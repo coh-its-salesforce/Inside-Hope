@@ -1,0 +1,120 @@
+.THIS .Wrapper {
+    margin:0 auto;
+    padding:0px;
+    border-top:8px solid #066dc0;
+    width:100%;
+}
+
+.THIS .Header {
+    margin:0 auto;
+    padding:0px;
+    width: 100%;
+    height: 75px;
+}
+
+.THIS .Header .Top{
+    margin:0px;
+    padding:0px;
+    width:100%;
+    height: 50px;
+}
+
+.THIS .Header .Left{margin:0px; padding-left:10px; float:left; color:#fdab00; font-size:30px;}
+.THIS .Header .Right{margin:0px; padding:15px 10px 0 0; float:right; color:#464749;}
+.THIS .Header .Right ul{margin:0px; padding:0px;}
+.THIS .Header .Right ul li{margin:0px; padding:0px; list-style-type:none; float:left; font-size:10px;}
+.THIS .Header .Right ul li a{color:#2c6ce7; text-decoration:underline;}
+.THIS .Header .Right ul li a:hover{color:#000; text-decoration:none;}
+.THIS .Header .Right ul li span{padding:0 5px; margin:0px; color:#989a9d;}
+.THIS .Header .Ihome{margin:0px; padding:0px;}
+.THIS .Header .IEmail{margin:0px; padding:0px;}
+
+
+.THIS .FourIconTxt{margin:0px; padding:0px; font-size:11px; font-weight:bold;height:25px;}
+.THIS .uiInput--input {
+    border-style: solid;
+    border-color: #2574a9;
+        border-radius: 15px;
+}
+
+.THIS .search-button{
+    border-radius: 18px;
+}
+
+.THIS .btnHope{
+    background-color: #40B5AD;
+    border: none;
+    height : 20px;
+
+}
+
+.THIS .btnOrg{
+    background-color: orange;
+    border: none;
+        height : 20px;
+
+}
+.THIS .btnHopemob{
+   background-color: #87CEEB;
+    border: none;
+        height: 1rem;
+    width: 8rem;
+        font-size: 10px;
+
+}
+.THIS .btnmob{
+     height: 1rem;
+    width: 8rem;
+        font-size: 10px;
+
+}
+.THIS .btnOrgmob{
+ background-color: orange;
+    border: none;
+           height: 1rem;
+    width: 8rem;
+    font-size: 10px;
+}
+
+
+.THIS .btn{
+     height : 20px;
+
+}
+
+
+.THIS.twUpcomingFoot{
+    display:none !important;
+}
+
+.THIS .profileName{
+    display:none !important;
+}
+
+.THIS .home {
+    display:none !important;
+}
+
+.THIS .profile {
+    display:none !important;
+}
+
+.THIS .logOut {
+   height:25px !important; 
+}
+
+.THIS .paddingTop{
+    padding-top:10px;
+}
+
+.THIS .myAccount {
+    display:none !important;
+}
+
+.THIS .selfServiceUserProfileMenu li.uiMenuItem a  {
+    padding:10px;
+}
+
+.THIS .siteforceServiceBody .cHeaderLine{
+    display:none !important;
+}

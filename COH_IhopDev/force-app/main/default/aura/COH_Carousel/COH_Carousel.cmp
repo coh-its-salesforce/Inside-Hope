@@ -1,0 +1,23 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="COH_CarouselController">
+    <aura:attribute name="carousellist" type="list"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12">
+            <lightning:carousel disableAutoRefresh="false" disableAutoScroll="false">
+                <aura:iteration items="{!v.carousellist}" var="item">
+                    
+                    <lightning:carouselImage
+                                             src = "{!item.cloudx_cms__Image_URL__c }"
+                                             header = "{!item.cloudx_cms__Title__c}"
+                                             description = "{!item.cloudx_cms__Description__c}"
+                                             alternativeText = "First card accessible description."
+                                             onclick="{!c.onClick}"
+                                             id="{!item.URL__c}">
+                    </lightning:carouselImage>
+                </aura:iteration>
+                
+            </lightning:carousel>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>
