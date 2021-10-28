@@ -1,0 +1,259 @@
+<aura:component  controller="IHope_CurrentUserInfo" implements="forceCommunity:profileMenuInterface,forceCommunity:themeLayout,forceCommunity:availableForAllPageTypes" access="global" description="Sample Custom Theme Layout">
+    <aura:attribute name="iframeUrl" type="String" />
+    <aura:attribute name="width" type="String" />
+    <aura:attribute name="height" type="String" />
+    <aura:attribute name="scrolling" type="String" />
+    <aura:attribute name="frameBorder" type="String" />
+    <aura:attribute name="style" type="String" />
+    <aura:attribute name="sandbox" type="String" />
+    <aura:attribute name="searchChild" type="Aura.Component[]" required="false"/>
+    <aura:handler name="init" value="this" action="{!c.doInit}"/>
+    <aura:attribute name="userInfo" type="user"/>
+    <aura:attribute name="label" type="String" default="Welcome: "/>
+    <aura:attribute name="profileMenuChild" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="navBar" type="Aura.Component[]" required="false"/>
+    
+    <aura:attribute name="isDesktop" type="Boolean" default="false"/>
+    <aura:attribute name="isMobile" type="Boolean" default="false"/>
+    <aura:attribute name="isTablet" type="Boolean" default="false"/>
+    
+    <aura:attribute name="showShortcut" type="Boolean" default="true"/>
+    <aura:attribute name="imageaddr" type="String"/>
+    <aura:attribute name="imageaddr1" type="String"/>
+    <aura:attribute name="imageaddrBreakthroughs" type="String"/>
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <aura:attribute name="isOpenBreakthroughs" type="boolean" default="false"/>
+    <aura:attribute name="SearchText" type="String"/>
+    <aura:attribute name="ShorcutVal" type="String"/>
+    
+    <aura:attribute name="shortcuts" type="List"/>
+    <aura:registerEvent name="COH_NavigationBarMenuEvent" type="c:COH_NavigationBarMenuEvent"/>
+    <!--Use "slds-m-around_xx-large" class to add standard X-Large padding to the component--> 
+    
+    <!--Use aura:if tag to display Model Box, on the bese of conditions. [isOpen boolean attribute] -->   
+    <aura:if isTrue="{!v.isOpen}">
+        
+        <!--###### MODAL BOX Start######--> 
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- ###### MODAL BOX HEADER Start ######-->
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Trumba Calender</h2>
+                </header>
+                <div>
+                    
+                    <iframe src="{!$Label.c.COH_TrumbaCalendar}" width="100%" height="250px" sandbox="allow-same-origin allow-top-navigation allow-scripts allow-forms"  scrolling="auto"/>
+                </div>
+                <!--###### MODAL BOX BODY Part Start######-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="text-align: center;">
+                    <lightning:button variant="brand" 
+                                      label="Edit"
+                                      title="Edit"
+                                      onclick="{! c.redirectToVfpage }"/>
+                    <lightning:button variant="brand" 
+                                      label="View All"
+                                      title="View All"
+                                      onclick="{! c.redirectToCalendar }"/>
+                </div>
+                
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        <!--###### MODAL BOX Part END Here ######-->
+        
+    </aura:if>
+    <aura:if isTrue="{!v.isOpenBreakthroughs}">
+        
+        <!--###### MODAL BOX Start######--> 
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- ###### MODAL BOX HEADER Start ######-->
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModalBreakthroughs }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Breakthroughs</h2>
+                </header>
+                <lightning:layout>
+                    <lightning:layoutItem>
+                        <div class="slds-scrollable" style="background-color:white; height: 625px">
+                            <center><c:iHopeBreakthroughArticleList height="125" imageWidth="125"></c:iHopeBreakthroughArticleList></center>
+                        </div>
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <!--###### MODAL BOX BODY Part Start######-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="text-align: center;">
+                    <lightning:button variant="brand" 
+                                      label="Close"
+                                      title="Close"
+                                      onclick="{! c.closeModalBreakthroughs }"/>
+                </div>
+                
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+        <!--###### MODAL BOX Part END Here ######-->
+        
+    </aura:if>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem largeDeviceSize="5" mediumDeviceSize="5" smallDeviceSize="9" size="9">
+            <div class="Left"><img src="{!v.imageaddr}"/></div>
+        </lightning:layoutItem>
+        <lightning:layoutItem largeDeviceSize="1" mediumDeviceSize="1" smallDeviceSize="2" size="2" padding="horizontal-small">
+            <div class="right" style="display: inline-flex;"> 
+                <!--   <a href="https://www.trumba.com/calendars/city-of-hope-master-calendar" class="calendarLink">-->
+                
+                <img src="{!v.imageaddr1}" onclick="{!c.OpenModal}"/>
+                <!--   </a>-->
+                
+                <img src="{!v.imageaddrBreakthroughs}" onclick="{!c.OpenModalBreakthroughs}"/>
+                
+            </div>
+        </lightning:layoutItem>
+        <!--  <lightning:layoutItem largeDeviceSize="1" mediumDeviceSize="1" smallDeviceSize="1" size="1">
+           <div class="slds-m-around_small"> 
+                <img src="{!v.imageaddrBreakthroughs}" onclick="{!c.OpenModalBreakthroughs}"/>
+            </div>
+        </lightning:layoutItem>    -->  
+        <aura:if isTrue="{!v.isDesktop}">
+            <lightning:layoutItem size="1">
+            </lightning:layoutItem>
+        </aura:if>    
+        
+        <lightning:layoutItem largeDeviceSize="5" mediumDeviceSize="6" smallDeviceSize="12" size="12">
+            <lightning:layout multipleRows="true">
+                <lightning:layoutItem size="12" flexibility="auto">
+                    <aura:if isTrue="{!or(v.isDesktop,v.isTablet)}">
+                        <div class="slds-clearfix">
+                            <div class="slds-float_right" style="display:flex">
+                                <lightning:formattedUrl 
+                                                        value="{!$Label.c.COH_SalesforceHome}"
+                                                        label=" Salesforce Home"
+                                                        target="_blank" />&nbsp;&nbsp;
+                                <lightning:icon iconName="utility:home" size="x-small" alternativeText="Salesforce Home" title="Home" />
+                                <label>{!v.label}</label>
+                                <a href="{!$Label.c.COH_userinfo + v.userInfo.Id}"
+                                   target="_blank">  {!v.userInfo.Name} </a> 
+                                
+                                {!v.profileMenuChild}
+                                
+                            </div>
+                        </div>
+                        <aura:set attribute="else">
+                            <div class="slds-align_absolute-center">
+                                <lightning:icon iconName="utility:home" size="x-small" alternativeText="Salesforce Home" title="Home"/>
+                                
+                                <label>{!v.label}</label>
+                                <a href="{!$Label.c.COH_userinfo + v.userInfo.Id}"
+                                   target="_blank">  {!v.userInfo.Name} </a> &nbsp;&nbsp;
+                                
+                                <!-- <lightning:formattedUrl value="https://www.salesforce.com"
+                                                        label="| Logout |"
+                                                        target="_blank"/>-->
+                                
+                                <lightning:formattedUrl value="{!$Label.c.COH_SalesforceHome}"
+                                                        label=" Salesforce Home"
+                                                        target="_blank"/>&nbsp;&nbsp;
+                                <div style="padding-bottom:5px;">
+                                    {!v.profileMenuChild}
+                                </div>
+                            </div>    
+                        </aura:set>    
+                    </aura:if>  
+                    
+                </lightning:layoutItem>
+                
+                <aura:if isTrue="{!or(v.isDesktop,v.isTablet)}">
+                    <lightning:layoutItem alignmentBump="left" class="slds-p-around_x-small"> 
+                        <lightning:button variant="brand" label="Hope works" title="Hope works" class="btnHope" onclick="{!c.handleClickHopewrks}"/> 
+                        <lightning:button variant="brand" label="Expanding Hope" title="Expanding Hope" class="btn" onclick="{!c.handleClickexp}"/>
+                        <lightning:button variant="brand" label="Orange County" title="Orange County" class="btnOrg"  onclick="{!c.handleClickOrg}"/>
+                    </lightning:layoutItem >
+                    <aura:set attribute="else">
+                        <lightning:layoutItem size="12">
+                            <div class="slds-align_absolute-center">
+                                
+                                <lightning:button variant="brand" label="Hope works" title="Hope works" class="btnHopemob" onclick="{!c.handleClickHopewrks}"/> 
+                                <!-- <button type="button"  onclick="{!c.handleClickHopewrks}">Click Me!</button> -->
+                                
+                                <lightning:button variant="brand" label="Expanding Hope" title="Expanding Hope" class="btnmob" onclick="{!c.handleClickexp}"/>
+                                <lightning:button variant="brand" label="Orange County" title="Orange County" class="btnOrgmob"  onclick="{!c.handleClickOrg}"/>
+                            </div>
+                        </lightning:layoutItem >
+                    </aura:set>    
+                </aura:if>   
+                
+                <lightning:layoutItem size="12" alignmentBump="right">
+                    <lightning:layout>
+                        <aura:if isTrue="{!v.isDesktop}">
+                            <lightning:layoutItem size="1" largeDeviceSize="4" mediumDeviceSize="1" smallDeviceSize="1">
+                            </lightning:layoutItem>
+                        </aura:if>
+                        
+                        <lightning:layoutItem size="12" largeDeviceSize="8" mediumDeviceSize="12" smallDeviceSize="12" class="paddingTop">
+                            <!--  <lightning:input aura:id="enter-search"
+                                             name="enter-search"
+                                             placeholder="Search Inside Hope"
+                                             type="search"/> --> 
+                            <!--  {!v.searchChild}-->
+                            <span onkeypress="{!c.CustomSearch}" >
+                                <lightning:input aura:id="enter-search"
+                                                 name="enter-search"
+                                                 placeholder="Search Inside Hope"
+                                                 type="search"
+                                                 value="{!v.SearchText}"
+                                                 />
+                            </span>
+                            <!-- <lightning:input name="input3" label="Text field with a placeholder" placeholder="type here..." value="{!v.SearchText}"/>-->
+                            <!-- <lightning:button variant="brand" 
+                                      label="Search"
+                                      title="Search"
+                                      onclick="{! c.CustomSearch }"/>-->
+                        </lightning:layoutItem>
+                    </lightning:layout>    
+                </lightning:layoutItem> 
+                
+                <aura:if isTrue="{!v.showShortcut}" >
+                    <aura:if isTrue="{!v.isDesktop}">
+                        <lightning:layoutItem size="12">
+                            <span style="float:right;display:-webkit-inline-box;padding-top:2%;padding-bottom: 5px;" >
+                                
+                                <span class="FourIconTxt slds-p-right_x-small" style="font-size: 12px;text-transform: uppercase;color: green">Change Shortcut Menu&nbsp;&nbsp;</span>
+                                
+                                <lightning:select value="{!v.ShorcutVal}" name="select" label="" variant="label-hidden" class="slds-form_inline" onchange="{!c.callShortcut}" >
+                                    <option value="">--None--</option>
+                                    <aura:iteration items="{!v.shortcuts}" var="shortcut">
+                                        <option value="{!shortcut.Id}">{!shortcut.Group_Name__c}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </span>
+                        </lightning:layoutItem>
+                    </aura:if>
+                </aura:if>
+            </lightning:layout>  
+        </lightning:layoutItem>
+        <aura:if isTrue="{!v.showShortcut}" >
+            <aura:if isTrue="{!v.isMobile}">
+                <lightning:layoutItem size="12">
+                    <span style="float:right;">
+                        <span class="FourIconTxt slds-p-right_x-small" style="font-size: 12px;text-transform: uppercase;color: green">Change Shortcut Menu</span>
+                        <lightning:select value="{!v.ShorcutVal}" name="select" label="" variant="label-hidden" class="slds-form_inline" onchange="{!c.callShortcut}">
+                            <option value="">--None--</option>       
+                            <aura:iteration items="{!v.shortcuts}" var="shortcut">
+                                <option value="{!shortcut.Id}">{!shortcut.Group_Name__c}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </span>
+                </lightning:layoutItem>
+            </aura:if>
+        </aura:if>
+    </lightning:layout>
+    
+</aura:component>

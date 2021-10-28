@@ -1,0 +1,99 @@
+<aura:component controller="IHope_CurrentUserInfo" implements="forceCommunity:profileMenuInterface,forceCommunity:themeLayout,forceCommunity:availableForAllPageTypes" access="global" description="Sample Custom Theme Layout">
+    <aura:attribute name="screenType" type="String" default=""/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="menus" type="List"/>
+    <aura:attribute name="shortCutList" type="List"/>
+    <aura:attribute name="navBarCss" type="String"/>
+    <aura:attribute name="contextBarCss" type="String"/>
+    <aura:attribute name="isRowsIcon" type="Boolean"/>
+    <aura:handler event="c:COH_NavigationBarMenuEvent" action="{!c.shorcutcalled}"/>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="12">
+            <aura:if isTrue="{!v.isRowsIcon}">
+                <div align="right" class="slds-p-top_x-small slds-p-right_x-small" >
+                    <lightning:icon iconName="utility:rows" size="medium" alternativeText="more" title="more" onclick="{!c.showNavigation}" />
+                </div>
+                <aura:set attribute="else">
+                    <aura:if isTrue="{!or(v.screenType eq 'PHONE',v.screenType eq 'TABLET')}">
+                        <div align="right" class="slds-p-top_x-small slds-p-right_x-small">
+                            <lightning:icon iconName="action:remove"  size="small" alternativeText="remove" title="remove" onclick="{!c.hideNavigation}" />
+                        </div>
+                    </aura:if>
+                    <div class="{!v.contextBarCss}" style= 'font-weight: 600; padding-top: 6px; border-bottom-color: #0476ba; border-top-color: #0476ba; background-color: gainsboro;'>
+                        <nav aura:id="navId" class="{!v.navBarCss}" aria-label="Sub page" role="navigation">
+                            <ul class="slds-grid">
+                                <aura:if isTrue="{!v.screenType eq 'DESKTOP'}">
+                                    <lightning:layout multipleRows="true">
+                                        <aura:iteration items="{!v.menus}" var ="rec" >
+                                            <lightning:layoutItem size="1">
+                                                <c:COH_SIP_Navigation rec="{!rec}" screenType="{!v.screenType}"/>
+                                            </lightning:layoutItem>
+                                        </aura:iteration>
+                                        <lightning:layoutItem size="1">
+                                            <li aura:id="changeItnew" class="liSeprator slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click">
+                                                <a  class="slds-context-bar__label-action" title="Menu Item">
+                                                    <span class="slds-truncate" title="Shortcuts">SHORTCUTS</span>
+                                                </a>
+                                                <aura:if isTrue = "{!not(empty(v.shortCutList))}">
+                                                    <div class="slds-context-bar__icon-action slds-p-left_none" >
+                                                        <div onfocusout="{!c.focusOut}">
+                                                            <lightning:buttonIcon size="xx-small" alternativeText="View More" title="View More" iconName="utility:down" onclick="{!c.openOrClose}"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slds-dropdown slds-dropdown_right">
+                                                        <ul class="slds-dropdown__list" role="menu" style="max-height: 300px; overflow: auto">
+                                                            
+                                                            <aura:iteration items="{!v.shortCutList}" var ="innerecnew">
+                                                                <li class="slds-dropdown__item" role="presentation">
+                                                                    <a href="{!innerecnew.Link_Url__c }" role="menuitem" tabindex="-1">
+                                                                        <span class="slds-truncate" title="{!innerecnew.Name}">{!innerecnew.Name}</span>
+                                                                    </a>
+                                                                </li> 
+                                                            </aura:iteration>
+                                                        </ul>
+                                                    </div>
+                                                </aura:if>
+                                            </li>
+                                        </lightning:layoutItem>
+                                    </lightning:layout>
+                                </aura:if>
+                                <aura:if isTrue="{!or(v.screenType eq 'PHONE',v.screenType eq 'TABLET')}">
+                                    <div class="vertical">
+                                        <aura:iteration items="{!v.menus}" var ="rec" >
+                                            <c:COH_SIP_Navigation rec="{!rec}" screenType="{!v.screenType}"/>
+                                        </aura:iteration>
+                                        
+                                        <li aura:id="changeItnew" class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click">
+                                            <a  class="slds-context-bar__label-action" title="Menu Item">
+                                                <span class="slds-truncate" title="Shortcuts">SHORTCUTS</span>
+                                            </a>
+                                            <aura:if isTrue = "{!not(empty(v.shortCutList))}">
+                                                <div class="slds-context-bar__icon-action slds-p-left_none" >
+                                                    <div onfocusout="{!c.focusOut}">
+                                                        <lightning:buttonIcon size="xx-small" alternativeText="View More" title="View More" iconName="utility:down" onclick="{!c.openOrClose}"/>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-dropdown slds-dropdown_right">
+                                                    <ul class="slds-dropdown__list" role="menu" style="max-height: 300px; overflow: auto">
+                                                        
+                                                        <aura:iteration items="{!v.shortCutList}" var ="innerecnew">
+                                                            <li class="slds-dropdown__item" role="presentation">
+                                                                <a href="{!innerecnew.Link_Url__c }" role="menuitem" tabindex="-1">
+                                                                    <span class="slds-truncate" title="{!innerecnew.Name}">{!innerecnew.Name}</span>
+                                                                </a>
+                                                            </li> 
+                                                        </aura:iteration>
+                                                    </ul>
+                                                </div>
+                                            </aura:if>
+                                        </li>
+                                    </div>
+                                </aura:if>
+                            </ul>
+                        </nav>
+                    </div>
+                </aura:set>
+            </aura:if>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

@@ -1,0 +1,853 @@
+<aura:component controller="COH_CampusPlanController">
+    <ltng:require styles="{!$Resource.MenuCSS}"/>
+   	<aura:handler name="init" value="{!this}" action="{!c.getArticles}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.getAlerts}"/>
+    <aura:handler name="sampleCmpEvent" event="c:CampusPlan_ArticlesData" action="{!c.parentComponentEvent}"/>
+    <aura:handler name="NewsEvent" event="c:CampusPlan_NewsEvent" action="{!c.getNewsStory}"/>
+    <aura:handler name="TimelineEvent" event="c:CampusPlan_TimelineEvent" action="{!c.getTimelineStory}"/>
+    <aura:handler name="sampleCmpEvent3" event="c:CampusPlan_ArticleStory" action="{!c.getStory}"/>
+    <aura:handler name="ExternalLinkEvent" event="c:CampusPlan_ExternalLinkToOpen" action="{!c.recordExternalLink}"/>
+    <aura:handler name="ExternalLinkEvent2" event="c:CampusPlan_ExternalLinkToOpen" action="{!c.getExternalLink}"/>
+    <aura:handler name="DuarteBuildingEvent" event="c:CampusPlan_OpenDuarteBuildingEvent" action="{!c.openDuarteBuilding}"/>
+    <aura:handler name="openResourcestoHelp" event="c:CampusPlan_ResourcestoHelpEvent" action="{!c.openRHArea}"/>
+    <aura:handler name="openRivergrade" event="c:CampusPlan_RivergradeEvent" action="{!c.openRGArea}"/>
+    <aura:attribute type="Aura.Component[]" name="singleCarouselDymamic" />
+    <aura:attribute type="Aura.Component[]" name="ptnewsCarouselDymamic" />
+    <aura:attribute type="boolean" name="isModalOpen" default="false" />
+    <aura:attribute type="String" name="chatbotURL" default="" />
+    <aura:attribute name = "ArticlesWrap" type = "COH_CampusPlanController.SingleArticle[]" />
+    <aura:attribute name = "ArticlesWrap2" type = "COH_CampusPlanController.SingleArticle[]" />
+    <aura:attribute name = "Announcements" type = "string[]" />
+    <aura:attribute name = "openBodyArea1" type = "boolean" default="true"/>
+    <aura:attribute name = "openBodyArea2" type = "boolean" default="false"/>
+    <aura:attribute name = "Holder" type = "boolean" default="true"/>
+    <aura:attribute name = "openPTNews" type = "boolean" default="false"/>
+    <aura:attribute name = "openRGNews" type = "boolean" default="false"/>
+    <aura:attribute name = "openDuNews" type = "boolean" default="false"/>
+    <aura:attribute name = "searchIcon" type = "boolean" default="true"/>
+    <aura:attribute name = "searchBar" type = "boolean" default="false"/>
+    <aura:attribute name = "openStory" type = "boolean" default="false"/>
+    <aura:attribute name = "openSearchBox" type = "boolean" default="true"/>
+    <aura:attribute name = "Menubar" type = "boolean" default="true"/>
+    <aura:attribute name = "openNewsStory" type = "boolean" default="false"/>
+    <aura:attribute name = "openTimelineStory" type = "boolean" default="false"/>
+    <aura:attribute name = "openDuarteBuildings" type = "boolean" default="false"/>
+    <aura:attribute name = "ExternalLink" type = "string"/>
+    <aura:attribute name = "storyimage" type = "string"/>
+    <aura:attribute name = "arecId" type = "string"/>
+    <aura:attribute name ="HideNews" type="boolean" default="true"/>
+    <aura:attribute type="Campus_Plan_News__c" name="newsrec"/>
+    <aura:attribute name="isFaQExists" type="Object" default="false"/>
+    <aura:attribute type="Campus_Plan_Timeline__c" name="timelinerec"/>
+    <aura:attribute name = "openExternalLink" type = "boolean" default="false"/>
+    <aura:attribute name = "Article" type = "Campus_Plan_Article__c" />
+    <aura:attribute name = "Articles" type = "Campus_Plan_Article__c[]" />
+    <aura:attribute name = "ContentStory" type = "Campus_Plan_Article__c" />
+    <aura:attribute name = "Images" type = "Map" />
+   <!-- <aura:attribute name="ShuttleFrequency" type="Boolean" default="false"/>
+    <aura:attribute name="StackedEmployee" type="Boolean" default="false"/>
+    <aura:attribute name="NewApproach" type="Boolean" default="false"/>
+    <aura:attribute name="ShuttleSchedule" type="Boolean" default="false"/> -->
+    <aura:attribute name="RivergradeOverView" type="Boolean" default="false"/>
+    <aura:attribute name="Parking" type="Boolean" default="false"/>
+    <aura:attribute name="Duarte" type="Boolean" default="false"/>
+    <aura:attribute name="CountyMenu" type="Boolean" default="false"/>
+    <aura:attribute name="FAQPage" type="Boolean" default="false"/>
+    <aura:attribute name="RivergradeFAQ" type="Boolean" default="false"/>
+    <aura:attribute name="OCFAQ" type="Boolean" default="false"/>
+    <aura:attribute name="DuarteFAQ" type="Boolean" default="false"/>
+    <!-- <aura:attribute name="OrangeCounty" type="Boolean" default="false"/>
+    <aura:attribute name="Transformation" type="Boolean" default="false"/>
+    <aura:attribute name="Milestone" type="Boolean" default="false"/>
+    <aura:attribute name="milestonepage1" type="Boolean" default="false"/>
+    <aura:attribute name="milestonepage2" type="Boolean" default="false"/>
+    <aura:attribute name="milestonepage3" type="Boolean" default="false"/>
+    <aura:attribute name="milestonepage4" type="Boolean" default="false"/>
+    <aura:attribute name="milestonepage5" type="Boolean" default="false"/>
+    <aura:attribute name="milestonepage6" type="Boolean" default="false"/>
+    <aura:attribute name="milestonepage7" type="Boolean" default="false"/>
+    <aura:attribute name="milestonepage8" type="Boolean" default="false"/>
+    <aura:attribute name="OCStories" type="Boolean" default="false"/>
+    <aura:attribute name="Events" type="Boolean" default="false"/> -->
+    <aura:attribute name="openOCNews" type="Boolean" default="false"/>
+    <aura:attribute name="EmployeeDisc" type="Boolean" default="false"/>
+    <aura:attribute name="openCarousel1" type="Boolean" default="false"/>
+    <aura:attribute name="openCarousel2" type="Boolean" default="false"/>
+   <!-- <aura:attribute name="profile1" type="Boolean" default="false"/>
+    <aura:attribute name="profile2" type="Boolean" default="false"/>
+    <aura:attribute name="profile3" type="Boolean" default="false"/>
+    <aura:attribute name="profile4" type="Boolean" default="false"/>
+    <aura:attribute name="profile5" type="Boolean" default="false"/>
+    <aura:attribute name="openDuarteBuildings2" type="boolean" default="false"/>
+    <aura:attribute name="MedicalOffice" type="boolean" default="false"/>
+    <aura:attribute name="aboutMedical" type="Boolean" default="false"/>
+    <aura:attribute name="aboutMOB" type="Boolean" default="false"/>
+    <aura:attribute name="RadiologyImagingCenter" type="boolean" default="false"/>
+    <aura:attribute name="aboutRIC" type="Boolean" default="false"/>
+    <aura:attribute name="aboutRICImpact" type="Boolean" default="false"/>
+    <aura:attribute name="telecommoverview" type="Boolean" default="false"/> -->
+    <aura:attribute name="displayalerts" type="Boolean" default="false"/>
+    <aura:attribute type="COH_CampusPlanController.NewsWrap" name="newstype" />
+    <aura:attribute type="Campus_Plan_News__c[]" name="newsList" default=""/>
+    
+    <!--16.06.2020 FSalinas -->
+    <!-- <aura:attribute type="COH_CampusPlanController.TimelineMenuWrap" name="newstype2" /> -->
+    <!--22.04.2020 -->
+    <aura:attribute type="COH_CampusPlanController.NewsWrap" name="newstype1" />
+    <aura:attribute type="Campus_Plan_News__c[]" name="newsList1" default=""/>
+    <aura:attribute name="rgNewsRecord" type="Campus_Plan_News__c"  />
+    <aura:attribute name="ptNewsRecord" type="Campus_Plan_News__c"  />
+    <aura:attribute name="duNewsRecord" type="Campus_Plan_News__c"  />
+    <aura:attribute name="ocNewsRecord" type="Campus_Plan_News__c"  />
+    <!-- <aura:attribute name="ocTimelineRecord" type="Campus_Plan_Timeline__c"  /> --> <!--16.06.2020 FSalinas -->
+    <aura:attribute type="String" name="listSource" default=""/>
+    
+    <aura:attribute type="String" name="Orange" default=""/>
+    
+    <!--22.04.2020 -->
+    <!-- <aura:attribute type="COH_CampusPlanController.timelinewrap" name="timelinetype1" /> --> <!--16.06.2020 FSalinas -->
+    <!-- <aura:attribute type="Campus_Plan_Timeline__c[]" name="timeList1" default=""/> --> <!--16.06.2020 FSalinas -->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+   
+   
+    <div>
+		<div class="main-container" id="mainContainer">           
+               <c:ExpandingHope_GoogleAnalytics/>
+               <div class="main-header-area">
+           		<div class="main-header">
+                    <div class="slds-grid slds-nowrap">
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_5-of-12 slds-large-size_4-of-12">
+                        <div class="logo-image-wrap">
+                            <img src="{!$Resource.ExpandingHopeLogoMain}" onclick="{!c.redirectToCoHSite}"/>
+                            
+           			</div>
+                        </div>
+          <div class="slds-col slds-size_1-of-3 slds-medium-size_7-of-12 slds-large-size_8-of-12">
+            	<div class="header-search-area">
+              		<a href="/apex/ExpandingHopePageViewer" title="Click here to Search Expanding Hope">
+                    </a>
+              </div>
+              <aura:if isTrue="{!v.Menubar}">
+                    <div class="header-menu">
+                        <!-- [THE HAMBURGER] -->
+                        <label for="hamburger" class="hamburger-label">&#9776;</label>
+                        <input type="checkbox" id="hamburger"/>
+                        <ul class="header-menu-main-ul">
+                            <aura:if isTrue="{! !v.Articles[0].Hide_Landing_Page__c}">
+                    	 <li> 
+                             <!-- Menu Start -->
+                             <div onclick="{!c.openSingleRecord}" id="Parking and Transportation"> 
+                               <!-- RESOURCES TO HELP -->
+                                <ui:outputText value="{!v.Articles[0].Menu_Name__c}" />
+                             </div>
+                             <label for="ddmenu1" class="fa fa-angle-down"></label>
+                            <input type="checkbox" id="ddmenu1"/>
+                            <ul>
+                                
+                               <aura:iteration items="{!v.newstype1.ptnews}" var="item" indexVar="index">
+                                   <li  id="{!item.Id}" value="{!item.Title__c}" name="{!item.Title__c}" onclick="{!c.getRHPage}">{!item.Title__c}</li>
+                            	</aura:iteration>
+                               <li onclick="{!c.getRHPageFAQ}" id="rhmenuitem3">Duarte Parking FAQs</li>
+                                <li onclick="{!c.gotoSquareSections}" id="squareSecLi1" class="square-sec-li">COH Parking App</li><!-- FS4Julie 20200729 -->
+                                <li onclick="{!c.gotoSquareSections}" id="squareSecLi2" class="square-sec-li">Alternative Transportation</li>
+                                <li onclick="{!c.gotoSquareSections}" id="squareSecLi3" class="square-sec-li">Off-site Parking</li>
+                                <li onclick="{!c.gotoSquareSections}" id="squareSecLi4" class="square-sec-li">Incentives and Subsidies</li>
+                            </ul>
+                         </li>
+                            </aura:if>
+                            <aura:if isTrue="{! !v.Articles[1].Hide_Landing_Page__c}">
+                         <li> 
+                           <!-- <div onclick="{!c.openDCPage}" id="Duarte Buildings">DUARTE CAMPUS</div> -->
+                            <div onclick="{!c.openSingleRecord}" id="Duarte Building">
+                             <!-- DUARTE CAMPUS -->
+                               <ui:outputText value="{!v.Articles[1].Menu_Name__c}" />
+                             </div>
+                            <label for="ddmenu2" class="fa fa-angle-down"></label>
+                            <input type="checkbox" id="ddmenu2"/>    
+                            <ul>
+                                <aura:iteration items="{!v.newstype1.Dunews}" var="item" indexVar="index">
+                                   <li  id="{!item.Id}" value="{!item.Title__c}" name="{!item.Title__c}" onclick="{!c.getProfilesPage}">{!item.Title__c}</li>
+                            	</aura:iteration>
+                               <!-- <li onclick="{!c.getProfilesPage}" id="cpMedicalOfficeBuilding">Medical Office Building</li>
+                                <li onclick="{!c.getProfilesPage}" id="RadiologyImagingCenter">Radiology Imaging Center</li>
+                                <li onclick="{!c.getProfilesPage}" id="NewHopeVillage">New Hope Village</li>
+                                <li onclick="{!c.getProfilesPage}" id="DuarteOutpatientClinic">Duarte Outpatient Clinic</li>
+                                <li onclick="{!c.getProfilesPage}" id="PatientParkingStructure">Patient Parking Structure</li> -->
+                               <aura:if isTrue="{!v.isFaQExists}">
+                                <li onclick="{!c.getProfilesPage}" id="DuarteFAQ">Duarte FAQ</li>
+                                </aura:if>
+                            </ul>
+                          </li>
+                            </aura:if>
+                            <aura:if isTrue="{! !v.Articles[2].Hide_Landing_Page__c}">
+                         <li> 
+                         	<div onclick="{!c.openSingleRecord}" id="Rivergrade Article">
+                            <!-- RIVERGRADE -->
+                               <ui:outputText value="{!v.Articles[2].Menu_Name__c}" />
+                             </div>
+                            <label for="ddmenu3" class="fa fa-angle-down"></label>
+                            <input type="checkbox" id="ddmenu3"/>    
+                            <ul>
+                                <!-- Revergrade Menu -->
+                                <aura:iteration items="{!v.newstype1.rivergradenews}" var="item" indexVar="index">
+                                   <li  id="{!item.Id}" value="{!item.Title__c}" name="{!item.Title__c}" onclick="{!c.getRGPage}">{!item.Title__c}</li>
+                            	</aura:iteration>
+                                <!--<li onclick="{!c.getRGPage}" id="rgmenuitem3">Rivergrade Overview</li>
+                                <li onclick="{!c.getRGPage}" id="rgmenuitem2">Employee Discounts</li> -->
+                                <li onclick="{!c.getRGPage}" id="rgmenuitem4">Duarte Patient Information FAQ</li>
+                           </ul>
+                         </li>
+                                </aura:if>
+                            <aura:if isTrue="{! !v.Articles[3].Hide_Landing_Page__c}">
+                         <li> 
+                            <div onclick="{!c.openSingleRecord}" id="Orange County">
+                           	<!-- ORANGE COUNTY NETWORK -->
+                               <ui:outputText value="{!v.Articles[3].Menu_Name__c}" />
+                             </div> 
+                            <label for="ddmenu4" class="fa fa-angle-down"></label>
+                            <input type="checkbox" id="ddmenu4"/>    
+                             <ul>
+                                <aura:iteration items="{!v.newstype1.orangecountynews}" var="item" indexVar="index">
+                                    <li  id="{!item.Id}" value="{!item.Title__c}" name="{!item.Title__c}" onclick="{!c.getOCPage}">
+                                       {!item.Title__c}
+                                   </li>
+                               	</aura:iteration>
+                               <!-- <li onclick="{!c.getOCPage}" id="ocmenuitem1">Why Orange County</li>
+                                <li onclick="{!c.getOCPage}" id="ocmenuitem2">Time of Transformation</li>
+                                <li onclick="{!c.getOCPage}" id="ocmenuitem3">Milestones of Hope</li> -->
+                                <!-- <li onclick="{!c.getOCPage}" id="ocmenuitem5"> Community Voices </li>
+                                <li onclick="{!c.getOCPage}" id="ocmenuitem6"> News and Events </li> -->
+                                 <li onclick="{!c.getOCPage}" id="ocmenuitem5">Timeline
+                                    <label for="cpTimeLines" class="fa fa-angle-down"></label>
+                                    <input type="checkbox" id="cpTimeLines"/>    
+                                        <ul id="cpTimeLine" class="milestones-ul2">
+                                            <aura:iteration items="{!v.newstype1.cpTimelines}" var="tLineItem" indexVar="index">
+                                                <li  id="{!index}" value="{!tLineItem.Title__c}" name="{!index}" title="{!tLineItem.Title__c}" onclick="{!c.openTimeLIne}">{!tLineItem.Title__c}</li>
+                                            </aura:iteration>
+                                        </ul>
+                                </li>
+                                <li onclick="{!c.getOCPage}" id="ocmenuitem4">Orange County FAQ</li>
+                           	</ul>
+                         </li>
+                            </aura:if>
+                        </ul>
+           			</div>
+                  
+                    </aura:if>
+                        </div>
+                    
+                    </div>           			
+                    
+                    <!--<aura:if isTrue="{!v.openSearchBox}">
+                    <div class="slds-col slds-size_5-of-12" >
+           			</div>
+           			<div class="slds-col slds-size_3-of-12" id="searchDiv">
+               		<aura:if isTrue="{!v.searchIcon}"><img src="{!$Resource.SearchIcon}" onclick="{! c.handleClick }" style="height:70%;"/></aura:if>
+                    <aura:if isTrue="{!v.searchBar}"><lightning:input type="search" placeholder="Search you want" class="searchBox" /></aura:if><span><img src="{!$Resource.UserIcon}" /></span>
+                    </div>
+                    </aura:if>-->
+               </div>
+         
+            
+            </div>   
+            <div class="banner-body-content-area">
+            <aura:if isTrue="{!v.displayalerts}" > 
+     		<div class="slds-grid slds-wrap">
+         		<div class="slds-col slds-size_12-of-12">
+                    
+           			<aura:if isTrue="{!!empty(v.Announcements)}">
+                        <div>
+               			<c:COH_CampusPlanAlert Announcements="{!v.Announcements}"/>
+                        </div>
+           			</aura:if>
+         		</div>
+            </div>
+           </aura:if>   
+            <aura:if isTrue="{!v.openBodyArea1}">
+                <div>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_12-of-12">
+                            <c:COH_CampusPlanHeroArea aura:id="HeroArea"/>
+                        </div>
+                    </div>  
+                </div>
+    		<div class="slds-grid slds-wrap">
+         		<div class="slds-col slds-size_12-of-12" >
+                    <div class="content-section">
+                        <!--<h1>LATEST NEWS</h1> 20200618 Commented out by FSalinas -->
+                        <!-- <h1>LATEST NEWS</h1> -->
+                        <c:CampusPlan_NewsAndAnnouncementComp pagesource="Home Page"/>                    
+                    </div>
+                    <div class="content-section">
+                        <h1>TIMELINE</h1>
+                        <c:CampusPlan_Timeline LandingPage="Home"/>
+                        <!--<div class="timeline-image">
+                            <img src="{!$Resource.Homepage_Timeline}"/>
+                        </div>--> 
+                    </div>                  
+             	</div>
+    		</div>
+      </aura:if>         
+      <aura:if isTrue="{!v.openBodyArea2}">
+          <div class="banner-container">
+    		<div class="slds-grid slds-wrap">
+               <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12">
+                <aura:if isTrue="{!v.openCarousel1}">
+                   <c:SingleItemCarousel ArticlesWrap="{!v.ArticlesWrap}"/>
+                </aura:if> 
+                <aura:if isTrue="{!v.openCarousel2}">
+                    {!v.singleCarouselDymamic}
+                </aura:if> 
+              </div>
+              		 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12">
+                    	<div class="banner-content">
+                                <aura:if isTrue="{!v.Article.Designative_Type__c=='Parking and Transportation'}">
+                                    <h4 class="label-header">
+                                        <label class="blue-bg">
+                                            <ui:outputText value="{!v.Article.Location__c}"/>
+                                           <!-- Resources -->
+                                        </label>
+                                    </h4>
+                                   <ui:outputText value="{!v.Article.Landing_Page_Title__c}"/>
+                                   <ui:outputRichText value="{!v.Article.Article_Content_Next_to_Image__c}"/>
+                                   
+                               </aura:if>
+                        
+                        		 <aura:if isTrue="{!v.Article.Designative_Type__c=='Duarte Building'}">
+                                     <h4 class="label-header">
+                                         <label class="blue-bg">
+                                         	<ui:outputText value="{!v.Article.Location__c}"/>
+                                         </label>
+                                    </h4>
+                                    <ui:outputText value="{!v.Article.Landing_Page_Title__c}"/>
+                                    <!--<h2>Expanding Hope</h2> -->
+                                        <ui:outputRichText value="{!v.Article.Article_Content_Next_to_Image__c}"/>
+                        		</aura:if>
+                        
+                                 <aura:if isTrue="{!v.Article.Designative_Type__c=='Rivergrade Article'}">
+                                     <h4 class="label-header">
+                                         <label class="blue-bg">
+                                         	<ui:outputText value="{!v.Article.Location__c}"/>
+                                         </label>
+                                    </h4>
+                                     <ui:outputText value="{!v.Article.Landing_Page_Title__c}"/>
+                                        <ui:outputRichText value="{!v.Article.Article_Content_Next_to_Image__c}"/>
+                                </aura:if>
+                                 <aura:if isTrue="{!v.Article.Designative_Type__c=='Orange County'}">
+                                     <h4 class="label-header">
+                                         <label class="orange-bg">
+                                            <ui:outputText value="{!v.Article.Location__c}"/>
+                                         </label>
+                                     </h4>
+                                     <ui:outputText value="{!v.Article.Landing_Page_Title__c}"/>                                    
+                                     <ui:outputRichText value="{!v.Article.Article_Content_Next_to_Image__c}"/>
+                                        
+                                </aura:if>
+                        </div>
+              </div>
+              </div>
+          </div>
+         
+               </aura:if>
+            
+           <div id="holderId">
+                <aura:if isTrue="{!v.Holder}">
+                   <aura:if isTrue="{!v.Article.Designative_Type__c=='Parking and Transportation'}">
+                       <c:CampusPlan_PlaceHolder Article="{!v.Article}"/>
+                    </aura:if>
+                </aura:if> 
+            </div>
+               <aura:if isTrue="{!v.openPTNews}">
+                  <aura:if isTrue="{!v.Article.Designative_Type__c=='Parking and Transportation'}">
+                    <div class="content-section">
+                       <!-- <h1>LATEST NEWS</h1> -->
+                        <c:CampusPlan_NewsAndAnnouncementComp pagesource="Parking and Transportation" />
+                      </div>
+                      <div class="content-section">
+                        <h1>FAQs</h1>
+                        <div class="images-gallery">
+                            <ul class="slds-grid slds-wrap">
+                                <li class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">                         
+                                        <div class="news-item" onclick="{!c.getFAQPage}" id="FAQ">
+                                            <div class="news-item-image">
+                                                <img src ="{!$Resource.StackedEmployee}"/>
+                                            </div>
+                                            <h3 class="news-title">
+                                                Duarte Parking FAQs
+                                            </h3>
+                                        </div>
+                                </li>
+                            </ul>
+                        </div> 
+                        
+                      
+                       
+                       </div>
+                   </aura:if>
+               </aura:if>
+               <aura:if isTrue="{!v.openBodyArea2}">
+               		<div>
+                      <div class="content-section">
+                      <!-- <aura:if isTrue="{!v.Article.Designative_Type__c=='Parking and Transportation'}">
+                                <c:CampusPlan_PlaceHolder Article="{!v.Article}"/> -->
+                                
+                                <aura:if isTrue="{!v.Article.Designative_Type__c=='Parking and Transportation'}">
+                                    <c:CampusPlan_LeaveaComment article="{!v.Article}"/>
+                                </aura:if>  
+                         <!-- </aura:if> -->      
+                        </div>
+                   </div>
+               </aura:if>
+            
+                     <!-- 28.04.2020 -->        
+            <aura:if isTrue="{!v.openNewsStory}">
+               <div class="banner-container">
+                <div class="slds-grid slds-wrap" >
+                    
+                     <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12" >
+                            <div class="banner-image">
+                             <img src="{!v.newsrec.PhotoURL__c}"/>
+                            </div>      
+                    </div>  
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12">
+                        <div class="banner-content">
+                            <aura:if isTrue="{!v.newsrec.Location__c}">
+                             <h4 class="label-header">
+                                
+                                  <aura:if isTrue="{!v.newsrec.Location__c == 'Orange County'}">
+                                    <label class="orange-bg">
+                                           <ui:outputText value="{!v.newsrec.Location__c}"/>
+                                    </label>
+                                       <aura:set attribute="else">
+                                          <label class="blue-bg">
+                                               <ui:outputText value="{!v.newsrec.Location__c}"/>
+                                        </label>
+                                        </aura:set>
+                                </aura:if>
+                             </h4>
+                             </aura:if>
+                             <h2>{!v.newsrec.Title__c}</h2>
+                            <p>{!v.newsrec.Sub_Title__c}</p>
+                             <p class="banner-p"><aura:unescapedHtml value="{!v.newsrec.News_Content_Next_to_Image__c}" /></p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="profile-content">
+                    <aura:unescapedHtml value="{!v.newsrec.Detailed_Description__c}" />
+                </div>
+             </aura:if>
+        <!-- 28.04.2020 -->
+            
+            <aura:if isTrue="{!v.openDuNews}">
+                 <aura:if isTrue="{!v.Article.Designative_Type__c=='Duarte Building'}">
+                       <div class="content-section">
+                       <!-- <h1>Building Profiles</h1> -->
+                        <c:CampusPlan_NewsAndAnnouncementComp pagesource="Duarte" />
+                           
+                           
+                       <div aura:id="faqFooter" class="slds-show">
+                       	<aura:if isTrue="{!v.isFaQExists}">
+                           <h1>FAQs</h1>
+                           <div class="images-gallery">
+                            <ul class="slds-grid slds-wrap">
+                                <li class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">                         
+                                       <div class="news-item" onclick="{!c.getDUFAQ}" id="DUFAQ">
+                                            <div class="news-item-image">                            
+                                                <img src ="{!$Resource.StackedEmployee}"/>
+                                            </div>
+                                            <h3 class="news-title">
+                                                Duarte FAQ
+                                            </h3>
+                                       </div> 
+                                </li>
+                            </ul>
+                        </div>
+                            </aura:if>
+                           <aura:if isTrue="{!v.Article.Designative_Type__c=='Duarte Building'}">
+                                    <c:CampusPlan_LeaveaComment article="{!v.Article}"/>
+                           </aura:if>
+                       </div>
+                  </div>
+                 </aura:if>
+            </aura:if>
+            
+               <aura:if isTrue="{!v.openRGNews}">
+                   <aura:if isTrue="{!v.Article.Designative_Type__c=='Rivergrade Article'}">
+                       <div class="content-section">
+                       <!-- <h1>LATEST NEWS</h1> -->
+                           <c:CampusPlan_NewsAndAnnouncementComp pagesource="Rivergrade"/>
+                       </div>
+                       <div class="content-section">
+                       <h1>FAQs</h1>
+                           <div class="images-gallery">
+                            <ul class="slds-grid slds-wrap">
+                                <li class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">                         
+                                       <div class="news-item" onclick="{!c.getRGFAQ}" id="RGFAQ">
+                                            <div class="news-item-image">                            
+                                                <img src ="{!$Resource.StackedEmployee}"/>
+                                            </div>
+                                            <h3 class="news-title">
+                                                Duarte Patient Information FAQs
+                                            </h3>
+                                       </div> 
+                                </li>
+                            </ul>
+                        </div>
+                       </div>
+                       
+                      <div class="content-section">
+                           <aura:if isTrue="{!v.Article.Designative_Type__c=='Rivergrade Article'}">
+                                    <c:CampusPlan_LeaveaComment article="{!v.Article}"/>
+                           </aura:if>
+                       </div>
+                       <!-- <div class="images-gallery">
+                            <ul class="slds-grid slds-wrap">
+                            <li class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">                         
+                                        <a class="news-item" onclick="{!c.getShuttleSchedule}" id="ShuttleSchedule">
+                                            <div class="news-item-image">                            
+                                                <img src ="{!$Resource.ShuttleSchedule}"/>
+                                            </div>
+                                            <h3 class="news-title">
+                                                Duarte Campus Shuttle Schedule
+                                            </h3>
+                                        </a> 
+                                </li>
+                                <li class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">                         
+                                        <a class="news-item" onclick="{!c.getOverview}" id="Overview">
+                                            <div class="news-item-image">                            
+                                                <img src ="{!$Resource.CampusPlanRivergradeOverview}"/>
+                                            </div>
+                                            <h3 class="news-title">
+                                                Rivergrade Overview
+                                            </h3>
+                                        </a> 
+                                </li>
+                                <li class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">                         
+                                        <a class="news-item" onclick="{!c.getEmployeeDisc}" id="EmployeeDisc">
+                                            <div class="news-item-image">                            
+                                                <img src ="{!$Resource.EmployeeDiscounts}"/>
+                                            </div>
+                                            <h3 class="news-title">
+                                                Employee Discounts
+                                            </h3>
+                                        </a> 
+                                </li>
+                            </ul>
+                       </div> -->
+                      </aura:if>
+               </aura:if>
+               <aura:if isTrue="{!v.openOCNews}">
+                   <aura:if isTrue="{!v.Article.Designative_Type__c=='Orange County'}">                       
+                     <div class="content-section">
+                        <!-- <h1>LATEST NEWS</h1> -->
+                           <c:CampusPlan_NewsAndAnnouncementComp pagesource="Orange County"/>
+                       </div>
+                       <div class="content-section">
+                        <h1>FAQs</h1>
+                        <div class="images-gallery">
+                            <ul class="slds-grid slds-wrap">
+                                <li class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">                         
+                                        <div class="news-item" onclick="{!c.OrangeCountyFAQ}" id="CountyFAQ">
+                                            <div class="news-item-image">                            
+                                                <img src ="{!$Resource.CampusPlanOCFAQ}"/>
+                                            </div>
+                                            <h3 class="news-title">
+                                                Orange County FAQ	
+                                            </h3>
+                                        </div>  
+                                </li>
+                            </ul>
+                        </div>
+                       </div>
+                       <div class="content-section">
+                        <div class="time-line">
+                        <h1>Milestones of Hope</h1>
+                        <c:CampusPlan_Timeline LandingPage="Orange County"/>
+                        </div>
+                       </div>
+                       <div class="content-section">
+                         <aura:if isTrue="{!v.Article.Designative_Type__c=='Orange County'}">
+                                    <c:CampusPlan_LeaveaComment article="{!v.Article}"/>
+                         </aura:if>
+                       </div>
+                       <!-- <div class="images-gallery">
+                            <ul class="slds-grid slds-wrap">
+                                <li class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">                         
+                                        <a class="news-item" onclick="{!c.getWhyOrangeCounty}" id="OrangeCount">
+                                            <div class="news-item-image">                            
+                                                <img src ="{!$Resource.WhyOrangeCounty}"/>
+                                            </div>
+                                            <h3 class="news-title">
+                                               Why Orange County
+                                            </h3>
+                                        </a> 
+                                </li>
+                                <li class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">                         
+                                        <a class="news-item" onclick="{!c.getTime}" id="Time">
+                                            <div class="news-item-image">                            
+                                                <img src ="{!$Resource.TimeofTransformation}"/>
+                                            </div>
+                                            <h3 class="news-title">
+                                                A Time of Transformation	
+                                            </h3>
+                                        </a> 
+                                </li>
+                                <li class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">                         
+                                        <a class="news-item" onclick="{!c.Milestone}" id="MilestoneHope">
+                                            <div class="news-item-image">                            
+                                                <img src ="{!$Resource.MilestonesofHope}"/>
+                                            </div>
+                                            <h3 class="news-title">
+                                                Milestones of Hope	
+                                            </h3>
+                                        </a> 
+                                </li>
+                                <li class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">                         
+                                        <a class="news-item" onclick="{!c.getStories}" id="Stories">
+                                            <div class="news-item-image">                            
+                                                <img src ="{!$Resource.CampusPlanStoriesCommunity}"/>
+                                            </div>
+                                            <h3 class="news-title">
+                                                Community Voices	
+                                            </h3>
+                                        </a> 
+                                </li>
+                                <li class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">                         
+                                        <a class="news-item" onclick="{!c.getEvents}" id="Events">
+                                            <div class="news-item-image">                            
+                                                <img src ="{!$Resource.CampusPlanEvents}"/>
+                                            </div>
+                                            <h3 class="news-title">
+                                                News and Events	
+                                            </h3>
+                                        </a> 
+                                </li>
+                            </ul>
+                       </div> -->
+                   </aura:if>
+               </aura:if>
+               <div class="profile-page">
+                
+                <aura:if isTrue="{!v.FAQPage}">
+            		 <c:CampusPlan_FAQPage/>
+                </aura:if>
+                <aura:if isTrue="{!v.OCFAQ}">
+         			 <c:COH_CampusPlan_OCFAQ/>
+                </aura:if>
+                <aura:if isTrue="{!v.RivergradeFAQ}">
+				<c:COH_CampusPlan_RGFAQPage/>
+				</aura:if>
+                <aura:if isTrue="{!v.DuarteFAQ}">
+                  <c:COH_CampusPlan_DuarteFAQPage/>
+                </aura:if>
+                <aura:if isTrue="{!v.Parking}">
+                <c:COH_CampusPlan_ParkingMenu ParkingRecord="{!v.ptNewsRecord}" />
+                </aura:if>
+                 <aura:if isTrue="{!v.Duarte}">
+                <c:COH_CampusPlan_DuarteMenu DuarteRecord="{!v.duNewsRecord}" />
+                </aura:if>  
+                <aura:if isTrue="{!v.RivergradeOverView}">
+                <c:COH_CampusPlan_Rivergrade RivergradeRecord="{!v.rgNewsRecord}" />
+                <!-- <c:COH_CampusPlan_RivergradeOverview/> -->
+				</aura:if>
+                <aura:if isTrue="{!v.CountyMenu}">
+                	<c:COH_CampusPlan_OrangeCountyMenu OrangeCountyRecord="{!v.ocNewsRecord}" />
+                </aura:if>
+                <!-- <aura:if isTrue="{!v.CountyTimelineMenu}"> --><!-- 20200616 FSalinas -->
+	                <!-- <c:COH_CampusPlan_OrangeCountyTimeline OrangeCountyTimelineRecord="{!v.ocTimelineRecord}" />
+                </aura:if> -->
+                <!-- 
+				<aura:if isTrue="{!v.telecommoverview}">
+         			 <c:CampusPlan_TelecommuteOverviewComp/>
+                </aura:if>
+				<aura:if isTrue="{!v.Events}">
+         			 <c:COH_CampusPlan_Events/>
+                </aura:if>
+                <aura:if isTrue="{!v.milestonepage1}">
+         			 <c:COH_CampusPlan_OCMarch2018/>
+                </aura:if>
+                <aura:if isTrue="{!v.milestonepage2}">
+         			 <c:COH_CampusPlan_OCMay2018/>
+                </aura:if>
+                <aura:if isTrue="{!v.milestonepage3}">
+         			 <c:COH_CampusPlan_OCJune2019/>
+                </aura:if>
+                <aura:if isTrue="{!v.milestonepage4}">
+         			 <c:COH_CampusPlan_OCJan2020/>
+                </aura:if>
+                <aura:if isTrue="{!v.milestonepage5}">
+         			 <c:COH_CampusPlan_OCFeb2020/>
+                </aura:if>
+                <aura:if isTrue="{!v.milestonepage6}">
+         			 <c:COH_CampusPlan_Coming2020/>
+                </aura:if>
+                <aura:if isTrue="{!v.milestonepage7}">
+         			 <c:COH_CampusPlan_OCComing2021/>
+                </aura:if>
+                <aura:if isTrue="{!v.milestonepage8}">
+         			 <c:COH_CampusPlan_Coming2025/>
+                </aura:if> 
+                <aura:if isTrue="{!v.OrangeCounty}">
+         			 <c:COH_CampusPlan_WhyOrangeCounty/>
+                </aura:if>
+                <aura:if isTrue="{!v.OCStories}">
+         			 <c:COH_CampusPlan_Stories/>
+                </aura:if>
+                <aura:if isTrue="{!v.Transformation}">
+         			 <c:COH_CampusPlan_Transformation/>
+                </aura:if>
+                <aura:if isTrue="{!v.Milestone}">
+         			 <c:COH_CampusPlan_Milestone/>
+                </aura:if>
+                <aura:if isTrue="{!v.ShuttleFrequency}">
+         			 <c:COH_CampusPlan_ShuttleFrequency/>
+                </aura:if>
+    	        <aura:if isTrue="{!v.StackedEmployee}">
+            		 <c:COH_CampusPlan_StackedEmployee/>
+                </aura:if>
+                <aura:if isTrue="{!v.NewApproach}">
+                <c:COH_CampusPlan_NewApproach/>
+                </aura:if> 
+               <aura:if isTrue="{!v.ShuttleSchedule}">
+         			 <c:COH_CampusPlan_ShuttleSchedule/>
+                </aura:if>
+    	        <aura:if isTrue="{!v.EmployeeDisc}">
+            		 <c:COH_CampusPlan_EmployeeDiscounts/>
+                </aura:if>
+                <aura:if isTrue="{!v.openDuarteBuildings}">
+                    <c:COH_CampusPlan_DuarteBuilding/>
+               </aura:if>
+                <aura:if isTrue="{!v.profile1}">
+                   <c:COH_CampusPlan_MedicalOfficeProfile openDuarteBuildings="{!v.openDuarteBuildings2}" MedicalOffice="{!v.MedicalOffice}" aboutMedical="{!v.aboutMedical}" aboutMOB="{!v.aboutMOB}"/>
+                </aura:if>
+                <aura:if isTrue="{!v.profile2}">
+                   <c:COH_CampusPlan_RadiologyImagingCenterProfile openDuarteBuildings="{!v.openDuarteBuildings2}" RadiologyImagingCenter="{!v.RadiologyImagingCenter}" aboutRIC="{!v.aboutRIC}" aboutRICImpact="{!v.aboutRICImpact}"/>
+                </aura:if>
+                <aura:if isTrue="{!v.profile3}">
+                   <c:COH_CampusPlan_NewHopeVillageProfile/>
+                </aura:if>
+                <aura:if isTrue="{!v.profile4}">
+                   <c:COH_CampusPlan_MainContainerDuarteBuilding/>
+                </aura:if>
+                <aura:if isTrue="{!v.profile5}">
+                  <c:COH_CampusPlan_PatientParkingStructureProfile/>
+                   </aura:if> -->
+            </div>
+   <aura:if isTrue="{!v.openExternalLink}">
+   		<div class="displaySite" >
+           <iframe class="browser1" src="{!v.ExternalLink}"
+            width="100%"
+            height="800px"
+            sandbox="allow-same-origin allow-scripts allow-forms allow-pointer-lock allow-popups allow-top-navigation"
+            scrolling="auto"/>
+        </div>      
+   </aura:if>
+   <aura:if isTrue="{!v.openStory}">
+        
+   		<div class="storycontainer" >
+            <p class="TitleHeader"><ui:outputText value="{!v.ContentStory.Article_Title__c}"/></p><br/>
+        	<p>
+    	    <ui:outputRichText value="{!v.ContentStory.Image__c}"/>
+            </p>
+        </div>
+     </aura:if>
+            
+    <!-- 28.04.2020 -->        
+    <!--aura:if isTrue="{!v.openNewsStory}">
+       <div class="banner-container">
+   		<div class="slds-grid slds-wrap" >
+            
+             <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12" >
+                    <div class="banner-image">
+                     <img src="{!v.newsrec.PhotoURL__c}"/>
+                    </div>      
+            </div>  
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12">
+                <div class="banner-content">
+                    <aura:if isTrue="{!v.newsrec.Location__c}">
+                     <h4 class="label-header">
+                        
+                          <aura:if isTrue="{!v.newsrec.Location__c == 'Orange County'}">
+                            <label class="orange-bg">
+                                   <ui:outputText value="{!v.newsrec.Location__c}"/>
+                            </label>
+                               <aura:set attribute="else">
+                                  <label class="blue-bg">
+                                       <ui:outputText value="{!v.newsrec.Location__c}"/>
+                                </label>
+                                </aura:set>
+                        </aura:if>
+                     </h4>
+                     </aura:if>
+                     <h2>{!v.newsrec.Title__c}</h2>
+                    <h2>{!v.newsrec.Sub_Title__c}</h2>
+                     <p class="banner-p"><aura:unescapedHtml value="{!v.newsrec.News_Content_Next_to_Image__c}" /></p>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="profile-content">
+            <aura:unescapedHtml value="{!v.newsrec.Detailed_Description__c}" />
+        </div>
+     </aura:if-->
+<!-- 28.04.2020 -->  
+            
+     <aura:if isTrue="{!v.openTimelineStory}">
+       <div class="banner-container">
+   		<div class="slds-grid slds-wrap" >
+            
+             <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12" >
+                    <div class="banner-image">
+                     <aura:unescapedHtml value="{!v.timelinerec.Timeline_Image__c}" />
+                    </div>      
+            </div>  
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12">
+                <div class="banner-content">                    
+                     <h2>{!v.timelinerec.Title__c}</h2>
+                     <p>{!v.timelinerec.Date_Text__c}</p>
+                   <!-- <p>{!v.timelinerec.Date_of_Event__c}</p> -->
+                    </div>
+            </div>
+        </div>
+        </div>
+        <div class="profile-content">
+            <aura:unescapedHtml value="{!v.timelinerec.Description__c}" />
+        </div>
+     </aura:if>
+    <br/>
+     <div class="footer"><img src="{!$Resource.ExpandingHopeSiteFooter}" class="fooImage"/></div>          
+      
+   <!-- <button onclick="{!c.topFunction}" id="myBtn" title="Go to top">Top</button> -->
+    <!-- <div onclick="{!c.activateChatbot}" class="chatbot" title="">
+        <p>I'm Hope Chatbot</p>
+    </div> -->
+    <aura:if isTrue="{!v.isModalOpen}">
+    <div class="slds-m-around_medium chatbot-container">
+       
+          <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box Header Starts here-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        
+                    </header>
+                   <div class="slds-modal__content slds-p-around_medium" >
+                   <p>  
+                   <iframe class="chatbot-content" src="{!v.chatbotURL}" sandbox="allow-same-origin allow-scripts allow-forms allow-pointer-lock allow-popups allow-top-navigation"
+                      scrolling="auto"/>
+                   </p>
+                   </div>  
+                </div>
+            </section>
+            
+        </div></aura:if>     
+            </div> <!-- end of banner-body-content-area -->
+   </div>        
+  </div>
+</aura:component>

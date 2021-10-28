@@ -1,0 +1,12 @@
+.THIS.vertical {
+    width:100%;
+}
+.THIS.liSeprator{
+    border-bottom: 1px solid #CCC;
+    padding: .5em 0;width:100%;
+}
+
+.THIS .slds-context-bar__label-action:hover{
+      background-color: #fea600;
+
+}

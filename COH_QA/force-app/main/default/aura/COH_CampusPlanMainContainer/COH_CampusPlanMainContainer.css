@@ -1,0 +1,1098 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
+.THIS * {
+    box-sizing: border-box;
+    font-family: calibri, sans-serif;
+    color: #333333;
+    font-size: 12pt;
+}
+.THIS h2{
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+.THIS h3{
+    font-size: 12pt;
+    font-weight: 900;
+}
+.THIS p span, .THIS p b{
+    font-size: 12pt !important;
+    font-family: calibri, sans-serif !important;
+    color: #333333 !important;
+}
+.THIS p br{
+    display: none !important;
+}
+.THIS .item p{
+    padding: 0 15px 0 25px;
+}
+.THIS .item .uiOutputRichText ul{
+    margin-left: 45px;
+    list-style-type: disc !important;
+}
+.THIS .banner-content .label-header ~ .uiOutputText{
+    color: #0075bc;
+    line-height: normal;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    font-weight: 900;
+    display: block;
+}
+/*
+.THIS html,
+.THIS body
+{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}*/
+/*.THIS body {
+    border-style: groove;
+}*/
+.THIS .main-container {
+    width: 100%;
+    height: 100%;
+}
+.THIS .main-header-area{
+   	position: absolute;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+    height: 133px;
+}
+.THIS .banner-body-content-area{
+    position: absolute;
+    width: 100%;
+    top: 134px;
+    bottom: 0px;
+    left: 0;
+    overflow-y: auto;
+}
+.THIS .main-header {
+        height: 134px;
+    	background: #d2eefa url('/resource/ExpandingHope_HeaderBG') center center no-repeat;
+        background-size: cover;
+    	width: 100%;
+    	clear: both;
+    	position: relative;
+    	
+    }
+.THIS .logo-image{
+     background: url(/resource/ExpandingHopeLogoMain) center center no-repeat;
+    background-size: cover;
+    display: block;
+    cursor:pointer;   
+    height: 100px;
+    width: 100%;
+}
+.THIS .header-search-area {
+     height: 50px;
+    width: 50px;
+	position: absolute;
+	right: 20px;
+	top: 1rem;    
+}
+.THIS .header-search-area a{    
+     background: url(/resource/SearchIcon) right center no-repeat;
+    width: 50px;
+    height: 50px;
+    display: block;
+    cursor:pointer; 
+}
+.THIS .main-header > .slds-grid{
+    height: 134px;
+    align-items: center;
+}
+.THIS .logo-image-wrap{
+    padding: 0 0 0 15px;
+    max-width: 100%;
+    cursor: pointer;    
+}
+.THIS .logo-image-wrap img{
+    max-width: 320px;
+}
+
+/* ADDED BY NICK - START */
+
+/*.THIS .logo-image-wrap {
+    padding-left: 50px!important;
+}
+
+.THIS .header-search-area {
+    padding-right: 75px!important;
+
+}
+*/
+
+.THIS .latest-news h1 {
+    padding-left: 50px!important;
+}
+
+/*.THIS .home-banner-content {
+    padding-left: 5.0em!important;
+    padding-right: 5.0em!important;
+}
+*/
+.THIS .content-section h1 {
+    margin: 0;
+    padding: 15px 15px;
+    padding-left: 50px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #333333;
+}
+
+.THIS .main-header-area {
+    height: 75px!important;
+}
+
+.THIS .main-header {
+    height: 75px!important;
+}
+
+.THIS .main-header>.slds-grid {
+    height: 75px!important;
+}
+
+.THIS .banner-body-content-area {
+    top: 75px!important;
+}
+
+
+
+/*ADDED BY NICK - END */
+
+
+
+.THIS .content-area{
+    margin-top: 0;
+    background: #f1faff;    
+}
+.THIS .news-item {
+   width: 97%;
+   color: #337ab7;
+   margin-bottom: 15px;
+    cursor: pointer;
+   text-decoration: none;
+   display: block;
+}
+.THIS .news-item-image{
+    width: 100%;
+    box-shadow: 0 0 4px 1px #cacaca;
+    margin: 5px 0 0 0;
+}
+.THIS .news-item-image img{
+    width: 100%;
+    max-height: 168px;
+    min-height: 126px;
+    object-fit: cover;
+}
+.THIS .news-title{
+    margin:20px 0 10px 0;
+    padding: 0;
+    display: block;
+    color: #337ab7;
+}
+.THIS .news-item:hover h3{
+    color: #23527c;
+    text-decoration: underline;
+}
+.THIS .images-gallery{
+    padding: 10px 15px;
+    margin: 0;
+}
+.THIS .images-gallery img{
+    width:100%;
+    cursor:pointer; 
+    height: 160px;
+}
+.THIS .content-section{
+    margin: 20px 30px;
+    padding: 0;
+    /*border: 1px solid rgb(226, 224, 224);*/
+}
+.THIS .content-section h1{
+    margin: 0;
+    padding: 5px 15px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #333333;
+   /* border-bottom: 1px solid rgb(226, 224, 224);*/
+}
+/*.THIS .time-line{
+    margin: 20px auto;
+    padding: 0 15px;
+}
+.THIS .time-line h1{
+    margin: 20px 0 10px 0;
+    padding: 0;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #333333;
+}
+*/
+.THIS .content-section .time-line-image{
+    width: 100%;
+}
+.THIS .content-section .time-line-image img{
+    width: 100%;
+}
+.THIS .location-p{
+    margin: 40px 0 0 0;
+    text-align: left;
+    font-size:18px;
+    max-width: 250px;
+}
+.THIS .location-p span{    
+    
+    background-color: #4682B4;
+    display: inline-block;
+    padding: 6px 20px;
+    color: #ffffff;
+    margin-left: 5%;
+    text-transform: uppercase;
+}
+.THIS .article-h1{
+    text-align: left;
+    font-weight: 500;
+    font-size: 50px;
+    padding-left: 5%;
+    color:#0075bc;
+    line-height: normal;
+    margin-bottom: 1em;
+    margin-top: 12px;
+}
+.THIS .article-h2{
+    text-align: left;
+    font-weight: 500;
+    font-size: 40x;
+    padding-left: 5%;
+    color:#0075bc;
+    line-height: normal;
+    margin-bottom: 1em;
+    margin-top: 12px;
+}
+.THIS .location-p.resource-bg span{
+    display:none;
+}
+.THIS .location-p.orange-bg span{
+    background: #f36522;
+}
+.THIS .article-p{
+    text-align: left;
+    font-weight: 400;
+    font-size: 20px;
+    padding-left: 5%;
+    color:#0075bc;
+}
+.THIS .orange-county-div{
+    padding: 0 5%;
+}
+.THIS .orange-county-div .article-h1{
+    padding-left: 0;
+}
+.THIS .orange-county-div .article-p{
+    padding-left: 0;
+    color: #333333;
+}
+.THIS .orange-county-link{
+    margin-top: 25px;
+}
+.THIS .orange-county-link a{    
+	color: #337ab7;
+	font-size: 24px;
+    text-transform: upperecase;
+    font-weight: bold;
+}
+.THIS .orange-county-link a:hover{
+    color: #23527c;
+    text-decoration: underline;    
+}
+
+.THIS .profile-page{
+    /*margin: 148px 0 0 0;*/
+    margin: 0;
+    padding: 0;
+    clear: both;    
+}
+
+.THIS #searchDiv{
+    float:none;
+    margin-top: 48px;
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+}
+.THIS .searchBox{
+    width: 30%;
+}
+/*.THIS .DCMENU,.THIS .RHMENU,.THIS .RGMENU,.THIS .OCMENU{
+    display: inline;
+}
+*/
+.THIS .cCOH_CampusPlanHeroArea{
+    background: #f1faff;
+    padding-bottom: 0;
+}
+/*.THIS ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #FFFFFF;
+  width: inherit;
+}
+
+.THIS li {
+  float: left;
+  width:33%;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+*/
+.THIS .Boarder{
+    border-width:1px;  
+    border-top-style:solid;
+}
+
+.THIS .articlecontainer{
+    height:auto;
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+    /*margin-top: 90px;
+    margin-left: 40px;*/
+    margin-top: 6.58vw;
+    margin-left: 2.92vw;
+}
+.THIS .articlebox{
+    width: 100%;
+    min-height: 260px;
+    box-sizing: border-box;
+}
+/*New Menu */
+.THIS .slds-dropdown__item {
+    width: 100%;
+    padding-left: 30px;
+}
+.THIS .slds-dropdown-trigger{
+    padding-left: 30px;
+    display: table-cell;
+}
+.THIS .storycontainer{
+            width:100%;
+            height:100%;
+            padding-left: 15%;
+            /*background-color: LemonChiffon;*/
+            padding-right: 8%;
+            padding-top: 1%;
+}
+.THIS .news-storycontainer{
+            width:100%;
+            height:100%;
+            background-color: #f1faff;
+}
+.THIS .news-story{
+   padding-top: 36px;
+   height:705px;
+    
+}
+.THIS .title-container{
+    padding-left: 68px;
+    margin-top: 68px;
+    padding-right: 20px;
+}
+.THIS .news-image{
+    height:705px;
+    width:800px;
+    border-style: groove;
+    
+}
+.THIS .news-titleHeader{
+    margin-top: 70px;
+    color: #0075bc;
+    font-size: 45px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.THIS .news-subtitle{
+    margin-top: 94px;
+    color: #0075bc;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.THIS .news-richtext{
+    margin-top: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+.THIS .simage{
+    width: 20%;
+    height: 30%;
+    
+}
+.THIS .TitleHeader{
+    
+    color: #0075bc;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.THIS .profile-content{
+    /*padding: 3.66vw 8.78vw;*/
+    clear: both;
+    padding: 20px;
+    margin: 0 auto;
+    width: 85vw;
+}
+.THIS .profile-content h2, .THIS h2{ 
+    color: #0075bc;
+}
+.THIS .profile-content p, .THIS p{
+    line-height: normal;
+    margin-bottom: 15px;
+    color: #333333;
+}
+.THIS .profile-content p span{
+    font-size: 12pt !important;
+}
+.THIS .profile-content p br{
+    display: none;
+}
+/*saidaiah added below*/
+.THIS .orangecounty-timeline{
+    margin-top: 30px;
+    width:100%;
+   
+}
+.THIS .octimeline-header{
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: 117px;
+}
+.THIS .octimeline-image{
+     margin-top: 45px;
+     margin-bottom: -37px;
+}
+.THIS #milestone1,.THIS #milestone2,.THIS #milestone3,.THIS #milestone4,.THIS #milestone5,.THIS #milestone6,.THIS #milestone7,.THIS #milestone8{
+    cursor:pointer;
+}
+/*up to here*/
+.THIS .label-header{
+    margin: 0 0 20px 0;
+    padding: 0;
+    clear: both;
+    text-transform: uppercase;
+}
+.THIS .label-header label{    
+    display: inline-block;
+    padding: 6px 20px;
+    color: #ffffff;
+}
+.THIS .label-header span{   
+    color: #ffffff;
+}
+.THIS .blue-bg{
+    background-color: #4682b4;
+}
+.THIS .orange-bg{
+    background-color: #f36522;
+}
+.THIS .square-sec-li{
+    display: none;
+}
+.THIS .oc-timeline-li{
+    display: none;
+}
+.THIS .banner-container{
+    margin: 0;
+    background-color: #f1faff;
+    position: relative;
+    width: 100%;
+    /*margin-top: 133px;*/
+}
+/*.THIS .cCOH_CampusPlanHeroArea .banner-container{
+    margin-top: 184px;    
+}*/
+
+.THIS .banner-image {
+  position: relative;
+}
+.THIS .banner-image img{    
+    /*height:112.8vh;*/
+    width: 100%;
+    max-width: 100%;    
+    border-style: groove;
+    cursor: pointer;
+    /*object-fit: cover;*/
+    object-position: left;
+}
+.THIS .banner-content{
+   /*padding: 5vw 4vw 0 4vw;*/
+    padding: 20px;
+}
+.THIS .banner-content h1{    
+    color: #0075bc;
+    font-size: 40px;
+    font-weight: 400;
+    margin-bottom: 60px;
+}
+.THIS .banner-content h2{
+    color: #0075bc;
+    line-height: normal;
+    margin-bottom: 15px;
+}
+.THIS .banner-content h3{
+    color: #0075bc;
+    margin-bottom: 50px;
+}
+.THIS .banner-content h5{
+	margin: 15px 0 0 0;
+	padding: 0;
+	font-weight: normal;
+	text-align: left;
+    line-height: normal;
+}
+
+.THIS .banner-text-big{
+    padding: 5px 0;
+    margin: 0;
+    font-size: 1.3rem;
+    color: rgba(0, 116, 189, 0.8);
+    font-weight: normal;
+}
+.THIS .banner-ul, .THIS .banner-content ul{
+    margin: 8px 15px 8px 25px;
+    padding: 0;
+    list-style-type: disc;
+}
+.THIS .banner-ul li, .THIS .banner-content ul li{    
+    margin: 4px 0;
+    padding: 0;
+    text-align: left;
+    font-weight: normal;
+}
+.THIS .banner-p,  .THIS .banner-content p{
+    text-align: left;
+    margin-bottom: 1rem;
+}
+.THIS .banner-link-area {
+    text-align: left;
+}
+.THIS .banner-content a{
+	color: #337ab7;
+    font-weight: normal;
+	text-transform: initial;
+    font-size: 1rem;
+}
+.THIS .banner-link-area a{
+    font-weight: bold;
+	text-transform: uppercase;
+}
+.THIS .banner-link-area .double-right-entity{
+    font-size: 1.2rem;
+	color: #337ab7;
+}
+.THIS .banner-link-area a:hover,  .THIS .banner-content a:hover{
+    text-decoration: underline;
+}
+/*.THIS .banner-p1-blue{
+    padding: 5px 0;
+    margin: 0;
+    font-size: 1.3rem;
+    color: rgba(0, 116, 189, 0.8);
+    font-weight: normal;
+    text-align: left;
+}*/
+.THIS .content-ul, .THIS .profile-content ul{
+    padding: 5px 5px 5px 25px;
+    margin: 0;
+    clear: both;
+    list-style-type: disc;
+}
+.THIS .content-ul.list-circle{
+    list-style-type: circle;
+}
+.THIS .content-ul li, .THIS .profile-content ul li{
+	margin: 4px 0;
+    padding: 0;
+}
+.THIS .content-ul li a,  .THIS .profile-content ul li a{
+    text-decoration: underline;
+}
+.THIS .profile-content ul.slds-accordion{
+    list-style-type: none;
+    padding: 0;
+}
+.THIS .profile-content ul.slds-accordion ul{
+    padding: 0;
+}
+.THIS .profile-content ul.slds-accordion li{
+    margin: 0;
+}
+.THIS .profile-content ul.slds-accordion .slds-accordion__section ul{
+    padding: 5px 5px 5px 25px;
+}
+.THIS .profile-content ul.slds-accordion .slds-accordion__section ul li{
+    margin: 4px 0;
+}
+.THIS .duarte-profiles{
+    max-width: 75vw;
+    margin: 10px auto;
+}
+.THIS .duarte-profiles ul li{
+    padding: 0 5px;
+    margin: 5px 0;
+}
+.THIS .duarte-profiles img{    
+    cursor:pointer;   
+}
+/* Telecommute Overview page css styles starts here */
+.THIS .to-container{
+    margin: 20px 0 35px 80px;
+}
+.THIS .to-header{
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: solid black;
+    margin-top: 20px;
+    display: inline;
+}
+.THIS .to-question{
+     font-size: 16px;
+     font-weight: bold;
+     margin-top: 20px;
+     font-family: inherit;
+}
+.THIS .to-container ul li{
+    margin-left: 45px;
+    list-style: initial;
+    font-size: 15px;
+    margin-top: 10px;
+}
+.THIS .to-answertext{
+    font-size: 15px;
+    margin-top: 15px;
+}
+/*end*/
+
+.THIS .footer{
+    height: 225px;
+    background-color: #2d73bb	;
+}
+.THIS .fooImage{
+    height: 60px;
+    width: 120px;
+    margin-top: 56px;
+    margin-left: 40px;
+}
+.THIS .backbutton{
+    font-size:1rem;
+    background-color: #2d73bb;
+    color: #ffffff;
+    margin: 5px 2px 5px 40px;
+    padding: 5px 10px;
+    display: inline-block;
+    cursor: pointer;
+}
+.THIS #myBtn {
+  display: none; /* Hidden by default */
+  position: fixed; /* Fixed/sticky position */
+  bottom: 20px; /* Place the button at the bottom of the page */
+  right: 30px; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border: none; /* Remove borders */
+  outline: none; /* Remove outline */
+  background: #333333; /* Set a background color */
+  color: white; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 15px; /* Some padding */
+  border-radius: 10px; /* Rounded corners */
+  font-size: 18px; /* Increase font size */
+}
+
+.THIS #myBtn:hover {
+  background: #555; /* Add a dark-grey background on hover */
+}
+.THIS .chatbot {
+    
+  display: flex;
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+    z-index: 99;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 10px;
+    font-size: 13px;
+    width: 98px;
+    height: 98px;
+    align-items: center;
+    justify-content: center;
+    background: url('/resource/ChatbotIcon') 0 0 no-repeat;
+    background-size: cover;
+}
+.THIS .chatbot p{
+    padding: 5px 10px;
+    color: #ffffff;
+    word-break: break-word;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.THIS .chatbot-content{
+    width: 100%;
+    height: 400px;
+}
+.THIS .slds-modal__container{
+    z-index: 99999;
+}
+.THIS .slds-modal__close {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: -12px;
+    right: -10px;
+}
+.THIS .slds-button__icon.slds-button_icon-inverse{
+    width: 25px;
+    height: 25px;
+    background: #fff;
+    border-radius: 50%;
+    padding: 5px;
+    box-shadow: 0 0 5px rgba(0, 117, 188,0.4);
+}
+.THIS .liveAgentState #chatTranscript, .THIS .liveAgentStateStatusMessage #chatTranscript, .THIS .liveAgentStateEnded #chatTranscript {
+    overflow-y: scroll;  
+}
+
+.THIS .header-menu{
+    margin-left: 0;
+    flex: 1; 
+}
+.THIS .header-menu>label{
+    display: none;
+}
+.THIS .header-menu>input{
+    display: none;
+}
+.THIS .header-menu-main-ul{
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    position: absolute;
+    padding: 0;
+    background: transparent;
+    bottom: 20px;
+}
+.THIS .header-menu-main-ul ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.THIS .header-menu-main-ul ul li{
+    margin: 0;
+}
+.THIS .header-menu-main-ul>li{
+    margin: 0 8px;
+    padding: 0;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    width: auto;    
+    color: #231f20;    
+    position: relative;
+}
+.THIS .header-menu-main-ul .rivergrade-main-li{
+    display: none;
+}
+.THIS .header-menu-main-ul>li>div>span{
+    font-weight: bold;
+    font-size: 15px;
+    color: #231f20;
+    text-transform: uppercase;
+}
+.THIS .header-menu-main-ul>li>div{
+    padding: 5px 25px 5px 8px;
+    display: block;
+}
+.THIS .header-menu-main-ul>li>label{
+    font-size: 1.6rem;
+    position: absolute;
+    top: 6px;
+    right: 5px;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0;
+}
+.THIS .header-menu-main-ul li input{
+ 	display: none;   
+}
+
+    
+.THIS .header-menu-main-ul > li:hover>div{
+    background: rgba(255,255,255,0.4);
+    color: #0075bc;
+}
+/* first level dropdown styles starts here */
+.THIS .header-menu-main-ul>li>ul{    
+    background: #ffffff;
+    display: none;
+    list-style-type: none;
+}
+.THIS .header-menu-main-ul>li:hover>ul{
+    display: block;
+	margin: 0; 
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 240px;
+    box-shadow: 0 0 6px rgb(84, 148, 202);
+    border: 1px solid rgb(179, 218, 234);
+}
+.THIS .header-menu-main-ul>li>ul>li{
+    font-weight: 400;
+    padding: 5px 7px;
+    font-size: 14px;
+    position: relative;
+    overflow: visible;
+    background: linear-gradient(#effbff, #d6f3ff);
+    border-bottom: 1px solid rgb(179, 218, 234);
+}
+.THIS .header-menu-main-ul>li>ul>li:hover{
+    background: #4682b4;
+    color: #ffffff;
+    font-weight: bold;
+}
+.THIS .header-menu-main-ul>li>ul>li>label{
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    content:'\276F';
+    font-size: 1.4em;
+}
+/* Second level Dropdown menu starts here */
+.THIS .header-menu-main-ul>li>ul>li>ul{
+    display: none;
+    width: 250px;
+}
+.THIS .header-menu-main-ul>li>ul>li:hover>ul{
+    display: block;
+	margin: 0; 
+    position: absolute;
+    top: 0;
+    right: 100%;
+    min-width: 110px;
+    max-width: 250px;
+    background-color: #ffffff;
+    box-shadow: 0 0 6px rgb(84, 148, 202);
+    border: 1px solid rgb(179, 218, 234);
+}
+.THIS .header-menu-main-ul>li>ul>li>ul>li{    
+    font-weight: 400;
+    padding: 5px 7px;
+    font-size: 15px;
+    background: linear-gradient(#effbff, #d6f3ff);
+    border-bottom: 1px solid rgb(179, 218, 234);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.THIS .header-menu-main-ul>li>ul>li>ul>li:hover{
+    background: #4682b4;
+    color: #ffffff;
+    font-weight: bold;
+}    
+    
+.THIS .autocomplete {
+  position: relative;
+  display: inline-block;
+  width: 300px;
+}
+
+.THIS .search-input {
+  border: 1px solid #f0f0f0;
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.THIS .search-submit  {
+  background-color: DodgerBlue;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid transparent;
+}
+
+.THIS .autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.THIS .autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+
+/*when hovering an item:*/
+.THIS .autocomplete-items div:hover {
+  background-color: #e9e9e9; 
+}
+
+/*when navigating through the items using the arrow keys:*/
+.THIS .autocomplete-active {
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
+}
+
+
+/* Mobile screen styles */
+
+@media screen and (max-width: 375px){
+    .THIS .profile-content p{
+        font-size: 5.5vw;
+    }
+}
+@media screen and (max-width: 540px){
+    .THIS .logo-image-wrap{
+        max-width: 80%;
+    }
+}
+@media screen and (max-width: 768px){
+    .THIS *{
+        font-size: 1.3rem;
+    }
+    .THIS h2{
+        font-size: 1.4rem;
+    }
+    .THIS h3{
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+    
+.THIS .logo-image-wrap img{
+    max-width: 250px;
+    }
+.THIS .header-search-area {
+        right: 69px;
+    }
+  /* Show Hamburger */
+  .THIS .header-menu>label {
+    display: inline-block;
+    color: #333333;
+    font-size: 2.2em;
+    padding: 0;
+    height: 45px;
+    position: absolute;
+    right: 0;
+    top: 10px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+  }
+  .THIS .header-menu>label:hover {
+        color: #555555;
+    }
+    .THIS .header-menu-main-ul{
+        display: none;
+    }
+  .THIS .header-menu>input:checked ~ ul {
+    	display: block !important;
+        position: absolute;
+        right: 0;
+        top: 92px;
+        width: 100%;
+        z-index: 99999;
+  }
+    
+  /* Break down menu items into vertical */
+  .THIS .header-menu-main-ul > li {
+    display: block;
+    background: #d2eefa;
+	border: 1px solid rgba(210, 207, 207, 1); 
+    padding:0;
+    margin: 0;
+  }
+  .THIS .header-menu-main-ul > li > div{
+    padding: 10px 15px;
+   }
+.THIS .header-menu-main-ul>li:hover{
+        background: #d2eefa;
+    }
+.THIS .header-menu-main-ul li:hover ul{
+        display: none;        
+    }
+
+    .THIS .header-menu-main-ul>li>label{
+        font-size: 2em;
+        top: 8px;
+        right: 15px;
+    }
+    .THIS .header-menu-main-ul>li>input:checked ~ ul{
+        display: block;
+        margin: 0;  
+        position: initial;
+        left: 0;
+        top: 0;
+        z-index: 99999;
+        width: 100%;
+        padding: 2px 0;
+    }
+    .THIS .header-menu-main-ul>li>ul>li{        
+        padding: 4px 10px;
+        font-size: 18px;
+    }
+.THIS .header-menu-main-ul>li>ul>li:hover>ul{ 
+        display: none;
+        position: initial;
+        min-width: initial;
+        max-width: initial;
+        width: 100%;        
+    }
+	
+.THIS .header-menu-main-ul>li>ul>li>input:checked~ul{
+    	background-color: #ffffff;
+        display: block;
+        margin: 0;  
+        position: initial;
+        left: 0;
+        top: 0;
+        z-index: 99999;
+        width: 100%;
+        padding: 2px 0;
+}
+
+    
+    /*.THIS .banner-content{
+        padding: 8vw 4.39vw 5vw 4.39vw;
+    }*/
+	.THIS .banner-content h1{
+        font-size: 11vw;
+    }
+    .THIS .banner-content h2{
+        font-size: 1.4rem;
+    }    
+    .THIS .profile-content{
+        width: 100%;
+    }
+    
+}
