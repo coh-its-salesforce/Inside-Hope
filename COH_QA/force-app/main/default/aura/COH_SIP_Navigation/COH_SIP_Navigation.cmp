@@ -1,0 +1,62 @@
+<aura:component >
+    <aura:attribute name="rec" type="Object"/>
+    <aura:attribute name="screenType" type="String" default=""/>
+    <aura:registerEvent name="COH_CloseNavigationBar" type="c:COH_CloseNavigationBar"/>
+    <aura:handler event="c:COH_CloseNavigationBar" action="{!c.component2Event}"/>
+    <aura:if isTrue="{!v.screenType eq 'DESKTOP'}">
+        <li aura:id="changeIt" class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click">
+            <a href="{!v.rec.ParentMenu.Menu_URL__c}" class="slds-context-bar__label-action" title="Menu Item">
+                <span class="slds-truncate" title="{!v.rec.ParentMenu.Desktop_Label__c }">{!v.rec.ParentMenu.Desktop_Label__c }</span>
+            </a>
+            <aura:if isTrue = "{!not(empty(v.rec.childMenus))}">
+                <div class="slds-context-bar__icon-action slds-p-left_none" >
+                    <div onfocusout="{!c.focusOut}">
+                        <lightning:buttonIcon alternativeText="View More" title="View More" size="xx-small" iconName="utility:down" onclick="{!c.openOrClose}"/>
+                    </div>
+                </div>
+                <div class="slds-dropdown slds-dropdown_right">
+                    <ul class="slds-dropdown__list" role="menu" style="max-height: 300px; overflow: auto">
+                        <aura:iteration items="{!v.rec.childMenus}" var ="innerec">
+                            <li class="slds-dropdown__item" role="presentation">
+                                <a href="{!innerec.Menu_URL__c}" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="{!innerec.Desktop_Label__c}">{!innerec.Desktop_Label__c}</span>
+                                </a>
+                            </li>
+                        </aura:iteration>
+                    </ul>
+                </div>
+            </aura:if>
+        </li>
+    </aura:if>
+    <aura:if isTrue="{!or(v.screenType eq 'PHONE',v.screenType eq 'TABLET')}">
+        <li aura:id="changeIt" class="slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click" style="border-bottom: 1px solid #CCC;padding: .5em 0;width:100%">
+            <lightning:layout multipleRows="true">
+                <lightning:layoutItem size="11">
+                    <a href="{!v.rec.ParentMenu.Menu_URL__c}" class="slds-context-bar__label-action" title="Menu Item">
+                        <span class="slds-truncate" title="{!v.rec.ParentMenu.Desktop_Label__c }"><b>{!v.rec.ParentMenu.Desktop_Label__c }</b></span>
+                    </a>
+                </lightning:layoutItem>
+                <lightning:layoutItem size="1" class="right-align">
+                    <aura:if isTrue = "{!not(empty(v.rec.childMenus))}">
+                        <div class="slds-context-bar__icon-action" >
+                            <div onfocusout="{!c.focusOut}">
+                                <lightning:buttonIcon alternativeText="View More" title="View More" size="x-small" iconName="utility:down" onclick="{!c.openOrClose}"/>
+                            </div>
+                        </div>
+                        <div class="slds-dropdown slds-dropdown_right">
+                            <ul class="slds-dropdown__list" role="menu" style="max-height: 300px; overflow: auto">
+                                <aura:iteration items="{!v.rec.childMenus}" var ="innerec">
+                                    <li class="slds-dropdown__item" role="presentation">
+                                        <a href="{!innerec.Menu_URL__c}" role="menuitem" tabindex="-1">
+                                            <span class="slds-truncate" title="{!innerec.Desktop_Label__c}"><b>{!innerec.Desktop_Label__c}</b></span>
+                                        </a>
+                                    </li>
+                                </aura:iteration>
+                            </ul>
+                        </div>
+                    </aura:if>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </li>
+    </aura:if>
+</aura:component>

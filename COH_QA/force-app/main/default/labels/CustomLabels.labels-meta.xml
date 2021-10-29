@@ -36,10 +36,52 @@
         <value>https://cityofhope--dxinsidhpe--c.visualforce.com/apex/COH_CampusPlanHeroAreaVFPage2</value>
     </labels>
     <labels>
+        <fullName>COH_SalesforceHome</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COH_SalesforceHome</shortDescription>
+        <value>https://cityofhope.lightning.force.com/lightning/n/BMCServiceDesk__Remedyforce_Self_Service</value>
+    </labels>
+    <labels>
+        <fullName>COH_Searchurl</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COH_Searchurl</shortDescription>
+        <value>https://cityofhope--dxinsidhpe--c.visualforce.com/apex/Search?keyword=</value>
+    </labels>
+    <labels>
+        <fullName>COH_TrumbaCalendar</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COH_TrumbaCalendar</shortDescription>
+        <value>https://dxinsidhpe-cityofhope.cs192.force.com/InsideHope/s/coh-calendar</value>
+    </labels>
+    <labels>
         <fullName>COH_TrumbaCalendarLogo</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>COH_TrumbaCalendarLogo</shortDescription>
         <value>https://cityofhope--dxinsidhpe--c.documentforce.com/servlet/servlet.ImageServer?id=0157d000000CjLt&amp;oid=00D7d0000077jY7&amp;lastMod=1634053640000</value>
+    </labels>
+    <labels>
+        <fullName>COH_ViewAllCalendar</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COH_ViewAllCalendar</shortDescription>
+        <value>https://www.trumba.com/calendars/city-of-hope-master-calendar</value>
+    </labels>
+    <labels>
+        <fullName>COH_userinfo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COH_userinfo</shortDescription>
+        <value>https://cityofhope--c.na118.visual.force.com/apex/UserProfile?uid=</value>
+    </labels>
+    <labels>
+        <fullName>COH_AddEvent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COH_AddEvent</shortDescription>
+        <value>https://cityofhope--dxinsidhpe--c.visualforce.com/apex/COH_SIP_Calendar_Add_Event</value>
     </labels>
 </CustomLabels>

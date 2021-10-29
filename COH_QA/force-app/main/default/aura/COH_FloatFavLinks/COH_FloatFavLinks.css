@@ -1,0 +1,49 @@
+.THIS.sidenav{
+  margin-top:160px;
+  width: 30px;
+  height: 150px;
+  background: #FFFFFF;
+  transition: all 0.8s;
+     z-index:20;
+}
+
+ 
+.THIS .slds-icon-action-edit{
+    background-color : #0a73ba!important;
+}
+/*.THIS.sidenav:hover{
+      width: 250px;
+    height: 196px;
+}*/
+
+ 
+
+.THIS.sidenavTest{
+      width: 400px;
+    height: 196px;
+    z-index:20;
+}
+
+.THIS.favoriteLink{
+ margin: 194px -160px 0px 0px;   
+}
+
+.THIS.trimText {
+  white-space: nowrap; 
+  width: 50px; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  border: 1px solid #000000;
+}
+
+ 
+
+.THIS.float-content{
+    background-color:white;
+    width:auto;
+    height:inherit;
+    position:absolute;
+}
+.THIS.wrapper {
+  position: absolute;
+}

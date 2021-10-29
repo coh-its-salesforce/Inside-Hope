@@ -1,0 +1,48 @@
+<aura:component controller="IHope_MyLinks_Controller" 
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" >
+    <aura:attribute name="mylinkLst" type="My_News__c[]"/>
+    
+    <div class="sidenav" style="position: fixed; top:50% ;right:0px !important" aura:id="linkObj"> 
+        <div style="display:inline-block;">
+            <img src="{!$Resource.My_links}" onclick="{!c.toggleClass}"/>            
+            <div class="slds-col slds-size_12-of-12" style="position: absolute; top:0px; left: 42px;">
+                <table class="slds-table slds-table_bordered slds-no-row-hover slds-table_cell-buffer" >
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col">
+                                 <div class="module">
+                                    <div class="slds-align_absolute-center" >               
+                                        <h5 class="FourIconTit"> 
+                                            My Links<a href="https://cityofhope--dxinsidhpe--c.visualforce.com/apex/COH_SIRP_Favorite_News?editmode=1" >&nbsp;&nbsp;<lightning:icon size="xx-small" iconName="action:edit" alternativeText="Edit" title="edit" /></a></h5>                                                                                  
+                                    </div>
+                                      <p class="slds-align_absolute-center">Click on My links</p><!--Favourites-->
+                                </div>                                
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <ul class="slds-list_dotted slds-text-heading_small" style="height: 133px; overflow: auto"  >
+                                <aura:iteration items="{!v.mylinkLst}" var="fav"> <!-- iteration account record.-->
+                                    <!--<tr class="slds-hint-parent">
+                                			<td class="trimText">
+                                    			<div class="slds-truncate" title="My Favourite Link">
+                                        			<a href="{!fav.URL__c}">{!fav.Name}</a>
+                                        		</div>
+                                			</td>                                
+                            		</tr>-->    
+                                    <li><a href="{!fav.URL__c}">{!fav.Name}</a></li>
+                                </aura:iteration>
+                            </ul>
+                        </tr>
+                    </tbody>                                        
+                </table>
+                <div class="col-md-12 col-xs-12 col-sm-12 align-cntr">
+                <div class="ViewMore">
+                    <lightning:button variant="success" label="View all" title="Success" class="slds-align_absolute-center slds-button_stretch" onclick="{!c.handleClick }"/>
+                </div></div>
+            </div>            
+        </div>                     
+    </div>
+</aura:component>

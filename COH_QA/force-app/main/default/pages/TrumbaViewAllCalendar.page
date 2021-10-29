@@ -1,0 +1,12 @@
+<apex:page showHeader="false"  sidebar="false">
+    <div style="overflow: auto;height: 220px;">       
+                                        <script type="text/javascript" src="https://www.trumba.com/scripts/spuds.js"></script>
+                                        <script type="text/javascript">
+                                            $Trumba.addSpud({
+                                                webName: "city-of-hope-master-calendar",
+                                                spudType : "upcoming" ,
+                                                spudConfig : "SpudConfig2",
+                                                teaserBase : "https://www.trumba.com/calendars/city-of-hope-master-calendar" });
+                                        </script>
+                                    </div>    
+</apex:page>

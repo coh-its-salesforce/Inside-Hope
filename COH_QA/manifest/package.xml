@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>COH_CarouselController</members>
+		<!--<members>COH_CarouselController</members> -->
 		<members>IHope_CurrentUserInfo</members>
 		<members>iHopeBreakthroughArticles</members>
 		<members>iHopeBreakthroughArticlesTest</members>
+		<members>IHope_FavoriteLinks_Controller</members>
 		<name>ApexClass</name>
 	</types>
 	<types>
 		<members>COH_CampusPlanHeroAreaVFPage2</members>
+		<members>TrumbaViewAllCalendar</members>
 		<name>ApexPage</name>
 	</types>
 	<types>
 		<members>COHIntranetHomepageLayout</members>
 		<members>COH_CampusPlanMainContainer</members>
-		<members>COH_Carousel</members>
+	<!--	<members>COH_Carousel</members> -->
 		<members>COH_DetailPageLayout</members>
 		<members>COH_Header</members>
 		<members>COH_Navigation_Menu</members>
+		<members>COH_SIP_Navigation</members>
+		<members>COH_NavigationBarMenuEvent</members>
+		<members>COH_CloseNavigationBar</members>
+		<members>COH_FloatFavLinks</members>
+		<members>COH_LinksFloat</members>
+		<members>FooterComponent</members>
 		<name>AuraDefinitionBundle</name>
+		<members>IHope_MyLinks_Controller</members>
 	</types>
 	<types>
 		<members>COH_CityofBreakthroughs</members>
@@ -26,17 +35,20 @@
 		<members>COH_ExtendingHope</members>
 		<members>COH_HopeWorks</members>
 		<members>COH_OrangeCountry</members>
+		<members>COH_SalesforceHome</members>
+		<members>COH_Searchurl</members>
+		<members>COH_TrumbaCalendar</members>
 		<members>COH_TrumbaCalendarLogo</members>
+		<members>COH_ViewAllCalendar</members>
+		<members>COH_userinfo</members>
+		<members>COH_AddEvent</members>
 		<name>CustomLabel</name>
 	</types>
 	<types>
 		<members>InsideHope</members>
 		<name>CustomSite</name>
 	</types>
-	<types>
-		<members>InsideHope</members>
-		<name>Network</name>
-	</types>
+	
 	<types>
 		<members>Community_user</members>
 		<name>PermissionSet</name>
@@ -46,8 +58,9 @@
 		<name>RecordType</name>
 	</types>
 	<types>
-		<members>InsideHope1</members>
-		<name>SiteDotCom</name>
+		<members>My_links</members>
+		<name>StaticResource</name>
 	</types>
 	<version>51.0</version>
 </Package>
+

@@ -7,7 +7,7 @@ private class iHopeBreakthroughArticlesTest {
         recBreakthrough.BlogAuthor__c = 'Test Author';
         recBreakthrough.BodyContent__c = 'Test BodyContent';
         recBreakthrough.Link_to_Full_Article__c = 'http://yahoo.com';
-        //ecBreakthrough.TitleRTF__c = 'Test Title';
+        //recBreakthrough.TitleRTF__c = 'Test Title';
         recBreakthrough.Property__c = 'Test Property';
         recBreakthrough.MetaTitle__c = 'Test MetaTitle';
         recBreakthrough.MetaKeywords__c = 'Test MetaKeywords';
