@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ihope_Intranet_Announcement</fullName>
+    <active>true</active>
+    <label>Ihope Intranet Announcement</label>
+    <picklistValues>
+        <picklist>Alert_Scope__c</picklist>
+        <values>
+            <fullName>Duarte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Orange County</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Organization Wide</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rivergrade</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

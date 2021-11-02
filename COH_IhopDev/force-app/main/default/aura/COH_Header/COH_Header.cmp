@@ -52,13 +52,14 @@
                 <!--###### MODAL BOX BODY Part Start######-->
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="text-align: center;">
                     <lightning:button variant="brand" 
-                                      label="Edit"
-                                      title="Edit"
-                                      onclick="{! c.redirectToVfpage }"/>
-                    <lightning:button variant="brand" 
                                       label="View All"
                                       title="View All"
                                       onclick="{! c.redirectToCalendar }"/>
+                    <lightning:button variant="brand" 
+                                      label="Edit"
+                                      title="Edit"
+                                      onclick="{! c.redirectToVfpage }"/>
+                   
                 </div>
                 
             </div>

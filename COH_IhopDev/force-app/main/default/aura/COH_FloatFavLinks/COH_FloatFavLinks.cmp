@@ -1,0 +1,59 @@
+<aura:component controller="IHope_FavoriteLinks_Controller" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="favLst" type="My_Favourite__c[]"/>
+    
+    <div class="sidenav" style="position: fixed; top:20% ;right:0px !important" aura:id="favObj"> 
+        <div style="display:inline-block;">
+            <img src="{!$Resource.favoriteFloat}" onclick="{!c.toggleClass}" alt="User avatar"/>            
+            <div class="slds-col slds-size_12-of-12" style="position: absolute; top: 0px; left: 39px;">
+                <table class="slds-table slds-table_bordered slds-no-row-hover slds-table_cell-buffer" >
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col">
+                                <div class="col-md-12 col-xs-12 col-sm-12 align-cntr">
+                                <!--<div class="slds-align_absolute-center">
+                                    <img src="{!$Resource.favourite}"/>        
+                                </div>-->
+                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                 <div class="module">
+                                    <div class="slds-align_absolute-center">               
+                                        <h5 class="slds-align_absolute-center">Favorites &nbsp;&nbsp;<lightning:icon size="xx-small" iconName="action:edit" alternativeText="Edit" title="edit" />
+                                        </h5>
+                                        </div>
+                                         <p class="slds-align_absolute-center">Click on your favorite links</p>
+                                     </div>
+                                </div>
+                                </div>
+                                <!--<div class="slds-truncate" title="Link">Favorites</div>-->
+                            </th>
+                          </tr>
+                    </thead>
+                    <tbody>
+                        <tr>                     
+                        <ul class="slds-list_dotted slds-text-heading_small" style="height: 133px; overflow: auto"  >
+                        	<aura:iteration items="{!v.favLst}" var="fav"> <!-- iteration account record.-->
+                           <!-- <tr class="slds-hint-parent">
+                                <td class="trimText">
+                                    <div class="slds-truncate" title="My Favourite Link">
+                                        <ul>
+                                            <a href="{!fav.Master_Favorite_Link__r.Link__c}">{!fav.Name}</a>
+                                        </ul>
+                                    </div>
+                                </td>                                
+                            </tr>-->                             
+                                <li><a href="{!fav.Master_Favorite_Link__r.Link__c}">{!fav.Name}</a></li>     
+                                
+                            </aura:iteration>
+                            </ul>                           
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="col-md-12 col-xs-12 col-sm-12 align-cntr">
+                    <div class="ViewMore" >
+                        <lightning:button variant="success" label="View all" title="Success" class="slds-align_absolute-center slds-button_stretch" onclick="{!c.handleClick }"/>
+                    </div></div>
+            </div>            
+        </div>        
+        <!-- div aura:id="linksPallet" style=" width:100%; top:20px ;right: 0px; !important; display:inline-block;">                          
+        </div -->        
+    </div>
+</aura:component>

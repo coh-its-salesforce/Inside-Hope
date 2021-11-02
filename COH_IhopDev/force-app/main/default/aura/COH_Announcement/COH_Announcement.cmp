@@ -1,0 +1,30 @@
+<aura:component access="global" implements="forceCommunity:availableForAllPageTypes" controller="IHope_CurrentUserInfo">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="intervalId" type="Integer" default="0"/>
+    <aura:attribute name = "Announcement" type ="string"/>    
+    <aura:attribute name="Duration" type="Integer" />
+    <aura:attribute name="showAnnouncement" type="boolean"  default="false"/>
+    
+    <aura:attribute name="isDesktop" type="Boolean" default="false"/>
+    <aura:attribute name="isMobile" type="Boolean" default="false"/>
+    <aura:attribute name="isTablet" type="Boolean" default="false"/>
+    
+    <aura:if isTrue="{!v.showAnnouncement}">
+    <div>
+        <div class="annmain">
+            <div class="announcement-heading"> Announcements 
+                <span>&#187;</span>              
+            </div>
+            
+            <div class="announcement-content" style="{!if(v.isMobile,'font-size:medium','')}">
+                <div id="parentDIV" style="overflow:hidden">
+                    <p style="position:relative;" id="tofloat">
+                        <p class="slds-p-around_x-small" style="color:white"><aura:unescapedHTML value="{!v.Announcement}"/></p>
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+        </aura:if>
+</aura:component>

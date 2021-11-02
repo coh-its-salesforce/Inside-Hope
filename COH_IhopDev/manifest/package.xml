@@ -3,35 +3,65 @@
 	<types>
 		<members>COH_CarouselController</members>
 		<members>IHope_CurrentUserInfo</members>
+		<members>IHope_FavoriteLinks_Controller</members>
+		<members>IHope_MyLinks_Controller</members>
 		<members>iHopeBreakthroughArticles</members>
 		<members>iHopeBreakthroughArticlesTest</members>
 		<name>ApexClass</name>
 	</types>
 	<types>
 		<members>COH_CampusPlanHeroAreaVFPage2</members>
+		<members>TrumbaViewAllCalendar</members>
 		<name>ApexPage</name>
 	</types>
 	<types>
 		<members>COHIntranetHomepageLayout</members>
+		<members>COH_Announcement</members>
 		<members>COH_CampusPlanMainContainer</members>
 		<members>COH_Carousel</members>
+		<members>COH_CloseNavigationBar</members>
 		<members>COH_DetailPageLayout</members>
+		<members>COH_FloatFavLinks</members>
+		<members>COH_HTMLEDITERVid</members>
 		<members>COH_Header</members>
+		<members>COH_LinksFloat</members>
+		<members>COH_NavigationBarMenuEvent</members>
 		<members>COH_Navigation_Menu</members>
+		<members>COH_SIP_Navigation</members>
+		<members>FooterComponent</members>
 		<name>AuraDefinitionBundle</name>
 	</types>
 	<types>
+		<members>COH_AddEvent</members>
 		<members>COH_CityofBreakthroughs</members>
 		<members>COH_CityofHopeLogo</members>
 		<members>COH_ExtendingHope</members>
 		<members>COH_HopeWorks</members>
 		<members>COH_OrangeCountry</members>
+		<members>COH_SalesforceHome</members>
+		<members>COH_Searchurl</members>
+		<members>COH_TrumbaCalendar</members>
 		<members>COH_TrumbaCalendarLogo</members>
+		<members>COH_ViewAllCalendar</members>
+		<members>COH_userinfo</members>
 		<name>CustomLabel</name>
+	</types>
+	<types>
+		<members>Carousel_Slides__c</members>
+		<name>CustomObject</name>
 	</types>
 	<types>
 		<members>InsideHope</members>
 		<name>CustomSite</name>
+	</types>
+	<types>
+		<members>Carousel__c-Inside Hope Carousel</members>
+		<name>Layout</name>
+	</types>
+	<types>
+		<members>iHopeBreakthroughArticleList</members>
+		<members>iHopeBreakthroughArticleTile</members>
+		<name>LightningComponentBundle</name>
 	</types>
 	<types>
 		<members>InsideHope</members>
@@ -42,8 +72,17 @@
 		<name>PermissionSet</name>
 	</types>
 	<types>
+		<members>Campus_Plan_Alert__c.Ihope_Intranet_Announcement</members>
+		<members>Carousel__c.Inside_Hope_Carousel</members>
+		<name>RecordType</name>
+	</types>
+	<types>
 		<members>InsideHope1</members>
 		<name>SiteDotCom</name>
+	</types>
+	<types>
+		<members>My_links</members>
+		<name>StaticResource</name>
 	</types>
 	<version>51.0</version>
 </Package>

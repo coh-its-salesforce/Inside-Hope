@@ -12,10 +12,10 @@
             if (state === "SUCCESS") {
                 // Alert the user with the value returned 
                 // from the server
-                console.log("From server: " , response.getReturnValue()[0].cloudx_cms__Carousel_Slides__r);
+                console.log("From server: " , response.getReturnValue()[0].Carousel_Slides__r);
                 var resp = response.getReturnValue();
                 if(resp.length>0)
-                cmp.set('v.carousellist',response.getReturnValue()[0].cloudx_cms__Carousel_Slides__r);
+                cmp.set('v.carousellist',response.getReturnValue()[0].Carousel_Slides__r);
 
                 // You would typically fire a event here to trigger 
                 // client-side notification that the server-side 
