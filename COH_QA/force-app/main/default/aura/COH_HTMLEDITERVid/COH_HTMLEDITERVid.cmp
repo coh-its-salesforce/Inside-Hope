@@ -1,0 +1,9 @@
+<aura:component  implements="forceCommunity:profileMenuInterface,forceCommunity:themeLayout,forceCommunity:availableForAllPageTypes" access="global" description="Sample Custom Theme Layout">
+	<aura:attribute name="isDesktop" type="Boolean" default="false"/>
+    <aura:attribute name="isMobile" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div >
+<iframe  width= "300"   height= "200" src="https://bcove.video/2TXBC4i"  sandbox="allow-same-origin allow-top-navigation allow-scripts allow-forms" frameborder="0" style="{!if(v.isDesktop,'width: 100%;height: 300px;','')}"></iframe>
+    
+</div>
+</aura:component>

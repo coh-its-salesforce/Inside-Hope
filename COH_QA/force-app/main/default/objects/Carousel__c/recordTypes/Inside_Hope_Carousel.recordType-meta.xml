@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Ihope_Intranet_Announcement</fullName>
+    <fullName>Inside_Hope_Carousel</fullName>
     <active>true</active>
-    <label>Ihope Intranet Announcement</label>
+    <label>Inside Hope Carousel</label>
 </RecordType>

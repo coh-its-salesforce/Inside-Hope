@@ -26,6 +26,8 @@
 		<members>COH_FloatFavLinks</members>
 		<members>COH_LinksFloat</members>
 		<members>FooterComponent</members>
+		<members>COH_HTMLEDITERVid</members>
+		<members>COH_Announcement</members>
 		<name>AuraDefinitionBundle</name>
 		<members>IHope_MyLinks_Controller</members>
 	</types>
@@ -55,11 +57,25 @@
 	</types>
 	<types>
 		<members>Campus_Plan_Alert__c.Ihope_Intranet_Announcement</members>
+		<members>Carousel__c.Inside_Hope_Carousel</members>
 		<name>RecordType</name>
 	</types>
 	<types>
 		<members>My_links</members>
 		<name>StaticResource</name>
+	</types>
+	<types>
+		<members>Carousel_Slides__c</members>
+		<name>CustomObject</name>
+	</types>
+	<types>
+		<members>Carousel__c-Inside Hope Carousel</members>
+		<name>Layout</name>
+	</types>
+	<types>
+		<members>iHopeBreakthroughArticleList</members>
+		<members>iHopeBreakthroughArticleTile</members>
+		<name>LightningComponentBundle</name>
 	</types>
 	<version>51.0</version>
 </Package>

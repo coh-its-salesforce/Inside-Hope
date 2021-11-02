@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>COH_AddEvent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>COH_AddEvent</shortDescription>
+        <value>https://cityofhope--dxinsidhpe--c.visualforce.com/apex/COH_SIP_Calendar_Add_Event</value>
+    </labels>
+    <labels>
         <fullName>COH_CityofBreakthroughs</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>COH_CityofBreakthroughs</shortDescription>
-        <value>https://cityofhope--dxinsidhpe--c.documentforce.com/servlet/servlet.ImageServer?id=0157d000000CkBa&amp;oid=00D7d0000077jY7&amp;lastMod=1634226001000</value>
+        <value>https://cityofhope--qatest--c.documentforce.com/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&amp;versionId=06852000001B0MX&amp;operationContext=CHATTER&amp;contentId=05T52000003gkX2</value>
     </labels>
     <labels>
         <fullName>COH_CityofHopeLogo</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>COH_CityofHopeLogo</shortDescription>
-        <value>https://cityofhope--dxinsidhpe--c.documentforce.com/servlet/servlet.ImageServer?id=0157d000000Ck8H&amp;oid=00D7d0000077jY7&amp;lastMod=1633695499000</value>
+        <value>https://cityofhope--qatest--c.documentforce.com/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Jpeg&amp;versionId=06852000001B0MD&amp;operationContext=CHATTER&amp;contentId=05T52000003gkWO</value>
     </labels>
     <labels>
         <fullName>COH_ExtendingHope</fullName>
@@ -61,7 +68,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>COH_TrumbaCalendarLogo</shortDescription>
-        <value>https://cityofhope--dxinsidhpe--c.documentforce.com/servlet/servlet.ImageServer?id=0157d000000CjLt&amp;oid=00D7d0000077jY7&amp;lastMod=1634053640000</value>
+        <value>https://cityofhope--qatest--c.documentforce.com/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&amp;versionId=06852000001B0MS&amp;operationContext=CHATTER&amp;contentId=05T52000003gkWt</value>
     </labels>
     <labels>
         <fullName>COH_ViewAllCalendar</fullName>
@@ -76,12 +83,5 @@
         <protected>false</protected>
         <shortDescription>COH_userinfo</shortDescription>
         <value>https://cityofhope--c.na118.visual.force.com/apex/UserProfile?uid=</value>
-    </labels>
-    <labels>
-        <fullName>COH_AddEvent</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>COH_AddEvent</shortDescription>
-        <value>https://cityofhope--dxinsidhpe--c.visualforce.com/apex/COH_SIP_Calendar_Add_Event</value>
     </labels>
 </CustomLabels>

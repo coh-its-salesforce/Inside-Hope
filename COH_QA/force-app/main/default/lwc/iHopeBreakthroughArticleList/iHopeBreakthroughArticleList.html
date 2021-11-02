@@ -1,0 +1,23 @@
+<template>
+        <div style={widthComponent}>
+            <div class="sldx-m-around_medium" style={widthComponent}>
+                <!--class="sldx-m-around_medium" style="width:300px; background:#0072CE; border:0.5px solid black; color:#ffffff" align="center"-->
+                    <b>Breakthroughs</b>
+            </div>
+            <div>
+                <template if:true={breakthroughRecords} >
+                    <div class="slds-grid slds-wrap" align="left">
+                        <template for:each={breakthroughRecords} for:item="item">  
+                            <div class="slds-col slds-size_1-of-1" style={widthDetailComponent} key={item.Id} align="left">
+                                    <c-i-hope-breakthrough-article-tile breakthrough-records={item}
+                                    image-width={imageWidth}
+                                    image-height={height}
+                                    font-size={fontSize}></c-i-hope-breakthrough-article-tile>
+                                    
+                            </div> 
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </div>
+</template>

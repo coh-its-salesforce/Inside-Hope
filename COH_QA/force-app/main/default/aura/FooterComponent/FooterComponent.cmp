@@ -1,0 +1,51 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" >
+        
+   <!--<div class="container-fluid Footer">
+    <div class="row FooterMid">
+        <div class="col-xs-12 col-sm-12 col-md-4 FooterMidL"><img src="{!$Resource.footerLogoMobile}" style="margin-top:0px;" class="visible-xs hidden-sm"/><img src="{!$Resource.footerLogoDesktop}" style="margin-top:0px;" class="hidden-xs visible-sm visible-md visible-lg"/></div>
+        <div class="hidden-xs hidden-sm col-md-8 FooterMidR">
+            <div class="FotNav"><a href="/apex/COH_SIRP_HOME_PAGE"><img src="{!$Resource.fothome}"/>&nbsp;&nbsp;Home</a><span>|</span><a href="https://aa067.taleo.net/careersection/in/jobsearch.ftl">Job Openings</a><span>|</span><a href="http://www.cityofhope.org/homepage">CityofHope.org</a><span>|</span><a href="https://www.cityofhope.org/about-city-of-hope/locations">Our Locations</a></div>
+            <p>© 2016 City of Hope. All Rights Reserved. 1500 E. Duarte Rd, Duarte, CA 91010</p>
+            <div class="citytext">City of Hope strongly supports and values the uniqueness of all individuals and promotes a work environment where diversity is embraced.</div>
+            <div class="citytext">Anonymous Corporate Compliance Hotline: (877) COH-COH8 / (877) 264-2648.</div>
+        </div>
+    </div>
+   </div>-->
+            
+    <lightning:layout multipleRows="true" class="layoutCls">
+            <lightning:layoutItem padding="around-small" size="12" mediumDeviceSize="4">                                
+               <!-- <aura:if isTrue="{!$Browser.formFactor == 'DESKTOP'}">-->
+                    <img src="{!$Resource.footerLogoDesktop}"/>
+               <!--     <aura:set attribute="else">
+                        <img src="{!$Resource.footerLogoMobile}"/>
+                    </aura:set>
+                </aura:if>  -->                                              
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="12" mediumDeviceSize="4">
+				<!--empty div-->                
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small" size="12" mediumDeviceSize="4">                
+                <div style="text-align: right; color: white;">
+                    <a style="color: white; font-size: inherit" href="/apex/COH_SIRP_HOME_PAGE">
+                        <img src="{!$Resource.fothome}"/>&nbsp;&nbsp;Home
+                    </a>
+                    <span>|</span>
+                    <a style="color: white" href="https://aa067.taleo.net/careersection/in/jobsearch.ftl">Job Openings</a>
+                    <span>|</span>
+                    <a style="color: white" href="http://www.cityofhope.org/homepage">CityofHope.org</a>
+                    <span>|</span>
+                    <a style="color: white" href="https://www.cityofhope.org/about-city-of-hope/locations">Our Locations</a>
+                </div>
+                <p style="text-align: right; color: white;">© 2016 City of Hope. All Rights Reserved. 1500 E. Duarte Rd, Duarte, CA 91010</p>
+                <div style="text-align: right; color: white;">
+                    City of Hope strongly supports and values the uniqueness of all individuals and promotes a work environment where diversity is embraced.
+                </div>
+                <div style="text-align: right; color: white;">
+                    Anonymous Corporate Compliance Hotline: (877) COH-COH8 / (877) 264-2648.
+                </div>
+            </lightning:layoutItem>            
+        </lightning:layout>
+    
+    
+</aura:component>

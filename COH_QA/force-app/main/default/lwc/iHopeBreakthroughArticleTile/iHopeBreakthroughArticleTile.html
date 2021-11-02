@@ -1,0 +1,19 @@
+<template>
+    <template if:true={breakthroughRecords}>
+        <div>
+            <a href={breakthroughRecords.Link_to_Full_Article__c}>
+                <lightning-tile variant="narrow">
+                    <div>
+                        <img src={breakthroughRecords.ImageURL__c}  class="slds-m-right_x-small" alt="Article Image" style={imageComponentSize}>
+                    
+                        <div class="box" style={fontComponentSize}>
+                            <strong>    
+                                <lightning-formatted-rich-text value={breakthroughRecords.TitleRTF__c}></lightning-formatted-rich-text>
+                            </strong> 
+                            <strong>By:</strong> {breakthroughRecords.BlogAuthor__c} <br/><strong>Published: </strong><lightning-formatted-date-time value={breakthroughRecords.Release_Date__c}></lightning-formatted-date-time></div>
+                    </div> 
+                </lightning-tile>
+            </a>
+        </div>
+    </template>
+</template>
