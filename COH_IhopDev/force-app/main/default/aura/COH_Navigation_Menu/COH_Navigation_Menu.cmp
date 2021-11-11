@@ -25,14 +25,14 @@
                                 <aura:if isTrue="{!v.screenType eq 'DESKTOP'}">
                                     <lightning:layout multipleRows="true">
                                         <aura:iteration items="{!v.menus}" var ="rec" >
-                                            <lightning:layoutItem size="1">
+                                           
                                                 <c:COH_SIP_Navigation rec="{!rec}" screenType="{!v.screenType}"/>
-                                            </lightning:layoutItem>
+                                           
                                         </aura:iteration>
-                                        <lightning:layoutItem size="1">
+                                       
                                             <li aura:id="changeItnew" class="liSeprator slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click">
                                                 <a  class="slds-context-bar__label-action" title="Menu Item">
-                                                    <span class="slds-truncate" title="Shortcuts">SHORTCUTS</span>
+                                                    <span class="slds-truncate FontCSS" title="Shortcuts">SHORTCUTS</span>
                                                 </a>
                                                 <aura:if isTrue = "{!not(empty(v.shortCutList))}">
                                                     <div class="slds-context-bar__icon-action slds-p-left_none" >
@@ -54,7 +54,7 @@
                                                     </div>
                                                 </aura:if>
                                             </li>
-                                        </lightning:layoutItem>
+                                        
                                     </lightning:layout>
                                 </aura:if>
                                 <aura:if isTrue="{!or(v.screenType eq 'PHONE',v.screenType eq 'TABLET')}">

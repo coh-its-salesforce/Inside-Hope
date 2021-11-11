@@ -10,7 +10,7 @@ private class iHopeBreakthroughArticlesTest {
         recBreakthrough.TitleRTF__c = 'Test Title';
         recBreakthrough.Property__c = 'Test Property';
         recBreakthrough.MetaTitle__c = 'Test MetaTitle';
-        recBreakthrough.MetaKeywords__c = 'Test MetaKeywords';
+		recBreakthrough.MetaKeywords__c = 'Test MetaKeywords';
         recBreakthrough.Release_Date__c = system.Date.today();
         insert recBreakthrough;
         String queryName = recBreakthrough.Name;
