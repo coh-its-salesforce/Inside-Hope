@@ -54,14 +54,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>COH_Searchurl</shortDescription>
-        <value>https://cityofhope--dxinsidhpe--c.visualforce.com/apex/Search?keyword=</value>
+        <value>https://cityofhope--qatest--c.visualforce.com/apex/Search?keyword=</value>
     </labels>
     <labels>
         <fullName>COH_TrumbaCalendar</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>COH_TrumbaCalendar</shortDescription>
-        <value>https://dxinsidhpe-cityofhope.cs192.force.com/InsideHope/s/coh-calendar</value>
+        <value>https://qatest-cityofhope.cs170.force.com/insidehope/s/coh-calendar</value>
     </labels>
     <labels>
         <fullName>COH_TrumbaCalendarLogo</fullName>

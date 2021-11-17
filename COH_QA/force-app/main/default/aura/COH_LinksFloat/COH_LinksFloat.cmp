@@ -12,11 +12,11 @@
                         <tr class="slds-text-title_caps">
                             <th scope="col">
                                  <div class="module">
-                                    <div class="slds-align_absolute-center" >               
+                                    <div class="" >               
                                         <h5 class="FourIconTit"> 
                                             My Links<a href="https://cityofhope--dxinsidhpe--c.visualforce.com/apex/COH_SIRP_Favorite_News?editmode=1" >&nbsp;&nbsp;<lightning:icon size="xx-small" iconName="action:edit" alternativeText="Edit" title="edit" /></a></h5>                                                                                  
                                     </div>
-                                      <p class="slds-align_absolute-center">Click on My links</p><!--Favourites-->
+                                      <p class="">Click on My links</p><!--Favourites-->
                                 </div>                                
                             </th>
                         </tr>

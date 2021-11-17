@@ -105,16 +105,16 @@
     </aura:if>
     <lightning:layout multipleRows="true">
         <lightning:layoutItem largeDeviceSize="5" mediumDeviceSize="5" smallDeviceSize="9" size="9">
-            <div class="Left"><img src="{!v.imageaddr}"/></div>
-        </lightning:layoutItem>
+            <div class="Left"><img src="{!$Resource.InsideHopeMainLogo}"/></div>
+        </lightning:layoutItem> 
         <lightning:layoutItem largeDeviceSize="1" mediumDeviceSize="1" smallDeviceSize="2" size="2" padding="horizontal-small">
             <div class="right" style="display: inline-flex;"> 
                 <!--   <a href="https://www.trumba.com/calendars/city-of-hope-master-calendar" class="calendarLink">-->
                 
-                <img src="{!v.imageaddr1}" onclick="{!c.OpenModal}"/>
+                <img src="{!$Resource.InsideHopeTrumbaCalender}" onclick="{!c.OpenModal}"/>
                 <!--   </a>-->
-                
-                <img src="{!v.imageaddrBreakthroughs}" onclick="{!c.OpenModalBreakthroughs}"/>
+                 
+                <img src="{!$Resource.InsideHopeBreakthroughs}" onclick="{!c.OpenModalBreakthroughs}"/>
                 
             </div>
         </lightning:layoutItem>

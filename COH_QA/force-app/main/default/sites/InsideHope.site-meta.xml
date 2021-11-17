@@ -24,6 +24,10 @@
     <selfRegPage>CommunitiesSelfReg</selfRegPage>
     <siteAdmin>ykinfu@coh.org</siteAdmin>
     <siteGuestRecordDefaultOwner>ykinfu@coh.org</siteGuestRecordDefaultOwner>
+    <siteIframeWhiteListUrls>
+        <url>https://bcove.video</url>
+    </siteIframeWhiteListUrls>
     <siteType>ChatterNetwork</siteType>
     <subdomain>cityofhope</subdomain>
+    <urlPathPrefix>insidehope</urlPathPrefix>
 </CustomSite>

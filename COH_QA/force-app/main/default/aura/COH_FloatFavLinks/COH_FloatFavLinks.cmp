@@ -15,11 +15,11 @@
                                 </div>-->
                                 <div class="col-md-12 col-xs-12 col-sm-12">
                                  <div class="module">
-                                    <div class="slds-align_absolute-center">               
-                                        <h5 class="slds-align_absolute-center">Favorites &nbsp;&nbsp;<lightning:icon size="xx-small" iconName="action:edit" alternativeText="Edit" title="edit" />
+                                    <div >               
+                                        <h5 >Favorites &nbsp;&nbsp;<lightning:icon size="xx-small" iconName="action:edit" alternativeText="Edit" title="edit" />
                                         </h5>
                                         </div>
-                                         <p class="slds-align_absolute-center">Click on your favorite links</p>
+                                         <p>Click on your favorite links</p>
                                      </div>
                                 </div>
                                 </div>

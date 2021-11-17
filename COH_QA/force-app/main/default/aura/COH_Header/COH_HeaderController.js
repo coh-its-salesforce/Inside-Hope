@@ -1,9 +1,9 @@
 ({
     doInit : function(component, event, helper) {
         
-        component.set("v.imageaddr",$A.get("$Label.c.COH_CityofHopeLogo")); 
-        component.set("v.imageaddr1",$A.get("$Label.c.COH_TrumbaCalendarLogo")); 
-        component.set("v.imageaddrBreakthroughs",$A.get("$Label.c.COH_CityofBreakthroughs"));
+       // component.set("v.imageaddr",$A.get("$Label.c.COH_CityofHopeLogo")); 
+        //component.set("v.imageaddr1",$A.get("$Label.c.COH_TrumbaCalendarLogo")); 
+        //component.set("v.imageaddrBreakthroughs",$A.get("$Label.c.COH_CityofBreakthroughs"));
         
         
         var device = $A.get("$Browser.formFactor");
@@ -108,7 +108,7 @@
             var search = component.get('v.SearchText');
             if(search==null||search==undefined||search=='')
                 return;
-            var searchURL = $A.get("$Label.c.COH_Searchurl ")
+            var searchURL = $A.get("$Label.c.COH_Searchurl")
             //prod url
             // window.open('https://cityofhope--c.na118.visual.force.com/apex/search?keyword='+search,'_blank');
             // sandbox url 
