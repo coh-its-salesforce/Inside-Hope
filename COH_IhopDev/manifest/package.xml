@@ -17,6 +17,7 @@
 	<types>
 		<members>COHIntranetHomepageLayout</members>
 		<members>COH_Announcement</members>
+		<members>COH_ArticleDetailPage</members>
 		<members>COH_CampusPlanMainContainer</members>
 		<members>COH_Carousel</members>
 		<members>COH_CloseNavigationBar</members>
