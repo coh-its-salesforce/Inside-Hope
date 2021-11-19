@@ -1,4 +1,4 @@
-public class COH_CarouselController {
+public without sharing class COH_CarouselController {
     
     @AuraEnabled
     public static list<Carousel__c> dataCarousel(){
@@ -18,4 +18,12 @@ FROM Carousel__c]);*/
                                                             where RecordType.Name = 'Inside Hope Carousel']);        
         return carousel;
     }
+    
+    @AuraEnabled
+    public static list<Knowledge__Kav> ArtcleData(String UrlName){
+        return [SELECT Id, Summary, AssignmentNote, Article__c, Exceptions__c, Keywords__c, Script__c, Supporting_Docs_Info__c, Title,
+                overview__c, Additional_Actors_Users_Roles__c, Workflow__c, Permission_Sets_Profile_Assignments__c,
+                Assumptions_Miscellaneous_Items__c, Note__c, Internal_Notes__c, Administrator_s_Notes__c FROM Knowledge__kav where URLName=:UrlName];
+    }
+    
 }
