@@ -34,9 +34,13 @@
         
         
         <div class="navigation" >
-            <!-- <c:COH_NavigationBar/> -->
-            <c:COH_Navigation_Menu/>
+			<lightning:layout multipleRows="true" >          
+            	<lightning:layoutItem size="12">
             
+            <!-- <c:COH_NavigationBar/> -->
+            	<c:COH_Navigation_Menu/>
+				</lightning:layoutItem> 
+    		</lightning:layout>  
         </div>
         <!--  {!v.navigationBar}-->
         <div>

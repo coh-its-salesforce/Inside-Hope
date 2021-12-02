@@ -103,7 +103,7 @@
         <!--###### MODAL BOX Part END Here ######-->
         
     </aura:if>
-    <lightning:layout multipleRows="true">
+    <lightning:layout multipleRows="true" class="TopMost">
         <lightning:layoutItem largeDeviceSize="5" mediumDeviceSize="5" smallDeviceSize="9" size="9">
             <div class="Left"><img src="{!v.imageaddr}"/></div>
         </lightning:layoutItem>
@@ -111,10 +111,10 @@
             <div class="right" style="display: inline-flex;"> 
                 <!--   <a href="https://www.trumba.com/calendars/city-of-hope-master-calendar" class="calendarLink">-->
                 
-                <img src="{!v.imageaddr1}" onclick="{!c.OpenModal}"/>
+                <img style="cursor:pointer" src="{!v.imageaddr1}" onclick="{!c.OpenModal}"/>
                 <!--   </a>-->
                 
-                <img src="{!v.imageaddrBreakthroughs}" onclick="{!c.OpenModalBreakthroughs}"/>
+                <img  style="cursor:pointer" src="{!v.imageaddrBreakthroughs}" onclick="{!c.OpenModalBreakthroughs}"/>
                 
             </div>
         </lightning:layoutItem>

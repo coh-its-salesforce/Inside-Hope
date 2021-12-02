@@ -5,6 +5,7 @@
         action.setCallback(this, function(a){
             var state = a.getState(); 
             if(state === 'SUCCESS') {
+                console.log('a.getReturnValue()',a.getReturnValue());
                 component.set('v.displayalerts',true);
                 component.set("v.Announcements", a.getReturnValue());
                 console.log('HELlo!',component.get('v.Orange'));

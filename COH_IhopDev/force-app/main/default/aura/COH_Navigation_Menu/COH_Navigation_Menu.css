@@ -18,3 +18,9 @@
    
 
 }
+.THIS .navDiv {
+    position: absolute;
+    white-space: nowrap;
+    overflow: hidden;
+
+}

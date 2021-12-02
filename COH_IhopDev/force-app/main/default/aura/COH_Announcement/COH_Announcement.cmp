@@ -19,7 +19,7 @@
             <div class="announcement-content" style="{!if(v.isMobile,'font-size:medium','')}">
                 <div id="parentDIV" style="overflow:hidden">
                     <p style="position:relative;" id="tofloat">
-                        <p class="slds-p-around_x-small" style="color:white"><aura:unescapedHTML value="{!v.Announcement}"/></p>
+                        <p class="slds-p-around_x-small" style="color:white"><aura:unescapedHTML value="{!v.Announcement.Content__c }"/></p>
                     </p>
                 </div>
                 

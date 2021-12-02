@@ -14,7 +14,7 @@
                         <lightning:buttonIcon alternativeText="View More" title="View More" size="xx-small" iconName="utility:down" onclick="{!c.openOrClose}"/>
                     </div>
                 </div>
-                <div class="slds-dropdown slds-dropdown_right">
+                <div class="slds-dropdown slds-dropdown_left">
                     <ul class="slds-dropdown__list" role="menu" style="max-height: 300px; overflow: auto">
                         <aura:iteration items="{!v.rec.childMenus}" var ="innerec">
                             <li class="slds-dropdown__item" role="presentation">

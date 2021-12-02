@@ -28,15 +28,17 @@
                 if(response.getReturnValue().length>0){
                     component.set('v.showAnnouncement',true);
                     
-                    component.set('v.Announcement',response.getReturnValue()[0].Content__c);
+                    component.set('v.Announcement',response.getReturnValue()[0]);
                     var lWidth = window.innerWidth ;//Get the window's width
+                    var counter = 0;
                     //The setInterval() method calls a function or 
                     //evaluates an expression at specified intervals (in milliseconds).
                     var dur = component.get('v.Duration');
                     if(dur==undefined||dur==null||dur==''){
-                        dur=100;
+                        dur=10;
                     }
                     window.setInterval($A.getCallback(function() { 
+                        
                         helper.shiftDiv(component, event,lWidth);
                     } ), dur);
                 }else{
