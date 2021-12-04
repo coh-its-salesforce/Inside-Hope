@@ -4,6 +4,21 @@
     border-top:8px solid #066dc0;
     width:100%;
 }
+.THIS .shortcutMenuCss > .slds-form-element__control > .slds-select_container{
+    width: 18.6rem !important;
+}
+.THIS.TopMost{
+   background-repeat:no-repeat;
+    
+    background-size:cover;
+    background-image: url(/resource/COHHhopeLlogo ) ;
+   /*background-image : url('https://cityofhope--dxinsidhpe--c.documentforce.com/servlet/servlet.ImageServer?id=0157d000000Ck8H&oid=00D7d0000077jY7&lastMod=1633695499000')*/
+}
+
+
+
+
+
 
 .THIS .Header {
     margin:0 auto;

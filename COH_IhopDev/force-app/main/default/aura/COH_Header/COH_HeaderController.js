@@ -63,6 +63,16 @@
         
         
     },
+    
+    hoverOver : function(component, event, helper) {
+        console.log('HOVER')
+        component.set('v.showClass','cursor:pointer;transform:scale(1.2)');
+    },
+    notHoverOver : function(component, event, helper) {
+        console.log('OFF')
+        component.set('v.showClass','cursor:pointer;');
+    },
+    
     handleClickexp: function(component, event, helper) {
         window.open($A.get("$Label.c.COH_ExtendingHope"), '_blank');    
     },
