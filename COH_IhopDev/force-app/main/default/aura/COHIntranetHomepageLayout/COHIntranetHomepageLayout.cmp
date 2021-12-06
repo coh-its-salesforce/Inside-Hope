@@ -36,7 +36,7 @@
         <div class="navigation" >
 			<lightning:layout multipleRows="true" >          
             	<lightning:layoutItem size="12">
-            
+            		
             <!-- <c:COH_NavigationBar/> -->
             	<c:COH_Navigation_Menu/>
 				</lightning:layoutItem> 
@@ -50,7 +50,9 @@
             <div class="row">
                 <lightning:layout multipleRows="true">
                     <lightning:layoutItem size="12"  >
-                        {!v.Announcement}
+                        <div style="height:57px !important;" >
+                          	{!v.Announcement}                            
+                        </div>
                     </lightning:layoutItem>
                     
                     

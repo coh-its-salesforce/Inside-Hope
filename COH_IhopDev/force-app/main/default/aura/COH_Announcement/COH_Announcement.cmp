@@ -8,6 +8,8 @@
     <aura:attribute name="isDesktop" type="Boolean" default="false"/>
     <aura:attribute name="isMobile" type="Boolean" default="false"/>
     <aura:attribute name="isTablet" type="Boolean" default="false"/>
+    <aura:attribute name = "AnnouncementList" type ="string"/>    
+	<aura:attribute name = "currentAnouncment" type ="Integer"/>
     
     <aura:if isTrue="{!v.showAnnouncement}">
     <div>

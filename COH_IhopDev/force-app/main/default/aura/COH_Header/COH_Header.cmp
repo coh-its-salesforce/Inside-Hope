@@ -59,7 +59,7 @@
                                       label="Edit"
                                       title="Edit"
                                       onclick="{! c.redirectToVfpage }"/>
-                   
+                    
                 </div>
                 
             </div>
@@ -103,32 +103,28 @@
         <!--###### MODAL BOX Part END Here ######-->
         
     </aura:if>
-    <lightning:layout multipleRows="true" class="TopMost">
-        <lightning:layoutItem largeDeviceSize="5" mediumDeviceSize="5" smallDeviceSize="9" size="9">
-            <div class="Left"><!--img src="{!v.imageaddr}"/--></div>
-        </lightning:layoutItem>
-        <lightning:layoutItem largeDeviceSize="1" mediumDeviceSize="1" smallDeviceSize="2" size="2" padding="horizontal-small">
+    <lightning:layout multipleRows="true" class="{!if(v.isDesktop,'TopMost','')}">
+        <aura:if isTrue="{!v.isMobile}">
+            <lightning:layoutItem largeDeviceSize="5" mediumDeviceSize="5" smallDeviceSize="9" size="9">
+                <div class="Left"><img src="https://cityofhope--dxinsidhpe--c.documentforce.com/servlet/servlet.ImageServer?id=0157d000000Ck8H&amp;oid=00D7d0000077jY7&amp;lastMod=1633695499000"/></div>
+            </lightning:layoutItem>
+             <aura:set attribute="else">
+                 <lightning:layoutItem largeDeviceSize="5" mediumDeviceSize="5" smallDeviceSize="9" size="9"><div class="Left"></div></lightning:layoutItem>
+            </aura:set>
+        </aura:if>
+        
+        <lightning:layoutItem largeDeviceSize="1" mediumDeviceSize="1" smallDeviceSize="2" size="2" padding="around-small">
             <div class="right" style="display: inline-flex;"> 
-                <!--   <a href="https://www.trumba.com/calendars/city-of-hope-master-calendar" class="calendarLink">-->
-
-                <img style="{!'max-width:47%;height:auto;'+v.showClass}" class="calenderImage" src="{!$Resource.COHIhopTrumbaCal}"  onclick="{!c.OpenModal}" onmouseover="{!c.hoverOver}" onmouseout="{!c.notHoverOver}"/>
-                <!--   </a>
-                
-                <img  style="cursor:pointer" src="{!v.imageaddrBreakthroughs}" onclick="{!c.OpenModalBreakthroughs}"/>-->
-                
+                <img style="{!if(v.isDesktop,'max-width:47%;height:auto;'+v.showClass,v.showClass)}" class="calenderImage" src="{!$Resource.COHIhopTrumbaCal}"  onclick="{!c.OpenModal}" onmouseover="{!c.hoverOver}" onmouseout="{!c.notHoverOver}"/>
             </div>
         </lightning:layoutItem>
-        <!--  <lightning:layoutItem largeDeviceSize="1" mediumDeviceSize="1" smallDeviceSize="1" size="1">
-           <div class="slds-m-around_small"> 
-                <img src="{!v.imageaddrBreakthroughs}" onclick="{!c.OpenModalBreakthroughs}"/>
-            </div>
-        </lightning:layoutItem>    -->  
+ 
         <aura:if isTrue="{!v.isDesktop}">
             <lightning:layoutItem size="1">
             </lightning:layoutItem>
         </aura:if>    
         
-        <lightning:layoutItem largeDeviceSize="5" mediumDeviceSize="6" smallDeviceSize="12" size="12">
+        <lightning:layoutItem largeDeviceSize="5" mediumDeviceSize="5" smallDeviceSize="12" size="12">
             <lightning:layout multipleRows="true">
                 <lightning:layoutItem size="12" flexibility="auto">
                     <aura:if isTrue="{!or(v.isDesktop,v.isTablet)}">
@@ -154,10 +150,7 @@
                                 <label>{!v.label}</label>
                                 <a href="{!$Label.c.COH_userinfo + v.userInfo.Id}"
                                    target="_blank">  {!v.userInfo.Name} </a> &nbsp;&nbsp;
-                                
-                                <!-- <lightning:formattedUrl value="https://www.salesforce.com"
-                                                        label="| Logout |"
-                                                        target="_blank"/>-->
+               
                                 
                                 <lightning:formattedUrl value="{!$Label.c.COH_SalesforceHome}"
                                                         label=" Salesforce Home"
@@ -181,12 +174,14 @@
                     </lightning:layoutItem >
                     <aura:set attribute="else">
                         <lightning:layoutItem size="12">
-                            <div class="slds-align_absolute-center">
-                                 <lightning:button variant="brand" label="Breakthroughs" title="Breakthroughs" class="btn" onclick="{!c.OpenModalBreakthroughs}"/>
-                                <lightning:button variant="brand" label="Hope works" title="Hope works" class="btnHopemob" onclick="{!c.handleClickHopewrks}"/> 
-                                <!-- <button type="button"  onclick="{!c.handleClickHopewrks}">Click Me!</button> -->
-                                
-                                <lightning:button variant="brand" label="Expanding Hope" title="Expanding Hope" class="btnmob" onclick="{!c.handleClickexp}"/>
+                            <div class="slds-align_absolute-center slds-p-around_x-small">
+                            <lightning:button variant="brand" label="Breakthroughs" title="Breakthroughs" class="btnMobile" onclick="{!c.OpenModalBreakthroughs}"/>
+                            <lightning:button variant="brand" label="Hope works" title="Hope works" class="btnHopemob" onclick="{!c.handleClickHopewrks}"/>                                 
+                            <!--/div>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="12">
+                            <div class="slds-align_absolute-center slds-p-around_x-small"-->
+                                 <lightning:button variant="brand" label="Expanding Hope" title="Expanding Hope" class="btnmob" onclick="{!c.handleClickexp}"/>
                                 <lightning:button variant="brand" label="Orange County" title="Orange County" class="btnOrgmob"  onclick="{!c.handleClickOrg}"/>
                             </div>
                         </lightning:layoutItem >

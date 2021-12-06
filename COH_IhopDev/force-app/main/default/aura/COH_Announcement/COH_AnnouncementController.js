@@ -27,8 +27,10 @@
                 console.log("From server: " , response.getReturnValue());
                 if(response.getReturnValue().length>0){
                     component.set('v.showAnnouncement',true);
-                    
                     component.set('v.Announcement',response.getReturnValue()[0]);
+					component.set('v.AnnouncementList',response.getReturnValue());
+					component.set('v.currentAnouncment',0);
+					
                     var lWidth = window.innerWidth ;//Get the window's width
                     var counter = 0;
                     //The setInterval() method calls a function or 
@@ -38,7 +40,6 @@
                         dur=10;
                     }
                     window.setInterval($A.getCallback(function() { 
-                        
                         helper.shiftDiv(component, event,lWidth);
                     } ), dur);
                 }else{
