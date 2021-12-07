@@ -19,7 +19,7 @@
                             <lightning:icon iconName="action:remove"  size="small" alternativeText="remove" title="remove" onclick="{!c.hideNavigation}" />
                         </div>
                     </aura:if>
-                    <div class="{!v.contextBarCss}" style= 'font-weight: 600; height:47px; padding-top: 6px; border-bottom-color: #0476ba; border-top-color: #0476ba; background-color: gainsboro;'>
+                    <div class="{!v.contextBarCss}" style= 'font-weight: 600; padding-top: 6px; border-bottom-color: #0476ba; border-top-color: #0476ba; background-color: gainsboro;'>
                         <nav aura:id="navId" class="{!v.navBarCss}" aria-label="Sub page" role="navigation">
                             <ul class="slds-grid">
                                 <aura:if isTrue="{!v.screenType eq 'DESKTOP'}">

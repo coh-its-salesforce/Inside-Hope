@@ -15,13 +15,6 @@
     <aura:attribute name="section_title_2a" type="Aura.Component[]"/>
     <aura:attribute name="section_title_3a" type="Aura.Component[]"/>
     <aura:attribute name="section_title_4a" type="Aura.Component[]"/>
-    <!-- <aura:attribute name="section_title_5a" type="Aura.Component[]"/>
-   
-    <aura:attribute name="section_title_1aa" type="Aura.Component[]"/>
-    <aura:attribute name="section_title_2aa" type="Aura.Component[]"/>
-    <aura:attribute name="section_title_3aa" type="Aura.Component[]"/>
-    <aura:attribute name="section_title_4aa" type="Aura.Component[]"/>
--->
     <aura:attribute name="section_2" type="Aura.Component[]"/>
     <aura:attribute name="Announcement" type="Aura.Component[]"/>
     
@@ -34,13 +27,13 @@
         
         
         <div class="navigation" >
-			<lightning:layout multipleRows="true" >          
-            	<lightning:layoutItem size="12">
-            		
-            <!-- <c:COH_NavigationBar/> -->
-            	<c:COH_Navigation_Menu/>
-				</lightning:layoutItem> 
-    		</lightning:layout>  
+            <lightning:layout multipleRows="true" >          
+                <lightning:layoutItem size="12">
+                    
+                    <!-- <c:COH_NavigationBar/> -->
+                    <c:COH_Navigation_Menu/>
+                </lightning:layoutItem> 
+            </lightning:layout>  
         </div>
         <!--  {!v.navigationBar}-->
         <div>
@@ -51,7 +44,7 @@
                 <lightning:layout multipleRows="true">
                     <lightning:layoutItem size="12"  >
                         <div style="height:57px !important;" >
-                          	{!v.Announcement}                            
+                            {!v.Announcement}                    
                         </div>
                     </lightning:layoutItem>
                     
@@ -72,22 +65,7 @@
                     <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="3" class="slds-p-around_xx-small">
                         {!v.section_title_4}
                     </lightning:layoutItem>
-                    <!-- <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="3" class="slds-p-around_xx-small">
-                        {!v.section_title_1a} 
-                    </lightning:layoutItem>
-                    <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="3" class="slds-p-around_xx-small">
-                        {!v.section_title_2a}
-                    </lightning:layoutItem>
                     
-                    <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="3" class="slds-p-around_xx-small">
-                        {!v.section_title_3a}
-                    </lightning:layoutItem>
-                    <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="3" class="slds-p-around_xx-small">
-                        
-                            {!v.section_title_4a}
-                        
-                       
-                    </lightning:layoutItem>--> 
                     <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="12" class="slds-p-around_xx-small">
                         
                         {!v.body}

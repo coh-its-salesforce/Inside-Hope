@@ -177,10 +177,10 @@
                             <div class="slds-align_absolute-center slds-p-around_x-small">
                             <lightning:button variant="brand" label="Breakthroughs" title="Breakthroughs" class="btnMobile" onclick="{!c.OpenModalBreakthroughs}"/>
                             <lightning:button variant="brand" label="Hope works" title="Hope works" class="btnHopemob" onclick="{!c.handleClickHopewrks}"/>                                 
-                            <!--/div>
+                            </div>
                         </lightning:layoutItem>
                         <lightning:layoutItem size="12">
-                            <div class="slds-align_absolute-center slds-p-around_x-small"-->
+                            <div class="slds-align_absolute-center slds-p-around_x-small">
                                  <lightning:button variant="brand" label="Expanding Hope" title="Expanding Hope" class="btnmob" onclick="{!c.handleClickexp}"/>
                                 <lightning:button variant="brand" label="Orange County" title="Orange County" class="btnOrgmob"  onclick="{!c.handleClickOrg}"/>
                             </div>
@@ -220,8 +220,10 @@
                 
                 <aura:if isTrue="{!v.showShortcut}" >
                     <aura:if isTrue="{!v.isDesktop}">
-                        <lightning:layoutItem size="12">
-                            <span style="float:right;display:-webkit-inline-box;padding-top:2%;padding-bottom: 5px;" >
+                            <lightning:layoutItem size="6" largeDeviceSize="6" mediumDeviceSize="1" smallDeviceSize="1">
+                            </lightning:layoutItem>
+                        <lightning:layoutItem size="6">
+                            <span style="padding-bottom: 3px;" class="slds-m-top_xx-small" >
                                 
                                 <span class="FourIconTxt slds-p-right_x-small" style="font-size: 12px;text-transform: uppercase;color: white">Change Shortcut Menu&nbsp;&nbsp;</span>
                                 
@@ -240,9 +242,9 @@
         <aura:if isTrue="{!v.showShortcut}" >
             <aura:if isTrue="{!v.isMobile}">
                 <lightning:layoutItem size="12">
-                    <span style="float:right;">
-                        <span class="FourIconTxt slds-p-right_x-small" style="font-size: 12px;text-transform: uppercase;color: white">Change Shortcut Menu</span>
-                        <lightning:select value="{!v.ShorcutVal}" name="select" label="" variant="label-hidden" class="slds-form_inline" onchange="{!c.callShortcut}">
+                    <span style="">
+                        <!--span class="FourIconTxt slds-p-right_x-small" style="font-size: 12px;text-transform: uppercase;color: white">Change Shortcut Menu</span-->
+                        <lightning:select value="{!v.ShorcutVal}" name="select" label="" variant="label-hidden" class="slds-form_inline shortcutMenuCss" onchange="{!c.callShortcut}">
                             <option value="">--None--</option>       
                             <aura:iteration items="{!v.shortcuts}" var="shortcut">
                                 <option value="{!shortcut.Id}">{!shortcut.Group_Name__c}</option>

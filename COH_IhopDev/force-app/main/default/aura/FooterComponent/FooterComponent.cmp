@@ -16,7 +16,7 @@
     <lightning:layout multipleRows="true" class="layoutCls">
             <lightning:layoutItem padding="around-small" size="12" mediumDeviceSize="4">                                
                <!-- <aura:if isTrue="{!$Browser.formFactor == 'DESKTOP'}">-->
-                    <img src="{!$Resource.footerLogoDesktop}"/>
+                    <img src="{!$Resource.COHHhopeFooterLlogo}" style = "    max-width: 35%;"/>
                <!--     <aura:set attribute="else">
                         <img src="{!$Resource.footerLogoMobile}"/>
                     </aura:set>

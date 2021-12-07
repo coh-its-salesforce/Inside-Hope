@@ -5,7 +5,17 @@
     width:100%;
 }
 .THIS .shortcutMenuCss > .slds-form-element__control > .slds-select_container{
-    width: 18.6rem !important;
+    /*width: 18.6rem !important;*/
+    position:unset;
+    margin-bottom:7px;
+}
+.THIS .shortcutMenuCss > .slds-form-element__label{
+    /*width: 18.6rem !important;*/
+    margin-right:0px !important;
+}
+.THIS .shortcutMenuCss > .slds-form-element__control {
+    /*width: 18.6rem !important;*/
+    display:block;
 }
 .THIS.TopMost{
    background-repeat:no-repeat;
@@ -77,13 +87,11 @@
     border: none;
         height: 20px;
     width: 100%;
-        font-size: 10px;
 
 }
 .THIS .btnmob{
      height: 20px;
     width: 100%;
-        font-size: 10px;
 
 }
 .THIS .btnOrgmob{
@@ -91,7 +99,6 @@
     border: none;
            height: 20px;
     width: 100%;
-    font-size: 10px;
 }
 
 
