@@ -6,7 +6,7 @@
     <aura:if isTrue="{!v.screenType eq 'DESKTOP'}">
         <li aura:id="changeIt" class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click">
             <a href="{!v.rec.ParentMenu.Menu_URL__c}" class="slds-context-bar__label-action" title="Menu Item">
-                <span class="slds-truncate" title="{!v.rec.ParentMenu.Desktop_Label__c }">{!v.rec.ParentMenu.Desktop_Label__c }</span>
+                <span  title="{!v.rec.ParentMenu.Desktop_Label__c }" class="FontCSS">{!v.rec.ParentMenu.Desktop_Label__c }</span>
             </a>
             <aura:if isTrue = "{!not(empty(v.rec.childMenus))}">
                 <div class="slds-context-bar__icon-action slds-p-left_none" >
@@ -14,12 +14,12 @@
                         <lightning:buttonIcon alternativeText="View More" title="View More" size="xx-small" iconName="utility:down" onclick="{!c.openOrClose}"/>
                     </div>
                 </div>
-                <div class="slds-dropdown slds-dropdown_right">
+                <div class="slds-dropdown slds-dropdown_left">
                     <ul class="slds-dropdown__list" role="menu" style="max-height: 300px; overflow: auto">
                         <aura:iteration items="{!v.rec.childMenus}" var ="innerec">
                             <li class="slds-dropdown__item" role="presentation">
                                 <a href="{!innerec.Menu_URL__c}" role="menuitem" tabindex="-1">
-                                    <span class="slds-truncate" title="{!innerec.Desktop_Label__c}">{!innerec.Desktop_Label__c}</span>
+                                    <span  title="{!innerec.Desktop_Label__c}">{!innerec.Desktop_Label__c}</span>
                                 </a>
                             </li>
                         </aura:iteration>

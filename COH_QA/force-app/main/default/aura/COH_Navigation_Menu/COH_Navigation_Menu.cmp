@@ -23,7 +23,7 @@
                         <nav aura:id="navId" class="{!v.navBarCss}" aria-label="Sub page" role="navigation">
                             <ul class="slds-grid">
                                 <aura:if isTrue="{!v.screenType eq 'DESKTOP'}">
-                                    <lightning:layout multipleRows="true">
+                                    <lightning:layout multipleRows="true" >
                                         <aura:iteration items="{!v.menus}" var ="rec" >
                                            
                                                 <c:COH_SIP_Navigation rec="{!rec}" screenType="{!v.screenType}"/>
