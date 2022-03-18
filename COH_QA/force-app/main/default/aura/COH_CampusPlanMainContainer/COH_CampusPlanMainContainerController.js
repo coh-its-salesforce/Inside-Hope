@@ -7,17 +7,6 @@
             if(state === 'SUCCESS') {
                 component.set('v.displayalerts',true);
                 component.set("v.Announcements", a.getReturnValue());
-                console.log('HELlo!',component.get('v.Orange'));
-                var orgn = component.get('v.Orange');
-                console.log('orgn',orgn);
-                if(orgn == 'Yes'){
-                    window.setTimeout(
-                        $A.getCallback(function(){
-                            helper.openSingleRecordhelper(component, event);
-                        }),200
-                    );
-                    
-                }
                 
             }
         });
@@ -64,7 +53,6 @@
             if(state ==='SUCCESS') {
             	var recorddata=a.getReturnValue();
                 component.set('v.Articles', recorddata);
-                console.log('HELdsdsd')
             }
              });
         $A.enqueueAction(action);
@@ -382,11 +370,9 @@
           
     },
     openSingleRecord: function(component, event, helper) {
-        console.log('openSingleRecord')
         window.scrollTo(0,0);        
         
         var title=event.target.getAttribute("id");
-        console.log('title',title)
         if(title == 'Parking and Transportation'){
           document.getElementById("squareSecLi1").style.display = 'block';
           document.getElementById("squareSecLi2").style.display = 'block';
@@ -420,7 +406,7 @@
                     
                 }
                 
-                console.log('recorddata',recorddata)
+                
                 
             $A.createComponent(
             "c:SingleItemCarousel",
@@ -434,7 +420,6 @@
                     
                     singleCarouselDymamic.pop();
                     singleCarouselDymamic.push(articles); 
-                    console.log('singleCarouselDymamic',singleCarouselDymamic)
                     component.set("v.singleCarouselDymamic", singleCarouselDymamic);
                    
                    

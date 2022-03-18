@@ -60,8 +60,7 @@
 		<name>Layout</name>
 	</types>
 	<types>
-		<members>iHopeBreakthroughArticleList</members>
-		<members>iHopeBreakthroughArticleTile</members>
+		<members>caseCreation</members>
 		<name>LightningComponentBundle</name>
 	</types>
 	<types>
@@ -85,5 +84,5 @@
 		<members>My_links</members>
 		<name>StaticResource</name>
 	</types>
-	<version>51.0</version>
+	<version>53.0</version>
 </Package>

@@ -1,0 +1,582 @@
+<template>
+    <template if:true={isServer} >
+            <lightning-spinner alternative-text="Loading..." size="large" class="slds-is-fixed">
+            </lightning-spinner>
+        </template>
+    <lightning-card title="Case Creation" icon-name="standard:call_history" style=background:#5679C0>
+       
+        <lightning-input style="padding:5px" type="search" onchange={handlePatientChangeServer} label="Search Patient"></lightning-input>
+        <template if:true={isDuplicate}>
+            <div class="slds-box">
+                <template if:true={showNext}>
+                        <p> <lightning-button style="float:right;margin:5px"  label="Next" variant="brand" onclick={prepopulateForm}></lightning-button></p>
+                    </template>
+                    <template if:true={showPatientFrom}>
+                        <lightning-button style="float:right;margin:5px"  label="New Patient" variant="brand" onclick={handleShowForm}></lightning-button>
+                    </template>
+                <template if:true={showClearButton}>
+                    <p><button style="float:right;margin:5px" class="slds-button slds-button_brand" onclick={clearSelection} title="OK">Clear selection</button></p>
+                </template>
+                <template if:true={showAccount}>
+               
+                            <table aria-describedby="account-list"
+                                        class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                <template if:true={accountList}>
+                                    <thead>
+                                        <th>
+
+                                        </th>
+                                        <th>
+                                            Account Name
+                                        </th>
+                                        <th>
+                                            Birth Date
+                                        </th>
+                                        <th>
+                                            Gender
+                                        </th>
+
+                                        <th>
+                                            Email
+                                        </th>
+                                        <th>
+                                            Mobile
+                                        </th>
+                                        <th>
+                                            Zip Code
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={accountList} for:item="item">
+                                            <tr key={item.Record.Id}>
+                                                <td>
+                                                    <div>
+                                                        <input type="radio" id={item.Record.Id}  value={item.Record.Id} name="dupeAccount" onclick={storeSelectedRec}>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <a href={item.url} target="_blank"> {item.Record.Name}</a>
+                                                </td>
+                                                <td>
+                                                   {item.Record.PersonBirthdate}
+                                                    
+                                                </td>
+                                                <td>
+                                                    {item.Record.Gender__pc}
+                                                </td>
+                                                <td>
+                                                    {item.Record.PersonEmail}
+                                                </td>
+                                                <td>
+                                                    {item.Record.PersonMobilePhone}
+                                                </td>
+                                                <td>
+                                                    {item.Record.Patient_Postal_Code__c}
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </template>
+                            </table>
+                </template>
+                <template if:true={showLead}>
+                    
+                    <table aria-describedby="lead-list"
+                                class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                        <template if:true={leadList}>
+                            <thead>
+                                <th>
+
+                                </th>
+                                <th>
+                                    Lead Name
+                                </th>
+                                    <th>
+                                    Birth Date
+                                </th>
+                                <th>
+                                    Gender
+                                </th>
+
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Mobile
+                                </th>
+                                <th>
+                                    Zip Code
+                                </th>
+                            </thead>
+                            <tbody>
+                                <template for:each={leadList} for:item="item">
+                                    <tr key={item.Record.Id}>
+                                        <td>
+                                            <div>
+                                                <input type="radio" id={item.Record.Id} value={item.Record.Id} name="dupeAccount" onclick={storeSelectedRec}>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href={item.url} target="_blank"> {item.Record.Name}</a>
+                                        </td>
+                                        
+                                        <td>
+                                            {item.Record.BirthDate__c}
+                                        </td>
+                                            <td>
+                                            {item.Record.Gender__c}
+                                        </td>
+                                            <td>
+                                            {item.Record.Email}
+                                        </td>
+                                            <td>
+                                            {item.Record.MobilePhone}
+                                        </td>
+                                       
+                                        <td>
+                                            {item.Record.PostalCode}
+                                        </td>
+                                            
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </template>
+                    </table>
+                </template>
+            </div>
+        </template>
+
+
+        <template if:true={showDuplicates}>
+            <div class="slds-box">
+                 <h6 style="font-size: 1.5em;text-align: center;"><b>DUPLICATE RECORDS FOUND</b></h6>
+                <template if:true={showClearButton}>
+                    <button style="float:right;margin:5px" class="slds-button slds-button_brand" onclick={clearSelection} title="OK">Clear selection</button>
+                </template>
+                <template if:true={showAccount}>
+                        <h1> DUPLICATE ACCOUNTS</h1>
+                            <table aria-describedby="account-list"
+                                        class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                <template if:true={accountList}>
+                                    <thead>
+                                        <th>
+
+                                        </th>
+                                        <th>
+                                            Account Name
+                                        </th>
+                                        <th>
+                                            Birth Date
+                                        </th>
+                                        <th>
+                                            Gender
+                                        </th>
+
+                                        <th>
+                                            Email
+                                        </th>
+                                        <th>
+                                            Mobile
+                                        </th>
+                                        <th>
+                                            Zip COde
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={accountList} for:item="item">
+                                            <tr key={item.Record.Id}>
+                                                <td>
+                                                    <div>
+                                                        <input type="radio" id={item.Record.Id}  value={item.Record.Id} name="dupeAccount" onclick={storeSelectedDupeRec}>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <a href={item.url} target="_blank"> {item.Record.Name}</a>
+                                                </td>
+                                                <td>
+                                                    {item.Record.PersonBirthdate}
+                                                </td>
+                                                <td>
+                                                    {item.Record.Gender__pc}
+                                                </td>
+                                                <td>
+                                                    {item.Record.PersonEmail}
+                                                </td>
+                                                <td>
+                                                    {item.Record.PersonMobilePhone}
+                                                </td>
+                                                <td>
+                                                    {item.Record.Patient_Postal_Code__c}
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </template>
+                            </table>
+                </template>
+                <template if:true={showLead}>
+                    <h1> DUPLICATE LEADS</h1>
+                    <table aria-describedby="lead-list"
+                                class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                        <template if:true={leadList}>
+                            <thead>
+                                <th>
+
+                                </th>
+                                <th>
+                                    Lead Name
+                                </th>
+                                    <th>
+                                    Birth Date
+                                </th>
+                                <th>
+                                    Gender
+                                </th>
+
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Mobile
+                                </th>
+                                <th>
+                                    Zip Code
+                                </th>
+                            </thead>
+                            <tbody>
+                                <template for:each={leadList} for:item="item">
+                                    <tr key={item.Record.Id}>
+                                        <td>
+                                            <div>
+                                                <input type="radio" id={item.Record.Id} value={item.Record.Id} name="dupeAccount" onclick={storeSelectedDupeRec}>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href={item.url} target="_blank"> {item.Record.Name}</a>
+                                        </td>
+                                        
+                                        <td>
+                                            {item.Record.BirthDate__c}
+                                        </td>
+                                            <td>
+                                            {item.Record.Gender__c}
+                                        </td>
+                                            <td>
+                                            {item.Record.Email}
+                                        </td>
+                                            <td>
+                                            {item.Record.MobilePhone}
+                                        </td>
+                                     
+                                        <td>
+                                            {item.Record.PostalCode}
+                                        </td>
+                                            
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </template>
+                    </table>
+                </template>
+            </div>
+        </template>
+
+        <template if:true={showCases}>
+            <br/>
+            <p style="text-align:center;padding-bottom:5px;"><span><lightning-icon size="x-small" icon-name="action:new_case" alternative-text="Case" title="Case"></lightning-icon></span>
+            <span style="font-size:1 rem;">&nbsp;<b>CASE RECORDS</b></span></p>
+            <!--<h6 style="text-align:center"><p style="font-size:1.5rem;"></p></h6>-->
+             <table aria-describedby="account-list"
+                                        class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+                                <template if:true={casesList}>
+                                    <thead>
+                                        <th>
+                                            Case Number
+                                        </th>
+                                        <th>
+                                            Owner
+                                        </th>
+                                        <th>
+                                            Appt. Date & Time
+                                        </th>
+                                        <th>
+                                            Recordtype Name
+                                        </th>
+                                        <th>
+                                            Status
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <template for:each={casesList} for:item="item">
+                                            <tr key={item.Id}>
+                                                <td>
+                                                    <a href={item.url} target="_blank">{item.CaseNumber}</a>
+                                                </td>
+                                                <td>
+                                                     {item.Owner.Name}
+                                                </td>
+                                                <td>
+                                                    {item.Appt_Date_Time__c}
+                                                </td>
+                                                <td>
+                                                    {item.RecordType.Name}
+                                                </td>
+                                                <td>
+                                                    {item.Status}
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </template>
+                            </table>
+        </template>
+
+        <template if:true={showFrom}>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small">
+                    <lightning-accordion
+                                        class="patientDetails"
+                                        active-section-name="A">
+                            <lightning-accordion-section name="A" label="Patient Details">
+                                <lightning-layout multiple-rows>
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small">
+                                        <lightning-combobox
+                                            name="salutation"
+                                            label="Salutation"
+                                            value={salutation}
+                                            placeholder="Select Salutation"
+                                            options={salutationList}
+                                            onchange={handleSalutationChange} ></lightning-combobox>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small">
+                                        <lightning-input name="firstname" type="text" label="First Name" value={firstName} required onchange={handleFirstNameChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small">
+                                        <lightning-input name="middename"  type="text" label="Middle Name" value={middleName} ></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small">
+                                        <lightning-input name="lastname" required type="text" label="Last Name" value={lastName}  onchange={handleLastNameChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small">
+                                        <lightning-input name="birthdate" type="date" date-style="short" required label="Birth Date" value={dateOfBirth} onchange={handleDOBChange}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small">
+                                        <lightning-combobox
+                                            name="ppn"
+                                            label="Primary Phone Number"
+                                            value={ppnId}
+                                            required
+                                            placeholder="Select Primary Phone"
+                                            options={ppnList}
+                                            onchange={handleppnChange} ></lightning-combobox>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small">
+                                        <lightning-input name="mobilephone" type="tel" label="Mobile" value={mobile}></lightning-input>
+                                    </lightning-layout-item>
+                                    
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small">
+                                        <lightning-input name="homephone" type="tel"  label="Home Phone" value={home}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small">
+                                        <lightning-input name="otherphone" type="tel"  label="Other Phone" value={other}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small">
+                                        <lightning-combobox
+                                            name="gender"
+                                            label="Gender"
+                                            value={gender}
+                                            required
+                                            placeholder="Select Gender"
+                                            options={genderlist}
+                                            
+                                            onchange={handleChange} ></lightning-combobox>
+                                    </lightning-layout-item>
+                                
+                                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small">
+                                        
+                                            <lightning-input-address
+                                                                    address-label="Address"
+                                                                    street-label="Street"
+                                                                    city-label="City"
+                                                                    country-label="Country"
+                                                                    province-label="Province"
+                                                                    postal-code-label="PostalCode"
+                                                                    province-options={stateList}
+                                                                    country-options={countryList}
+                                                                    city={city}
+                                                                    street={street}
+                                                                    country={country}
+                                                                    province={province}
+                                                                    postal-code={postalCode}
+                                                                    onchange={handleAddressChange}
+                                                                    >
+                                                                    </lightning-input-address>                                                          
+                                    </lightning-layout-item>
+                                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small">
+                                        <lightning-input name="email" type="email"  label="Email" value={email}></lightning-input>
+                                    </lightning-layout-item>
+                                    </lightning-layout>
+                            </lightning-accordion-section>                   
+                    </lightning-accordion>                 
+                </lightning-layout-item>
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small">
+                    <lightning-accordion 
+                                        class="callerDetails"
+                                        active-section-name="A">
+                            <lightning-accordion-section name="A" label="Caller Details">
+                                <lightning-layout multiple-rows>
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="12" padding="around-small">
+                                        <lightning-input name="sameaspatient" type="checkbox" label="Caller Same as Patient?" value={checkVal} onchange={handleCheckbox}></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="12" padding="around-small">
+                                        <lightning-combobox
+                                                name="relationship"
+                                                label="Caller Relationship to Patient"
+                                                value={relationship}
+                                                placeholder="Select Relationship"
+                                                options={relationshipList}
+                                                onchange={handeRelationshipChange} ></lightning-combobox>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="12" padding="around-small">
+                                        <lightning-input name="callerfirstname" type="text" label="Caller First Name"></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="12" padding="around-small">
+                                        <lightning-input name="callerlastname" type="text" label="Caller Last Name"></lightning-input>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="12" padding="around-small">
+                                        <lightning-input name="callercallbacknumber" type="tel" label="Primary Callback Number"></lightning-input>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+
+                                
+                            </lightning-accordion-section>                   
+                        </lightning-accordion>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small">
+                    <lightning-accordion 
+                                        class="caseinformation"
+                                        active-section-name="A">
+                            <lightning-accordion-section name="A" label="Case Information">
+                                <lightning-layout multiple-rows>                               
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="12" padding="around-small">                                      
+                                        <lightning-combobox
+                                                name="origin"
+                                                label="Case Origin"
+                                                value={caseOrigin}
+                                                placeholder="Select Case Origin"
+                                                options={originList}
+                                                onchange={handleOriginChange} 
+                                                required ></lightning-combobox>                                      
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="12" padding="around-small">                                        
+                                            <lightning-combobox
+                                                    name="priority"
+                                                    label="Priotrity"
+                                                    value={priority}
+                                                    placeholder="Select Priority"
+                                                    options={priorityList}
+                                                    onchange={handlePriorityChange} ></lightning-combobox>                                           
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="12" padding="around-small">
+                                        <lightning-combobox
+                                                name="status"
+                                                label="Status"
+                                                value={status}
+                                                placeholder="Select Status"
+                                                options={statusList}
+                                                onchange={handleStatusChange} 
+                                                required ></lightning-combobox>
+                                    </lightning-layout-item>
+                                    <template if:true={showInquiryType}>
+                                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="12" padding="around-small">
+                                            <lightning-combobox
+                                                    name="inquiry"
+                                                    label="Inquiry Type"
+                                                    value={inquiry}
+                                                    placeholder="Select Inquiry Type"
+                                                    options={inquiryList}
+                                                    onchange={handleInquiryChange}></lightning-combobox>
+                                        </lightning-layout-item>
+                                    </template>
+                                    <template if:true={showClosedReason}>
+                                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="12" padding="around-small">
+                                            <lightning-combobox
+                                                    name="closedreason"
+                                                    label="Closed Reason"
+                                                    value={closedreason}
+                                                    placeholder="Select Closed Reason"
+                                                    options={closedReasonList}
+                                                    onchange={handleReasonChange}></lightning-combobox>
+                                        </lightning-layout-item>
+                                    </template>
+                                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6" padding="around-small">
+                                       <!-- <lightning-input name="inquirynotes"  type="text" label="Inquiry Notes"></lightning-input> -->
+                                        <lightning-textarea name="inquirynotes" label="Inquiry Notes" placeholder="type here..."></lightning-textarea>
+
+                                    </lightning-layout-item>
+                                </lightning-layout>
+
+                                
+                            </lightning-accordion-section>                   
+                        </lightning-accordion>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+        <div slot="footer">
+            <div class="slds-clearfix">
+                <div class="slds-float_right">
+                    <template if:true={showNext}>
+                         <lightning-button label="Next" variant="brand" onclick={prepopulateForm}></lightning-button>
+                    </template>
+                    <template if:true={showPatientFrom}>
+                       &nbsp; <lightning-button label="New Patient" variant="brand" onclick={handleShowForm}></lightning-button>
+                    </template>
+                    <template if:true={showFrom}>
+                        <lightning-button label="Save" variant="brand" onclick={handleSaveForm}></lightning-button>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </lightning-card>
+    
+    <template if:true={isCommentBox}>
+        
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+               
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">You are Creating a Duplicate Record</h2>
+                </header>
+                
+                 <template if:true={isServer} >
+                    <lightning-spinner alternative-text="Loading..." size="large" class="slds-is-fixed">
+                    </lightning-spinner>
+                </template>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="height:300px">
+                    
+                    <lightning-combobox
+                                                    name="reasonForDupe"
+                                                    label="Reason for duplicate"
+                                                    value={reasonfordupe}
+                                                    placeholder="Select Reason"
+                                                    options={reasonForDupeList}
+                                                    onchange={handleReasonFordupe} ></lightning-combobox>   
+                    
+                </div>
+               
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModal} title="Cancel">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={updateRecord} title="OK">OK</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

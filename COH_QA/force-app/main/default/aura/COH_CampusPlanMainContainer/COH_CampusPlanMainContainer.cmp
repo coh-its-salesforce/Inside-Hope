@@ -101,9 +101,6 @@
     <aura:attribute name="ocNewsRecord" type="Campus_Plan_News__c"  />
     <!-- <aura:attribute name="ocTimelineRecord" type="Campus_Plan_Timeline__c"  /> --> <!--16.06.2020 FSalinas -->
     <aura:attribute type="String" name="listSource" default=""/>
-    
-    <aura:attribute type="String" name="Orange" default=""/>
-    
     <!--22.04.2020 -->
     <!-- <aura:attribute type="COH_CampusPlanController.timelinewrap" name="timelinetype1" /> --> <!--16.06.2020 FSalinas -->
     <!-- <aura:attribute type="Campus_Plan_Timeline__c[]" name="timeList1" default=""/> --> <!--16.06.2020 FSalinas -->
