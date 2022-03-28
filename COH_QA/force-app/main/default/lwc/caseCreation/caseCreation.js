@@ -1,4 +1,4 @@
-import { LightningElement , wire } from 'lwc';
+import { LightningElement , wire,track,api } from 'lwc';
 import saveCaseLead from '@salesforce/apex/COH_LeadCaseCreation.saveCaseLead';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin }  from 'lightning/navigation';
@@ -85,63 +85,103 @@ export default class LightningExampleAccordionBasic extends NavigationMixin(Ligh
 
 
 
-    @wire(getObjectInfo, { objectApiName: Case_OBJECT }) caseMD;
+    //@wire(getObjectInfo, { objectApiName: Case_OBJECT }) caseMD;
 
-    @wire(getObjectInfo, { objectApiName: Account_OBJECT }) accountMD;
+    //@wire(getObjectInfo, { objectApiName: Account_OBJECT }) accountMD;
 
-    @wire(getObjectInfo, { objectApiName: Lead_OBJECT }) leadMD;
+    //@wire(getObjectInfo, { objectApiName: Lead_OBJECT }) leadMD;
     
  
     // now retriving the StageName picklist values of Case
- 
+
+    @track caseRecordTypeId;
+    @track leadRecordType;
+    @track accountRecordType;
+
+    @wire(getObjectInfo, { objectApiName: Case_OBJECT })
+    wiredObjectInfo({error, data}) {
+        if (error) {
+            // handle Error
+        } else if (data) {
+            const rtis = data.recordTypeInfos;
+            console.log('rtis',rtis);
+            this.caseRecordTypeId = Object.keys(rtis).find(rti => rtis[rti].name === 'New Patient Services');
+            console.log('this.caseRecordTypeId',this.caseRecordTypeId)
+        }
+    };
+
+    @wire(getObjectInfo, { objectApiName: Lead_OBJECT })
+    wiredObjectInfolead({error, data}) {
+        if (error) {
+            // handle Error
+        } else if (data) {
+            const rtis = data.recordTypeInfos;
+            console.log('rtis',rtis);
+            this.leadRecordType = Object.keys(rtis).find(rti => rtis[rti].name === 'New Patient');
+            console.log('this.leadRecordType',this.leadRecordType)
+        }
+    };
+
+    @wire(getObjectInfo, { objectApiName: Account_OBJECT })
+    wiredObjectInfoaccount({error, data}) {
+        if (error) {
+            // handle Error
+        } else if (data) {
+            const rtis = data.recordTypeInfos;
+            console.log('rtis',rtis);
+            this.accountRecordType = Object.keys(rtis).find(rti => rtis[rti].name === 'Patient (Screen Unification)');
+            console.log('this.accountRecordType',this.accountRecordType)
+        }
+    };
+
     @wire(getPicklistValues,{
-        recordTypeId: '$caseMD.data.defaultRecordTypeId', 
+        recordTypeId: '$caseRecordTypeId', 
         fieldApiName: Origin_FIELD
     }) CaseOriginPicklist;
 
     @wire(getPicklistValues,{
-        recordTypeId: '$caseMD.data.defaultRecordTypeId', 
+        recordTypeId: '$caseRecordTypeId', 
         fieldApiName: Priority_FIELD
     }) CasePriorityPicklist;
 
     @wire(getPicklistValues,{
-        recordTypeId: '$caseMD.data.defaultRecordTypeId', 
+        recordTypeId: '$caseRecordTypeId', 
         fieldApiName: Status_FIELD
     }) CaseStatusPicklist;
 
     @wire(getPicklistValues,{
-        recordTypeId: '$caseMD.data.defaultRecordTypeId', 
+        recordTypeId: '$caseRecordTypeId', 
         fieldApiName: InquiryType_FIELD
     }) CaseInquiryPicklist;
 
     @wire(getPicklistValues,{
-        recordTypeId: '$caseMD.data.defaultRecordTypeId', 
+        recordTypeId: '$caseRecordTypeId', 
         fieldApiName: ClosedReason_FIELD
     }) CaseClosedReasonPicklist;
 
      @wire(getPicklistValues,{
-        recordTypeId: '$accountMD.data.defaultRecordTypeId', 
+        recordTypeId: '$accountRecordType', 
         fieldApiName: State_FIELD
     }) AccountStatePicklist;
 
     @wire(getPicklistValues,{
-        recordTypeId: '$accountMD.data.defaultRecordTypeId', 
+        recordTypeId: '$accountRecordType', 
         fieldApiName: Country_FIELD
     }) AccountCountryPicklist;
 
     @wire(getPicklistValues,{
-        recordTypeId: '$leadMD.data.defaultRecordTypeId', 
+        recordTypeId: '$leadRecordType', 
         fieldApiName: RFD_FIELD
     }) LeadReasonForDupePicklist;
 
 
     @wire(getPicklistValues,{
-        recordTypeId: '$accountMD.data.defaultRecordTypeId', 
+        recordTypeId: '$accountRecordType', 
         fieldApiName: PPN_FIELD
     }) AccountPPNPicklist;
 
     @wire(getPicklistValues,{
-        recordTypeId: '$leadMD.data.defaultRecordTypeId', 
+        recordTypeId: '$leadRecordType', 
         fieldApiName: L_SALUTATION_FIELD
     }) LeadSalution;
     
@@ -345,6 +385,8 @@ export default class LightningExampleAccordionBasic extends NavigationMixin(Ligh
         this.country = undefined
         this.province = undefined
         this.postalCode = undefined
+        this.caseOrigin = 'Inbound Call';
+        this.salutation = undefined;
     }
 
     searchPatientRecords(patientName){
@@ -650,6 +692,7 @@ export default class LightningExampleAccordionBasic extends NavigationMixin(Ligh
                         this.dateOfBirth = modifedDate;
                     }
                    
+                    this.caseObject = (acc.WTP_Created__c == true)?'Web':'Inbound Call';
                     this.salutation = acc.Salutation
                     this.ppnId = acc.Primary_Phone_Number__c;
                     this.mobile = acc.PersonMobilePhone;
@@ -692,6 +735,7 @@ export default class LightningExampleAccordionBasic extends NavigationMixin(Ligh
                         this.dateOfBirth = modifedDate;
                     }
 
+                    this.caseOrigin = acc.LeadSource;
                     this.salutation = acc.Salutation
                     this.ppnId = acc.Primary_Phone_Number__c;
                     this.mobile = acc.MobilePhone;
