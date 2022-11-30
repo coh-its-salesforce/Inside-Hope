@@ -1,0 +1,7 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+	  <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:registerEvent name="announceErrors" type="c:announceErrors"/>
+      <aura:registerEvent name="initCount" type="c:initCount"/>
+    <c:patientAccessCaseInsuranceMartix onnoerrorcustom="{!c.handleNoValidation}" onerrorcustom="{!c.handleError}" recordId ="{!v.recordId}"/>
+       
+</aura:component>

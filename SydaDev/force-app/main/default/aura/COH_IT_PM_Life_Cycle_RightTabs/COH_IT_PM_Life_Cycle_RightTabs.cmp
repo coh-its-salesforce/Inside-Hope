@@ -1,0 +1,19 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<lightning:tabset>
+        <lightning:tab label="Project Highlights">
+            Project Highlights !
+        </lightning:tab>
+        <lightning:tab label="Project Setup" title="Project Setup is 2ndTab Title">
+            Project Setup !
+        </lightning:tab>
+        <lightning:tab label="Project Health">
+            <c:COH_Project_Health1/>Project Health !
+        </lightning:tab>
+	<lightning:tab label="Dates">
+            Dates !
+        </lightning:tab>
+	<lightning:tab label="Project Status">
+            Project Status !
+        </lightning:tab>
+    </lightning:tabset>
+</aura:component>

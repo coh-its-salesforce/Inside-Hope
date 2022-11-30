@@ -1,0 +1,24 @@
+<!--
+* This is the lightning component for COHGoldenToHdpRestApiCall.
+* 
+* Balaji Rao
+* City of Hope
+* Copyright (c) 2019
+* 
+* No portion of this code may be copied, transferred, or transmitted
+* in any form (written, electronic, or otherwise) without the prior
+* written consent from the City of Hope.
+*  
+*/-->
+<aura:component controller="COHGoldenToHdpRestApiCall" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithOutHeader" access="global" >
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h2>Are you sure to send the records to HDP ?</h2><br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <aura:attribute name="spinner" type="boolean" default="FALSE"/>
+    <div class="exampleHolder">
+        <aura:if isTrue="{!v.spinner}">
+            <lightning:spinner alternativeText="Loading" size="Large" title ="Loading" />
+        </aura:if>
+        <lightning:button label="Cancel" onclick="{!c.handleCancel}"  iconPosition="center"/>
+        <lightning:button label="Send" onclick="{!c.sendRecord}"  variant="brand" iconPosition="center"/>
+    </div>    
+</aura:component>

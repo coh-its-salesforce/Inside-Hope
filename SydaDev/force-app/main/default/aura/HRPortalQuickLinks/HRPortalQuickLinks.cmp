@@ -1,0 +1,14 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<div class="customcss" style="background-color: #5BC2E7 !important;color: white;padding: 8px;border-radius: 8px;">
+        <div class="slds-media slds-media_center ">
+            <div class="slds-media__figure">
+                <span class="slds-avatar slds-avatar_small">
+                    <lightning:icon iconName="standard:link" size="small" class="iconcss"/>
+                </span>
+            </div>
+            <div class="slds-media__body">
+                <a target="_blank" href="https://cityofhope.lightning.force.com/lightning/r/ContentDocument/0693o000009wqNfAAI/view" style="font-size:12px;color: white;"><b>Previous iHOPE HR Links</b></a><br/>
+            </div>
+        </div>
+    </div>
+</aura:component>

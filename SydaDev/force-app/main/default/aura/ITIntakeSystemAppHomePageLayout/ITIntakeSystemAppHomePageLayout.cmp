@@ -1,0 +1,20 @@
+<aura:component implements="lightning:homeTemplate" description="Left Sidebar and Main Column. On a phone, the regions are of equal width">
+    <aura:attribute name ="left" type="Aura.Component[]"/>
+    <aura:attribute name ="right" type="Aura.Component[]"/>
+    <aura:attribute name ="bottom" type="Aura.Component[]"/>
+    <aura:attribute name ="footer" type="Aura.Component[]" description="Footer"/>
+    <aura:attribute name ="header" type="Aura.Component[]" description="Header"/>
+<div>
+    <div>{!v.header}</div><br/>
+    <lightning:layout>
+        <lightning:layoutItem flexibility="grow" class="slds-m-right_small">
+            {!v.left}
+        </lightning:layoutItem>
+        <lightning:layoutItem size="{! $Browser.isDesktop ? '9' : '2' }" class="slds-m-left_small">
+            {!v.right}
+        </lightning:layoutItem>
+    </lightning:layout>
+    <div>{!v.footer}</div>
+</div>
+
+</aura:component>

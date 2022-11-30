@@ -1,0 +1,57 @@
+<apex:component controller="ext_NewsAnnouncement">
+  <apex:attribute name="pageName" description="To show the News and Announcement Accordingly" type="string" required="true" />
+  <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false"><!-- -->
+    
+    <div class="classNews">
+      <div class="NewsAnnTit">
+        <h1>News &#x26; Announcements</h1>
+      </div>
+      <!-- Wrapper for slides -->
+      <div id="innerCarousel" class="carousel-inner" role="listbox">
+        <div class="item active">
+          <div class="SliderWrapper">
+            <div class="NewsClass">
+                <apex:repeat value="{!lstNewsList1}" var="News">
+                    <div class="NewsItem">
+                        <div class="NewsItemHeader">
+                            {!News.Title__c}
+                        </div>
+                        <div class="NewsItemImage">
+                            <apex:image value="/servlet/servlet.FileDownload?file={!IF(News.Image_Attachment_Id__c!=null,News.Image_Attachment_Id__c, $Label.Default_Image)}"  styleClass="imgClass"/>
+                        </div>
+                        <div class="NewsItemText">
+                            {!News.Description__c}
+                            <br/>
+                            <apex:outputLink target="_blank" value="{!IF(News.Image_URL__c!=null, News.Image_URL__c, '/apex/NewsAnnouncementDetailPage?id=' + News.id)}" style="color:darkOrange;text-decoration:none;" > <b>> read more</b></apex:outputLink>
+                        </div>
+                    </div>
+                 </apex:repeat>
+              </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="SliderWrapper">
+            <div class="NewsClass">
+                <apex:repeat value="{!lstNewsList2}" var="News">
+                    <div class="NewsItem">
+                        <div class="NewsItemHeader">
+                            {!News.Title__c}
+                        </div>
+                        <div class="NewsItemImage">
+                            <apex:image value="/servlet/servlet.FileDownload?file={!IF(News.Image_Attachment_Id__c!=null,News.Image_Attachment_Id__c, $Label.Default_Image)}"  styleClass="imgClass"/>
+                        </div>
+                        <div class="NewsItemText">
+                            {!News.Description__c}
+                            <br/>
+                            <apex:outputLink target="_blank" value="{!IF(News.Image_URL__c!=null, News.Image_URL__c, '/apex/NewsAnnouncementDetailPage?id=' + News.id)}" style="color:darkOrange;text-decoration:none;" > <b>> read more</b></apex:outputLink>
+                        </div>
+                    </div>
+                 </apex:repeat>
+              </div>
+          </div>
+        </div>
+      </div>
+      <!-- Left and right controls --> 
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="margin-left:-61px;margin-top: 8px;"></span> <span class="sr-only">Previous</span> </a> <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true" style="margin-right:-61px;margin-top: 8px;"></span> <span class="sr-only">Next</span> </a> </div>
+  </div>
+</apex:component>

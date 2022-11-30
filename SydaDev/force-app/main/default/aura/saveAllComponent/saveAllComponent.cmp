@@ -1,0 +1,16 @@
+<aura:component controller="publishEvent" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    
+    <aura:attribute name="spinner" type="boolean" default="false"/>
+    <aura:attribute name="timer" type="Integer"/>
+     <aura:registerEvent name="callSaveAll" type="c:callSaveAll"/>
+       
+        
+    
+    <lightning:card title="">
+  
+        <p class="slds-p-horizontal_small" style="text-align: center;">
+            <!--<lightning:button variant="brand" label="Save All" onclick="{! c.saveAll }"/>-->
+            <lightning:button variant="brand" label="Save All" onclick="{! c.saveAllAppEvent }"/>
+        </p>
+    </lightning:card>
+</aura:component>

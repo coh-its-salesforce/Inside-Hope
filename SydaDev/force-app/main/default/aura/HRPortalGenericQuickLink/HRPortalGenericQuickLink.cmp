@@ -1,0 +1,28 @@
+<aura:component implements="flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global" >
+	<aura:attribute name="url" type="string"></aura:attribute>
+    <aura:attribute name="iconName" type="string"></aura:attribute>
+    <aura:attribute name="target" type="string" default="_blank"></aura:attribute>
+    <aura:attribute name="title" type="string" required="true"></aura:attribute>
+    <aura:attribute name="subtitle" type="string" ></aura:attribute>
+    <aura:attribute name="fontcolor" type="string" default="white"></aura:attribute>
+    <aura:attribute name="backgroundcolor" type="string" default="#5BC2E7"></aura:attribute>
+   
+    <div class="customcss" style="{!'background-color: '+ v.backgroundcolor +' !important;padding: 8px;border-radius: 8px;color:'+ v.fontcolor}">
+        <div class="slds-media slds-media_center ">
+            <div class="slds-media__figure">
+                <span class="slds-avatar slds-avatar_small">
+                    <lightning:icon iconName="{!v.iconName}" size="small" class="iconcss" />
+                </span>
+            </div>
+            <div class="slds-media__body">
+                <a target="{!v.target}" href="{!v.url}" style="{! 'font-size:12px;color:'+ v.fontcolor}">
+                    <b>{!v.title}</b>
+                </a>
+                <br/>
+                <aura:if isTrue="{!v.subtitle != ''}">
+                	<p style="{!'font-size:10px;color:'+v.fontcolor}">{!v.subtitle}</p>
+                </aura:if>
+            </div>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,19 @@
+<apex:page controller="SIRP_DepartmentPortal" sidebar="false" showHeader="false">
+   
+    <apex:form >
+        <apex:pageBlock title="{!secondaryDeptEditLst[0].Name}">
+            <apex:pageMessages />
+            <apex:pageBlockSection title="Update Details:" columns="1" >
+                <apex:inputField value="{!secondaryDeptEditLst[0].Name}" />
+                <apex:inputField value="{!secondaryDeptEditLst[0].Title__c}" />
+
+                <apex:inputField value="{!secondaryDeptEditLst[0].Secondary_Department_Content__c}" style="width:250px; height: 10px;"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Update" action="{!updateSecondaryDepartmentSection}"/>
+                <apex:commandButton value="Cancel" action="{!cancelSecondaryDepartmentSection}"/>                               
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+      
+    </apex:form>
+</apex:page>

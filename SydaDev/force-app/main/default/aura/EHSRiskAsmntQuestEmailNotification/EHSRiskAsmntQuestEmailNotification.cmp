@@ -1,0 +1,9 @@
+<aura:component controller="EHSRiskAsmntQuestEmailController" implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" access="global" >
+<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:html tag="style">
+            
+        .forceModal {
+        display:none !important;
+        }
+    </aura:html>
+</aura:component>

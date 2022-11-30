@@ -1,0 +1,23 @@
+<template>
+    <template if:true={intakeRecords}>
+        <div class="slds-m-around_xxx-small">
+        <lightning-card title={intakeRecords.Name} icon-name="custom:custom55" style=background:#5679C0>
+            <div class="slds-m-around_small">
+                <p>
+                    <strong>Request Name : </strong> {intakeRecords.Request_Name__c} <br />
+                    <strong>Request Type: </strong> {intakeRecords.Request_Type__c} <br />
+                    <strong>Intake Status : </strong> {intakeRecords.Request_Status__c}<br />
+                    <strong>Final Disposition : </strong> {intakeRecords.Approval_Status__c}<br />
+                    <strong>Primary ISC : </strong> {intakeRecords.Primary_ISC__c}<br />
+                    <strong>IT/Delivery Functional Area : </strong> {intakeRecords.IT_Functional_Area__c}<br />
+                    <strong>IT/Delivery Sub-Functional Area : </strong> {intakeRecords.IT_Functional_Sub_Area__c}<br />            
+                    <strong>Created By : </strong> {intakeRecords.CreatedBy.Name}
+                </p>
+                <p class="slds-m-around_small">
+                    <lightning-button label="Open Record Detail" variant="brand" onclick={handleOpenRecordDetail}></lightning-button>
+                </p>
+            </div>
+        </lightning-card>
+        </div>
+    </template>
+</template>

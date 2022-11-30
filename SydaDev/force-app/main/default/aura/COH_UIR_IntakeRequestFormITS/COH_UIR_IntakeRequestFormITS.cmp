@@ -1,0 +1,247 @@
+<aura:component controller="COH_UIR_IntakeRequestFormController" >
+	<aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:method name="validateFields" action="{!c.validateFields}"/>
+    <aura:attribute name="mIntakeRequest" type="COH_UniversalIntakeRequest__c"/>    
+    <aura:attribute name="mPicklists" type="Map" />
+    
+    <div class="slds-form-horizontal">
+        <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_small">
+            ITS Request
+        </h3>
+        
+        <!-- Proposed Name and Alternative Name -->
+        <div class="slds-grid slds-wrap">
+			<div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+				<div class="slds-form-element__control">
+					<lightning:input value="{!v.mIntakeRequest.COH_UIR_ITS_ProposedRequestName__c}"
+									 label="Proposed Name of Initiative"
+									 name="COH_UIR_ITS_ProposedRequestName__c"
+									 aura:id="intakeRequestFormITS"
+									 required="true"
+                                     disabled="true"/>                
+				</div>         
+			</div>
+			<div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+				<div class="slds-form-element__control">
+					<lightning:input value="{!v.mIntakeRequest.COH_UIR_ITS_AlternativeRequestName__c}"
+									 label="Alternate Name of Initiative"
+									 name="COH_UIR_ITS_AlternativeRequestName__c"
+									 aura:id="intakeRequestFormITS"
+									 required="true"/>                
+				</div>         
+			</div>            
+        </div>
+        
+        <!-- Program, Priority -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ITS_Program__c}" 
+                                      label="Program"
+                                      name="COH_UIR_ITS_Program__c"
+                                      aura:id="intakeRequestFormITS"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ITS_Program__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ITS_Program__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ITS_RequesterPriority__c}" 
+                                      label="Requester Priority"
+                                      name="COH_UIR_ITS_RequesterPriority__c"
+                                      aura:id="intakeRequestFormITS"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ITS_RequesterPriority__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ITS_RequesterPriority__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>            
+        </div>
+        
+        <!-- Project Size, Request Category -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ITS_ProjectSize__c}" 
+                                      label="Project Size (Business)"
+                                      name="COH_UIR_ITS_ProjectSize__c"
+                                      aura:id="intakeRequestFormITS"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ITS_ProjectSize__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ITS_ProjectSize__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ITS_RequestCategory__c}" 
+                                      label="Request Category"
+                                      name="COH_UIR_ITS_RequestCategory__c"
+                                      aura:id="intakeRequestFormITS"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ITS_RequestCategory__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ITS_RequestCategory__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>            
+        </div>
+        
+        <!-- Budget Category, Funding Type -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ITS_BudgetCategory__c}" 
+                                      label="Budget Category"
+                                      name="COH_UIR_ITS_BudgetCategory__c"
+                                      aura:id="intakeRequestFormITS"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ITS_BudgetCategory__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ITS_BudgetCategory__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ITS_FundingType__c}" 
+                                      label="Funding Type"
+                                      name="COH_UIR_ITS_FundingType__c"
+                                      aura:id="intakeRequestFormITS"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ITS_FundingType__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ITS_FundingType__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+        </div>
+        
+        <!-- Funding Source, Funding Source Sub Category -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ITS_FundingSource__c}" 
+                                      label="Funding Source"
+                                      name="COH_UIR_ITS_FundingSource__c"
+                                      aura:id="intakeRequestFormITS"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ITS_FundingSource__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ITS_FundingSource__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <c:COH_UTIL_DependentPicklist mControllingPicklistValue="{!v.mIntakeRequest.COH_UIR_ITS_FundingSource__c}"
+                                                  mSObjectAPIName="COH_UniversalIntakeRequest__c"
+                                                  mControllingFieldAPIName="COH_UIR_ITS_FundingSource__c"
+                                                  mDependentFieldAPIName="COH_UIR_ITS_FundSourceSubCategory__c"
+                                                  mDependentPicklistValue="{!v.mIntakeRequest.COH_UIR_ITS_FundSourceSubCategory__c}"
+                                                  mDependentPicklistLabel="Funding Source Sub Category"
+                                                  mDependentPicklistName="COH_UIR_ITS_FundSourceSubCategory__c" 
+                                                  mRequired="true"
+                                                  aura:id="intakeRequestFormChildComponent"/>
+                </div>         
+            </div>            
+        </div>
+        
+        <!-- Funding Source Explanation -->
+        <div class="slds-grid slds-wrap">
+			<div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium ">
+				<div class="slds-form-element__control">
+					<lightning:input value="{!v.mIntakeRequest.COH_UIR_ITS_FundingSourceExplanation__c}"
+									 label="Funding Source Explanation"
+									 name="COH_UIR_ITS_FundingSourceExplanation__c"
+									 aura:id="intakeRequestFormITS"
+									 required="true"/>                
+				</div>         
+			</div>            
+        </div>
+        
+        <!-- Regulatory?, Regulatory due date -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ITS_Regulatory__c}" 
+                                      label="Regulatory?"
+                                      name="COH_UIR_ITS_Regulatory__c"
+                                      aura:id="intakeRequestFormITS"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ITS_Regulatory__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ITS_Regulatory__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_ITS_Regulatory__c == 'Yes'}">
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_ITS_RegulatoryDueDate__c}"
+                                         label="Regulatory Due Date"
+                                         name="COH_UIR_ITS_RegulatoryDueDate__c"
+                                         aura:id="intakeRequestFormITS"
+                                         type="date"
+                                         required="true"/>                
+                    </div>         
+                </div>
+            </aura:if>
+        </div>
+        
+        <!-- Expedited Request, Expedited Request reason -->
+        <div class="slds-grid slds-wrap">
+			<div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+				<div class="slds-form-element__control">
+					<lightning:input type="checkbox"
+                                     checked="{!v.mIntakeRequest.COH_UIR_ITS_ExpeditedRequest__c}"
+									 label="Expedited Request?"
+									 name="COH_UIR_ITS_ExpeditedRequest__c"
+									 aura:id="intakeRequestFormITS"/>                
+				</div>         
+			</div>
+            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_ITS_ExpeditedRequest__c}">
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_ITS_ExpeditedRequestReason__c}" 
+                                          label="If Expedited Request, Reason For Request"
+                                          name="COH_UIR_ITS_ExpeditedRequestReason__c"
+                                          aura:id="intakeRequestFormITS"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_ITS_ExpeditedRequestReason__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ITS_ExpeditedRequestReason__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+            </aura:if>
+        </div>
+        
+        <!-- Requester Notes -->
+        <div class="slds-grid slds-wrap">
+			<div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+				<div class="slds-form-element__control">
+					<lightning:textarea value="{!v.mIntakeRequest.COH_UIR_ITS_RequesterNotes__c}"
+									 label="Requester Notes"
+									 name="COH_UIR_ITS_RequesterNotes__c"
+									 aura:id="intakeRequestFormITS"
+									 required="true"/>                
+				</div>         
+			</div>	            
+        </div>        
+    </div>    
+</aura:component>

@@ -1,0 +1,125 @@
+<aura:component controller="COH_IntSvc_ComponentController" implements="flexipage:availableForAllPageTypes,force:hasRecordId">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <c:COH_UTIL_CheckboxGroupHelper aura:id="COH_Util_CheckboxGroupHelper"/>
+    <aura:attribute name="mLoading" type="boolean" default="true"/>
+    <aura:attribute name="mVisaRecord" type="Visa__c"/>
+    <aura:attribute name="mPicklists" type="Map"/>
+    <aura:attribute name="mFieldsUsed" type="String" default="I_acknowledge_and_agree__c, Items_applicant_will_have_access_to__c, Export_Administration_Regulations__c, International_Traffic_in_Arms_Regulation__c, Research_made_publicly_available__c, Access_knowledge_technology_for_purposes__c"/>
+    <aura:attribute name="mCheckboxGroupValues" type="Map" default="{	'Export_Administration_Regulations__c':'', 
+                                                                    'International_Traffic_in_Arms_Regulation__c':'', 
+                                                                    'Research_made_publicly_available__c':'', 
+                                                                    'Access_knowledge_technology_for_purposes__c':''}"/> 
+    <aura:attribute name="mShowErrorMessage" type="Boolean" default="false"/>
+    
+    
+    <aura:if isTrue="{!v.mLoading}">
+        <div class="slds-form-horizontal slds-theme_default slds-p-vertical_large ">
+            <div>
+                <lightning:spinner variant="brand" size="large"/>
+            </div>
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!v.mLoading == false}">
+        <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_small">
+            H-1B, TN, E-3, and O-1 Only - Important Information for Sponsoring Department
+        </h3>
+        <div class="slds-form-horizontal slds-theme_default slds-p-vertical_small">
+            <ul class="slds-list_dotted slds-is-nested">
+                <li>
+                    COH will request for the maximum time for each visa category as indicated below unless the applicant has less than maximum time 
+                    <ul class="slds-list_dotted slds-is-nested">
+                        <li>H-1B = 3 years</li>
+                        <li>TN = 2 years</li>
+                        <li>E-3 = 2 years</li>
+                        <li>O-1 = </li>
+                    </ul>
+                </li>
+                <li>For H-1B only -- In the event that the employee is terminated prior to the expiration date indicated on the employee’s H-1B Approval Notice the sponsoring department agrees to pay for the reasonable cost of return transportation to the employee’s last country of residence outside the United States. This includes termination for all reasons including end of contract. The only exception is when the employee resigns at his/her own will.</li>
+                <li>For H-1B and TN -- The offered salary must meet the minimum Prevailing Wage requirement per the U.S. Department of Labor guidelines for each year</li>
+                <li>
+                    The sponsoring department is responsible for reporting to ISSS regarding to any changes in employment and working conditions including but not to the following:
+                    <ul class="slds-list_dotted slds-is-nested">
+                        <li>Full time to part time employment</li>
+                        <li>Leave of Absence</li>                
+                        <li>New work location</li>
+                        <li>Chang in hiring entity (i.e. Med Center, BRI, Foundation, Philanthropy, Med Group, etc.)</li>
+                    </ul>
+                </li>
+                <li>The sponsoring department will be responsible for all associated fees including but not limited to legal and the USCIS filing fees as related to obtaining and/or terminating the H-1B sponsorship</li>
+                <li>
+                    The following fees are not the sponsoring department’s responsibility and should be paid by the applicant:
+                    <ul class="slds-list_dotted slds-is-nested">
+                        <li>Applicant’s spouse and family fees</li>
+                        <li>Credential evaluation fees for foreign degree</li>
+                        <li>Any additional cost applicant incurred outside the scope of the application due to their own doing</li>
+                    </ul>
+                </li>        
+            </ul>
+            <br/>
+            <lightning:input type="checkbox" 
+                             label="I acknowledge and agree to the above conditions" 
+                             name="I_acknowledge_and_agree__c" 
+                             checked="{!v.mVisaRecord.I_acknowledge_and_agree__c}"
+                             aura:id="sectionSixFormInput"
+                             required="true"
+                             onchange="{!c.onRequiredFieldUpdate}"/>
+        </div>
+        <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_small">
+            For H-1B and O-1 Only – Release of Controlled Technology or Technical Data to Foreign Persons in the United States 
+        </h3>
+        <div class="slds-form-horizontal slds-theme_default slds-p-vertical_small">
+            <ul class="slds-list_dotted slds-is-nested">
+                <li class="slds-p-vertical_xx-small">
+                    <lightning:select name="Items_applicant_will_have_access_to__c" 
+                                      label="List all items below that the applicant will have access to in performing his/her duties.  These items may include various types of chemicals, compounds, biologics, nuclear material, software, and equipment that the applicant will use and have access to during employment. Note that this information will be used to determine whether or not the Export Control License will be required for the applicant." 
+                                      value="{!v.mVisaRecord.Items_applicant_will_have_access_to__c}"
+                                      aura:id="sectionSixFormInput">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.Items_applicant_will_have_access_to__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mVisaRecord.Items_applicant_will_have_access_to__c}">{!currentPicklistOption.label}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                    <ul class="slds-list_ordered">
+                        <li class="slds-p-vertical_xx-small">
+                            <lightning:checkboxGroup name="Export_Administration_Regulations__c"
+                                                     label="Export Administration Regulations (EAR) -- Any item(s) listed on the Commerce Control List, including technologies (not end products) associated with certain (check all that apply):"
+                                                     options="{!v.mPicklists.Export_Administration_Regulations__c}"
+                                                     value="{!v.mCheckboxGroupValues.Export_Administration_Regulations__c}"
+                                                     aura:id="sectionSixFormCheckboxGroup"/>
+                            <p>Complete list is available at: <lightning:formattedUrl value="http://www.access.gpo.gov/bis/ear/pdf/indexccl.pdf"/></p>
+                        </li>
+                        <li class="slds-p-vertical_xx-small">
+                            <lightning:checkboxGroup name="International_Traffic_in_Arms_Regulation__c"
+                                                     label="International Traffic in Arms Regulations (ITAR) -- Any item(s) listed on the United States Munitions List, including technologies (not end products) related to (check all that apply):"
+                                                     options="{!v.mPicklists.International_Traffic_in_Arms_Regulation__c}"
+                                                     value="{!v.mCheckboxGroupValues.International_Traffic_in_Arms_Regulation__c}"
+                                                     aura:id="sectionSixFormCheckboxGroup"/>                    
+                            <p>Complete list is available at: <lightning:formattedUrl value="http://www.fas.org/spp/starwars/offdocs/itar/p121.htm"/></p>
+                        </li>                    
+                    </ul>
+                </li>
+                <li class="slds-p-vertical_xx-small">
+                    <lightning:checkboxGroup name="Research_made_publicly_available__c"
+                                             label="If you answer “yes” to the above question, will the research/work results generated from use of the items in the answer to question above be made publicly available through any of the following (select one or more):"
+                                             options="{!v.mPicklists.Research_made_publicly_available__c}"
+                                             value="{!v.mCheckboxGroupValues.Research_made_publicly_available__c}"
+                                             aura:id="sectionSixFormCheckboxGroup"/>                
+                </li>
+                <li class="slds-p-vertical_xx-small">
+                    <lightning:checkboxGroup name="Access_knowledge_technology_for_purposes__c"
+                                             label="If you answered “None of the above” to question above, will  the applicant’s access the information/knowledge or technology(ies) for any of the following purposes (select one):"
+                                             options="{!v.mPicklists.Access_knowledge_technology_for_purposes__c}"
+                                             value="{!v.mCheckboxGroupValues.Access_knowledge_technology_for_purposes__c}"
+                                             aura:id="sectionSixFormCheckboxGroup"/>               
+                </li>
+            </ul>
+        </div>
+        <div class="slds-text-align_center">
+            <lightning:button label="Save Section 6" onclick="{!c.onSubmitBtnClick}" class="slds-button slds-button_brand" aura:id="submitBtn"/>
+            <aura:if isTrue="{!v.mShowErrorMessage}">
+                <p class="slds-text-body_regular slds-p-vertical_xx-small slds-text-color_error">Please complete the required fields</p>
+            </aura:if>   
+            <p class="slds-text-heading_small slds-p-top_small">Please click "Save" to submit</p>
+        </div>
+    </aura:if>
+</aura:component>

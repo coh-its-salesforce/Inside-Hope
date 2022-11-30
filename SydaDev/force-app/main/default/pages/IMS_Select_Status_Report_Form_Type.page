@@ -1,0 +1,58 @@
+<!--
+  -- This is the Visualforce page for the selecting the IMS Status Report Form type.
+  --
+  -- Raymond Tam
+  -- City of Hope
+  -- Copyright (c) 2015
+  -- 
+  -- No portion of this code may be copied, transferred, or transmitted
+  -- in any form (written, electronic, or otherwise) without the prior
+  -- written consent from the City of Hope.
+  --
+ -->
+<apex:page StandardController="IMS_Status_Report_Form__c" extensions="IMSStatusReportFormController" id="resourceRequestForm" sidebar="false" showHeader="true" title="Resource RequestForm">
+    <apex:stylesheet value="{!$Resource.IMS_Stylesheet}"/> 
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"/>
+    <script type="text/javascript">
+        var j$=jQuery.noConflict();
+    
+    	//  Create a basic popup window
+    
+        function popitup(url, windowName, height, width) {
+            newwindow = window.open(url, windowName, 'height=' + height + ', width=' + width);
+            if (window.focus) {
+                newwindow.focus();
+            }
+            return false;
+        }
+    
+    	//  Close the popup window
+       	function closeWindow() {
+    		if (newWindow.closed == false) {
+               newWindow.close();
+			}            
+    	}
+    
+    	// If the user selected a status report, then go back two pages.  
+    	// Otherwise, go back only one page. 
+       	function goBackPage(statusReportSelected) {
+            if (statusReportSelected == true) {
+            	window.history.go(-2); 
+            } else {
+            	window.history.go(-1); 
+            }
+            location.reload(true);
+    	}
+    </script>                    
+
+    <apex:form >
+        <apex:pageBlock title="Select Status Report Form Type" id="selectStatusReportFormType">
+            <apex:pageBlockButtons >
+                <apex:commandButton id="selectClinicalRecord" action="{!setStatusReportTrue}" title="Create a Clinical status report" value="Clinical" onclick="popitup('/apex/IMS_Status_Report_Form_Clinical', 'Clinical Status Report', 740, 1230)"/>
+                <apex:commandButton id="selectNonClinicalRecord" action="{!setStatusReportTrue}" title="Create a Non-Clinical status report" value="Non-Clinical" onclick="popitup('/apex/IMS_Status_Report_Form_Non_Clinical', 'Non Clinical Status Report', 740, 1230)"/>
+                <apex:commandButton id="finishRecord" action="{!setStatusReportFalse}" title="Finished" value="Finished" onclick="goBackPage({!statusReportSelected})"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+    
+</apex:page>

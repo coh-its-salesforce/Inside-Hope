@@ -1,0 +1,18 @@
+<apex:page STAndardController="ITS_Project_Request__c" extensions="ITSProjectApprovalController">
+    <apex:sectionHeader title="Approve/Reject Account" />
+    <apex:pageMessages ></apex:pageMessages>    
+    <apex:form >
+        <apex:pageblock >
+            <apex:pageblockButtons >
+                <apex:commandButton value="Save" action="{!doSingleSave}"/>
+                <apex:commandButton value="Cancel" action="{!Cancel}"/>
+            </apex:pageblockButtons>
+            <apex:pageblockSection columns="1">
+                <apex:outputField value="{!ITS_Project_Request__c.Name}"/>
+              
+                <apex:inputField value="{!acc.Commented__c}" required="true"/>
+            </apex:pageblockSection>
+        </apex:pageblock>
+    </apex:form>
+  
+</apex:page>

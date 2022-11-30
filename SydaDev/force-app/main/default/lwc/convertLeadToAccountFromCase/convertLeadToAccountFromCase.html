@@ -1,0 +1,15 @@
+<template>
+    <template if:true={isServer} >
+            <lightning-spinner alternative-text="Loading..." size="large" class="slds-is-fixed">
+            </lightning-spinner>
+        </template>
+       <lightning-card  variant="Narrow"  title="" icon-name="">
+          
+           <p class="slds-p-horizontal_small" style="text-align:center"><lightning-button variant="brand" label="Convert Lead" class="slds-button_stretch"  title="Convert" onclick={handleConvertlead}></lightning-button></p>
+        
+       </lightning-card>
+        <!--
+   <lightning-button variant="brand" label="Convert Lead" class="slds-button_stretch"  title="Convert" onclick={handleConvertlead}></lightning-button>
+       
+        <input type="button" value="Convert Lead" onclick={handleConvertLead} style="width: 100%;color: white;background-color: #175caa;border-radius: 5px;">-->
+</template>

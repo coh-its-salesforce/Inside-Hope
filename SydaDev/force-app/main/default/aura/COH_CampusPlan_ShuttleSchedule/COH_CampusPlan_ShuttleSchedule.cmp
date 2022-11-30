@@ -1,0 +1,130 @@
+<aura:component >
+   
+   <aura:registerEvent name="openRivergrade" type="c:CampusPlan_RivergradeEvent" />
+   <aura:attribute name="ShuttleSchedule" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.ShuttleSchedule}">
+       <div class="banner-container">
+    	<div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+                    <div class="banner-image">
+      				<img src = "{!$Resource.ShuttleSchedule}"/> 
+      				</div>
+      		</div>
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12">
+               <div class="banner-content">
+                   <h4 class="label-header"><label class=" blue-bg">Rivergrade</label></h4>
+                   <h2>Duarte Campus Shuttle Service </h2>
+               </div>
+      		</div>
+      	</div>
+       </div>
+        <div class="profile-content">
+        	<table class="shuttle-schedule-table">
+                <thead>
+                    <tr>
+                        <th>Depart 4920 Rivergrade</th>
+                        <th>Departs Helford Driveway</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>7:30 a.m.</td>
+                        <td>7:45 a.m.</td>
+                    </tr>
+                    <tr>
+                        <td>8:00 a.m.</td>
+                        <td>8:15 a.m.</td>
+                    </tr>                          
+                    <tr>
+                        <td>8:30 a.m.</td>
+                        <td>8:45 a.m.</td>
+                    </tr>                         
+                    <tr>
+                        <td>9:00 a.m.</td>
+                        <td>9:15 a.m.</td>
+                    </tr>                         
+                    <tr>
+                        <td>9:30 a.m.</td>
+                        <td>9:45 a.m.</td>
+                    </tr>
+                    <tr>
+                        <td>10:00 a.m.</td>
+                        <td>10:15 a.m.</td>
+                    </tr>
+                    <tr>
+                        <td>10:30 a.m.</td>
+                        <td>10:45 a.m.</td>
+                    </tr>                          
+                    <tr>
+                        <td>11:00 a.m.</td>
+                        <td>11:15 a.m.</td>
+                    </tr>                         
+                    <tr>
+                        <td>11:30 a.m.</td>
+                        <td>11:45 a.m.</td>
+                    </tr>                         
+                    <tr>
+                        <td>12 noon</td>
+                        <td>12:15 p.m.</td>
+                    </tr>
+                    <tr>
+                        <td>12:30 p.m.</td>
+                        <td>12:45 p.m.</td>
+                    </tr>
+                    <tr>
+                        <td>1:00 p.m. </td>
+                        <td>1:15 p.m.</td>
+                    </tr>                          
+                    <tr>
+                        <td>1:30 p.m.</td>
+                        <td>1:45 p.m.</td>
+                    </tr>                         
+                    <tr>
+                        <td>2:00 p.m.</td>
+                        <td>2:15 p.m.</td>
+                    </tr>                         
+                    <tr>
+                        <td>2:30 p.m.</td>
+                        <td>2:45 p.m.</td>
+                    </tr>
+                    <tr>
+                        <td>3:00 p.m.</td>
+                        <td>3:15 p.m.</td>
+                    </tr>
+                    <tr>
+                        <td>3:30 p.m.</td>
+                        <td>3:45 p.m.</td>
+                    </tr>                          
+                    <tr>
+                        <td>4:00 p.m.</td>
+                        <td>4:15 p.m.</td>
+                    </tr>                         
+                    <tr>
+                        <td>4:30 p.m.</td>
+                        <td>4:45 p.m.</td>
+                    </tr>                         
+                    <tr>
+                        <td>5:00 p.m.</td>
+                        <td>5:15 p.m.</td>
+                    </tr>
+                    <tr>
+                        <td>5:30 p.m.</td>
+                        <td>5:45 p.m.</td>
+                    </tr>                         
+                    <tr>
+                        <td>6:00 p.m.</td>
+                        <td>6:15 p.m.</td>
+                    </tr>
+                </tbody>
+        </table>
+            
+        <p class="call-us">Call (626) 218-2006 for after-hours assistance.</p>
+		</div>
+        
+
+        <!--<div class="backbutton" onclick="{!c.goBackToRiverGrade}" ><lightning:icon iconName="utility:back" size="x-small" variant="inverse" />&nbsp;&nbsp;&nbsp;&nbsp;Back  
+    </div>-->
+       </aura:if>
+    
+    
+</aura:component>

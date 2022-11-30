@@ -1,0 +1,30 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" controller="COHHopeAssistController">
+    <aura:attribute name="mCase" type="Case" default=""/>
+    
+    <article class="slds-card slds-card_boundary">    
+        <aura:if isTrue="{!not(empty(v.mCase))}">
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">
+                            <div class="slds-card__header-link">
+                                <span class="nestedCard slds-text-heading_small" style="font-weight:400;">Case Tasks:</span>
+                            </div>
+                        </h2>
+                    </div>
+                </header>
+            </div>
+            <div class="slds-card__body slds-card__body_inner">
+                <c:COHCaseStep mComplete="{!not(empty(v.mCase.Duarte_or_Community__c))}" mCompleteText="Insurance Tab Complete" mIncompleteText="Insurance Tab Incomplete"/>
+                <c:COHCaseStep mComplete="{!v.mCase.Diagnosis_Tab_Complete__c}" mCompleteText="Clinical Information Tab Complete" mIncompleteText="Clinical Information Tab Incomplete"/>
+                <c:COHCaseStep mComplete="{!not(empty(v.mCase.Appt_Date_Time__c))}" mCompleteText="Appointment Information Tab Complete" mIncompleteText="Appointment Information Tab Incomplete"/>
+                <c:COHCaseStep mComplete="{!v.mCase.Procurement_Tab_Complete__c}" mCompleteText="Procurement Tab Complete" mIncompleteText="Procurement Tab Incomplete"/>
+            </div>
+            <aura:set attribute="else">
+                <div style="height:5rem;">
+                    <lightning:spinner alternativeText="Loading"/>
+                </div>
+            </aura:set>
+        </aura:if>
+    </article>
+</aura:component>

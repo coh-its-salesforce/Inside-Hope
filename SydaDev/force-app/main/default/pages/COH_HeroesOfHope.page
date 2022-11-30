@@ -1,0 +1,197 @@
+<apex:page standardController="COH_Heroes_of_Hope__c" extensions="COH_HeroesOfHopeController" showHeader="false" sidebar="false" id="page" >
+    <apex:includeScript value="{!$Resource.JQuery1}"/>
+    <style>
+        .LabelClass{
+        font-weight: bold;
+        }
+        
+        .Mandatory{
+        color: red;
+        }
+        td{
+        border:none !important;
+        }
+        
+        .hideDropdown select{
+        visibility: hidden !important;
+        display: block !important;
+        }
+        }
+        
+        .pbSubheader{
+        font-size:22px;
+        }
+        h3{
+        font-size:22px !important;
+        }
+        
+    </style>
+    <script>
+    $(document).ready(function(){
+        $("div[id$='TDPanel']").css({"background":"white","border":"none"});
+        $("select[name*='mlktp']").remove();
+    });
+    $(document).click(function(){
+        $("div[id$='TDPanel']").css({"background":"white","border":"none"});
+    });
+    function backgrndclr(){
+        $("div[id$='TDPanel']").css({"background":"white","border":"none"});
+        $("select[name*='mlktp']").remove();
+    }
+    /*Changes Made by Sanjay :: Date 05/18/2019 */
+    /* Total Character conunter-CHanges -Start */
+    function calculateCharacters(elem){
+        //alert(elem.value);
+        if(elem.value  != ''){
+            document.getElementById('count').innerHTML = elem.value.length;
+        }else{
+            document.getElementById('count').innerHTML = '0';
+        }
+    }
+    /* Total Character conunter-CHanges -END */
+    
+    function handlevalSelected(elem){
+        console.log('--elem-'+elem.value);
+        var radiobtns =document.getElementById("page:form:TDPanel:section:categPiller").querySelectorAll("input");
+        console.log('--radiobtns---'+radiobtns.length);
+        for(var i=0; i<radiobtns.length ; i++){
+            radiobtns[i].checked= false;
+        }
+        document.getElementById("page:form:TDPanel:section:category").value = elem.value;
+    }
+    
+    function handlepillerSelected(elem){
+        console.log('--elem-'+elem.value);
+        var radiobtns =document.getElementById("page:form:TDPanel:section:categValue").querySelectorAll("input");
+        console.log('--radiobtns---'+radiobtns.length);
+        for(var i=0; i<radiobtns.length ; i++){
+            radiobtns[i].checked= false;
+        }
+        document.getElementById("page:form:TDPanel:section:category").value = elem.value;
+        
+    }
+    </script>
+    <apex:form id="form">
+        
+        <div class="header">
+            <apex:image url="{!$Resource.HeroesOfHope}" width="100%" />
+            
+        </div>
+        
+        
+        <apex:pageBlock title="Heroes of Hope Form" id="TDPanel" >
+            <apex:pageMessages ></apex:pageMessages>
+            <apex:outputText value="* Required" styleClass="Mandatory"></apex:outputText>
+            <div style='text-align: center;'>
+                
+            </div>
+            <apex:pageblockButtons >
+                <apex:commandButton value="Submit" action="{!Save}" />
+                <apex:commandButton value="Cancel" action="{!cancel}"/>
+            </apex:pageblockButtons>
+            <apex:pageblockSection columns="1" title="Hero's Information" id="section">
+                
+                <apex:outputPanel >
+                    Please select Type of Hero:
+                    <apex:selectRadio value="{!COH_Heroes_of_Hope__c.Type_of_Hero__c}" required="true" >
+                        <apex:selectOption Itemvalue="Individual" itemlabel="Individual"/>
+                        <apex:selectOption Itemvalue="Group" itemlabel="Group" />
+                        <apex:actionSupport event="onchange" rerender="nomineePanel" status="st1"/>
+                    </apex:selectRadio>
+                    <apex:actionStatus id="st1" startText="Please wait.." >
+                        
+                    </apex:actionStatus>
+                </apex:outputPanel>
+                
+                <apex:outputPanel id="nomineePanel">
+                    <apex:outputPanel rendered="{!COH_Heroes_of_Hope__c.Type_of_Hero__c == 'Individual'}">
+                        <apex:outputLabel value="Please select Hero" styleClass="LabelClass"> 
+                            <span class='Mandatory'>: *</span>
+                        </apex:outputLabel>
+                        <apex:outputtext value="Error : Please Select Hero" style="color:red;" Rendered="{!usernull}"></apex:outputtext> 
+                        <apex:outputPanel >
+                            <apex:inputField value="{!COH_Heroes_of_Hope__c.Hero_Name__c}" label="" /> 
+                        </apex:outputPanel>
+                        
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!COH_Heroes_of_Hope__c.Type_of_Hero__c == 'Group'}">
+                        
+                        <apex:outputLabel value="Please select Hero" styleClass="LabelClass"> <span class='Mandatory'>: *</span></apex:outputLabel>
+                        <apex:outputtext value="Error : Please Select at least one Hero" style="color:red;" Rendered="{!usernull}"></apex:outputtext> 
+                        
+                        <apex:outputPanel >
+                            
+                            <apex:outputPanel >
+                                
+                                Search User &nbsp;
+                                <apex:inputText value="{!userKeyword}" />&nbsp;
+                                <apex:outputPanel >
+                                    <apex:actionStatus id="st">
+                                        <apex:facet name="start">
+                                            <apex:commandButton value="Searching.." disabled="true"></apex:commandButton>            
+                                        </apex:facet>
+                                        <apex:facet name="stop">
+                                            <apex:commandButton value="Search" action="{!doSearchUser}" status="st" reRender="userList"></apex:commandButton>
+                                        </apex:facet>
+                                    </apex:actionStatus>
+                                    
+                                </apex:outputPanel>
+                                
+                            </apex:outputPanel>
+                            <apex:outputPanel id="userList">
+                                
+                                <c:MultiselectPicklist leftLabel="Available Users"
+                                                       leftOptions="{!availableUsers}"
+                                                       rightLabel="Selected User"
+                                                       rightOptions="{!selectedusers}"
+                                                       size="10"
+                                                       width="250px"/>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                <apex:outputPanel >
+                    <apex:outputLabel value="Select one core value or pillar which the above individual exemplifies" styleClass="LabelClass"><span class='Mandatory'>: *</span></apex:outputLabel>
+                    
+                    <apex:inputHidden value="{!COH_Heroes_of_Hope__c.Individual_Category__c}" id="category"/><br/>                
+                    <apex:outputtext value="Error : Please select atleast one value" style="color:red;" Rendered="{!submitterCategory}"></apex:outputtext>
+                    <apex:selectRadio layout="pageDirection" label=""  legendText="Values" onchange="handlevalSelected(this);" id="categValue">
+                        
+                        <apex:selectOptions value="{!categoryList}" />
+                        
+                    </apex:selectRadio>
+                    <apex:selectRadio layout="pageDirection" label=""  legendText="Pillars" onchange="handlepillerSelected(this);"  id="categPiller">
+                        <apex:selectOptions value="{!PillerList}"/>
+                    </apex:selectRadio>
+                </apex:outputPanel>
+                
+                
+                <apex:outputLabel value="Describe how the Hero goes above and beyond when demonstrating the core value or pillar selected. Please be specific and provide examples" styleClass="LabelClass" ><span class='Mandatory'>: *</span> </apex:outputLabel>
+                <apex:outputtext value="Error : Please provide the Description" style="color:red;" Rendered="{!submitterDesc}"> <br/></apex:outputtext> <apex:outputtext value="Error : Please provide more details." style="color:red;" Rendered="{!errormsg}"><br/></apex:outputtext>  
+                <apex:outputPanel >
+                    <!-- Changes Made by Sanjay :: Date 06/11/2020 --> 
+                    <!-- Total Character conunter-CHanges --Start-->
+                    <apex:inputTextarea value="{!COH_Heroes_of_Hope__c.Describe_how_Hero_goes__c}" label="" 
+                                        style="margin: 0px; width: 519px; height: 97px;" onkeyup="calculateCharacters(this);" onkeypress="calculateCharacters(this);"/>
+                    <div>
+                        <I> Total characters: <B id="count">{!LEN(COH_Heroes_of_Hope__c.Describe_how_Hero_goes__c)}</B> (More than 500 characters required)</I>
+                    </div>
+                    <!-- Total Character counter--changes end-->
+                </apex:outputPanel>
+                
+            </apex:pageblockSection>
+            <apex:pageblockSection columns="1" title="Submitter's Information" id="NominatorSec">
+                <apex:outputLabel value="Submitter's Name" styleClass="LabelClass"> <span class='Mandatory'>: *</span></apex:outputLabel>
+                <apex:outputtext value="Error : Please provide First and Last Name" style="color:red;" Rendered="{!submitterNameFlag}"></apex:outputtext> <apex:inputField value="{!COH_Heroes_of_Hope__c.Submitter_s_Name__c}" label="" >
+                <apex:actionsupport event="onchange" action="{!modifyTD}" reRender="NominatorSec" oncomplete="backgrndclr()"/>
+                </apex:inputField>
+                <apex:outputLabel value="{!$ObjectType.COH_Heroes_of_Hope__c.fields.Employee_ID__c.Label}" styleClass="LabelClass"><span class='Mandatory'>: *</span> </apex:outputLabel><apex:outputText value="{!submitterEmployeeId}" Label=""/>
+                <apex:outputLabel value="{!$ObjectType.COH_Heroes_of_Hope__c.fields.Email_Address__c.Label}" styleClass="LabelClass"><span class='Mandatory'>: *</span> </apex:outputLabel><apex:outputText value="{!submitterEmail}" Label=""/>
+                <apex:outputLabel value="{!$ObjectType.COH_Heroes_of_Hope__c.fields.Submitter_Title__c.Label}" styleClass="LabelClass"><span class='Mandatory'>: *</span> </apex:outputLabel> <apex:outputText value="{!submitterTitle}" Label=""/>
+                <apex:outputLabel value="{!$ObjectType.COH_Heroes_of_Hope__c.fields.Submitter_Department__c.Label}" styleClass="LabelClass"> <span class='Mandatory'>: *</span></apex:outputLabel> <apex:outputText value="{!submitterDepartment}" Label=""/>
+            </apex:pageblockSection>
+        </apex:pageBlock>
+    </apex:form>
+    
+    
+</apex:page>

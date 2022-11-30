@@ -1,0 +1,56 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" controller="COHHopeAssistController">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler event="force:refreshView" action="{!c.init}" />    
+    <aura:attribute name="mCase" type="Case" default="{}"/>
+    <aura:attribute name="mAuthChanged" type="Boolean" default="false"/>
+    <aura:attribute name="mCaseLoaded" type="Boolean" default="false"/>
+    
+    <aura:if isTrue="{!v.mCaseLoaded}">    
+        <article class="slds-card">
+            <div class="slds-card__header slds-grid slds-border_bottom">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-standard-account">
+                            <!-- testing raymond tam-->
+                            <!--img src="{!$Resource.Kathys_Recommendations}"/-->
+                            <img src="{!$Resource.COHLogo}"/>
+                        </span>
+                    </div>                    
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">
+                            <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Card Header">
+                                <span class="parentCard slds-text-heading_small"><b>Hope Recommendations</b></span>
+                            </a>
+                        </h2>
+                    </div>
+                </header>
+            </div>
+            <div class="slds-card__body slds-card__body_inner">
+<!--
+                <c:COHKateRecsMessages mMessageType="{!v.mCase.Type}"/>
+                <aura:if isTrue="{!not(empty(v.mCase.Physician__c))}">
+                    <c:COHKatesRecsPhysicianDetails mRecordId="{#v.mCase.Physician__c}"/>
+                </aura:if>
+                <aura:if isTrue="{!v.mCase.Auth_Needed__c}">
+                    <c:COHKatesRecsAuthChanged mCase="{!v.mCase}"/>
+                </aura:if>
+                <aura:if isTrue="{!and( and(empty(v.mCase.Patient_Can_Be_Seen_At__c), not(empty(v.mCase.Insurance_Provider__c))), v.mCase.RecordTypeId == '0125B000000BCrxQAG')}">
+                    <c:COHKatesRecsLocation mCase="{!v.mCase}"/>
+                </aura:if>                
+                <aura:if isTrue="{!and( and(empty(v.mCase.Physician__c), not(empty(v.mCase.Department_Case__c))), v.mCase.RecordTypeId == '0125B000000BCrxQAG')}">
+                    <c:COHKatesRecsPhysician mCase="{!v.mCase}"/>
+                </aura:if>
+-->
+                <aura:if isTrue="{!v.mCase.RecordType.DeveloperName == 'Patient_Referral_Services'}">
+                    <c:COHCaseStepsToComplete mCase="{!v.mCase}"/>
+                </aura:if>
+                <aura:if isTrue="{!v.mCase.RecordType.DeveloperName == 'Admitting'}">
+                    <c:COHCaseAdmittingStepsToComplete mCase="{!v.mCase}"/>
+                </aura:if>                
+            </div>
+        </article>
+        <aura:set attribute="else">
+            <lightning:spinner alternativeText="Loading"/>
+        </aura:set>
+    </aura:if>
+</aura:component>

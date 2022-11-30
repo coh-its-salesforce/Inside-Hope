@@ -1,0 +1,73 @@
+<apex:page >
+  <!-- Contact Information and Font styling -->
+   <p></p>
+   
+    <style type="text/css">
+             
+        h1{ font-size: 16px;
+        }
+        h2{
+           font-size: 14px;
+        }
+        h4{ color:blue;}
+        
+        .pbTitle {
+        white-space: nowrap;
+    }
+</style>
+     <apex:panelGrid columns="2">
+     <apex:pageBlock title="Contact City of Hope Laboratories"  >
+                                                  <p></p>
+      <br></br>
+      
+              <h2>Cytogenetics Lab Information: </h2>
+        <p></p> Hours of Operation:  Mon-Fri 7:00 am – 6:00 pm; Sat 8:00 am – 3:00 pm
+             <br></br>
+                  <br></br>
+             <h3>- Please contact us at (626) 256-4673, extension 62438, or</h3> <a href="mailto:%23Cytogenetics@coh.org?subject=Portal Lab Results"><b><h4>
+   Send Email</h4></b></a>           
+      <br></br>
+      <br></br> 
+       <p></p>
+    
+   
+        <h2>HLA Lab Information: </h2>
+        <p></p>
+
+        <h3>- Please contact HLA Testing: </h3>&nbsp; <a href="mailto:Hlatesting@coh.org?subject=Portal Lab Results"><b><h4>
+   Send Email</h4></b></a>           
+   <br></br>
+    <br></br>
+    <p></p>
+
+  <h2>Consultation Services Lab Information: </h2>
+        <p></p>
+
+        <h3>- Please contact Bob Swenson: </h3>&nbsp; <a href="mailto:rswenson@coh.org?subject=Portal Lab Results"><b><h4>
+   Send Email</h4></b></a>           
+   <br></br>
+    <br></br>
+    <p></p>
+    <h2>Clinical Molecular Diagnostic Lab Information: </h2>
+    <br></br>
+    <br></br><b>- Please contact our Lab</b>: <b>1-888-826-4362</b>, select option <b>#1</b>
+    <p></p>
+
+    </apex:pageBlock>
+     <apex:pageBlock title="Contact City of Hope Technical Support" >
+      <p></p>
+        <br></br>
+
+             <h2>Lab Results Portal Technical Help: </h2>
+        <p></p>
+
+        <h3>- Please contact ITS Support: </h3>&nbsp; <a href="mailto:%23ITSSFDCSupport@coh.org?subject=Lab Results Portal Site"><b><h4>
+   Send Email</h4></b></a> 
+         <p></p>  
+    </apex:pageBlock>
+
+    </apex:panelGrid>
+
+        <p></p>         
+       <br></br>
+</apex:page>

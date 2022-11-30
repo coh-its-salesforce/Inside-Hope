@@ -1,0 +1,16 @@
+<apex:component access="global" controller="COH_SIRP_myNewsCompController">
+    <div class="text-center">
+        <!--<p class="FourIconTxt">Click on your News links</p>-->
+    </div> 
+    <div class="FavSecB">
+        <div class="MenTxtB">
+            <apex:repeat value="{!MyNewsLinks}" var="nl">
+                <li> <a href="{!nl.linkURL}" target="_blank">{!nl.label}</a></li>
+            </apex:repeat>
+        </div> 
+        <apex:outputPanel rendered="{!OR(ISNULL(MyNewsLinks), MyNewsLinks.size==0)}">
+            <p><center>You do not have any News Links</center></p>
+        </apex:outputPanel>
+    </div>
+   
+</apex:component>

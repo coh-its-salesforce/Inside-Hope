@@ -1,0 +1,8 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" controller="COH_SY_ActionCall_Controller">
+   
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h2>Are you sure all documents have been received ?</h2><br/>
+   
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<lightning:button label="No" onclick="{!c.handleCancel}"  iconPosition="center"/>
+    <lightning:button label="Yes" onclick="{!c.saveRec}"  variant="brand" iconPosition="center"/>
+    
+</aura:component>

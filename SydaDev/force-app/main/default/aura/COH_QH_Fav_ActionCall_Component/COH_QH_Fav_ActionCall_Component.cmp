@@ -1,0 +1,8 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" controller="COH_QH_ActionCall_Controller">
+   
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h2>Are you sure to make the record as favorite ?</h2><br/>
+   
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<lightning:button label="No" onclick="{!c.handleCancelOne}"  iconPosition="center"/>
+    <lightning:button label="Yes" onclick="{!c.saveRecOne}"  variant="brand" iconPosition="center"/>
+    
+</aura:component>

@@ -1,0 +1,55 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" 
+           applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">    
+    
+    <html lang="en">
+        <head>            
+            <c:Head title="COH VIA Training Video"></c:Head>
+            <apex:includeScript value="{!$Resource.fitVids}"/>
+                    <style>
+
+          video {
+            max-width: 100%;
+            height: auto;
+          }
+
+          iframe,
+          embed,
+          object {
+            max-width: 100%;
+            margin: 0 auto;
+          }
+
+          .vendor {
+            padding: 2%;
+            margin-bottom: 2em;
+          }
+
+          .unsupported {
+            background: #fddfde;
+          }
+        </style>
+        <script>
+            //var $ = jQuery.noConflict();
+            //$(".container").fitVids();
+        </script>            
+        </head>
+        <body>
+            <div class="Wrapper">
+                <apex:form >
+                    <!-- Header Bar---> 
+                    <c:COH_SIP_Header ></c:COH_SIP_Header>                     
+                    <!--search bar-->
+                    <c:COH_SIP_Search ></c:COH_SIP_Search>
+                    <!-- page Body Content-->
+                    <!-- Container -->
+                    <div class="container" style="padding: 150px 0 0 0;height: 100%; width:675px;">
+                        <div class="vendor">
+                            <iframe src="//players.brightcove.net/5069692884001/BkaSxFBJl_default/index.html?videoId=5393996699001" width="650" height="550" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>                            
+                        </div>
+                    </div>
+                    <c:COH_SIP_Footer ></c:COH_SIP_Footer> 
+                </apex:form>
+            </div>            
+        </body>            
+    </html>     
+</apex:page>

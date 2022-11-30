@@ -1,0 +1,19 @@
+<aura:component controller="createPortalUserCtl" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:attribute name="mMessage" type="String" default=""/>
+    <aura:attribute name="mLoading" type="Boolean" default="true"/>
+    
+    
+    <div class="slds-text-body_regular slds-text-align_center">
+        <aura:if isTrue="{!v.mLoading}">
+            <div class="slds-form-horizontal slds-theme_default slds-p-vertical_large ">
+                <div>
+                    <lightning:spinner variant="brand" size="large"/>
+                </div>
+            </div>
+            <aura:set attribute="else">
+            	{!v.mMessage}
+            </aura:set>
+        </aura:if>        
+    </div>
+</aura:component>

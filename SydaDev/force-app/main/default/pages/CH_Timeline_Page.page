@@ -1,0 +1,47 @@
+<apex:page standardcontroller="Case" extensions="CH_TimelineController" standardStylesheets="false">
+    <apex:includescript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js" />
+    <apex:includescript value="https://cdnjs.cloudflare.com/ajax/libs/tooltipster/3.0.5/js/jquery.tooltipster.js"/>
+    <apex:stylesheet value="{!URLFOR($Resource.CH_Timeline , 'timeline/timelinecss/timeline.css')}"/> 
+    
+    
+    <apex:dataTable value="{!stageStatusOrderMap}" var="order" styleClass="timelinetable">
+        <apex:column value="{!stageStatusDetailsMap[stageStatusOrderMap[order]].stage}" >
+            <apex:facet name="header">Stage</apex:facet>
+        </apex:column>
+        <apex:column value="{!stageStatusDetailsMap[stageStatusOrderMap[order]].status}" > 
+            <apex:facet name="header">Stage</apex:facet>
+        </apex:column>
+        <apex:column >
+            <apex:facet name="header">Progress</apex:facet>
+                
+            <apex:image value="{!URLFOR($Resource.CH_Timeline , 'timeline/timelineimages/green.png')}"
+                rendered="{!IF(stageStatusDetailsMap[stageStatusOrderMap[order]].progress == 0,true,false)}"
+                title="{!stageStatusDetailsMap[stageStatusOrderMap[order]].timelinedetails} "
+                styleclass="progressImg"/>
+            <apex:image value="{!URLFOR($Resource.CH_Timeline , 'timeline/timelineimages/yellow.png')}"
+                rendered="{!IF(stageStatusDetailsMap[stageStatusOrderMap[order]].progress == 1,true,false)}"
+                title="{!stageStatusDetailsMap[stageStatusOrderMap[order]].timelinedetails} "
+                styleclass="progressImg"/>
+            <apex:image value="{!URLFOR($Resource.CH_Timeline , 'timeline/timelineimages/gray.png')}"
+                rendered="{!IF(stageStatusDetailsMap[stageStatusOrderMap[order]].progress == 2,true,false)}"
+                title="{!stageStatusDetailsMap[stageStatusOrderMap[order]].timelinedetails} "
+                styleclass="progressImg"/>   
+        </apex:column>
+    </apex:dataTable>
+    
+            
+    <script type="text/javascript">
+       $(document).ready(function() {
+            $('.progressImg').tooltipster({
+               animation: 'fade',
+               delay: 200,
+               theme: 'tooltipster-light',
+               touchDevices: false,
+               trigger: 'click',
+               contentAsHTML : true,
+               interactive : true,
+               position : 'left'
+            });
+        });
+    </script>
+</apex:page>

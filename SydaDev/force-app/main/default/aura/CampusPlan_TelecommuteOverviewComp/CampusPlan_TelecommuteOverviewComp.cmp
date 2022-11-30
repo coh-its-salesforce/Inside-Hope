@@ -1,0 +1,130 @@
+<aura:component>
+    
+    <aura:attribute type="string" name="microsoftteamlink2" default="https://support.office.com/en-us/teams"/>
+    <aura:attribute type="string" name="followsteps" default="https://cityofhope.lightning.force.com/lightning/r/Department_Components__c/a6F0V000001UJccUAG/view?0.source=alohaHeader"/>
+    <div class="to-container">
+	<div class="to-header">Work from Home Program Overview</div>
+<div class="to-question">Who is eligible to telecommute? </div>
+    <ul>
+        <li>
+	       Exempt and non-exempt staff in non-patient facing roles and dry lab researchers may work from home. Please contact your manager to determine if your job is eligible for the Work from Home program. 
+        </li>
+    </ul>
+            <div class="to-question">Where can I get the telecommuting agreement link? </div>
+    <ul>
+        <li>As soon as you have obtained manager approval to participate in the Work from Home Program, you may access the agreement at <a onclick="{!c.telecommutelink}" target="_blank">Telecommuting Agreement Acknowledgement</a> or ask your manager to send it to you. 
+        </li>
+    </ul>    
+            <div class="to-question">Does the telecommuting agreement need to be completed prior to allowing my team to work from home? </div>
+    <ul>
+        <li>No, you may begin telecommuting as soon as your manager approves. However, please make every effort to complete the agreement as soon as possible.
+        </li>
+    </ul>    
+            
+            <div class="to-question">Should all employees work from home if they are able to do so and is it full-time? </div>
+    <ul>
+        <li>Employees should work from home if their manager deems that their work can be performed remotely.</li>
+        <li>Please consult with your supervisor to determine your specific schedule.</li> 
+    </ul>   
+        <div class="to-question">How should intermittent leave be handled with employees that telecommute? </div>
+    <ul>
+        <li>The employee should report any time away pertaining to a qualified intermittent leave to the Standard. Employees are still expected to record time away in Centricity and let their manager know when they are out of the office. All COH policies and procedures apply. 
+        </li>
+    </ul>
+        <br/><br/>   
+            <div class="to-header">COH Technology Questions Related to Work from Home</div>
+
+        <div class="to-question">What if I do not have a laptop? </div>
+       <ul>
+           <li>Due to the limited number of laptops, Human Resources and IT will be prioritize laptop issuance across City of Hope.</li>
+      </ul>
+        <div class="to-question">If I do not have a laptop, can I take my desktop home? </div>
+      <ul>
+           <li>No, desktops should not be taken home. Your manager will work with their HR Strategic Partner to determine the best course of action. 
+          </li>
+      </ul>
+               <div class="to-question">How will distribution of laptops be prioritized? </div>
+        <ul>
+           <li>Human Resources is partnering with ITS and leaders to prioritize the distribution of laptops.
+            </li>
+        </ul>
+               <div class="to-question">How do I know if I have Duo or VPN Access? </div>
+         <ul>
+             <li>Please watch for communication regarding the Genius Bars at Rivergrade and Duarte sites to assist employees in their remote access setup. If you are offsite, you can contact the Help Desk at 626-218-4357<span>&#9742;<img src="{!$Resource.skypeIcon}"/></span> .
+             </li>
+         </ul>
+               <div class="to-question">Can employees have VPN access on a home computer? </div>
+          <ul>
+           <li>For security purposes, VPN access is available on COH computers/laptops only.
+              </li>
+          </ul>
+               <div class="to-question">How can I get collaboration tools such as MS Team? </div>
+         <ul>
+           <li>IT will be setting up Genius Bars at COH sites to assist employees on tools related questions. Visit the nearest Genius Bar to get help or contact IT helpdesk at 626-218-4357<span>&#9742;<img src="{!$Resource.skypeIcon}"/></span> .
+             </li>
+         </ul>
+               <div class="to-question">Will the conference bridge be able to accommodate large groups in online meetings? </div>
+         <ul>
+           <li>Our IT department is working diligently to ensure minimal disruptions to work during telecommuting. They will continue to monitor, prioritize and address such issues.
+             </li>
+         </ul>
+               <div class="to-question">Are there any tools or resources available on how to use Microsoft Teams or Skype? </div>
+         <ul>
+             <li>All COH staff have access to <a href="https://app.quickhelp.com/coh" target="_blank">QuickHelp</a>, a learning platform that houses a wide selection of quick videos and other self-service training materials on Teams, Skype, and much more. Here are a few recommended learning resources/paths to get you started: 
+               <ul><li><a href="https://app.quickhelp.com/coh/skillPaths/144590" target="_blank">Manage Risk by Enabling Remote Work</a></li>
+                   <li><a href="https://app.quickhelp.com/coh/skillPaths/115325" target="_blank">Drive Efficiency with a More Connected Workforce</a></li>
+                   <li><a href="http://download.microsoft.com/download/D/9/F/D9FE8B9E-22F5-47BF-A1AB-09539C41FCD0/Teams QS.pdf" target="_blank">Quick Start Guide (PDF file)</a></li>
+                   <li><a onclick="{!c.microsoftteamlink1}" target="_blank">Meetings and Calls in Microsoft Teams</a></li>
+                  
+                   <li><a href="{!v.microsoftteamlink2}" target="_blank">Microsoft Teams Help Center</a></li>
+               </ul>
+           </li>
+        </ul>
+        <div class="to-question">How can I ensure I am hosting a secure Zoom meeting?</div>
+     <ul>
+           <li>Microsoft Teams should be used whenever possible for remote meetings. This platform is stable and secure, and it is the best option for online meetings. If you must use zoom, please adhere to these best practices:  
+             <ul>  <li>	Do not use Facebook or Gmail to sign in -- this is a poor security practice and dramatically increases the amount of personal data Zoom has access to.</li> 
+                   <li>	Keep your Zoom app up to date</li>
+                   <li>	Create Waiting Rooms for attendees -- You can choose to send all participants or only guests to the Waiting Room when they join your meeting (participants who are not on your Zoom account). You can then admit attendees one by one or all at once.</li>
+                   <li>	Require a password for participants joining by phone -- To ensure only authorized participants join the meeting, a numeric password will be required for users joining by phone.</li>
+                   <li>	Avoid using their Zoom Personal Meeting ID (PMI) to host events -- Your PMI is effectively one continuous meeting; avoid using this method to stop random crashing of your virtual space after meetings have ended.</li>
+                   <li>	Only allow individuals with a given email domain to join -- As an alternative to passwords, the meeting host can only allow specific users to join the meeting.</li>
+             </ul>
+           </li>
+      </ul>
+        <div class="to-question">What if I get disconnected and/or cannot access the COH network? </div>
+      <ul>
+           <li>Connectivity issues can range from home wi-fi to network issues. For issues with the COH network or COH equipment, contact IT helpdesk at 626-218-4357 <span>&#9742;<img src="{!$Resource.skypeIcon}"/></span>. The number is also available on your desktop screen when you first logon to your laptop. Keep your supervisor informed if there are any delays in getting the issue resolved.
+           </li>
+      </ul>
+               <div class="to-question">How can I forward my COH landline to my cell phone? </div>
+      <ul>
+           <li>Our IT department is working diligently to address and enable this functionality. They will continue to monitor, prioritize and address these issues.
+           </li>
+      </ul>
+        <div class="to-question"> How do I ensure our patients’ protected health information (PHI) stays secure while working from home? </div>
+
+      <span class="to-answertext">You can protect PHI by:</span> 
+  <ul>
+    <li>Accessing the COH network from home -- Always connect through our virtual private network (VPN) when accessing COH programs and data, and be mindful of your surroundings and who can see your screen.</li>
+    <li>Storing electronic (ePHI) -- Store all ePHI on the COH network server, and never on your computer, flash drive or mobile device, unless in strict accordance with COH policies and procedures. If ePHI must be transported (USB, external hard drive, etc.) it must be encrypted.</li>
+    <li>Storing printed PHI -- Do not maintain or transport physical copies of PHI while telecommuting unless this has been approved in advance in writing by your department director. Store all printed PHI in a secure place away from others, such as in a locked cabinet or drawer, and never on top of your desk or in your vehicle.</li> 
+    <li>Disposing of PHI -- When documents are no longer needed to perform your job duties, promptly shred or return documents to their applicable storage location, following COH and department policies. For HIMS coders, shred the work list of assigned cases at the end of each workday.</li>
+  </ul>
+        <br/><span class="to-answertext">Please notify your supervisor and/or Annamarie Allison, City of Hope’s privacy manager, if you become aware of activities that violate our HIPAA policies.</span>
+
+        <div class="to-question">How do I protect myself from a phishing email (e.g. a fraudulent email to obtain personal information, including patient PHI)? </div>
+
+        <span class="to-answertext">It is important to be wary of opening messages and attachments and following hyperlinks from unknown sources. Always hover your mouse over hyperlinks to see where they are leading before you click. Be on the lookout for:</span>
+
+        <ul><li>Messages from unsolicited sources -- The CDC shared <a href="https://www.cdc.gov/media/releases/2019/s0322-phishing.html" target="_blank">this example</a> from someone claiming to be the agency offering urgent tips to prevent the flu. When clicked, malware is installed on your computer, which encrypts and locks your files in exchange for payment.</li>
+            <li>Emails, texts and phones calls from people you don’t know -- The Federal Communications Commission shared <a href="https://www.fcc.gov/covid-scams" target="_blank">this example</a> about messages offering COVID-19 testing kits, encouraging people to stock up on supplies, promoting cures, selling health insurance or asking for your personal information.</li>
+        </ul>
+        <span class="to-answertext">   If you think you’ve been phished, <a href="{!v.followsteps}" target="_blank">please follow these steps</a> or click the “Report Phishing” icon in Outlook. If you have questions about a message you received, please email our cyber security team at <a href="mailto:spam@coh.org" target="_blank">spam@coh.org.</a></span>
+
+        <div class="to-question">Who should I contact if I have questions about telecommuting? </div>
+        <ul><li>You should first reach out to your manager regarding questions on telecommuting. For policy questions, send an email to <a target="_blank">[insert name/email address].</a></li>
+        </ul>
+ 
+    </div>
+</aura:component>

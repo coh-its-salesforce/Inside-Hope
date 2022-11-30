@@ -1,0 +1,5 @@
+<aura:event type="APPLICATION" description="Sample Application Event" access="global">
+   
+    
+    
+</aura:event>

@@ -1,0 +1,39 @@
+<apex:page controller="PA_ShowCases">
+  <apex:pageBlock title="My Cases" rendered="{!bl_MyCases}">
+      <apex:pageBlockTable value="{!lst_MyCases}" var="c" title="Cases" border="1" >
+                            <apex:column headerValue="Case Number" >
+                            <apex:outputLink onclick="window.open('/{!c.id}','_parent')" >{!c.CaseNumber}</apex:outputLink>
+                            </apex:column>
+                            <apex:column headerValue="Department Created" value="{!c.RecordType.Name}" />
+                            <apex:column headerValue="Account" value="{!c.Account.Name}" />
+                            <apex:column headerValue="Issue" value="{!c.Issue__c}" />
+                            <apex:column headerValue="Encounter Date" value="{!c.Encounter_Date__c}" />
+                            <apex:column headerValue="Occurence Date" value="{!c.Occurence_Date__c}" />
+                            <apex:column headerValue="Department Assigned" value="{!c.Department__c}" />
+                            <!--<apex:column headerValue="Assigned To" value="{!c.Assign_To__r.Name}" />-->
+                            <apex:column headerValue="Case Owner" value="{!c.Owner.Name}" />
+                            <apex:column headerValue="Created By" value="{!c.CreatedBy.Name}" />
+                            <apex:column headerValue="Case Status" value="{!c.Status}" />
+                            <apex:column headerValue="Created Date" value="{!c.CreatedDate}" />
+                        </apex:pageBlockTable>
+  </apex:pageBlock>
+  <apex:pageBlock title="Queue Cases" rendered="{!bl_QueueCases}">
+  <apex:pageBlockTable value="{!lst_QueueCases}" var="c1" title="Cases" border="1" >
+                            <apex:column headerValue="Case Number" >
+                            <apex:outputLink onclick="window.open('/{!c1.id}','_parent')" >{!c1.CaseNumber}</apex:outputLink>
+                            </apex:column>
+                            <apex:column headerValue="Department Created" value="{!c1.RecordType.Name}" />
+                            <apex:column headerValue="Account" value="{!c1.Account.Name}" />
+                            <apex:column headerValue="Issue" value="{!c1.Issue__c}" />
+                            <apex:column headerValue="Encounter Date" value="{!c1.Encounter_Date__c}" />
+                            <apex:column headerValue="Occurence Date" value="{!c1.Occurence_Date__c}" />
+                            <apex:column headerValue="Department Assigned" value="{!c1.Department__c}" />
+                            <apex:column headerValue="Location" value="{!c1.Location1__c}" />
+                            <!--<apex:column headerValue="Assigned To" value="{!c1.Assign_To__r.Name}" />-->
+                            <apex:column headerValue="Case Owner" value="{!c1.Owner.Name}" />
+                            <apex:column headerValue="Created By" value="{!c1.CreatedBy.Name}" />
+                            <apex:column headerValue="Case Status" value="{!c1.Status}"/>
+                            <apex:column headerValue="Created Date" value="{!c1.CreatedDate}" />
+                        </apex:pageBlockTable>
+  </apex:pageBlock>
+</apex:page>

@@ -1,0 +1,796 @@
+<aura:component controller="COH_UIR_IntakeRequestFormController" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId">
+    <c:COH_UTIL_CheckboxGroupHelper aura:id="checkboxGroupHelper"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <aura:attribute name="mIntakeRequest" type="COH_UniversalIntakeRequest__c"/>
+    <aura:attribute name="mCheckboxGroupValues" type="Map" default="{}"/>
+    <aura:attribute name="mPicklists" type="Map" default="{}"/>
+    <aura:attribute name="mSelectedCheckboxGroupValues" type="Map" default="{}"/>
+    <aura:attribute name="mShowAlternatives" type="Boolean[]" default="[false, false]"/>        
+    <aura:attribute name="mRecordLoaded" type="Boolean" default="false"/>
+    <aura:attribute name="mHeader" type="Object" />
+    <aura:attribute name="mHeaderLocation" type="Object" />
+    
+    <div class="slds-form-horizontal slds-theme_default slds-p-around_small slds-card" aura:id="projectInformation">
+        <aura:if isTrue="{!v.mRecordLoaded}">
+            <div aura:id="project_information_header">
+                <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_small">
+                    Project Information
+                </h3>
+            </div>            
+            
+            <!-- Requester Name, Request owner -->
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                                mSelectedRecord="{!v.mIntakeRequest.COH_UIR_SHR_RequesterName__c}" 
+                                                mLabel="Requestor Name"
+                                                mPrimaryFieldAPIName="Name"
+                                                mSecondaryFieldAPIName="Title"
+                                                mAdditionalSelectFields="IsActive"
+                                                mAdditionalSearchConditions="AND IsActive = true"
+                                                mRequired="true"
+                                                aura:id="childComponent"/>
+                    </div>         
+                </div>
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">               
+                        <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                                mSelectedRecord="{!v.mIntakeRequest.COH_UIR_SHR_RequestOwner__c}" 
+                                                mLabel="Request Owner"
+                                                mPrimaryFieldAPIName="Name"
+                                                mSecondaryFieldAPIName="Title"
+                                                mAdditionalSelectFields="IsActive"
+                                                mAdditionalSearchConditions="AND IsActive = true"
+                                                mRequired="true"
+                                                aura:id="childComponent"/>                    
+                    </div>         
+                </div>
+            </div>
+            
+            <!-- Request Date, Request Name -->
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_SHR_RequestName__c}"
+                                         label="Request/Project Name"
+                                         name="COH_UIR_SHR_RequestName__c"
+                                         aura:id="intakeRequestForm"
+                                         required="true"
+                                         onchange="{!c.updateRequestName}"/>
+                    </div>         
+                </div>                
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_SHR_RequestDate__c}" 
+                                         label="Request Date"
+                                         type="date" 
+                                         name="COH_UIR_SHR_RequestDate__c"
+                                         aura:id="intakeRequestForm"
+                                         required="true"/>                
+                    </div>         
+                </div>
+            </div>
+			
+<!-- While FY 19 Planning is going on and the rest of the UIR is not implemented.
+
+
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                    <div class="slds-form-element__control">
+                        <lightning:select name="COH_UIR_SHR_IsBudgetPlanningRequest__c" 
+                                          label="Is This a Capital FY19 Annual Budget Planning Project/Request?" 
+                                          value="{!v.mIntakeRequest.COH_UIR_SHR_IsBudgetPlanningRequest__c}"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">-Select-</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_IsBudgetPlanningRequest__c}" var="currentPicklistOption">
+                                <option value="{#currentPicklistOption.value}">{#currentPicklistOption.label}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </div>
+                </div> 
+            </div>
+-->         
+            
+            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_IsBudgetPlanningRequest__c == 'No'}">
+                
+                <!-- Is Facility Request? -->            
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                        <div class="slds-form-element__control">
+                            <lightning:select name="COH_UIR_SHR_IsThisAFacilityRequest__c" 
+                                              label="Is this a Facility request (ie Move, Furniture, Artwork, A/C)?" 
+                                              value="{!v.mIntakeRequest.COH_UIR_SHR_IsThisAFacilityRequest__c}"
+                                              aura:id="intakeRequestForm"
+                                              required="true">
+                                <option value="">--Select--</option>
+                                <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_IsThisAFacilityRequest__c}" var="currentPicklistOption">
+                                    <option value="{#currentPicklistOption.value}">{#currentPicklistOption.label}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>
+                    </div> 
+                </div>
+                
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_IsThisAFacilityRequest__c == 'No'}">
+                    <!-- Request Type -->
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-box slds-m-vertical_small slds-box_no-padding ">
+                            <div class="slds-grid slds-wrap">        
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                                    <div class="slds-form-element__control">
+                                        <lightning:checkboxGroup name="COH_UIR_SHR_RequestType__c"
+                                                                 label="Request Type?"
+                                                                 options="{!v.mPicklists.COH_UIR_SHR_RequestType__c}"
+                                                                 value="{!v.mCheckboxGroupValues.COH_UIR_SHR_RequestType__c}"
+                                                                 aura:id="intakeRequestFormCheckboxGroup"
+                                                                 required="true"
+                                                                 onchange="{!c.clearCheckboxGroupErrorMessage}"/>
+                                    </div>         
+                                </div>
+                            </div>
+                            <!-- Pre-Allocated, seeking funds -->
+                            <div class="slds-grid slds-wrap">
+                                <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_SHR_RequestType__c.Capital == 'true'}">
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                                        <div class="slds-form-element__control">
+                                            <lightning:select name="COH_UIR_SHR_RequestPreAllocated__c" 
+                                                              label="For Capital: Is this request Pre-Allocated?" 
+                                                              value="{!v.mIntakeRequest.COH_UIR_SHR_RequestPreAllocated__c}"
+                                                              aura:id="intakeRequestForm"
+                                                              required="true">
+                                                <option value="">--Select--</option>
+                                                <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_RequestPreAllocated__c}" var="currentPicklistOption">
+                                                    <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                                </aura:iteration>
+                                            </lightning:select>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                                        <div class="slds-form-element__control">
+                                            <lightning:select name="COH_UIR_SHR_TotalCapitalCost__c" 
+                                                              label="What is the total Capital cost for this request?" 
+                                                              value="{!v.mIntakeRequest.COH_UIR_SHR_TotalCapitalCost__c}"
+                                                              aura:id="intakeRequestForm"
+                                                              required="true">
+                                                <option value="">--Select--</option>
+                                                <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_TotalCapitalCost__c}" var="currentPicklistOption">
+                                                    <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                                </aura:iteration>
+                                            </lightning:select>
+                                        </div>         
+                                    </div>                                
+                                </aura:if> 
+                                <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_SHR_RequestType__c.Opex == 'true'}">
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                                        <div class="slds-form-element__control">
+                                            <lightning:select name="COH_UIR_SHR_RequestFundedOrSeekingFunds__c" 
+                                                              label="For OPEX: Is the request funded or are you seeking funds?" 
+                                                              value="{!v.mIntakeRequest.COH_UIR_SHR_RequestFundedOrSeekingFunds__c}"
+                                                              aura:id="intakeRequestForm"
+                                                              required="true">
+                                                <option value="">--Select--</option>
+                                                <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_RequestFundedOrSeekingFunds__c}" var="currentPicklistOption">
+                                                    <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                                </aura:iteration>
+                                            </lightning:select>
+                                        </div>         
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                                        <div class="slds-form-element__control">
+                                            <lightning:select name="COH_UIR_SHR_TotalOPEXCost__c" 
+                                                              label="What is the total OPEX cost for this request?" 
+                                                              value="{!v.mIntakeRequest.COH_UIR_SHR_TotalOPEXCost__c}"
+                                                              aura:id="intakeRequestForm"
+                                                              required="true">
+                                                <option value="">--Select--</option>
+                                                <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_TotalOPEXCost__c}" var="currentPicklistOption">
+                                                    <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                                </aura:iteration>
+                                            </lightning:select>
+                                        </div>         
+                                    </div>
+                                </aura:if>                     
+                            </div>                  
+                        </div>
+                    </div>                
+                    
+                    <!-- project, equipment, operating expense or labor-->
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-box slds-m-vertical_small slds-box_no-padding">        
+                            <div class="slds-grid slds-wrap">    
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                                    <div class="slds-form-element__control">
+                                        <lightning:checkboxGroup name="COH_UIR_SHR_ProjectEquipmentOPEXLabor__c"
+                                                                 label="Is this request for a project, equipment, operating expense or labor?"
+                                                                 options="{!v.mPicklists.COH_UIR_SHR_ProjectEquipmentOPEXLabor__c}"
+                                                                 value="{!v.mCheckboxGroupValues.COH_UIR_SHR_ProjectEquipmentOPEXLabor__c}"
+                                                                 aura:id="intakeRequestFormCheckboxGroup"
+                                                                 required="true"
+                                                                 onchange="{!c.clearCheckboxGroupErrorMessage}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Location -->
+                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_SHR_ProjectEquipmentOPEXLabor__c.Equipment == 'true'}">
+                                <div class="slds-grid slds-wrap">    
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_SHR_Location__c}" 
+                                                             label="Location (Building and room number)"
+                                                             name="COH_UIR_SHR_Location__c"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"
+                                                             title="Provide the building and room number (if applicable) for the request"/>   
+                                        </div>
+                                    </div>
+                                </div>
+                            </aura:if>
+                            
+                            <!-- Mutli-year -->
+                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_SHR_ProjectEquipmentOPEXLabor__c.Project == 'true'}">
+                                <div class="slds-grid slds-wrap">    
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                                        <div class="slds-form-element__control">
+                                            <lightning:select name="COH_UIR_SHR_MultiYearProject__c" 
+                                                              label="Is this a multi-year project?" 
+                                                              value="{!v.mIntakeRequest.COH_UIR_SHR_MultiYearProject__c}"
+                                                              aura:id="intakeRequestForm"
+                                                              required="true">
+                                                <option value="">--Select--</option>
+                                                <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_MultiYearProject__c}" var="currentPicklistOption">
+                                                    <option value="{#currentPicklistOption.value}">{#currentPicklistOption.label}</option>
+                                                </aura:iteration>
+                                            </lightning:select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_MultiYearProject__c == 'Yes'}">
+                                    <div class="slds-grid slds-wrap">    
+                                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                            <div class="slds-form-element__control">
+                                                <lightning:select name="COH_UIR_SHR_StartYear__c" 
+                                                                  label="Please select start year" 
+                                                                  value="{!v.mIntakeRequest.COH_UIR_SHR_StartYear__c}"
+                                                                  aura:id="intakeRequestForm"
+                                                                  required="true">
+                                                    <option value="">--Select--</option>
+                                                    <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_StartYear__c}" var="currentPicklistOption">
+                                                        <option value="{#currentPicklistOption.value}">{#currentPicklistOption.label}</option>
+                                                    </aura:iteration>
+                                                </lightning:select>                                
+                                            </div>
+                                        </div>
+                                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                            <div class="slds-form-element__control">
+                                                <lightning:select name="COH_UIR_SHR_EndYear__c" 
+                                                                  label="Please select end year" 
+                                                                  value="{!v.mIntakeRequest.COH_UIR_SHR_EndYear__c}"
+                                                                  aura:id="intakeRequestForm"
+                                                                  required="true">
+                                                    <option value="">--Select--</option>
+                                                    <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_EndYear__c}" var="currentPicklistOption">
+                                                        <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                                    </aura:iteration>
+                                                </lightning:select>                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-wrap">    
+                                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                            <div class="slds-form-element__control">
+                                                <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_CostPerYear__c}" 
+                                                                    label="Please enter the cost for each year"
+                                                                    name="COH_UIR_SHR_CostPerYear__c"
+                                                                    aura:id="intakeRequestForm"
+                                                                    required="true"
+                                                                    title="Enter seperate years on a new line."/>              
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aura:if>
+                            </aura:if>
+                            
+                            <!-- Start Date, Completetion Date, Project Lead  -->
+                            <aura:if isTrue="{!(v.mSelectedCheckboxGroupValues.COH_UIR_SHR_ProjectEquipmentOPEXLabor__c.Project == 'true' &amp;&amp; v.mIntakeRequest.COH_UIR_SHR_MultiYearProject__c == 'No') || (v.mSelectedCheckboxGroupValues.COH_UIR_SHR_ProjectEquipmentOPEXLabor__c.Equipment == 'true' &amp;&amp; v.mSelectedCheckboxGroupValues.COH_UIR_SHR_ProjectEquipmentOPEXLabor__c.Project != 'true')}">
+                                <!-- Start Date, Completion Date -->
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_SHR_EstimatedStartDate__c}" 
+                                                             label="Estimated Start Date"
+                                                             type="date" 
+                                                             name="COH_UIR_SHR_EstimatedStartDate__c"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"
+                                                             title="For Equipment, the start date is the order date."/>                
+                                        </div>         
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_SHR_EstimatedCompletionDate__c}"
+                                                             label="Estimated Completion Date?"
+                                                             type="date"
+                                                             name="COH_UIR_SHR_EstimatedCompletionDate__c"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>                
+                                        </div>         
+                                    </div>
+                                </div>        
+                                
+                                <!-- Who is project lead -->
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">                 
+                                            <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                                                    mSelectedRecord="{!v.mIntakeRequest.COH_UIR_SHR_ProjectLead__c}" 
+                                                                    mLabel="Project lead?"
+                                                                    mPrimaryFieldAPIName="Name"
+                                                                    mSecondaryFieldAPIName="Title"
+                                                                    mAdditionalSelectFields="IsActive"
+                                                                    mAdditionalSearchConditions="AND IsActive = true"
+                                                                    mRequired="true"
+                                                                    aura:id="childComponent"/>                       
+                                        </div>         
+                                    </div>
+                                </div>        
+                            </aura:if>
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Overall Objective -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_OverallObjective__c}" 
+                                                    label="Overall objective?"
+                                                    name="COH_UIR_SHR_RequestDate__c"
+                                                    aura:id="intakeRequestForm"
+                                                    required="true"
+                                                    title="Provide details about your project, request, purchase, new position and its significance for supporting your daily operations. This is considered the elevator pitch and high level business justification for why this request needs to be reviewed, submitted, analyzed and/or approved. Please include any recommended solutions to resolve the problem, issue or concern."/>
+                            </div>         
+                        </div>               
+                    </div>                    
+    
+                    <!-- Support Departments -->
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-box slds-m-vertical_small slds-box_no-padding ">        
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                                    <div class="slds-form-element__control">
+                                        <lightning:checkboxGroup name="COH_UIR_SHR_SupportDepartments__c"
+                                                                 label="Which departments will support this request?"
+                                                                 options="{!v.mPicklists.COH_UIR_SHR_SupportDepartments__c}"
+                                                                 value="{!v.mCheckboxGroupValues.COH_UIR_SHR_SupportDepartments__c}"
+                                                                 aura:id="intakeRequestFormCheckboxGroup"
+                                                                 required="true"
+                                                                 onchange="{!c.clearCheckboxGroupErrorMessage}"/>
+                                    </div>         
+                                </div>
+                            </div>
+                            
+                            <!-- Support Departments Other info -->
+                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_SHR_SupportDepartments__c.Other == 'true'}">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                                        <div class="slds-form-element__control">
+                                            <lightning:checkboxGroup name="COH_UIR_SHR_SupportDepartmentsOther__c"
+                                                                     label="If other, select department"
+                                                                     options="{!v.mPicklists.COH_UIR_SHR_SupportDepartmentsOther__c}"
+                                                                     value="{!v.mCheckboxGroupValues.COH_UIR_SHR_SupportDepartmentsOther__c}"
+                                                                     aura:id="intakeRequestFormCheckboxGroup"
+                                                                     required="true"
+                                                                     onchange="{!c.clearCheckboxGroupErrorMessage}"/>
+                                        </div>         
+                                    </div>
+                                    <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_SHR_SupportDepartments__cOther.Other == 'true'}">
+                                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                                            <div class="slds-form-element__control">
+                                                <lightning:input name="COH_UIR_SHR_SupportDepartmentsOtherInfo__c"
+                                                                 label="If Other, please specify"
+                                                                 value="{!v.mCheckboxGroupValues.COH_UIR_SHR_SupportDepartmentsOtherInfo__c}"
+                                                                 aura:id="intakeRequestForm"
+                                                                 required="true"/>
+                                            </div>         
+                                        </div>                      
+                                    </aura:if>        
+                                </div>        
+                            </aura:if>
+                        </div>
+                    </div>
+                    
+                    <!-- Strategic Initiative --> 
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-box slds-m-vertical_small slds-box_no-padding ">        
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                                    <div class="slds-form-element__control">
+                                        <lightning:select name="COH_UIR_SHR_SupportStrategicInitiative__c" 
+                                                          label="Does this request support a Strategic Initiative?" 
+                                                          value="{!v.mIntakeRequest.COH_UIR_SHR_SupportStrategicInitiative__c}"
+                                                          aura:id="intakeRequestForm"
+                                                          required="true">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_SupportStrategicInitiative__c}" var="currentPicklistOption">
+                                                <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>         
+                                </div>               
+                            </div>
+                            
+                            <!-- Strategic Initiative, Others -->
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_SupportStrategicInitiative__c == 'Yes'}">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                                        <div class="slds-form-element__control">
+                                            <lightning:checkboxGroup name="COH_UIR_SHR_StrategicInitiative__c"
+                                                                     label="Which one?"
+                                                                     options="{!v.mPicklists.COH_UIR_SHR_StrategicInitiative__c}"
+                                                                     value="{!v.mCheckboxGroupValues.COH_UIR_SHR_StrategicInitiative__c}"
+                                                                     aura:id="intakeRequestFormCheckboxGroup"
+                                                                     required="true"
+                                                                     onchange="{!c.clearCheckboxGroupErrorMessage}"/>  
+                                        </div>
+                                    </div>
+                                    <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_SHR_StrategicInitiative__c.Other == 'true'}">
+                                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">                          
+                                            <div class="slds-form-element__control">
+                                                <lightning:input name="COH_UIR_SHR_OtherStrategicInitiative__c"
+                                                                 label="If 'Other', please specify"
+                                                                 value="{!v.mIntakeRequest.COH_UIR_SHR_OtherStrategicInitiative__c}"
+                                                                 aura:id="intakeRequestForm"
+                                                                 required="true"/>
+                                            </div>
+                                        </div>
+                                    </aura:if>
+                                </div>	              
+                            </aura:if>  
+                            
+                            <!-- Existing funds, swapped with pre-allocated request -->
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_SupportStrategicInitiative__c == 'No'}">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                                        <div class="slds-form-element__control">
+                                            <lightning:select name="COH_UIR_SHR_ExistingOPEXOrCAPEX__c" 
+                                                              label="Is this request funded within an existing operational or capital budget?" 
+                                                              value="{!v.mIntakeRequest.COH_UIR_SHR_ExistingOPEXOrCAPEX__c}"
+                                                              aura:id="intakeRequestForm"
+                                                              required="true">
+                                                <option value="">--Select--</option>
+                                                <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_ExistingOPEXOrCAPEX__c}" var="currentPicklistOption">
+                                                    <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                                </aura:iteration>
+                                            </lightning:select>
+                                        </div>         
+                                    </div>
+                                </div>
+                                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_ExistingOPEXOrCAPEX__c == 'No'}">
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                            <div class="slds-form-element__control">
+                                                <lightning:select name="COH_UIR_SHR_SwappedForExistingRequest__c" 
+                                                                  label="Is this request being swapped for an existing pre-allocated or budgeted request?" 
+                                                                  value="{!v.mIntakeRequest.COH_UIR_SHR_SwappedForExistingRequest__c}"
+                                                                  aura:id="intakeRequestForm"
+                                                                  required="true">
+                                                    <option value="">--Select--</option>
+                                                    <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_SwappedForExistingRequest__c}" var="currentPicklistOption">
+                                                        <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                                    </aura:iteration>
+                                                </lightning:select>
+                                            </div>
+                                        </div>
+                                        <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_SwappedForExistingRequest__c == 'Yes'}">
+                                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                                <div class="slds-form-element__control">  
+                                                    <lightning:input name="COH_UIR_SHR_ProjectBeingSwapped__c" 
+                                                                     label="Which project is this being swapped with?" 
+                                                                     value="{!v.mIntakeRequest.COH_UIR_SHR_ProjectBeingSwapped__c}"
+                                                                     aura:id="intakeRequestForm"
+                                                                     required="true"/>
+                                                </div>
+                                            </div>
+                                        </aura:if>
+                                    </div>
+                                    <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_SHR_RequestType__c.Capital == 'true'}">
+                                        <div class="slds-grid slds-wrap">
+                                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                                <div class="slds-form-element__control">
+                                                    <lightning:select name="COH_UIR_SHR_CarryoverProject__c" 
+                                                                      label="Is this a carryover project?" 
+                                                                      value="{!v.mIntakeRequest.COH_UIR_SHR_CarryoverProject__c}"
+                                                                      aura:id="intakeRequestForm"
+                                                                      required="true"
+                                                                      title="Funded previously and will continue to use pre allocated funds">
+                                                        <option value="">--Select--</option>
+                                                        <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_CarryoverProject__c}" var="currentPicklistOption">
+                                                            <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                                        </aura:iteration>
+                                                    </lightning:select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </aura:if>
+                                </aura:if>                    
+                            </aura:if>
+                        </div>
+                    </div>
+                    
+                    <!-- Vertical Leader -->
+                    <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_ExistingOPEXOrCAPEX__c == 'Yes' || v.mIntakeRequest.COH_UIR_SHR_RequestPreAllocated__c == 'Yes' || v.mIntakeRequest.COH_UIR_SHR_RequestFundedOrSeekingFunds__c == 'Funded'}">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                <div class="slds-form-element__control">
+                                    <lightning:input name="COH_UIR_SHR_VerticalLeader__c" 
+                                                     label="Which vertical leader is funding this request?" 
+                                                     value="{!v.mIntakeRequest.COH_UIR_SHR_VerticalLeader__c}"
+                                                     aura:id="intakeRequestForm"
+                                                     required="true"/>
+                                </div>                  
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                    <!-- ELT Sponsor -->
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-box slds-m-vertical_small slds-box_no-padding ">             
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                                    <div class="slds-form-element__control">
+                                        <lightning:checkboxGroup name="COH_UIR_SHR_ELTSponsor__c"
+                                                                 label="Who is the ELT Sponsor?"
+                                                                 options="{!v.mPicklists.COH_UIR_SHR_ELTSponsor__c}"
+                                                                 value="{!v.mCheckboxGroupValues.COH_UIR_SHR_ELTSponsor__c}"
+                                                                 aura:id="intakeRequestFormCheckboxGroup"
+                                                                 required="true"
+                                                                 onchange="{!c.clearCheckboxGroupErrorMessage}"                                             
+                                                                 />  
+                                    </div>
+                                </div>
+                                
+                                <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_SHR_ELTSponsor__c.Other == 'true'}">
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                                        <div class="slds-form-element__control">                 
+                                            <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                                                    mSelectedRecord="{!v.mIntakeRequest.COH_UIR_SHR_ELTSponsorOther__c}" 
+                                                                    mLabel="If Other, provide details"
+                                                                    mPrimaryFieldAPIName="Name"
+                                                                    mSecondaryFieldAPIName="Title"
+                                                                    mAdditionalSelectFields="IsActive"
+                                                                    mAdditionalSearchConditions="AND IsActive = true"
+                                                                    mRequired="true"
+                                                                    aura:id="childComponent"/>
+                                        </div>
+                                    </div>
+                                </aura:if>
+                            </div>  
+                        </div>
+                    </div>        
+                    
+                    <!-- Addition Labor Required -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                            <div class="slds-form-element__control">
+                                <lightning:select name="COH_UIR_SHR_AdditionalLaborRequired__c" 
+                                                  label="Are additional Labor resources required?" 
+                                                  value="{!v.mIntakeRequest.COH_UIR_SHR_AdditionalLaborRequired__c}"
+                                                  aura:id="intakeRequestForm"
+                                                  required="true">
+                                    <option value="">--Select--</option>
+                                    <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_AdditionalLaborRequired__c}" var="currentPicklistOption">
+                                        <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>         
+                        </div>
+                    </div>
+                    
+                    <!-- Consequences of delay/stopping -->
+                    <div class="slds-grid slds-wrap">        
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">                    
+                                <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_ConsequencesOfDelaying__c}" 
+                                                    label="Consequences for stopping or delaying this request?"
+                                                    name="COH_UIR_SHR_ConsequencesOfDelaying__c"
+                                                    aura:id="intakeRequestForm"
+                                                    required="true"
+                                                    title="Please describe the issue or consequence of delaying the request. If the request is associated with compliance or regulatory please provide specific details as to the rule/regulation that would impacted, timeline of when regulation will be in place and impact to the organization."/>                                       
+                            </div>         
+                        </div>
+                    </div>
+                    
+                    <!-- Alternative 1 -->
+                    <div class="slds-grid slds-wrap">        
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                            <div class="slds-form-element__control">                    
+                                <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_IRC_AlternativeOption1__c}"
+                                                    label="Alternatives for accomplishing the goals of this request?"
+                                                    name="COH_UIR_IRC_AlternativeOption1__c"
+                                                    aura:id="intakeRequestForm"
+                                                    required="true"
+                                                    title="What other options have you evaluated in order to solve the problem you're presented with. Please provide concrete examples of attempts and/or analysis of alternatives that can resolve the root cause problem. Please provide specific details of previous attempts."/>    
+                            </div>
+                            <aura:if isTrue="{!v.mShowAlternatives[0] == false}">
+                                <lightning:button label="Add another Alternative Option" onclick="{!c.toggleAlternativeOption}" value="0" class="slds-float_left"/>
+                            </aura:if>
+                        </div>
+                    </div>
+                    
+                    <!-- Show alternative 2, when button is clicked -->
+                    <aura:if isTrue="{!v.mShowAlternatives[0] == true}">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                <div class="slds-form-element__control">                    
+                                    <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_IRC_AlternativeOption2__c}"
+                                                        label="Alternatives for accomplishing the goals of this request?"
+                                                        name="COH_UIR_IRC_AlternativeOption2__c"
+                                                        aura:id="intakeRequestForm"
+                                                        required="true"
+                                                        title="What other options have you evaluated in order to solve the problem you're presented with. Please provide concrete examples of attempts and/or analysis of alternatives that can resolve the root cause problem. Please provide specific details of previous attempts."/>                                       
+                                </div>
+                                <aura:if isTrue="{!v.mShowAlternatives[1] == false}">
+                                    <div>
+                                        <lightning:button label="Add another Alternative Option" onclick="{!c.toggleAlternativeOption}" value="1" class="slds-float_left"/>
+                                        <lightning:button label="Delete" onclick="{!c.toggleAlternativeOption}" value="0" class="slds-float_right"/>
+                                    </div>
+                                </aura:if>               
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                    <!-- Show Alternative 3, when button is clicked -->
+                    <aura:if isTrue="{!v.mShowAlternatives[1] == true}">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small slds-p-vertical_small">              
+                                <div class="slds-form-element__control">                    
+                                    <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_IRC_AlternativeOption3__c}"
+                                                        label="Alternatives for accomplishing the goals of this request?"
+                                                        name="COH_UIR_IRC_AlternativeOption3__c"
+                                                        aura:id="intakeRequestForm"
+                                                        required="true"
+                                                        title="What other options have you evaluated in order to solve the problem you're presented with. Please provide concrete examples of attempts and/or analysis of alternatives that can resolve the root cause problem. Please provide specific details of previous attempts."/>
+                                </div>
+                                <div>
+                                    <lightning:button label="Delete" onclick="{!c.toggleAlternativeOption}" value="1" class="slds-float_right"/>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                    <!-- Dependencies Contraints Assumptions -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                            <div class="slds-form-element__control">
+                                <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_DependenciesContraints__c}"
+                                                    label="Please identify any Dependencies, Constraints, Assumptions or Previous Attempts" 
+                                                    name="COH_UIR_SHR_DependenciesContraints__c"
+                                                    aura:id="intakeRequestForm"
+                                                    required="true" />
+                            </div>         
+                        </div>            
+                    </div>
+                    
+                    <!-- Compliance Or Regulatory Impact -->
+                    <div class="slds-grid slds-wrap">        
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                            <div class="slds-form-element__control">
+                                <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_ComplianceOrRegulatoryImpact__c}"
+                                                  label="Does the project have a compliance or regulatory impact?"
+                                                  name="COH_UIR_SHR_ComplianceOrRegulatoryImpact__c"
+                                                  aura:id="intakeRequestForm"
+                                                  required="true">
+                                    <option value="">--Select--</option>
+                                    <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_ComplianceOrRegulatoryImpact__c}" var="currentPicklistOption">
+                                        <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>                        
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>         
+                        </div>
+                    </div>        
+                    
+                    <!-- Affect campus and affiliate sites -->
+                    <div class="slds-grid slds-wrap">        
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                            <div class="slds-form-element__control">
+                                <lightning:select value="{!v.mIntakeRequest.COH_UIR_IRC_AffectMainCampusAndAffiliate__c}"
+                                                  label="Does this request/ project affect both the main campus and affiliate sites or community practices?" 
+                                                  name="COH_UIR_IRC_AffectMainCampusAndAffiliate__c"
+                                                  aura:id="intakeRequestForm"
+                                                  required="true">
+                                    <option value="">--Select--</option>
+                                    <aura:iteration items="{!v.mPicklists.COH_UIR_IRC_AffectMainCampusAndAffiliate__c}" var="currentPicklistOption">
+                                        <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>                        
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>         
+                        </div>
+                    </div>
+                    
+                    <!-- Impact Connect Hope, How -->
+                    <div class="slds-grid slds-wrap">        
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                            <div class="slds-form-element__control">
+                                <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_ImpactConnectHope__c}"
+                                                  label="Does this request impact ConnectHope?" 
+                                                  name="COH_UIR_SHR_ImpactConnectHope__c"
+                                                  aura:id="intakeRequestForm"
+                                                  required="true">
+                                    <option value="">--Select--</option>
+                                    <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_ImpactConnectHope__c}" var="currentPicklistOption">
+                                        <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>                        
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>         
+                        </div>
+                        <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_ImpactConnectHope__c == 'Yes'}">
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                                <div class="slds-form-element__control">
+                                    <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_HowConnectHopeImpacted__c}"
+                                                        label="How does this request impact ConnectHope?" 
+                                                        name="COH_UIR_SHR_HowConnectHopeImpacted__c"
+                                                        aura:id="intakeRequestForm"
+                                                        required="true" />
+                                </div>         
+                            </div>
+                        </aura:if>
+                    </div>        
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-box slds-m-vertical_small slds-box_no-padding ">
+                            <c:COH_UIR_IntakeRequestFormResourceInvolvement mIntakeRequest="{!v.mIntakeRequest}" aura:id="childComponent"/>
+                        </div>
+                    </div>
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-box slds-m-vertical_small slds-box_no-padding ">  
+                            <c:COH_UIR_IntakeRequestFormAdoptionImpact mIntakeRequest="{!v.mIntakeRequest}" aura:id="childComponent"/>
+                        </div>
+                    </div>
+                    
+                    <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_SHR_ProjectEquipmentOPEXLabor__c.AdditionalLaborResources == 'true' || v.mIntakeRequest.COH_UIR_SHR_AdditionalLaborRequired__c == 'Yes'}">
+                        <c:COH_UIR_IntakeRequestFormLabor mIntakeRequest="{!v.mIntakeRequest}" aura:id="childComponent"/>
+                    </aura:if>
+                    <!-- 			Disabled per Transformation Office Request                
+                <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_SHR_RequestType__c.Capital == 'true'}">
+                    <c:COH_UIR_IntakeRequestFormCapital mIntakeRequest="{!v.mIntakeRequest}" aura:id="childComponent"/>
+                </aura:if>
+-->
+                    <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_SHR_SupportDepartments__c.ITS == 'true'}">
+                        <c:COH_UIR_IntakeRequestFormITS mIntakeRequest="{!v.mIntakeRequest}" aura:id="childComponent"/>
+                    </aura:if>
+                    <!-- 			Disabled per Transformation Office Request  
+                <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_SHR_SupportDepartments__c.InfoSec == 'true'}">
+                    <c:COH_UIR_IntakeRequestFormInfoSec mIntakeRequest="{!v.mIntakeRequest}" aura:id="childComponent"/>
+                </aura:if>
+-->
+                    <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_SHR_SupportDepartments__c.Research == 'true'}">
+                        <c:COH_UIR_IntakeRequestFormResearch mIntakeRequest="{!v.mIntakeRequest}" aura:id="childComponent"/>
+                    </aura:if>
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_IsThisAFacilityRequest__c == 'Yes'}">
+                    <c:COH_UIR_IntakeRequestFormFacilities mIntakeRequest="{!v.mIntakeRequest}" aura:id="childComponent"/>
+            </aura:if>
+            </aura:if>
+            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_IsBudgetPlanningRequest__c == 'Yes'}">
+            	<c:COH_UIR_IntakeRequestFormFYPlanning mIntakeRequest="{!v.mIntakeRequest}" aura:id="childComponent"/>
+            </aura:if>
+            <div class="slds-grid slds-p-vertical_medium">
+                <lightning:button label="Submit Request"
+                                  class="slds-size_1-of-3 slds-align_absolute-center"
+                                  variant="brand"
+                                  onclick="{!c.submitRequestClick}"/>
+            </div>
+            
+            <aura:set attribute="else">
+                <div class="slds-form-horizontal slds-theme_default slds-p-vertical_large ">
+                    <div>
+                        <lightning:spinner variant="brand" size="large"/>
+                    </div>
+                </div>        	
+            </aura:set>
+        </aura:if>
+    </div>
+</aura:component>

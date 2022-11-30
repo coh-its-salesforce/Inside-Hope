@@ -1,0 +1,96 @@
+<aura:component >
+   <aura:attribute name="Events" type="boolean" default="true"/>
+    <aura:if isTrue="{!v.Events}">
+     <div>
+         <div class="banner-container">
+             <div class="slds-grid slds-wrap">
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+                     <div class="banner-image">
+                         <img src = "{!$Resource.CampusPlanEvents}"/> 
+                     </div>
+                 </div>
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12">
+                     <div class="banner-content">
+                         <h4 class="label-header"><label class="orange-bg">Orange County</label></h4>
+                         <h2> News and Events </h2>
+                         <p class="banner-p"> Check out our latest news and events as we speed our life-saving treatments to the people of Orange County. </p>
+                     </div>
+                 </div>
+             </div>            
+         </div>
+        <div class="profile-content">
+            	<strong> Top Internal News </strong>
+            <p>
+                <ul class="content-ul">
+                    <li>
+                            <a target = '_blank' href= 'http://insidehope.coh.org/designing-hope/'> 
+                                Designing Hope: City of Hope puts the design of our $1 billion OC cancer campus in the hands of patients, faculty and staff
+                            </a>
+                    </li>
+                    <li>
+                        <a target = '_blank' href= 'https://cityofhope--c.na118.visual.force.com/apex/NewsAnnouncementDetailPage?id=a6E3o000001chmZEAQ'>
+                           City of Hope Newport Beach Now Open
+                        </a>
+                    </li>
+                    <li>
+                        <a target = '_blank' href= 'https://cityofhope--c.na118.visual.force.com/apex/NewsAnnouncementDetailPage?id=a6E0V000001QgsuUAC'>
+                            Our $1B Vision for Orange County
+                        </a>
+                    </li>
+                </ul>
+            </p>
+            <p>
+            	<strong> Top News Coverage </strong>
+                <ul class="content-ul">
+                    <li>
+         				<a target = '_blank' href= 'https://www.ocregister.com/2020/01/21/city-of-hope-previews-its-first-cancer-center-in-orange-county/'> 
+                            City of Hope previews its first cancer center in Orange County  </a> – The Orange County Register
+                    </li>
+                    <li>
+                    	<a target = '_blank' href= 'https://www.latimes.com/socal/daily-pilot/news/story/2020-01-21/city-of-hope-plants-its-flag-in-newport-beach-with-new-outpatient-cancer-clinic'> 
+                            City of Hope plants its flag in Newport Beach with new outpatient cancer clinic </a> – Daily Pilot
+                    </li>
+                    <li>
+                        <a target = '_blank' href= 'https://www.ocregister.com/2019/06/25/city-of-hope-to-invest-1-billion-for-cancer-treatment-and-research-near-irvines-great-park/'> 
+                            City of Hope to invest $1 billion for cancer treatment and research near Irvine’s Great Park  </a> – The Orange County Register
+                    </li>
+                    <li>
+                    	<a target = '_blank' href= 'https://www.latimes.com/business/la-fi-city-of-hope-orange-county-20190625-story.html'> 
+                            City of Hope to develop $1 billion in new cancer hospital </a> – Los Angeles Times
+                    </li>
+                    <li>
+            			<a target = '_blank' href= 'https://www.fiercehealthcare.com/hospitals-health-systems/city-hope-announces-1b-cancer-campus-orange-county'>
+                            City of Hope announces $1 billion cancer campus in Orange County </a> - FierceHealthcare
+                    </li>
+                    <li>
+            			<a target = '_blank' href= 'https://cancerletter.com/articles/20190628_3/'>
+                            City of Hope invests more than $1B to build second campus in Irvine </a> - The Cancer Letter
+                    </li>
+                    <li>
+            			<a target = '_blank' href= 'https://labusinessjournal.com/news/2019/feb/05/city-hope-open-first-cancer-center-oc-14m/'>
+                            City of Hope to open first cancer clinic in OC </a> - LA Business Journal
+                    </li>
+                </ul>
+            </p>
+                <strong> Recent Events </strong>
+            <p>
+                <ul class="content-ul">
+                    <li>
+         				<a target = '_blank' href= 'https://www.youtube.com/watch?v=VpewJS-kK-U'> 
+                        Laura Goetz, M.D. and Wade Smith, M.D. showcase City of Hope’s commitment to the health and wellness of Orange County residents</a>
+                    </li>
+                    <li>
+         				<a target = '_blank' href= 'https://vimeo.com/387567741'> 
+                            City of Hope | Newport Beach Grand Opening Ceremony ushers in a new era of cancer care</a>
+                    </li>
+                    <li>
+         				<a target = '_blank' href= 'https://www.youtube.com/watch?v=ThKRGr2k5qU'> 
+                            Wade Smith, M.D. talks the importance of coming to Orange County at the 2019 Komen Orange County Walk</a>
+                    </li>
+                </ul>
+            </p>
+            
+         </div>
+       </div>
+       </aura:if>
+</aura:component>

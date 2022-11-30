@@ -1,0 +1,17 @@
+<aura:component controller="COHEpicLightningController" implements="lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickActionWithOutHeader" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="showErrorMessage" type="String" default=""/>
+    <aura:attribute name="callServer" type="Boolean" default="false"/>
+    <p style="color:red">{!v.showErrorMessage}</p>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h2>Are you sure you want to create an Epic record?</h2><br/>
+    <aura:if isTrue="{!v.callServer}">
+        
+        <lightning:spinner alternativeText="Loading" size="large" />
+        
+    </aura:if>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<lightning:button label="Cancel" onclick="{!c.cancelRecord}"  iconPosition="center"/>
+    <lightning:button label="Create Epic MRN" onclick="{!c.validate}"  variant="brand" iconPosition="center" aura:id=
+                      "createEpicButton"/>
+   <!-- <lightning:button label="Validate Form" onclick="{!c.validate}"  variant="brand" iconPosition="center"/>-->
+    <br/>
+</aura:component>

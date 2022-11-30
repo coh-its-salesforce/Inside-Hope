@@ -1,0 +1,268 @@
+<apex:page id="page" controller="Timesheetcontroller" docType="html-5.0">
+  <apex:sectionHeader title="Time and Effort Tracking"/>
+  <apex:includeScript value="//code.jquery.com/jquery-1.11.2.min.js"/>
+  <style>
+      .button {
+   border: 1px solid #0a3c59;
+   background: #3e779d;
+   
+   background: -webkit-gradient(linear, left top, left bottom, from(#65a9d7), to(#3e779d));
+   background: -webkit-linear-gradient(top, #65a9d7, #3e779d);
+   background: -moz-linear-gradient(top, #65a9d7, #3e779d);
+   background: -ms-linear-gradient(top, #65a9d7, #3e779d);
+   background: -o-linear-gradient(top, #65a9d7, #3e779d);
+   background-image: -ms-linear-gradient(top, #65a9d7 0%, #3e779d 100%);
+   padding: 7.5px 15px;
+   -webkit-border-radius: 9px;
+   -moz-border-radius: 9px;
+   border-radius: 9px;
+   -webkit-box-shadow: rgba(255,255,255,0.4) 0 0px 0, inset rgba(255,255,255,0.4) 0 0px 0;
+   -moz-box-shadow: rgba(255,255,255,0.4) 0 0px 0, inset rgba(255,255,255,0.4) 0 0px 0;
+   box-shadow: rgba(255,255,255,0.4) 0 0px 0, inset rgba(255,255,255,0.4) 0 0px 0;
+   text-shadow: #7ea4bd 0 1px 0;
+   color: #f2f7fa;
+   font-size: 13px;
+   font-family: helvetica, serif;
+   text-decoration: none;
+   vertical-align: middle;
+   }
+
+  </style>
+  <script>
+    function checkMethod(e){
+        if(e.which == 13)
+            e.preventDefault();
+    }
+    </script>
+  <apex:form id="form" >
+       <apex:actionFunction name="recalculateTotal" action="{!calculateTotalHours}" reRender="script,table" oncomplete="onCompleteRun();">
+            <apex:param value="" name="compId" assignTo="{!componentID}"/>
+        </apex:actionFunction> 
+      <apex:inputHidden id="comId"/>
+      <apex:pageblock id="panel">
+          <apex:pageMessages ></apex:pageMessages>
+          <apex:pageblockSection title="Information" id="sect1">
+              <apex:pageblockSectionItem >
+                  <apex:outputLabel value="Week"></apex:outputLabel>
+                  <apex:outputPanel >
+                     <apex:outputText value="{!selectedWeek}" label="Week" style="font-size:15px;" rendered="{!NOT(isCustomdate)}"/>
+                      <apex:outputPanel rendered="{!isCustomdate}" >
+                          <apex:inputField value="{!tr.Date__c}"/>
+                          <apex:commandButton value="Go" action="{!findCustomWeek}" status="loading" rerender="panel,script"/>
+                      </apex:outputPanel>
+                      <div>
+                          <apex:outputPanel rendered="{!NOT(isCustomdate)}">
+                          <apex:commandbutton value="Previous" status="loading" action="{!gotoPreviousWeek}" rerender="panel,script"/>
+                          <apex:commandbutton value="Current" style="margin-left:5px;" status="loading" action="{!goToCurrentWeek}" disabled="{!isCurretWeek}" rerender="panel,script"/>
+                          <apex:commandbutton value="Next" style="margin-left:5px;" status="loading" action="{!gotoNextWeek}" rerender="panel,script"/>
+                          <apex:commandButton value="Custom" action="{!enterCustom}" status="loading" rerender="panel,script"/>
+                          </apex:outputPanel>
+                          <apex:actionStatus id="loading">
+                                 <apex:facet name="start">
+                                     <img src="/img/loading.gif" />
+                                 </apex:facet>
+                                 
+                             </apex:actionStatus>
+                      </div>    
+                  </apex:outputPanel>
+              </apex:pageblockSectionItem>
+              
+              
+             
+              <apex:outputField value="{!tsWeek.Status__c}" style="font-size:20px;"/>
+              
+              
+          </apex:pageblockSection>
+          
+          <apex:pageblockSection title="Time Record" columns="1" id="sect2">
+              
+              <apex:outputPanel id="table">
+                   <table class="list" border="0" cellspacing="0" cellpadding="0">
+                       <tr class="headerRow">
+                           <th></th><th></th>
+                           <apex:repeat value="{!weekDates}" var="wd">
+                               <th>{!wd.dateStr}</th>
+                           </apex:repeat>
+                           <th></th>
+                       </tr>
+                       <tr class="headerRow">
+                           <th>Action</th>
+                           <th>Project</th>
+                           <apex:repeat value="{!weekDates}" var="wd">
+                               <th>{!wd.dayname}</th>
+                           </apex:repeat>
+                           <th>Total</th>
+                       </tr>
+                       <apex:repeat id="projRep" value="{!projectWrapperList}" var="pw" rendered="{!AND(NOT(ISNULL(projectWrapperList)), projectWrapperList.size > 0)}">
+                        <tr>
+                           <td>
+                               <apex:outputPanel >
+                                   <apex:actionStatus id="delst" rendered="{!isEditable}">
+                                       <apex:facet name="stop">
+                                           <apex:outputPanel >
+                                           <apex:commandLink action="{!removeRow}" status="delst" rerender="table" style="font-weight:bold;color:#d9534f;" title="Remove Row">
+                                               Del
+                                               <apex:param name="delRow" value="{!pw.roworder}" assignTo="{!projectRoworder }"/>    
+                                           </apex:commandLink>
+                                           </apex:outputPanel>
+                                       </apex:facet>
+                                       <apex:facet name="start">
+                                           <img src="/img/loading.gif" />
+                                       </apex:facet>
+                                   </apex:actionStatus>
+                               </apex:outputPanel>    
+                           </td>
+                            <td>
+                                <apex:outputField value="{!pw.trObj.Project__c}" rendered="{!NOT(isEditable)}"/>
+                                <apex:outputPanel layout="block" styleClass="requiredInput" rendered="{!isEditable}">
+                                    <apex:outputPanel layout="block" styleClass="requiredBlock"></apex:outputPanel>
+                                    <apex:inputField value="{!pw.trObj.Project__c}" onkeypress="checkMethod(event);"/>
+                                </apex:outputPanel>
+                            </td>
+                            <apex:variable value="{!0}" var="colCount"/>
+                            <apex:repeat value="{!pw.timeRecordmap}" var="wd" id="dateRowRep" rendered="{!NOT(ISNULL(pw.timeRecordmap))}">
+                                <td >
+                                    <apex:outputField value="{!pw.timeRecordmap[wd].hours__c}" rendered="{!NOT(isEditable)}"/>
+                                    <apex:inputField styleClass="hours rowHr-{!TEXT(pw.rowOrder)} colhr-{!TEXT(colCount)}" onkeypress="checkMethod(event);" style="width:50%" id="hrs" value="{!pw.timeRecordmap[wd].hours__c}" rendered="{!isEditable}"/>
+                                </td>
+                                <apex:variable value="{!colCount+1}" var="colCount"/>
+                            </apex:repeat>
+                            <td style="text-align:right;">
+                                <p class="rowHr-{!TEXT(pw.rowOrder)}-total">
+                                    {!pw.total}
+                                </p>
+                            </td>
+                        </tr>
+                       </apex:repeat>
+                       <tr  class="success">
+                           <th colspan="2" style="text-align:right;">Grand Total</th>
+                          
+                           <apex:repeat value="{!weekDates}" var="w">
+                                  
+                               <th ><p class="colhr-{!TEXT(w.order)}-total">
+                                        {!totalMap[w.order]} 
+                                   </p></th>
+                           </apex:repeat> 
+                            <th style="text-align:right;" ><p class="hours-total">
+                                {!grandTotal}
+                                </p>
+                           </th>
+                       </tr>
+                    </table>
+                 </apex:outputPanel>
+                 <apex:outputPanel rendered="{!isEditable}">
+                     <apex:panelGrid columns="2" width="100%">
+                         <apex:outputPanel >
+                             <apex:actionStatus id="addrowSt">
+                                    <apex:facet name="start">
+                                        <!--<apex:commandButton  styleclass="button" disabled="true" value="Adding..."></apex:commandButton>-->
+                                        <a href="#" disabled="true" class="button">Adding...</a>
+                                    </apex:facet>
+                                    <apex:facet name="stop">
+                                        <apex:commandLink action="{!addRow}" styleClass="button" style="text-decoration:none;" rerender="table,script" status="addrowSt">
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> + Add Row
+                                        </apex:commandLink>
+                                    </apex:facet>
+                                </apex:actionStatus>
+                         </apex:outputPanel>
+                         <apex:outputPanel >
+                             <apex:outputPanel style="float:right">
+                                 <apex:actionStatus id="saveSt">
+                                    <apex:facet name="start">
+                                        <!--<apex:commandButton styleclass="button" disabled="true" value="Saving..."></apex:commandButton>-->
+                                        <a href="#" disabled="true" class="button" style="text-decoration:none;">Saving..</a>
+                                    </apex:facet>
+                                    <apex:facet name="stop">
+                                        <apex:commandLink action="{!doSave}" style="text-decoration:none;" styleClass="button" rerender="panel,script" status="saveSt">
+                                             Calculate &amp; Save
+                                        </apex:commandLink>
+                                    </apex:facet>
+                                </apex:actionStatus>
+                                &nbsp;
+                                <apex:actionStatus id="submitSt">
+                                    <apex:facet name="start">
+                                        <!--<apex:commandButton styleclass="button"  disabled="true" value="Submitting..."></apex:commandButton>-->
+                                         <a href="#" disabled="true" class="button" style="text-decoration:none;">Submitting...</a>
+                                    </apex:facet>
+                                    <apex:facet name="stop">
+                                        <apex:commandLink action="{!doSubmit}" style="text-decoration:none;" styleClass="button" rerender="panel,script" status="submitSt">
+                                             Submit
+                                        </apex:commandLink>
+                                    </apex:facet>
+                                </apex:actionStatus>
+                             </apex:outputPanel>    
+                         </apex:outputPanel>
+                     </apex:panelGrid>    
+                 </apex:outputPanel>
+              
+              
+          </apex:pageblockSection>
+      </apex:pageblock>
+      
+       <apex:outputPanel id="script">
+           <script>
+                var flag = false;
+                function onCompleteRun(){
+                    var comIval = document.getElementById('page:form:comId').value;
+                    if(comIval!= ''){
+                        document.getElementById(comIval).focus();
+                    }
+                }
+                $(document).ready(function() {
+                    
+                    $('.hours').keyup(function(e){
+                        if(e.keyCode == 9){
+                          document.getElementById('page:form:comId').value =this.id ;
+                          recalculateTotal(); 
+                        }
+                    });
+                    
+                    
+                    
+                    /*
+                    onloadCalculate();                
+                    $('.hours').keyup(function(){
+                        var compID = this.id;
+                        var classtr = $("input[id^='"+compID+"']").attr('class') ;
+                        var classarray = classtr.split(' ');
+                        
+                        for(var i=0; i<classarray.length ; i++){
+                            calculateSum(classarray[i], classarray[i]+'-total');
+                        }
+                    });*/
+                });
+                /*
+                function onloadCalculate(){
+                    var v = '{!weekDates.size}';
+                    var r = '{!projectWrapperList.size}';
+                    calculateSum('hours','hours-total');
+                    for(var i=0; i<v;i++){
+                        calculateSum('colhr'+i,'colhr-'+i+'-total');
+                    }
+                    
+                    for(var j=0; j<r;j++){
+                        calculateSum('rowHr'+j,'rowHr-'+j+'-total');
+                    }
+                }
+                             
+                function calculateSum(classname, totalClass) {
+                    var sum = 0.0;
+                    //iterate through each textboxes and add the values
+                    var elemnts = document.getElementsByClassName(classname);
+                    for(var cm=0; cm<elemnts.length;cm++ ){
+                       if(elemnts[cm].value > 0)
+                           sum = sum + parseFloat(elemnts[cm].value);
+                    }
+                    console.log('-----'+totalClass);
+                    var totalElemt = document.getElementsByClassName(totalClass)[0];
+                    totalElemt.innerHTML= parseFloat(sum).toFixed(1); 
+                }   
+                */
+                
+                function focusonNext(){
+                    var compId = '';
+                }
+            </script>
+        </apex:outputPanel>
+  </apex:form>
+</apex:page>

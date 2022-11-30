@@ -1,0 +1,47 @@
+<aura:component >
+   <aura:registerEvent name="openResourcestoHelp" type="c:CampusPlan_ResourcestoHelpEvent" />
+   <aura:attribute name="openBodyArea2" type="boolean" default="false"/>
+   <aura:attribute name="NewApproach" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.NewApproach}">
+       <div>
+        <div class="banner-container">
+    	<div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_7-of-12">
+                <div class="banner-image">
+                    <img src = "{!$Resource.CampusPlanRivergradeOverview}"/> 
+                </div>
+      		</div>
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_5-of-12">
+               <div class="banner-content">
+                   <h2> New Approach to Parking on Duarte Campus Starting Sept. 1 </h2>
+                    <p class="banner-p">Due to our expansion, there will be an upcoming shortage of parking spaces on campus so the following changes are being planned:
+                    <ul class="banner-ul">
+                    <li>Patients will have priority for parking on campus and will park free (including valet) starting Sept. 1</li>
+                    <li>The remaining spaces available for faculty/staff parking will be prioritized as follows:
+                        <ul class="banner-ul">
+                            <li>Physician, nurses and other patient-facing staff (highest)</li>
+                           <li>Professorial series faculty [red tag] with offices/labs on campus (highest)</li>
+                           <li>Executives (SVP and above) with offices on campus</li>
+                            <li>Remaining faculty and staff</li>
+                       </ul>
+                    </li>
+                    <li>Starting Sept. 1, 2020, faculty/staff eligible to park on campus (M-F, daytime hours) will be charged an annual fee, ranging from $10 to $155 per month depending on proximity to the north end of campus</li>
+                    <li>Swing-shift, night-shift and weekend workers will continue to park free on campus, and staff can park free on campus from 6 p.m. to 5:30 a.m. M-F and any time on weekends</li>
+                    <li>Staff can continue to park free on campus through August; however, due to construction, there may be short periods of time when it may not be possible.</li>
+                    </ul>
+                    Thank you for your understanding and support as we transform our campus and expand hope for our patients.</p>
+               
+               </div>
+
+
+               
+               
+      		</div>
+      	</div>            
+       </div>
+           </div>
+          <!--<div class="backbutton" onclick="{!c.goBackToResourceToHelp}" ><lightning:icon iconName="utility:back" size="x-small" variant="inverse" />&nbsp;&nbsp;&nbsp;&nbsp;Back  
+    </div>-->
+</aura:if>
+   
+</aura:component>

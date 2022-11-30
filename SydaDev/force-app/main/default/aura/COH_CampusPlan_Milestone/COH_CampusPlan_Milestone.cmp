@@ -1,0 +1,86 @@
+<aura:component >
+    <aura:attribute name="MedicalOffice" type="boolean" default="false"/>
+    <aura:registerEvent name="OpenOrangeCounty" type="c:CampusPlan_OrangeCountyEvent" />
+    <!-- <aura:attribute name="March2018" type="boolean" default="false"/> -->
+   <aura:attribute name="Milestone" type="boolean" default="true"/>
+   <aura:attribute name="milestonepage1" type="boolean" default="false"/>
+   <aura:attribute name="milestonepage2" type="boolean" default="false"/>
+   <aura:attribute name="milestonepage3" type="boolean" default="false"/>
+   <aura:attribute name="milestonepage4" type="boolean" default="false"/>
+   <aura:attribute name="milestonepage5" type="boolean" default="false"/>
+   <aura:attribute name="milestonepage6" type="boolean" default="false"/>
+   <aura:attribute name="milestonepage7" type="boolean" default="false"/>
+   <aura:attribute name="milestonepage8" type="boolean" default="false"/>
+    
+   <aura:if isTrue="{!v.Milestone}">
+     <div>
+           <div class="banner-container">
+    	<div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+                    <div class="banner-image">
+      				<img src = "{!$Resource.MilestonesofHope}"/> 
+      				</div>
+      		</div>
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12">
+               <div class="banner-content">
+                   <h4 class="label-header"><label class="orange-bg">Orange County</label></h4>
+                   <h2> Milestones Of Hope </h2>
+				   <p class="banner-p">
+				      <strong>A Legacy Lives On</strong><br/>
+					  The journey to Orange County and beyond calls upon a rich history of a community determined to save lives and find cures. From the story of the “two tents” to expanding into two campuses, City of Hope is transforming the future of health.
+				   </p>
+               </div>
+      		</div>
+      	</div>            
+       </div>
+        <div class="profile-content">
+        	<p>
+				<strong>We're speeding cancer care to Orange County. Follow along on our unfolding vision.</strong> 
+                It began in 2018 when we announced plans to expand to Orange County. In 2019, we revealed plans to invest $1B to develop and operate a world-class comprehensive cancer campus at Irvine's FivePoint Gateway and network of care in Orange County. In early 2020, we opened our first clinical location in Orange County. Our Newport Beach site is the first phase of our bold vision for Orange County. 
+				Now, the story continues as we call upon our City of Hope family and the local community to help us design and bring to life the world-class campus, which will open in 2021.
+            </p>					
+		</div>
+       </div>
+          <!-- <div class="backbutton" onclick="{!c.goBackToOrangeCounty}" ><lightning:icon iconName="utility:back" size="x-small" variant="inverse" />&nbsp;&nbsp;&nbsp;&nbsp;Back  
+    </div> -->
+      
+       <div class="orangecounty-timeline">
+           <h1 class="octimeline-header">TIMELINE - Click on each Milestone to learn more</h1>
+           <img src="{!$Resource.OrangeCounty_Timeline}" class="octimeline-image" usemap="#image-map"/>
+           <map name="image-map">
+               <area id="milestone1" alt="Milestone 1" title="Milestone 1" onclick="{!c.openMileStonePage}" coords="21,123,290,44" shape="rect"/>
+               <area id="milestone2" alt="Milestone 2" title="Milestone 2" onclick="{!c.openMileStonePage}" coords="100,198,365,295" shape="rect" />
+               <area id="milestone3" alt="Milestone 3" title="Milestone 3" onclick="{!c.openMileStonePage}" coords="312,16,600,122" shape="rect"/>
+               <area id="milestone4" alt="Milestone 4" title="Milestone 4" onclick="{!c.openMileStonePage}" coords="415,195,699,305" shape="rect"/>
+               <area id="milestone5" alt="Milestone 5" title="Milestone 5" onclick="{!c.openMileStonePage}" coords="620,30,908,125" shape="rect" />
+               <area id="milestone6" alt="Milestone 6" title="Milestone 6" onclick="{!c.openMileStonePage}" coords="710,280,995,195" shape="rect" />
+               <area id="milestone7" alt="Milestone 7" title="Milestone 7" onclick="{!c.openMileStonePage}" coords="920,29,1215,125" shape="rect" />
+               <area id="milestone8" alt="Milestone 8" title="Milestone 8" onclick="{!c.openMileStonePage}" coords="1030,195,1315,280" shape="rect"/>
+           </map>
+       </div>
+     </aura:if>   
+    <aura:if isTrue="{!v.milestonepage1}">
+        <c:COH_CampusPlan_OCMarch2018/>
+    </aura:if>
+    <aura:if isTrue="{!v.milestonepage2}">
+         <c:COH_CampusPlan_OCMay2018/>
+    </aura:if>
+    <aura:if isTrue="{!v.milestonepage3}">
+         <c:COH_CampusPlan_OCJune2019/>
+    </aura:if>
+    <aura:if isTrue="{!v.milestonepage4}">
+        <c:COH_CampusPlan_OCJan2020/>
+    </aura:if>
+    <aura:if isTrue="{!v.milestonepage5}">
+         <c:COH_CampusPlan_OCFeb2020/>
+    </aura:if>
+    <aura:if isTrue="{!v.milestonepage6}">
+        <c:COH_CampusPlan_Coming2020/>
+    </aura:if>
+    <aura:if isTrue="{!v.milestonepage7}">
+         <c:COH_CampusPlan_OCComing2021/>
+    </aura:if>
+    <aura:if isTrue="{!v.milestonepage8}">
+        <c:COH_CampusPlan_Coming2025/> 
+    </aura:if>
+</aura:component>

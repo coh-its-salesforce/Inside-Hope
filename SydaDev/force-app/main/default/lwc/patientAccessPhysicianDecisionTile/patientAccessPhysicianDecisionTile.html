@@ -1,0 +1,29 @@
+<template>
+    <template if:true={recPhysicianMatrix}>
+        <div class="slds-m-around_xxx-small">
+        <lightning-card title={recPhysicianMatrix.Name} icon-name="standard:shift_template" style=background:#5679C0>
+            <div class="slds-m-around_small">
+                <p>
+                    <strong>Location: </strong> {recPhysicianMatrix.Location__c}<br />
+                    <strong>Department: </strong> {recPhysicianMatrix.Department__c}<br />
+                    <strong>Service Line: </strong> {recPhysicianMatrix.Service_Line__c}<br />
+                    <strong>Specialty: </strong> {recPhysicianMatrix.Specialty_Diagnosis__c}<br />
+                    <strong>Subgroup #: </strong> {recPhysicianMatrix.Subgroup_No__c}<br />
+                    <strong>Physician: </strong> {recPhysicianMatrix.Provider__c}<br />
+                    <strong>Scheduling Guidelines: </strong> {recPhysicianMatrix.Scheduling_Guidelines__c}<br />
+                    <strong>Does not see/treat: </strong> {recPhysicianMatrix.Does_not_seetreat__c}<br />
+                </p>
+                <p class="slds-m-around_small"> 
+                    <lightning-button label="Open Record Detail" variant="brand" onclick={handleOpenRecordDetail} disabled={isButtonDisabled}> </lightning-button>
+                    <lightning-button variant="success" label="Update Picklists" title="Update Physician Picklists to the boxed values" onclick={handleSendToPhysicianMatrix} class="slds-m-left_x-small"></lightning-button>
+                </p>
+            </div>
+        </lightning-card>
+        </div>
+    </template>
+    <template if:true={distanceMapData}>
+          <lightning-card title="Distance" icon-name="standard:shift_template" style=background:#5679C0>
+                Distance : {distanceMapData}
+          </lightning-card>
+    </template>
+</template>

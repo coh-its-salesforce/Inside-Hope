@@ -1,0 +1,266 @@
+<aura:component controller="COHCaseInsuranceTabControllerLegacy" implements="flexipage:availableForAllPageTypes,force:hasRecordId">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:attribute name="mCase" type="Case" default="{}"/>
+    <aura:attribute name="mLoading" type="boolean" default="true"/>
+    <aura:attribute name="mCurPRSpecialist" type="String" default=""/>
+    <aura:attribute name="mAllRecordsReceivedVal" type="Boolean" default="false"/>
+    <aura:attribute name="mRecordsNoLongerNeededVal" type="Boolean" default="false"/>
+    <aura:attribute name="mInsuranceCardVal" type="Boolean" default="false"/>
+    <aura:attribute name="mNewPatientPacketVal" type="Boolean" default="false"/>
+    <aura:attribute name="mMedicationsVal" type="Boolean" default="false"/>
+    
+    <div class="slds-card slds-card_boundary" style="box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.16);">
+        <div class="slds-section slds-is-open slds-m-top_none">
+            <h3 class="slds-section__title">
+                <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                    <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                    <span class="slds-truncate" title="Section Title">Patient Records</span>
+                </button>
+            </h3>
+            <lightning:recordEditForm aura:id="procurementForm" recordId="{!v.recordId}" objectApiName="Case" onload="{!c.onRecordEditFormLoad}" onsubmit="{!c.saveProcurementClick}">
+                <div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
+                    <div class="slds-form">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <label for="PRSpecialist_Assignment__c">PRS Specialist Assignment</label>
+                                <lightning:inputField aura:id="PRSpecialist_Assignment__c" name="PRSpecialist_Assignment__c" fieldName="PRSpecialist_Assignment__c" onchange="{!c.onPRSSpecialistAssignmentChange}" variant="label-hidden"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:input type="datetime" aura:id="Date_PRS_Specialist_Is_Assigned__c" label="Date PRS Specialist Assigned" name="Date_PRS_Specialist_Is_Assigned__c" fieldName="Date_PRS_Specialist_Is_Assigned__c" readonly="true" value="{!v.mCase.Date_PRS_Specialist_Is_Assigned__c}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ***Changes made by Sanjay Date 01-05-2021 ****changes start**moved code from down** -->
+                    <div  class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+							<lightning:inputField fieldName="PHI_Received_List__c"/>
+                        </div>   
+                        <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+							<lightning:inputField fieldName="Date_Time_PHI_Received__c" />
+                        </div>
+               		</div>
+                    <!-- ***Changes made by Sanjay Date 01-05-2021 ****changes END**** -->
+                    <div class="slds-grid slds-wrap">
+                        <!-- ***** Changes made by Sanjay Date 01-05-2021 ****changes start**** 
+						<div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:select aura:id="mAllRecordsReceived" name="mAllRecordsReceived"  value="{!v.mAllRecordsReceivedVal}" label="All Records Received?" required="false">
+                                <option value="false" selected="{!not(v.mCase.All_Records_Recieved__c)}">No</option>
+                                <option value="true" selected="{!v.mCase.All_Records_Recieved__c}">Yes</option>
+                            </lightning:select>
+                        </div>
+						 ***** Changes made by Sanjay Date 01-05-2021 ****changes END**** -->
+                        <!-- testing raymond tam -->
+                        <!-- **** field added by sanjay - 01-24-21***START*-->
+                        <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                           	<lightning:inputField fieldName="E_Consents_Sent_To_Patient__c"/>
+                        </div>
+                        <!-- **** field added by sanjay - 01-24-21***END*-->
+                        <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                           	<lightning:inputField fieldName="Procurement_Process_Completed__c"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+						</div>
+                        <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                           	<!-- ***** Changes made by Sanjay Date 01-05-2021 ****changes start****-->
+                            <lightning:inputField fieldName="Records_No_Longer_Needed__c"/>
+                            <!--
+                            <lightning:select aura:id="mRecordsNoLongerNeeded" name="mRecordsNoLongerNeeded" value = "{!v.mRecordsNoLongerNeededVal}"  label="Records No Longer Needed?" required="false">
+                                <option value="false" selected="{!not(v.mCase.Records_No_Longer_Needed__c)}">No</option>
+                                <option value="true" selected="{!v.mCase.Records_No_Longer_Needed__c}">Yes</option>
+                            </lightning:select>
+							***** Changes made by Sanjay Date 01-05-2021 ****changes END**** -->
+                        </div>
+						
+                        <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                         
+                        </div>
+                    <br/>
+                    </div>
+                    <div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:inputField fieldName="Imaging_Status__c"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:inputField fieldName="X1st_Request_Imaging_Status__c"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:inputField fieldName="How_Many_Locations_Imaging_Status_1__c"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:inputField fieldName="Comments_Imaging_Status_1__c" class="COH_TextArea"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:inputField fieldName="X2nd_Request_Imaging_Status__c"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:inputField fieldName="How_Many_Locations_Imaging_Status_2__c"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:inputField fieldName="Comments_Imaging_Status_2__c" class="COH_TextArea"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:inputField fieldName="X3rd_Request_Imaging_Status__c"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:inputField fieldName="How_Many_Locations_Imaging_Status_3__c"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:inputField fieldName="Comments_Imaging_Status_3__c" class="COH_TextArea"/>
+                            </div>
+                        </div>                        
+                    </div>
+                    <br/>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="MD_Note_Status__c"/>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="X1st_Request_MD_Notes__c"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="How_Many_Locations_MD_Notes_1__c"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="Comments_MD_Notes_1__c" class="COH_TextArea"/>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="X2nd_Request_MD_Notes__c"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="How_Many_Locations_MD_Notes_2__c"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="Comments_MD_Notes_2__c" class="COH_TextArea"/>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="X3rd_Request_MD_Notes__c"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="How_Many_Locations_MD_Notes_3__c"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="Comments_MD_Notes_3__c" class="COH_TextArea"/>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="Pathology_Status__c"/>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="X1st_Request_Pathology__c"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="How_Many_Locations_Pathology_1__c"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="Comments_Pathology_1__c" class="COH_TextArea"/>
+                        </div>
+                    </div>
+                    <!-- ***** Changes made by Sanjay Date 01-05-2021 ****changes start****Commented 
+					<div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="X2nd_Request_Pathology__c"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="How_Many_Locations_Pathology_2__c"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="Comments_Pathology_2__c" class="COH_TextArea"/>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="X3rd_Request_Pathology__c"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="How_Many_Locations_Pathology_3__c"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="Comments_Pathology_3__c" class="COH_TextArea"/>
+                        </div>
+                    </div>
+					***** Changes made by Sanjay Date 01-05-2021 ****changes END****  -->
+                    
+                    <br/>
+                    <!-- ***** Changes made by Sanjay Date 01-05-2021 ****changes start***Added New Field*--> 
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-4 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="Pathology_Req_Entered__c"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-4 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="Path_request_uploaded_to_EPIC__c"/>
+                        </div>
+                        
+                    </div>
+                    <!-- ***** Changes made by Sanjay Date 01-05-2021 ****changes END****--> 
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="Confirmation_Email_Sent__c"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="Confirmation_Call_Completed__c"/>
+                        </div>
+                        <!-- ***** Changes made by Sanjay Date 01-05-2021 ****changes start**** 
+                        <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:select aura:id="mInsuranceCard" name="mInsuranceCard" value = "{!v.mInsuranceCardVal}"  label="Insurance Card?" required="false">
+                                <option value="false" selected="{!not(v.mCase.Insurance_Card_ID__c)}">No</option>
+                                <option value="true" selected="{!v.mCase.Insurance_Card_ID__c}">Yes</option>
+                            </lightning:select>
+                            
+                        </div> 
+						***** Changes made by Sanjay Date 01-05-2021 ****changes END****  -->                       
+                    </div>
+                    <div class="slds-grid slds-wrap">
+                       
+                        <!-- ***** Changes made by Sanjay Date 01-05-2021 ****changes start**** 
+                        <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:select aura:id="mNewPatientPacket" name="mNewPatientPacket"  label="New Patient Packet?" required="false" value="{!v.mNewPatientPacketVal}">
+                                <option value="false" selected="{!not(v.mCase.New_Patient_Packet__c)}">No</option>
+                                <option value="true" selected="{!v.mCase.New_Patient_Packet__c}">Yes</option>
+                            </lightning:select>
+                        </div>   
+						***** Changes made by Sanjay Date 01-05-2021 ****changes END****  -->                     
+                    </div>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+								<lightning:inputField fieldName="Checklist_Emailed_Date__c"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:inputField fieldName="Result_of_Confirmation_Call__c"/>
+                        </div>
+                        <!-- ***** Changes made by Sanjay Date 01-05-2021 ****changes start**** 
+                        <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:select aura:id="mMedications" name="mMedications"  label="Medications?" required="false" value="{!v.mMedicationsVal}">
+                                <option value="false" selected="{!(v.mCase.Medications__c)}">No</option>
+                                <option value="true" selected="{!v.mCase.Medications__c}">Yes</option>
+                            </lightning:select>
+                        </div> 
+                        ***** Changes made by Sanjay Date 01-05-2021 ****changes END****  -->
+                    </div>                    
+                </div>   
+                <div class="slds-text-align_center">
+                    <lightning:button aura:id="Save" label="Save Procurement Information" type="submit" variant="brand"/>
+                </div>
+                <aura:if isTrue="{!v.mLoading}">
+                    <lightning:spinner/>
+                </aura:if>                
+            </lightning:recordEditForm>
+        </div>
+    </div>	
+</aura:component>

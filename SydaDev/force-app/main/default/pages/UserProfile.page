@@ -1,0 +1,610 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" 
+           controller="UserProfileController"
+           action="{!RedirectToErrorPage}"
+           applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+    
+     
+    <html lang="en">
+        <head>
+            
+            <c:Head title="My Profile"></c:Head>
+           <style>
+            .modal-body{
+               max-height:450px;
+               overflow-y:scroll;
+               }
+               .cke_contents{
+               height:100px !important;
+               }
+               .modal{
+               z-index:9999 !important
+               }
+               
+            </style>
+            <!--<apex:stylesheet value="https://fonts.googleapis.com/css?family=Alef"/>-->
+        </head>
+        <body>
+            <div class="Wrapper">
+            <apex:form >
+            <!-- Header Bar --->
+                <c:COH_SIP_Header ></c:COH_SIP_Header> 
+            </apex:form>
+            <apex:form >            
+            <!--Search bar-->
+                <c:COH_SIP_Search ></c:COH_SIP_Search>
+            <!-- page Body Content-->
+            <!-- Container -->
+            <div class="container" style="padding: 150px 0 0 0;height: 100%;">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 ">
+                        <apex:outputPanel rendered="{!UId != $User.Id}"><!---->
+                                    
+                            <ul class="list-inline pull-right" >
+                               <li>
+                                    <a href="#" id="msglink" data-toggle="modal"   data-target="#messageModal">
+                                        <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>&nbsp;Send Message
+                                    </a>
+                                </li>
+                                <li>|</li>
+                                <li>
+                                        <apex:outputPanel id="followSect">
+                                            <apex:actionStatus id="fst">
+                                                <apex:facet name="stop">
+                                                    <apex:commandLink action="{!toggleFollow}" rerender="followSect" status="fst">
+                                                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>{!IF(isFollowing, 'Unfollow', 'Follow')}
+                                                    </apex:commandLink>
+                                                </apex:facet>
+                                                <apex:facet name="start"> 
+                                                    <apex:outputText >{!IF(isFollowing, 'Unfollowing....', 'Following..')}  </apex:outputText>
+                                                </apex:facet>
+                                            </apex:actionStatus>
+                                        </apex:outputPanel>
+                                </li>
+                            </ul>
+                            <!-- Message Modal -->
+                            <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                            <h4 class="modal-title" id="messageModalLabel"><span class="ion-android-mail mr15"></span>Send Message</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div id="messages"> 
+                                                
+                                            </div>
+                                            <form role="form">
+                                                
+                                                <div class="form-group">
+                                                    <textarea class="form-control" placeholder="Message" id="InputMessage" rows="7"></textarea>
+                                                </div>
+                                                
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-rw btn-default" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-rw btn-primary" onclick="sendMessage();">Send</button>
+                                        </div>
+                                    </div><!-- /modal content -->
+                                </div><!-- /modal dialog -->
+                            </div><!-- /modal holder -->
+                            <!-- End Default Modal -->
+                        </apex:outputPanel>
+                    </div>
+                </div>
+                <!-- breadcrumb- end -->
+                <div class="row">
+                    <!-- Begin Sidebar -->
+                    <aside class="col-lg-4 col-md-4 col-sm-4">
+                        <nav role="navigation">
+                            <ul class="sidebar-nav list-group no-margin" id="sidebar-nav">
+                                <li class="list-group-item text-left profileImgbox">
+                                    <!-- Name -->
+                                    <!-- Larry Kiang Updated and added displayName to the User Name -->
+                                    <h4 class="team-member-name-imgtop">{!userObj.Displayname__c}
+                                        <br/><small class="text-muted no-padding">{!userObj.Job_Title__c}</small><br/>                                         
+                                        <small class="text-muted no-padding">{!userObj.Department}</small>
+                                        <br/><small class="text-muted no-padding">{!userCurrentYear}</small></h4>
+                                    <!-- Image -->
+                                    <img src="{!Userdetail.photo.largePhotoUrl}" class="profilepic" alt="{!Userdetail.displayName}"/>
+                                 </li>
+                                <li class="list-group-item">
+                                    <div>
+                                        <div class="sidebarHeading">
+                                            <span class="headinglabel">Contact</span>
+                                            <apex:outputPanel rendered="{!UId == $User.Id}">
+                                                <a style="float:right;" data-toggle="modal" href="#usereditModal">
+                                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                                </a>   
+                                            </apex:outputPanel>
+                                        </div>
+                                        <hr class="saperater"/>
+                                        <div>
+                                            <apex:outputPanel rendered="{!NOT(ISNULL(userObj.Primary_Specialties__c))}">
+                                                <div class="sidebar-min-heading">
+                                                  Primary Speciality
+                                                </div>
+                                                <div>
+                                                   {!userObj.Primary_Specialties__c} 
+                                                </div>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!OR(NOT(ISNULL(userObj.Clinical_Area__c)), NOT(ISNULL(userObj.Sub_Specialties__c)))}">
+                                                <div class="sidebar-min-heading">
+                                                  Clinical Area/ Sub-Specialities
+                                                </div>
+                                                <div>
+                                                    {!userObj.Clinical_Area__c}<apex:outputText rendered="{!NOT(ISNULL(userObj.Sub_Specialties__c))}">/ {!userObj.Sub_Specialties__c}</apex:outputText> 
+                                                </div>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel rendered="{!OR(NOT(ISNULL(userObj.Department)), NOT(ISNULL(userObj.Division_Program__c)))}">
+                                                <div class="sidebar-min-heading">
+                                                    Department / Division-Program
+                                                </div>
+                                                <div>
+                                                    {!userObj.Department} <apex:outputText rendered="{!NOT(ISNULL(userObj.Division_Program__c))}">/ {!userObj.Sub_Specialties__c}</apex:outputText>
+                                                </div>
+                                                {!userObj.Location__c}
+                                            </apex:outputPanel>
+                                        </div>
+                                        <p><a href="mailto:{!userdetail.email}">{!userdetail.email}</a><br/>                                          
+                                        <!--{!userdetail.Job_Title__c}<br/>-->
+                                            <!--<apex:repeat value="{!userDetail.phoneNumbers}" var="phone"> 
+                                                {!phone.phoneNumber} ({!Phone.label}) <br/>
+                                            </apex:repeat>-->
+                                            <apex:outputpanel rendered="{!if(userObj.Extension != null && userObj.Extension != '', true, false)}">
+                                                {!userobj.Extension} (Extension) <br/>
+                                            </apex:outputpanel>
+                                            <apex:outputpanel rendered="{!if(userObj.Work_Phone__c != null && userObj.Work_Phone__c != '', true, false)}">
+                                                {!userobj.Work_Phone__c} (Work) <br/>
+                                            </apex:outputpanel>
+                                            <apex:outputpanel rendered="{!if(userObj.Work_Mobile__c != null && userObj.Work_Mobile__c != '', true, false)}">
+                                                {!userobj.Work_Mobile__c} (Mobile) <br/>
+                                            </apex:outputpanel>
+                                            <apex:outputpanel rendered="{!if(userObj.Academic_Office_NO_PATIENT_CALLS__c != null && userObj.Academic_Office_NO_PATIENT_CALLS__c != '', true, false)}">
+                                                {!userobj.Academic_Office_NO_PATIENT_CALLS__c} (Academic Office-NO PATIENT CALLS) <br/>
+                                            </apex:outputpanel>
+                                            <apex:outputpanel rendered="{!if(userObj.Call_Center_PATIENT_CALLS__c != null && userObj.Call_Center_PATIENT_CALLS__c != '', true, false)}">
+                                                {!userobj.Call_Center_PATIENT_CALLS__c} (Call Center-PATIENT CALLS) <br/>
+                                            </apex:outputpanel>                                            
+                                            <apex:outputpanel rendered="{!if(userObj.BMCServiceDesk__pager__c != null && userObj.BMCServiceDesk__pager__c != '', true, false)}">
+                                                {!userobj.BMCServiceDesk__pager__c} (Pager) <br/>
+                                            </apex:outputpanel>
+                                            <apex:outputpanel rendered="{!if(userObj.Fax__c != null && userObj.Fax__c != '', true, false)}">
+                                                {!userobj.Fax__c} (Fax) <br/>
+                                            </apex:outputpanel>
+                                            <!--<apex:outputPanel rendered="{!if(userObj.Fax__c != null && userObj.Fax__c != '', true, false)}">
+                                                {!userobj.Fax__c} (Fax) <br/>
+                                            </apex:outputPanel>-->
+                                            <!--<br/>-->
+                                            <!-- Changes by Pavani-->
+                                            <!--<apex:commandLink onclick="window.open('{!userJob}');return false;"  value="Job Title" rendered="{!NOT(ISNULL(userJob))}"/> <br/>-->
+                                           
+                                           <apex:commandLink onclick="window.open('{!userlinkedIn}');return false;"  value="LinkedIn / External COH Bio Profile" rendered="{!NOT(ISNULL(userlinkedIn))}"/> <br/><br/>
+                                             <apex:commandLink onclick="window.open('{!userMapSite}');return false;"  value=" Duarte Map" rendered="{!NOT(ISNULL(userMapSite))}" /> <br/> 
+                                            <apex:commandLink onclick="window.open('{!userRiverGradeMapSite}');return false;"  value="Rivergrade Map" rendered="{!NOT(ISNULL(userRiverGradeMapSite))}"/> <br/>
+                                           <apex:commandLink onclick="window.open('{!userCommunitiesMapSite}');return false;"  value="Community Practice Sites Map" rendered="{!NOT(ISNULL(userCommunitiesMapSite))}"/> <br/>
+                                       <!-- end of Changes by Pavani-->
+                                       
+                                        <!-- Changes by Abhishek to put the chatter policy Link-->
+                                        <br/>
+                                       <a class="pull-left" href="https://cityofhope.my.salesforce.com/069d0000001vvHT" target="_blank">Chatter Usage Policy</a>
+                                       <br/>
+                                       <!-- end of Changes by Abhishek-->
+                                        </p>
+                                    </div>
+                                </li>
+                                    <!-- Abhisheks code to hide report to if blank and show supervisor instead of managerId -->
+                                 <apex:outputPanel rendered="{!Manager != null}">
+                                        <li class="list-group-item">
+                                                <div>
+                                                    <div class="sidebarHeading">
+                                                        <span class="headinglabel">Reports To </span><span class="reportsTolabel">(Results Defined by PeopleSoft)</span>
+                                                    </div>
+                                                    <hr class="saperater"/>
+                                                    <p>
+                                                        <div class="media">
+                                                         <a class="pull-left" href="{!$Page.userProfile}?uid={!Manager.chatterUser.Id}" target="_blank">                                                        
+                                                                <img class="media-object" src="{!Manager.UserPhoto}" alt="{!Manager.chatterUser.Name}"/>
+                                                            </a>
+                                                            <div class="media-body">
+                                                                 <h4 class="media-heading">
+                                                                    <a href="{!$Page.UserProfile}?uid={!Manager.chatterUser.Id}" target="_blank">
+                                                                        {!UserManager.Displayname__c}
+                                                                        <!--{!Manager.chatterUser.name}-->
+                                                                    </a>
+                                                                </h4>
+                                                            </div>
+                                                    </div>   
+                                                </p>
+                                            </div>
+                                      </li>
+                                </apex:outputPanel>                        
+                                 <apex:outputPanel rendered="{!Administrator != null}">
+                                        <li class="list-group-item">
+                                                <div>
+                                                    <div class="sidebarHeading">
+                                                        <span class="headinglabel">Department Administrator</span>
+                                                    </div>
+                                                    <hr class="saperater"/>
+                                                    <p>
+                                                        <div class="media">
+                                                            <a class="pull-left" href="{!$Page.userProfile}?uid={!Administrator.chatterUser.Id}" target="_blank">                                                        
+                                                                <img class="media-object" src="{!Administrator.UserPhoto}" alt="{!Administrator.chatterUser.Name}"/>
+                                                            </a>
+                                                            <div class="media-body">
+                                                                 <h4 class="media-heading">
+                                                                    <a href="{!$Page.UserProfile}?uid={!Administrator.chatterUser.Id}" target="_blank">
+                                                                        {!UserAdministrator.displayname__c}
+                                                                        <!--{!Administrator.chatterUser.Name}-->
+                                                                    </a>
+                                                                </h4>
+                                                            </div>
+                                                    </div>   
+                                                </p>
+                                            </div>
+                                      </li>
+                                </apex:outputPanel>
+                                <!-- End Of Abhisheks code to hide report to if blank and show supervisor instead of managerId -->
+                                <apex:outputPanel rendered="{!supportedByUsers.size>0}">
+                                    <li class="list-group-item">
+                                        <div>
+                                            <div class="sidebarHeading">
+                                                <!-- <span class="headinglabel">Supported By</span> -->
+                                                <span class="headinglabel">Administrative Support</span>
+                                            </div>
+                                            <hr class="saperater"/>
+                                            <p>
+                                                <apex:repeat value="{!supportedByUsers}" var="supBy">
+                                                    <div class="media">
+                                                        <a class="pull-left" href="{!$Page.userProfile}?uid={!supBy.supportedBy.supported_By_User__c}" target="_blank">
+                                                            
+                                                            <img class="media-object" src="{!supBy.UserPhoto}" alt="{!supBy.supportedBy.supported_By_User__r.Name}"/>
+                                                        </a>
+                                                        <div class="media-body">
+                                                            <h4 class="media-heading">
+                                                                <a href="{!$Page.UserProfile}?uid={!supBy.supportedBy.supported_By_User__c}" target="_blank">
+                                                                    {!supBy.supportedBy.supported_By_User__r.displayname__c}
+                                                                  </a>
+                                                            </h4>
+                                                        </div>
+                                                    </div>  
+                                                </apex:repeat>
+                                                
+                                            </p>
+                                        </div>
+                                    </li>
+                                </apex:outputPanel>
+                              <li class="list-group-item">
+                                <div>
+                                    <div class="sidebarHeading">
+                                       <!-- Sanjay Oct 13<span class="headinglabel">Chatter Contribution</span>-->
+                                    </div>
+                                    <hr class="saperater"/>
+                                   <!--Sanjay Oct 13 <c:ChatterContribution UserId="{!uID}"></c:ChatterContribution> -->
+                                  </div>
+                              </li>
+                                
+                          </ul>
+                      </nav>
+                    </aside>
+                    
+                    <section class="col-lg-8 col-md-8 col-sm-8">
+                                    
+                        <!--===- Nav tabs ===-->
+                        
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li ><a href="#feed" role="tab" data-toggle="tab">Feed</a></li>
+                            <li class="active"><a href="#overview" role="tab" data-toggle="tab">Overview</a></li>
+                            <div class="pull-right">
+                                
+                            </div>
+                        </ul>
+                        <div class="tab-content">
+                            
+                            <div class="tab-pane" id="feed" >
+                                <div style="margin-top:10px;">
+                                    <c:chatter_feed subjectid="{!userObj.id}"/>
+                                    <!--<c:ChatterFeed subjectId="{!userObj.id}" ></c:ChatterFeed>-->
+                                </div>
+                            </div>
+                            <div class="tab-pane in active" id="overview">
+                                <apex:outputPanel rendered="{!if(placeholderText != '' && UId == $User.Id,  true, false)}">
+                                    <span class="placeholderText"><br/>{!placeholderText}</span>
+                                </apex:outputPanel>                                
+                                <apex:outputPanel rendered="{!UId == $User.Id}">
+                                <a style="float:right;" data-toggle="modal" href="#usereditModal">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </a>   
+                                </apex:outputPanel>    
+                                <apex:outputPanel rendered="{!UserObj.Show_Biography__c}">
+                                        <div class="sidebarHeading">
+                                            <span class="headinglabel">Biography</span>
+                                        </div>
+                                        <hr class="saperater"/>
+                                        <p>
+                                            <apex:outputText value="{!userDetail.aboutMe}" />
+                                        </p>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!UserObj.Show_Professional_experience__c}">
+                                        <div class="sidebarHeading">
+                                            <span class="headinglabel">Professional Experience</span>
+                                        </div>
+                                        <hr class="saperater"/>
+                                        <p>
+                                            <apex:outputField value="{!UserObj.Professional_experience__c}"/>
+                                        </p>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!UserObj.Show_Education_Training__c}">
+                                        
+                                        <div class="sidebarHeading">
+                                            <span class="headinglabel"><apex:outputText value="Education & Training"></apex:outputText></span>
+                                        </div>
+                                        <hr class="saperater"/>
+                                        <p>
+                                            <apex:outputField value="{!UserObj.Education_Training__c}"/>
+                                        </p>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!UserObj.Show_Honours_Awards__c}">    
+                                        <div class="sidebarHeading">
+                                            <span class="headinglabel">
+                                                <apex:outputText value="Honors & Awards"></apex:outputText>
+                                            </span>
+                                        </div>
+                                        <hr class="saperater"/>
+                                        <p>
+                                            <apex:outputField value="{!UserObj.Honours_Awards__c}"/>
+                                        </p> 
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!UserObj.Show_Memberships_Certifications__c}">
+                                        <div class="sidebarHeading">
+                                            <span class="headinglabel">
+                                                <apex:outputText value="Memberships & Certifications"></apex:outputText>
+                                            </span>
+                                        </div>
+                                        <hr class="saperater"/>
+                                        <p>
+                                            <apex:outputField value="{!UserObj.Memberships_Certifications__c}"/>
+                                        </p> 
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!UserObj.Show_Publications__c}">
+                                       <div class="heading mb20">
+                                            <span class="headinglabel">Publications</span>
+                                        </div>
+                                        <hr class="saperater"/>
+                                        <p>
+                                            <apex:outputField value="{!UserObj.Publications__c}"/>
+                                        </p>
+                                    </apex:outputPanel>    
+                            </div>
+                        </div>
+                        <!--=== End Nav tabs ===-->
+                        
+                    </section>
+                 </div>
+            </div>
+            <!-- Modal -->
+            <div id="usereditModal" class="modal fade" role="dialog">
+              <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content modal-lg">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Edit User Details</h4>
+                  </div>
+                  <div class="modal-body">
+                      <apex:outputPanel id="modalBody" rendered="{!UID == $User.Id}"> 
+                      <div class="form-horizontal">
+                           <div class="form-group">
+                           <p style="text-align: right; color:#337ab7; position:absolute; width:100%;">Scroll Down for more fields.</p>
+                               <div class="col-xs-3">
+                                   <apex:image value="{!largePhotoUrl}"/>                               
+                               </div>    
+                               <div class="col-xs-5">                                   
+                                   <apex:inputFile value="{!blobValue}"
+                                                   contentType="{!contentType}"
+                                                   fileName="{!filename}"/>
+                                                   
+                               </div>
+                          </div>
+                          
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">First Name</label>
+                                <div class="col-xs-5">
+                                    <apex:inputtext value="{!userObj.firstName}" html-readonly="true" styleclass="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Last Name</label>
+                                <div class="col-xs-5">
+                                    <apex:inputtext value="{!userObj.LastName}" html-readonly="true" styleclass="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Phone</label>
+                                <div class="col-xs-5">
+                                    <apex:inputtext value="{!userObj.Phone}" html-readonly="true" styleclass="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Mobile</label>
+                                <div class="col-xs-5">
+                                    <apex:inputtext value="{!userObj.MObilePhone}" html-readonly="true" styleclass="form-control"/>
+                                </div>
+                            </div>
+                            <!-- Changes Made by Pavani-->
+                             <div class="form-group">
+                                <label class="col-xs-3 control-label">Fax</label>
+                                <div class="col-xs-5">
+                                    <apex:inputtext value="{!userObj.Fax__c}" html-readonly="true" styleclass="form-control"/>
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label class="col-xs-3 control-label">Pager</label>
+                                <div class="col-xs-5">
+                                    <apex:inputtext value="{!userObj.BMCServiceDesk__pager__c}" html-readonly="true" styleclass="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">Job Title</label>
+                                <div class="col-xs-5">
+                                    <apex:inputtext value="{!userObj.Job_Title__c}" html-readonly="true" styleclass="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">LinkedIn / External COH Bio</label>
+                                <div class="col-xs-5">
+                                    <apex:inputtext value="{!userObj.Linkedin_Profile__c}" styleclass="form-control"/>
+                                </div>
+                            </div>
+                          <!--  <div class="form-group">
+                                <label class="col-xs-3 control-label"> Duarte Map </label>
+                                <div class="col-xs-5">
+                                    <apex:inputtext value="{!userObj.Duarte_Map__c}" styleclass="form-control"/>
+                                </div>
+                                </div> -->
+                                
+                                <!--<div class="form-group">
+                                <label class="col-xs-3 control-label"> RiverGrade Map </label>
+                                <div class="col-xs-5">
+                                    <apex:inputtext value="{!userObj.RiverGrade_Map__c}" styleclass="form-control"/>
+                                </div>
+                                </div>-->
+                               <!-- <div class="form-group">
+                                <label class="col-xs-3 control-label"> Communities Map </label>
+                                <div class="col-xs-5">
+                                    <apex:inputtext value="{!userObj.Communities_Map__c}" styleclass="form-control"/>
+                                </div>
+                                
+                            </div>-->
+                            <!-- end of changes by Pavani-->
+                           
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-xs-3 control-label">Biography</label>
+                                        <div class="col-xs-9">
+                                            <span><apex:inputCheckbox value="{!userObj.Show_Biography__c}"/> &nbsp;(Show/Hide) </span>
+                                            <apex:inputField value="{!userObj.aboutme}" style="width:80%;height:100px;" />
+                                        </div>
+                                    </div>    
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-xs-3 control-label">Education &amp; Training</label>
+                                        <div class="col-xs-9">
+                                            <span><apex:inputCheckbox value="{!userObj.Show_Education_Training__c}"/> &nbsp;(Show/Hide) </span>
+                                            <apex:inputField value="{!userObj.Education_Training__c}" style="width:80%;height:100px;"/> 
+                                        </div>
+                                    </div>    
+                                </div>
+                            </div>
+                             
+                            <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-xs-3 control-label">Honors &amp; Awards</label>
+                                        <div class="col-xs-9">
+                                            <span><apex:inputCheckbox value="{!userObj.Show_Honours_Awards__c}"/> &nbsp;(Show/Hide) </span>
+                                            <apex:inputField value="{!userObj.Honours_Awards__c}" style="width:80%;height:100px;"/>
+                                        </div>
+                                    </div>         
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-xs-3 control-label">Memberships &amp; Certifications </label>
+                                        <div class="col-xs-9">
+                                            <span><apex:inputCheckbox value="{!userObj.Show_Memberships_Certifications__c}"/> &nbsp;(Show/Hide) </span>
+                                            <apex:inputField value="{!userObj.Memberships_Certifications__c}" style="width:80%;height:100px;"/> 
+                                                
+                                        </div>
+                                    </div>
+                               </div>
+                          </div>
+                          <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-xs-3 control-label">Professional Experience </label>
+                                        <div class="col-xs-9">
+                                            <span><apex:inputCheckbox value="{!userObj.Show_Professional_experience__c}"/> &nbsp;(Show/Hide) </span>
+                                            <apex:inputField value="{!userObj.Professional_experience__c}" style="width:80%;height:100px;"/> 
+                                        </div>
+                                    </div>        
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-xs-3 control-label">Publications</label>
+                                        <div class="col-xs-9">
+                                            <span><apex:inputCheckbox value="{!userObj.Show_Publications__c}"/> &nbsp;(Show/Hide) </span>
+                                            
+                                            <apex:inputField value="{!userObj.Publications__c}" style="width:80%;height:100px;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                           </div>
+                          </div>
+                        </apex:outputpanel>
+                      <!--<apex:pageBlock >
+                            <apex:pageBlockSection >
+                                
+                                <apex:inputField value="{!userObj.LastName}"/>
+                                <apex:inputField value="{!userObj.Phone}"/>
+                                <apex:inputField value="{!userObj.MObilePhone}"/>
+                                
+                                <apex:inputField value="{!userObj.Show_Biography__c}"/>
+                                <apex:inputField value="{!userObj.Show_Education_Training__c}"/>
+                                <apex:inputField value="{!userObj.Show_Honours_Awards__c}"/>
+                                <apex:inputField value="{!userObj.Show_Memberships_Certifications__c}"/>
+                                <apex:inputField value="{!userObj.Show_Professional_experience__c}"/>
+                                <apex:inputField value="{!userObj.Show_Publications__c}"/>
+                                
+                                
+                            </apex:pageBlockSection>
+                      
+                      </apex:pageBlock>
+                      -->  
+                  </div>
+                  <div class="modal-footer">
+                    <apex:commandButton value="Save" action="{!doUpdateUser}" rendered="{!UID == $User.Id}" styleClass="btn btn-success" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+
+              </div>  
+            </div>              
+                <c:COH_SIP_Favorite_Float ></c:COH_SIP_Favorite_Float>
+                <c:COH_SIP_Footer ></c:COH_SIP_Footer>
+                
+                
+                <!-- Sanjay 01/16 -->
+                
+            <script>
+                function sendMessage(){
+                    var j$ = jQuery.noConflict();
+                    j$('#loading_Modal').modal('show');
+                    var postedText = j$('#InputMessage').val();
+                    
+                     Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.UserProfileController.sendChatteMessage}',
+                     '{!uID}', postedText,  function(result, event) {
+                        feedItems = result.elements;
+                        j$('#loading_Modal').modal('hide'); 
+                        j$('#InputMessage').val('');
+                        getFeedsForGroup();
+                        j$('#messageModal').modal('hide');
+                  });
+                   j$('#loading_Modal').modal('hide'); 
+                }
+            </script>   
+                           
+            </apex:form>  
+         </div>
+        </body>    
+    
+    </html> 
+    
+      
+</apex:page>

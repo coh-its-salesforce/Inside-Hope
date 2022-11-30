@@ -1,0 +1,5 @@
+<aura:component >
+	<aura:method name="validateFields" action="{!c.validateFields}">
+        <aura:attribute name="fieldsToValidate" type="Object"/>
+    </aura:method>
+</aura:component>

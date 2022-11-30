@@ -1,0 +1,59 @@
+<apex:page standardController="BMCServiceDesk__Incident__c" extensions="ChangeStatusWithNoteController" sidebar="false" showheader="false">
+	<html> 
+   <head></head>
+<body onload="checkStatus();"></body>
+</html>
+	
+	<script language='JAVASCRIPT'>
+		saveIncident();
+		window.close();
+	</script>
+	<apex:pageMessages />
+    <apex:form id="changeStatusForm">
+    <apex:inputHidden id="stat" value="{!sStatus}" />
+    	 <apex:pageBlock title="Change Status to {!status.Name}">
+    	 <apex:outputLabel value="Please enter a reason for setting the incident to {!status.Name}:" style="color:red;"/><br/> <apex:inputTextArea id="note" cols="120" rows="6" value="{!incident.TempNote__c}" required="true" />
+        	<apex:outputPanel id="buttons">
+    			<apex:commandButton value="Save" action="{!save}" />
+    			<apex:commandButton value="Cancel" onclick="window.close()"/>
+    			
+    		</apex:outputPanel>
+        </apex:pageBlock>
+        
+
+		<script>
+			var sts = document.getElementById("{!$Component.changeStatusForm.stat}");
+     	</script>
+    </apex:form>
+ 
+ 	<script type="text/javascript">
+    	function checkStatus(){
+     		if(sts.value == 'saved'){
+     		
+            	window.close();
+            } 
+        }
+        
+      </script>
+    <style type="text/css">
+       .customPopup{
+            background-color: white;
+            border-style: solid;
+            border-width: 2px;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            z-index: 9999;
+            /* These are the 3 css properties you will need to tweak so the pop 
+            up displays in the center of the screen. First set the width. Then set 
+            margin-left to negative half of what the width is. You can also add 
+            the height property for a fixed size pop up.*/
+            width: 500px;
+            margin-left: -250px;
+            top:100px;
+        }
+        .required{
+        	color: red;
+        }
+    </style>
+</apex:page>

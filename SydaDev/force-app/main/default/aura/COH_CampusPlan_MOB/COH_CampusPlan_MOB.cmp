@@ -1,0 +1,34 @@
+<aura:component >
+    <aura:attribute name="openMedicalBuildings" type="boolean" default="false"/>
+    <aura:attribute name="MedicalOffice" type="boolean" default="false"/>
+   <aura:attribute name="aboutMedical" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.aboutMedical}">
+       <div class="banner-container">
+    	<div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+      			<div class="banner-image">
+      				<img src = "{!$Resource.cpMedicalOfficeBuilding}"/> 
+      			</div>
+      		</div>
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12" >
+      	   		<div class="banner-content">
+                   <h4 class="label-header"><label class=" blue-bg">Duarte</label></h4>
+                   <h2> About the NEW MOB </h2>
+               	</div>
+      		</div>
+      	</div>
+      </div>
+		<div class="profile-content" >
+        <p>We broke ground on our new medical office building in fall 2017 and it is currently on schedule for staff to begin moving in june 2020. When complete, the four story facility will primarily house many of our physicians. It will be compraised of approximately 160 new offices and 310 workstations, a micro-market food service outlet, and a 200-seat auditoriumfor meeting and reserch presentation.</p>
+        <p>Just a short walk from our on-campus reserch facilities, the building will be physicially connected by a bridge to the michael Amini Transfusion Medicine Center and eventually the Duarte Outpatient Clinic, which will be located on the site, where the Needleman, Wing 4 and Machris buildings stand currently.</p>
+        </div>
+  			
+          <div class="backbutton" onclick="{!c.goBackToMedicalProfilePage}" >
+              <lightning:icon iconName="utility:back" size="x-small" variant="inverse" />Back  
+    </div>
+       </aura:if>
+    <aura:if isTrue="{!v.MedicalOffice}">
+            <c:COH_CampusPlan_MedicalOfficeProfile/>
+        </aura:if>
+    
+</aura:component>

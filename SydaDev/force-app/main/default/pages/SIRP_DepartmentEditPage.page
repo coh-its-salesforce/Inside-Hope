@@ -1,0 +1,148 @@
+<apex:page controller="SIRP_DepartmentPortal" sidebar="false">
+    <script type = "text/javascript">    
+   
+        function check(obj) { 
+            var path = obj.value;
+            
+            document.getElementById('j_id0:j_id2:j_id3:j_id4:img1').value = path;
+        }
+        
+        function deleteConfirmation() {
+            var r = confirm("Please click OK to remove the selected Section.");
+            return r;
+        }
+        
+        function scrollDown() {
+            x = 0;  //horizontal coord
+            y = document.height; //vertical coord
+            window.scroll(x,y);
+        } 
+    </script>
+    <apex:form >
+        <apex:pageBlock title="{!lstDepartment[0].Name}" rendered="{!$CurrentPage.parameters.edit == 'dpt'}">
+            <apex:pageMessages />
+            <apex:pageBlockSection title="Update Details:" columns="1" >
+                <apex:outputField value="{!lstDepartment[0].Name}" />
+                <apex:inputField value="{!lstDepartment[0].Title__c}"/>
+                <apex:outputPanel >
+                    <apex:inputText value="{!deptImageName}" id="img1" disabled="true" />
+                    <apex:inputFile value="{!deptImageContent}" filename="{!deptImageName}" onchange="check(this)" id="filePath"/>
+                </apex:outputPanel>
+                <!--<apex:inputField value="{!lstDepartment[0].Description__c}" style="width:400px; height: 100px;"/>--> 
+                <apex:outputlabel />
+                <apex:inputField value="{!lstDepartment[0].Department_Additional_Description__c}" style="width:500px; height: 100px;"/ >
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Update" action="{!updateDepartmentSection}"/>
+                <apex:commandButton value="Cancel" action="{!cancelDepartmentEditPage}"/> 
+                                               
+            </apex:pageBlockButtons>
+           <apex:pageBlock title="Select other Owners" rendered="{!shwSecOw}">
+            
+            <apex:outputPanel >
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                
+           <br/>
+            &nbsp; <B>Available</B>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            
+             
+            <B>Other Owners</B>
+            <apex:panelGrid columns="3" id="abcd">
+                <apex:selectList id="sel1" value="{!leftselected}" multiselect="true" style="width:150px" size="10">
+                <apex:selectOptions value="{!unSelectedValues}" />
+                </apex:selectList>
+                
+                <apex:panelGroup ><br/><br/>
+                    &nbsp;&nbsp;
+                    
+                    <apex:image value="/s.gif" alt="Add" styleClass="rightArrowIcon"
+                                title="Add">
+                        <apex:actionSupport event="onclick" action="{!selectclick}"/>
+                    </apex:image>
+                    
+                    <br/>&nbsp;&nbsp;&nbsp;
+                    <apex:image value="/s.gif" alt="Remove" styleClass="leftArrowIcon"
+                                title="Remove">
+                        <apex:actionSupport event="onclick" action="{!unselectclick}"/>
+                    </apex:image>
+                    
+                </apex:panelGroup>                
+                
+                <apex:selectList id="sel2" value="{!rightselected}" multiselect="true" style="width:150px" size="11">
+                <apex:selectOptions value="{!SelectedValues}" />
+                </apex:selectList>
+               
+            </apex:panelGrid>
+            </apex:outputPanel>
+        
+            </apex:pageBlock>
+            <!--<apex:pageBlockSection title="Other Owners" rendered="{!showOtherOwners}">
+            <apex:panelGrid columns="1" >
+                    <apex:panelBar >
+                        <apex:panelBarItem label="Select other Owners" headerClass="headerStyle"> 
+                            <c:MultiselectPicklist leftLabel="Available"
+                                                   leftOptions="{!UnSelectedValues}"
+                                                   rightLabel="Other Owners"
+                                                   rightOptions="{!SelectedValues}"
+                                                   size="15" showUpDownButtons="false" width="200px" >
+                            </c:MultiselectPicklist>    
+                        </apex:panelBarItem>
+                    </apex:panelBar>
+                    </apex:panelGrid>
+            </apex:pageBlockSection>-->
+        </apex:pageBlock>
+        
+        
+        <apex:pageBlock title="Department Components" rendered="{!$CurrentPage.parameters.edit == 'dptcomp'}">
+            <apex:pageMessages />
+            <apex:pageBlockTable value="{!lstDepartmentComponentWrapper}" var="dcw" id="thePageBlockTable">
+            
+                <apex:column >
+                   <apex:inputCheckbox value="{!dcw.isSelected}"/>
+                </apex:column>  
+                <apex:column >
+                    <apex:inputField value="{!dcw.depComp.Order__c}"/> 
+                    <apex:facet name="header">Order</apex:facet>
+                </apex:column>
+                <apex:column >
+                    <apex:inputField value="{!dcw.depComp.Name}" /> 
+                    <apex:facet name="header">Name</apex:facet>
+                </apex:column>
+                <apex:column >
+                    <apex:inputField value="{!dcw.depComp.Department_Content__c}" />  
+                        <apex:facet name="header">Content</apex:facet>
+                </apex:column>
+                <!--
+                <apex:inlineEditSupport event="ondblClick" showOnEdit="saveButton,cancelButton" hideOnEdit="editButton" />
+                --> 
+                
+            </apex:pageBlockTable>
+           
+            
+            
+            <apex:pageBlockButtons > 
+                <apex:commandButton value="Update" action="{!updateDepartmentComponents}" id="saveButton" />
+                <apex:commandButton value="Cancel" action="{!cancelDepartmentEditPage}" id="cancelButton" />
+                <apex:commandButton value="Add Section" action="{!addDepartmentComponentSection}" />
+                <apex:commandButton value="Remove Section" action="{!deleteSelectedDepartmentComponent}" onClick="return deleteConfirmation();" />
+            </apex:pageBlockButtons> 
+            
+        </apex:pageBlock>
+</apex:form>
+    
+
+</apex:page>

@@ -1,0 +1,127 @@
+<apex:page controller="SearchObjectSettingController" tabStyle="Search_Object__c">
+    <apex:sectionHeader title="Search Object Setting"/>
+    <style>
+        .headerStyle {
+            text-align:center;
+            font-size:12px;
+        }
+    </style>
+    <apex:form >
+        <apex:pageMessages id="msg"></apex:pageMessages>
+        <apex:pageBlock id="pb">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!doSave}" rerender="pb,msg"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="1">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Select Object"></apex:outputLabel>
+                    <apex:outputPanel >
+                        <apex:selectList value="{!selectedObject}" size="1" multiselect="false">
+                            
+                            <apex:actionSupport event="onchange" action="{!populateFields}" rerender="pb" status="St"/>
+                            <apex:selectOptions value="{!ObjectNames}"></apex:selectOptions>
+                        </apex:selectList>
+                        &nbsp;<apex:actionStatus id="St" startText="Please Wait..."></apex:actionStatus>
+                    </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+               
+                <apex:panelGrid columns="2">
+                    <apex:panelBar >
+                        <apex:panelBarItem label="Search Result Fields" headerClass="headerStyle">
+                            <c:MultiselectPicklist leftLabel="Available Fields"
+                                                   leftOptions="{!availableFields}"
+                                                   rightLabel="Selected Fields"
+                                                   rightOptions="{!selectedFields}"
+                                                   size="15" showUpDownButtons="true" width="200px" >
+                            </c:MultiselectPicklist>    
+                        </apex:panelBarItem>
+                    </apex:panelBar>
+                    <apex:panelBar >
+                        <apex:panelBarItem label="Search Filter Fields" headerClass="headerStyle">
+                            <c:MultiselectPicklist leftLabel="Available Fields"
+                                                   leftOptions="{!availableFilterField}"
+                                                   rightLabel="Selected Fields"
+                                                   rightOptions="{!selectedFilterField}"
+                                                   size="15" showUpDownButtons="true" width="200px" >
+                            </c:MultiselectPicklist>
+                        </apex:panelBarItem>
+                    </apex:panelBar>
+                </apex:panelGrid>
+             </apex:pageBlockSection>
+            <!-- Section to Show/re-order Selected Objects -->
+            <apex:pageBlockSection title="Already Selected Objects" columns="1" id="objSect">
+                
+                <apex:outputPanel rendered="{!NOT(reOrderFlag)}">
+                    
+                    
+                    <apex:dataTable value="{!alreadySelectedObject}" var="sel">
+                        <apex:column value="{!sel.Label}" headerValue="Available Object"/>
+                    </apex:dataTable>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!reOrderFlag}">
+                    
+                <table class="layout">
+                <tbody>
+                    <tr>    
+                        <td class="selectCell">
+                        <apex:outputPanel layout="block" styleClass="selectTitle">
+                          <apex:outputLabel value="Object List" for="multiselectPanel:rightList" />
+                        </apex:outputPanel>
+                        <select id="{!$Component.multiselectPanel}:ObjList" 
+                          class="multilist" multiple="multiple" size="15" 
+                          style="width:200px;">
+                          <apex:repeat value="{!alreadySelectedObject}" var="option">
+                            <option value="{!option.value}">{!option.label}</option>
+                          </apex:repeat>
+                        </select>
+                      </td>
+                      <td class="buttonCell" style="verticle-align:middle;">
+                          <apex:outputPanel layout="block" styleClass="text">Up</apex:outputPanel>
+                        <apex:outputPanel layout="block" styleClass="text" >
+                          <apex:outputLink value="javascript:slideSelectedOptionsUp('{!$Component.multiselectPanel}:ObjList', 
+                              '{!$Component.optHidden}');"
+                            id="upBtn">
+                            <apex:image value="/s.gif" alt="Up" styleClass="upArrowIcon"
+                              title="Up" />
+                          </apex:outputLink>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="block" styleClass="text">
+                          <apex:outputLink value="javascript:slideSelectedOptionsDown('{!$Component.multiselectPanel}:ObjList', 
+                              '{!$Component.optHidden}');"
+                            id="downBtn">
+                            <apex:image value="/s.gif" alt="Down" styleClass="downArrowIcon"
+                              title="Down" />
+                          </apex:outputLink>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="block" styleClass="text">Down</apex:outputPanel>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <apex:inputHidden value="{!OptionsHidden}" id="optHidden" />
+                </apex:outputPanel>
+                <apex:outputPanel >
+                                       <apex:actionStatus id="st">
+                        <apex:facet name="start">
+                            <img src="/img/loading.gif"/> Please wait...
+                        </apex:facet>
+                        <apex:facet name="stop">
+                            <apex:outputPanel >
+                                 <apex:commandLink value="Reorder" action="{!editForRearrange}" status="st" rerender="objSect,msg" rendered="{!Not(reOrderFlag)}"/>
+                                <apex:commandLink value="Save order" action="{!reArrangeOrder}"  status="st" rerender="objSect,msg" rendered="{!reOrderFlag}"/> 
+                            </apex:outputPanel> 
+                           </apex:facet>
+                    </apex:actionStatus>
+                </apex:outputPanel>                               
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <script type="text/javascript">
+       
+            // Initialize the string representations
+            // Method definition is available in Vf Component multiselectPicklist
+            // This will work only if this VF Component has been added in this page.
+            buildOutputString(document.getElementById('{!$Component.multiselectPanel}:ObjList'), 
+                document.getElementById('{!$Component.optHidden}'));
+          </script>
+    </apex:form>
+</apex:page>

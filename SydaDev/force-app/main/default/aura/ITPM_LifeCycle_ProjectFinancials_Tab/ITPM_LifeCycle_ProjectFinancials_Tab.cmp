@@ -1,0 +1,1682 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,lightning:isUrlAddressable" controller="COH_Get_IT_PMRecords">
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="ITPMRecs" type="IT_Portfolio_Management__c" default=""/>
+    <aura:attribute name="isEdit" type="Boolean" default="false" description="Used to handle show /hide edit form"/>
+    <aura:attribute name="displayButton" type="boolean" default="false" />
+    <aura:attribute name="activeSections" type="List" default="YEAR 1 BUDGET DETAIL" />
+    <aura:attribute name="activeSectionsMessage" type="String" default="" />
+    <lightning:accordion
+                         allowMultipleSectionsOpen="true"
+                         onsectiontoggle="{! c.handleSectionToggle }"
+                         activeSectionName="{! v.activeSections }"
+                         >
+        
+        <div class="slds-card slds-card_boundary" style="box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.16);">
+            <h3 class="slds-section__title">
+                <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                    <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                    <span class="slds-truncate" title="Section Title"> Summary </span>   
+                </button>
+            </h3>
+            <aura:if isTrue="{!v.isEdit == false}">
+                <div class="slds-section slds-is-open slds-m-top_none">
+                    
+                    <!-- <h3 class="slds-section__title">
+                    <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                        <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                        <span class="slds-truncate" title="Section Title"> Summary </span>   
+                    </button>
+                </h3> -->
+                    <lightning:messages /><br/>
+                    
+                    <div class="slds-p-left_medium">
+                        <div class="slds-grid">
+                            <div class="slds-col--padded slds-large-size--6-of-12 fld-left-p0">
+                                <span class="slds-text-title_bold">
+                                    <lightning:helptext class='tooltip-btm' content="Fiscal Year the project started. References to Yr 1 tie to this fiscal year."/>
+                                    Fiscal Year Start :
+                                </span><br/>
+                                <span class="valueFont fld-right-p"><ui:outputText value="{!v.ITPMRecs.ITS_Intake_Request__r.Fiscal_Year_Start__c}" /></span>
+                            </div>
+                            <div class="slds-col--padded slds-large-size--6-of-12 fld-left-p0">
+                                <span class="slds-text-title_bold">
+                                    <lightning:helptext class='tooltip-btm' content="Financial Key is used to identify/report projects with master/sub relationship. CEA ID is assigned to Capital projects (master and corresponding subprojects). A unique identifier will be assigned to OPEX projects."/>
+                                    Financial Key: 
+                                </span><br/>
+                                <span class="valueFont fld-right-p">
+                                	<ui:outputText value="{!v.ITPMRecs.ITS_Intake_Request__r.Financial_Key__c}" />
+                                </span>
+                               <!-- <span class="valueFont fld-right-p"><ui:outputNumber value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Total_Hrs_Multi_Year__c}"/></span> -->
+                            </div>
+                        </div><br/><br/>
+                    </div>
+                    <div class="slds-p-left_medium">
+                        <div class="slds-grid">
+                            <div class="slds-col--padded slds-large-size--6-of-12 fld-left-p0">
+                                <span class="slds-text-title_bold"> 
+                                    <lightning:helptext class='tooltip-btm' content="Total approved Capital budget for the project. This includes approved change requests, and years 2 and 3 if applicable."/> 
+                                    Total Capex Budget [A]: 
+                                </span><br/>
+                                <aura:if isTrue="{!v.ITPMRecs.ITS_Intake_Request__r.Total_Approved_Revised_Capex_Budget__c == null}">
+                                	<span class="valueFont fld-right-p">
+                                    	$0.00
+                                    </span>
+                                    <aura:set attribute="else">
+                                        <span class="valueFont fld-right-p">
+                                    		<ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Total_Approved_Revised_Capex_Budget__c}" />
+                                		</span>
+                                    </aura:set>
+                                </aura:if>
+                               <!-- <span class="valueFont fld-right-p"><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Total_Approved_Revised_Capex_Budget__c}" /></span> -->
+                            </div>
+                            <div class="slds-col--padded slds-large-size--6-of-12 fld-left-p0">
+                                <span class="slds-text-title_bold">
+                                    <lightning:helptext class='tooltip-btm' content="Approved total Capex and Opex hours for the first three years of the project including approved change requests."/>
+                                    Approved Hours [C]: 
+                                </span><br/>
+                                <aura:if isTrue="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Total_Hrs_Multi_Year__c == null}">
+                                	<span class="valueFont fld-right-p">
+                                    	0
+                                    </span>
+                                    <aura:set attribute="else">
+                                        <span class="valueFont fld-right-p">
+                                    		<ui:outputNumber value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Total_Hrs_Multi_Year__c}" />
+                                		</span>
+                                    </aura:set>
+                                </aura:if>
+                               <!-- <span class="valueFont fld-right-p"><ui:outputNumber value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Total_Hrs_Multi_Year__c}"/></span> -->
+                            </div>
+                        </div><br/><br/>
+                    </div>
+                    <div class="slds-p-left_medium">
+                        <div class="slds-grid">
+                            <div class="slds-col--padded slds-large-size--6-of-12 fld-left-p0">
+                                <span class="slds-text-title_bold">
+                                    <lightning:helptext class='tooltip-btm' content="Total contracted purchases or services"/>
+                                    Total Committed Capex (Open POs) [B]: 
+                                </span><br/>
+                                <aura:if isTrue="{!v.ITPMRecs.Committed_Open_POs_B__c == null}">
+                                    <span class="valueFont fld-right-p">
+                                    	$0.00
+                                    </span>
+                                    <aura:set attribute="else">
+                                        <span class="valueFont fld-right-p">
+                                    		<ui:outputCurrency value="{!v.ITPMRecs.Committed_Open_POs_B__c}" />
+                                		</span>
+                                    </aura:set>
+                                </aura:if>
+                            </div>
+                            <div class="slds-col--padded slds-large-size--6-of-12 fld-left-p0">
+                                <span class="slds-text-title_bold">
+                                    <lightning:helptext class='tooltip-btm' content="Total actual hours charged to the project in IT Time and Effort (T and E)"/>
+                                    Hours Burned [D]: 
+                                </span><br/>
+                                <!--<aura:if isTrue="{!v.ITPMRecs.Hours_Burned_D__c==null}">
+                                    <span class="valueFont fld-right-p">0</span>
+                                <aura:set attribute="else">-->
+                                <span class="valueFont fld-right-p">
+                                    <ui:outputNumber value="{!v.ITPMRecs.Hours_Burned_rollup__c}"/>
+                                </span>
+                                    <!--</aura:set>
+                                </aura:if>-->
+                                <!-- <aura:if isTrue="{!greaterthan(v.ITPMRecs.Hours_Burned_D__c, -1)}">
+                                    <span class="valueFont fld-right-p">
+                                        <ui:outputNumber value="{!v.ITPMRecs.Hours_Burned_D__c}" />
+                                    </span>
+                                    <aura:set attribute="else">
+                                        <span class="valueFont fld-right-p" style="color:Red;">
+                                            <ui:outputNumber value="{!v.ITPMRecs.Hours_Burned_D__c}" />
+                                        </span>
+                                    </aura:set>
+                                </aura:if> -->
+                            </div>
+                        </div><br/><br/>
+                    </div>
+                    <div class="slds-p-left_medium">
+                        <div class="slds-grid">
+                            <div class="slds-col--padded slds-large-size--6-of-12 fld-value-p">
+                                <span class="slds-text-title_bold">
+                                    <!-- <lightning:helptext class='tooltip-btm' content="Sample Text Approved Revised Capex"/> -->
+                                    Total Remaining Capex Budget [A - B]: 
+                                </span><br/>
+                                <aura:if isTrue="{!greaterthan(v.ITPMRecs.Remaining_Capex_Budget_AB__c,-0.01)}">
+                                    <span class="slds-text-title_bold">
+                                        <ui:outputCurrency value="{!v.ITPMRecs.Remaining_Capex_Budget_AB__c}" />
+                                    </span>
+                                    <aura:set attribute="else">
+                                        <span class="slds-text-title_bold" style="color:Red;">
+                                            <ui:outputCurrency value="{!v.ITPMRecs.Remaining_Capex_Budget_AB__c}" />
+                                        </span>
+                                    </aura:set>
+                                </aura:if>
+                            </div>
+                            <div class="slds-col--padded slds-large-size--6-of-12 fld-right-p">
+                                <span class="slds-text-title_bold">
+                                   <!-- <lightning:helptext class='tooltip-btm' content="Sample Text Approved Revised Capex"/> -->
+                                   Hours Variance [C - D]: 
+                                </span><br/>
+                                <aura:if isTrue="{!greaterthan(v.ITPMRecs.Remaining_Hours_CD__c, -1)}">
+                                    <span class="valueFont">
+                                        <ui:outputNumber value="{!v.ITPMRecs.Remaining_Hours_CD__c}" />
+                                    </span>
+                                    <aura:set attribute="else">
+                                        <span class="valueFont" style="color:Red;">
+                                            (<ui:outputNumber value="{!v.ITPMRecs.Remaining_Hours_CD__c *-1}" />)
+                                        </span>
+                                    </aura:set>
+                                </aura:if>
+                               <!-- <span class="valueFont"><ui:outputNumber value="{!v.ITPMRecs.Remaining_Hours_CD__c}"/></span> -->
+                            </div>
+                        </div><br/><br/>
+                    </div>
+                    <div class="slds-p-left_medium">
+                        <div class="slds-grid">
+                            <div class="slds-col--padded slds-large-size--6-of-12 fld-left-p0">
+                                <span class="slds-text-title_bold">
+                                    <lightning:helptext class='tooltip-btm' content="Total approved Operating budget for the project. This includes approved change requests, and years 2 and 3 if applicable."/>
+                                    Total Opex Budget [E]: 
+                                </span><br/>
+                                <aura:if isTrue="{!v.ITPMRecs.ITS_Intake_Request__r.Total_Approved_Revised_Opex_Budget__c == null}">
+                                	<span class="valueFont fld-right-p">
+                                    	$0.00
+                                    </span>
+                                    <aura:set attribute="else">
+                                        <span class="valueFont fld-right-p">
+                                    		<ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Total_Approved_Revised_Opex_Budget__c}" />
+                                		</span>
+                                    </aura:set>
+                                </aura:if>
+                               <!-- <span class="valueFont fld-right-p"><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Total_Approved_Revised_Opex_Budget__c}" /></span> -->
+                            </div>
+                            <div class="slds-col--padded slds-large-size--6-of-12 fld-right-p">
+                                <span class="slds-text-title_bold">
+                                   <!-- <lightning:helptext class='tooltip-btm' content="Sample Text Approved Revised Capex"/> -->
+                                    % Hours Burned: 
+                                </span><br/>
+                                <aura:if isTrue="{!v.ITPMRecs.Hours_Burned__c == null}">
+                                    <span>0</span>
+                                </aura:if>
+                                <aura:if isTrue="{!greaterthan(v.ITPMRecs.Hours_Burned__c, 100)}">
+                                    <span style="color:Red;">
+                                        <ui:outputNumber value="{!v.ITPMRecs.Hours_Burned__c}"/>%
+                                    </span>
+                                    <aura:set attribute="else">
+                                        <span>
+                                            <ui:outputNumber value="{!v.ITPMRecs.Hours_Burned__c}"/>%
+                                        </span>
+                                    </aura:set>
+                                </aura:if> 
+                               <!-- <span class="valueFont"><ui:outputNumber value="{!v.ITPMRecs.Hours_Burned__c}"/>%</span> -->
+                            </div>
+                        </div><br/><br/>
+                    </div>
+                    <div class="slds-p-left_medium">
+                        <div class="slds-grid">
+                            <div class="slds-col--padded slds-large-size--6-of-12 fld-left-p0">
+                                <span class="slds-text-title_bold">
+                                    <lightning:helptext class='tooltip-btm' content="Total contracted operating costs tied to the project."/>
+                                    Total Committed Opex (Open POs) [F]: 
+                                </span><br/>
+                                <aura:if isTrue="{!v.ITPMRecs.Total_Committed_Opex_Open_POs_F__c == null}">
+                                    <span class="valueFont fld-right-p">
+                                    	$0.00
+                                    </span>
+                                    <aura:set attribute="else">
+                                        <span class="valueFont fld-right-p">
+                                    		<ui:outputCurrency value="{!v.ITPMRecs.Total_Committed_Opex_Open_POs_F__c}" />
+                                		</span>
+                                    </aura:set>
+                                </aura:if>
+                            </div>
+                            <div class="slds-col--padded slds-large-size--6-of-12">
+                            </div>
+                        </div><br/><br/>
+                    </div>
+                    <div class="slds-p-left_medium">
+                        <div class="slds-grid">
+                            <div class="slds-col--padded slds-large-size--6-of-12 fld-value-p">
+                                <span class="slds-text-title_bold">
+                                   <!-- <lightning:helptext class='tooltip-btm' content="Sample Text Approved Revised Capex"/> -->
+                                    Total Remaining Opex Budget [E - F]: 
+                                </span><br/>
+                                <aura:if isTrue="{!greaterthan(v.ITPMRecs.Total_Remaining_Opex_Budget_E_F__c, -0.01)}">
+                                    <span class="slds-text-title_bold">
+                                        <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Opex_Budget_E_F__c}" />
+                                    </span>
+                                    <aura:set attribute="else">
+                                        <span class="slds-text-title_bold" style="color:Red;">
+                                            <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Opex_Budget_E_F__c}" />
+                                        </span>
+                                    </aura:set>
+                                </aura:if>
+                            </div>
+                            <div class="slds-col--padded slds-large-size--6-of-12">
+                            </div>
+                        </div><br/><br/>
+                    </div>
+                    
+                    <h3 class="slds-section__title">
+                        <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                            <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                            <span class="slds-truncate" title="Section Title"> Details </span>
+                        </button>
+                    </h3>
+                    <lightning:accordionSection name="YEAR 1 BUDGET DETAIL" label="YEAR 1 BUDGET DETAIL" >
+                        <!-- <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action"> -->
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12 year-left">
+                                   <!-- <span class="slds-text-title_bold">YEAR 1 BUDGET DETAIL </span> -->
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="text">* Committed $ = Open POs </span>
+                                </div>
+                            </div>
+                        </div>
+                        <lightning:messages /><br/>
+                        <div class="slds-box slds-box_xx-small">
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12 box-left-p0">
+                                        <span class="slds-text-title_bold">
+                                            <lightning:helptext class='tooltip-btm' content="Total Capex budget approved for first year including approved change requests"/>
+                                            Approved Budget Yr 1 (Capex): 
+                                        </span><br/>
+                                        <aura:if isTrue="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Capex_Budget_Year_1__c == null}">
+                                    		<span class="valueFont fld-right-p">
+                                    			$0.00
+                                    		</span>
+                                    		<aura:set attribute="else">
+                                        		<span class="valueFont fld-right-p">
+                                    				<ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Capex_Budget_Year_1__c}" />
+                                				</span>
+                                    		</aura:set>
+                                		</aura:if>
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <span class="slds-text-title_bold">
+                                            <lightning:helptext class='tooltip-btm' content="Total contracted purchases or services forecasted to be incurred in Yr 1"/>
+                                            * Total Committed Cost Yr 1 (Capex): 
+                                        </span><br/>
+                                        <span class="valueFont fld-right-p"> <ui:outputCurrency value="{!v.ITPMRecs.Total_Committed_Cost_Yr_1_Capex__c}"/></span>
+                                    </div>
+                                </div><br/><br/>
+                            </div>
+                            
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12 box-fld-value-p">
+                                        <span class="slds-text-title_bold">
+                                            Total Remaining Budget Yr 1 (Capex): 
+                                        </span><br/>
+                                        <aura:if isTrue="{!greaterthan(v.ITPMRecs.Total_Remaining_Budget_Yr_1_Capex__c, -0.01)}">
+                                            <span class="valueFont">
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_1_Capex__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span class="valueFont" style="color:red;"> 
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_1_Capex__c}"/>
+                                                </span>
+                                            </aura:set>
+                                        </aura:if>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="slds-text-title_bold">
+                                        <lightning:helptext class='tooltip-btm' content="Total approved Yr 1 CAP budget allocated for internal developers/analysts to complete capitalizable work (design, build and test). PM, conversion, training, admin cost, process re-engineering, support and post-implementation hrs to be expensed (OPEX)"/>
+                                        Approved Internal Cost Yr 1 (Capex): 
+                                    </span><br/>
+                                    <aura:if isTrue="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Internal_Cost_Yr_1_Capex__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Internal_Cost_Yr_1_Capex__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                   <!-- <span class="valueFont fld-right-p"><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Internal_Cost_Yr_1_Capex__c}" /></span> -->
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="slds-text-title_bold">
+                                        <lightning:helptext class='tooltip-btm' content="Year-to-date actual cost in Yr 1 based on hours charged to the project by internal developers/analysts for capitalizable work (design, build and test). PM, conversion, training, admin cost, process re-engineering, support and post-implementation hrs are OPEX"/>
+                                        Internal Actual Cost YTD Yr 1 (Capex): 
+                                    </span><br/>
+                                    <aura:if isTrue="{!v.ITPMRecs.Internal_Actual_Cost_YTD_Yr_1_Capex__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.Internal_Actual_Cost_YTD_Yr_1_Capex__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                </div>
+                            </div><br/><br/>
+                        </div>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12 yr-fld-value-p">
+                                    <span class="slds-text-title_bold">
+                                        Internal Cost Yr 1 (Capex) Variance: 
+                                    </span><br/>
+                                    <aura:if isTrue="{!greaterthan(v.ITPMRecs.Internal_Cost_Yr_1_Capex_Variance__c, -0.01)}">
+                                            <span class="valueFont">
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Internal_Cost_Yr_1_Capex_Variance__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span class="valueFont" style="color:red;">
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Internal_Cost_Yr_1_Capex_Variance__c}"/>
+                                                </span>
+                                            </aura:set>
+                                     </aura:if>
+                                </div>
+                            </div><br/><br/>
+                        </div>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="slds-text-title_bold">
+                                        <lightning:helptext class='tooltip-btm' content="Total approved Yr 1 Capex budget allocated for external resources to complete the capitalizable work(design, build, test and PM). Conversion, training, admin cost, process re-engineering, support and post-implementation hours to be expensed (OPEX)"/>
+                                        Approved External Cost Yr 1 (Capex): 
+                                    </span><br/>
+                                    <aura:if isTrue="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Prof_Svcs_Cost_Yr_1_Capex__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Prof_Svcs_Cost_Yr_1_Capex__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="slds-text-title_bold">
+                                        <lightning:helptext class='tooltip-btm' content="Total contracted services to complete the capitalizable work in Yr 1. This includes design, build, test, and project management. Conversion, training, admin cost, process re-engineering, support and post-implementation hours to be expensed (OPEX)"/>
+                                        * Committed External Cost Yr 1 (Capex): 
+                                    </span><br/>
+                                    <aura:if isTrue="{!v.ITPMRecs.Committed_Prof_Svcs_Cost_Yr_1_Capex__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.Committed_Prof_Svcs_Cost_Yr_1_Capex__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                </div>
+                            </div><br/><br/>
+                        </div>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12 box-fld-value-p">
+                                    <span class="slds-text-title_bold">
+                                        External Cost Yr 1 (Capex) Variance: 
+                                    </span><br/>
+                                     <aura:if isTrue="{!greaterthan(v.ITPMRecs.Remaining_Prof_Svcs_Cost_Yr_1_Capex__c, -0.01)}">
+                                            <span class="valueFont">
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Remaining_Prof_Svcs_Cost_Yr_1_Capex__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span class="valueFont" style="color:red;">
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Remaining_Prof_Svcs_Cost_Yr_1_Capex__c}"/>
+                                                </span>
+                                            </aura:set>
+                                     </aura:if>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="slds-text-title_bold">
+                                        <lightning:helptext class='tooltip-btm' content="Total approved Yr 1 Capex budget allocated for hardware purchase (>= $5K) needed to implement project"/>
+                                        Approved Hardware Cost Yr 1 (Capex): 
+                                    </span><br/>
+                                    <aura:if isTrue="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Hardware_Cost_Yr_1_Capex__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Hardware_Cost_Yr_1_Capex__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="slds-text-title_bold">
+                                        <lightning:helptext class='tooltip-btm' content="Total hardware purchases (>= $5K) incurred in Yr 1"/>
+                                        * Committed Hardware Cost Yr 1 (Capex): 
+                                    </span><br/>
+                                    <aura:if isTrue="{!v.ITPMRecs.Committed_Hardware_Cost_Yr_1_Capex__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.Committed_Hardware_Cost_Yr_1_Capex__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                </div>
+                            </div><br/><br/>
+                        </div>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12 box-fld-value-p">
+                                    <span class="slds-text-title_bold">
+                                        Hardware Cost Yr 1 (Capex) Variance: 
+                                    </span><br/>
+                                    <aura:if isTrue="{!greaterthan(v.ITPMRecs.Remaining_Hardware_Cost_Yr_1_Capex__c, -0.01)}">
+                                            <span class="valueFont">
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Remaining_Hardware_Cost_Yr_1_Capex__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span class="valueFont" style="color:red;">
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Remaining_Hardware_Cost_Yr_1_Capex__c}"/>
+                                                </span>
+                                            </aura:set>
+                                     </aura:if>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="slds-text-title_bold">
+                                        <lightning:helptext class='tooltip-btm' content="Total approved Yr 1 Capex budget allocated for perpetual license (>= $5K) needed to implement project"/>
+                                        Approved Software Cost Yr 1 (Capex): 
+                                    </span><br/>
+                                    <aura:if isTrue="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Software_Cost_Yr_1_Capex__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Software_Cost_Yr_1_Capex__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="slds-text-title_bold">
+                                        <lightning:helptext class='tooltip-btm' content="Total perpetual license purchases (>= $5K) incurred in Yr 1"/>
+                                        * Committed Software Cost Yr 1 (Capex): 
+                                    </span><br/>
+                                    <aura:if isTrue="{!v.ITPMRecs.Committed_Software_Cost_Yr_1_Capex__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.Committed_Software_Cost_Yr_1_Capex__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                </div>
+                            </div><br/><br/>
+                        </div>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12 box-fld-value-p">
+                                    <span class="slds-text-title_bold">
+                                        Software Cost Yr 1 (Capex) Variance: 
+                                    </span><br/>
+                                    <aura:if isTrue="{!greaterthan(v.ITPMRecs.Remaining_Software_Cost_Yr_1_Capex__c, -0.01)}">
+                                            <span class="valueFont">
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Remaining_Software_Cost_Yr_1_Capex__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span class="valueFont" style="color:red;">
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Remaining_Software_Cost_Yr_1_Capex__c}"/>
+                                                </span>
+                                            </aura:set>
+                                     </aura:if>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="slds-text-title_bold">
+                                        <lightning:helptext class='tooltip-btm' content="Total approved Yr 1 Capex budget allocated for project contingency"/>
+                                        Approved Contingency Yr 1 (Capex): 
+                                    </span><br/>
+                                    <aura:if isTrue="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Contingency_Yr_1_Capex__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Contingency_Yr_1_Capex__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="slds-text-title_bold">
+                                        <lightning:helptext class='tooltip-btm' content="Total remaining project contingency"/>
+                                        Remaining Contingency Yr 1 (Capex): 
+                                    </span><br/>
+                                    <aura:if isTrue="{!v.ITPMRecs.Remaining_Contingency_Yr_1_Capex_Cur__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.Remaining_Contingency_Yr_1_Capex_Cur__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                </div>
+                            </div><br/><br/>
+                        </div>
+                        <div class="slds-box slds-box_xx-small">
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12 box-left-p0">
+                                        <span class="slds-text-title_bold">
+                                            <lightning:helptext class='tooltip-btm' content="Total Opex budget approved for first year including approved change requests"/>
+                                            Approved Budget Yr 1 (Opex): 
+                                        </span><br/>
+                                        <aura:if isTrue="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Opex_Budget_Year_1__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Opex_Budget_Year_1__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <span class="slds-text-title_bold">
+                                            <lightning:helptext class='tooltip-btm' content="Total contracted operating costs forecasted to be incurred in Yr 1"/>
+                                            * Total Committed Cost Yr 1 (Opex): 
+                                        </span><br/>
+                                        <aura:if isTrue="{!v.ITPMRecs.Total_Committed_Cost_Yr_1_Opex__c == null}">
+                                    		<span class="valueFont fld-right-p">
+                                    			$0.00
+                                    		</span>
+                                    		<aura:set attribute="else">
+                                        		<span class="valueFont fld-right-p">
+                                    				<ui:outputCurrency value="{!v.ITPMRecs.Total_Committed_Cost_Yr_1_Opex__c}" />
+                                				</span>
+                                    		</aura:set>
+                                		</aura:if>
+                                       <!-- <span class="valueFont fld-right-p"><ui:outputCurrency value="{!v.ITPMRecs.Total_Committed_Cost_Yr_1_Opex__c}"/></span> -->
+                                    </div>
+                                </div><br/><br/>
+                            </div>
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12 box-fld-value-p">
+                                        <span class="slds-text-title_bold">
+                                            Total Remaining Budget Yr 1 (Opex): 
+                                        </span><br/>
+                                        
+                                        <aura:if isTrue="{!greaterthan(v.ITPMRecs.Total_Remaining_Budget_Yr_1_Opex__c, -0.01)}">
+                                            <span class="valueFont">
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_1_Opex__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span class="valueFont" style="color:red;">
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_1_Opex__c}"/>
+                                                </span>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning:accordionSection>
+                    
+                    <lightning:accordionSection name="YEAR 2 BUDGET DETAIL" label="YEAR 2 BUDGET DETAIL" >
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12 year-left ">
+                                   <!-- <span class="slds-text-title_bold">YEAR 2 BUDGET DETAIL </span> -->
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="text">* Committed $ = Open POs </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-box slds-box_xx-small">
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12 box-left-p0">
+                                        <span class="slds-text-title_bold">
+                                            <lightning:helptext class='tooltip-btm' content="Total Capex budget approved for second year  including approved change requests"/>
+                                            Approved Budget Yr 2 (Capex): 
+                                        </span><br/>
+                                        <aura:if isTrue="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Capex_Budget_Yr_2__c == null}">
+                                    		<span class="valueFont fld-right-p">
+                                    			$0.00
+                                    		</span>
+                                    		<aura:set attribute="else">
+                                        		<span class="valueFont fld-right-p">
+                                    				<ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Capex_Budget_Yr_2__c}" />
+                                				</span>
+                                    		</aura:set>
+                                		</aura:if>
+                                       <!-- <span class="valueFont fld-right-p"><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Capex_Budget_Yr_2__c}" /></span> -->
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <span class="slds-text-title_bold">
+                                            <lightning:helptext class='tooltip-btm' content="Total contracted purchases or services forecasted to be incurred in Yr 2"/>
+                                            * Total Committed Cost Yr 2 (Capex): 
+                                        </span><br/>
+                                        <span class="valueFont fld-right-p"> <ui:outputCurrency value="{!v.ITPMRecs.Total_Committed_Cost_Yr_2_Capex__c}"/></span>
+                                    </div>
+                                </div><br/><br/>
+                            </div>
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12 box-fld-value-p">
+                                        <span class="slds-text-title_bold">
+                                            Total Remaining Budget Yr 2 (Capex): 
+                                        </span><br/>
+                                        
+                                        <aura:if isTrue="{!greaterthan(v.ITPMRecs.Total_Remaining_Budget_Yr_2_Capex__c, -0.01)}">
+                                            <span class="valueFont">
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_2_Capex__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span class="valueFont" style="color:red;">
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_2_Capex__c}"/>
+                                                </span>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="slds-text-title_bold">
+                                        <lightning:helptext class='tooltip-btm' content="Year-to-date actual cost in Yr 2 based on hours charged to the project by internal developers/analysts for capitalizable work (design, build and test). PM, conversion, training, admin cost, process re-engineering, support and post-implementation hrs are OPEX"/>
+                                        Internal Actual Cost YTD Yr 2 (Capex): 
+                                    </span><br/>
+                                    <aura:if isTrue="{!v.ITPMRecs.Internal_Actual_Cost_YTD_Yr_2_Capex__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.Internal_Actual_Cost_YTD_Yr_2_Capex__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="slds-text-title_bold">
+                                        <lightning:helptext class='tooltip-btm' content="Total contracted services to complete the capitalizable work in Yr 2. This includes design, build, test, and project management. Conversion, training, admin cost, process re-engineering, support and post-implementation hours to be expensed (OPEX)"/>
+                                        * Committed External Cost Yr 2 (Capex): 
+                                    </span><br/>
+                                    <aura:if isTrue="{!v.ITPMRecs.Committed_External_Cost_Yr_2_Capex__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.Committed_External_Cost_Yr_2_Capex__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="slds-text-title_bold">
+                                        <lightning:helptext class='tooltip-btm' content="Total hardware purchases (>= $5K) incurred in Yr 2"/>
+                                        * Committed Hardware Cost Yr 2 (Capex): 
+                                    </span><br/>
+                                    <aura:if isTrue="{!v.ITPMRecs.Committed_Hardware_Cost_Yr_2_Capex__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.Committed_Hardware_Cost_Yr_2_Capex__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="slds-text-title_bold">
+                                        <lightning:helptext class='tooltip-btm' content="Total perpetual license purchases (>= $5K) incurred in Yr 2"/>
+                                        * Committed Software Cost Yr 2 (Capex): 
+                                    </span><br/>
+                                    <aura:if isTrue="{!v.ITPMRecs.Committed_Software_Cost_Yr_2_Capex__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.Committed_Software_Cost_Yr_2_Capex__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-box slds-box_xx-small">    
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12 box-left-p0">
+                                        <span class="slds-text-title_bold">
+                                            <lightning:helptext class='tooltip-btm' content="Total Opex budget approved for second year  including approved change requests"/>
+                                            Approved Budget Yr 2 (Opex): 
+                                        </span><br/>
+                                        <aura:if isTrue="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Opex_Budget_Yr_2__c == null}">
+                                    		<span class="valueFont fld-right-p">
+                                    			$0.00
+                                    		</span>
+                                    		<aura:set attribute="else">
+                                        		<span class="valueFont fld-right-p">
+                                    				<ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Opex_Budget_Yr_2__c}" />
+                                				</span>
+                                    		</aura:set>
+                                		</aura:if>
+                                       <!-- <span class="valueFont fld-right-p"><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Opex_Budget_Yr_2__c}" /></span> -->
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <span class="slds-text-title_bold">
+                                            <lightning:helptext class='tooltip-btm' content="Total contracted operating costs forecasted to be incurred in Yr 2."/>
+                                            * Total Committed Cost Yr 2 (Opex): 
+                                        </span><br/>
+                                        <aura:if isTrue="{!v.ITPMRecs.Total_Committed_Cost_Yr_2_Opex__c == null}">
+                                    		<span class="valueFont fld-right-p">
+                                    			$0.00
+                                    		</span>
+                                    		<aura:set attribute="else">
+                                        		<span class="valueFont fld-right-p">
+                                    				<ui:outputCurrency value="{!v.ITPMRecs.Total_Committed_Cost_Yr_2_Opex__c}" />
+                                				</span>
+                                    		</aura:set>
+                                		</aura:if>
+                                        <!-- <span class="valueFont fld-right-p"> <ui:outputCurrency value="{!v.ITPMRecs.Total_Committed_Cost_Yr_2_Opex__c}"/></span> -->
+                                    </div>
+                                </div><br/><br/>
+                            </div>
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12 box-fld-value-p">
+                                        <span class="slds-text-title_bold">
+                                            Total Remaining Budget Yr 2 (Opex): 
+                                        </span><br/>
+                                        <aura:if isTrue="{!greaterthan(v.ITPMRecs.Total_Remaining_Budget_Yr_2_Opex__c,-0.01)}">
+                                            <span class="valueFont"> 
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_2_Opex__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span class="valueFont" style="color:red;"> 
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_2_Opex__c}"/>
+                                                </span>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning:accordionSection>
+                    
+                    
+                    
+                    <lightning:accordionSection name="YEAR 3 BUDGET DETAIL" label="YEAR 3 BUDGET DETAIL" >
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12 year-left">
+                                   <!-- <span class="slds-text-title_bold">YEAR 3 BUDGET DETAIL </span> -->
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="text">* Committed $ = Open POs </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-box slds-box_xx-small">
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12 box-left-p0">
+                                        <span class="slds-text-title_bold">
+                                            <lightning:helptext class='tooltip-btm' content="Total Capex budget approved for third year including approved change requests"/>
+                                            Approved Budget Yr 3 (Capex): 
+                                        </span><br/>
+                                        <aura:if isTrue="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Capex_Budget_Yr_3__c == null}">
+                                    		<span class="valueFont fld-right-p">
+                                    			$0.00
+                                    		</span>
+                                    		<aura:set attribute="else">
+                                        		<span class="valueFont fld-right-p">
+                                    				<ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Capex_Budget_Yr_3__c}" />
+                                				</span>
+                                    		</aura:set>
+                                		</aura:if>
+                                       <!-- <span class="valueFont fld-right-p"><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Capex_Budget_Yr_3__c}" /></span> -->
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <span class="slds-text-title_bold">
+                                            <lightning:helptext class='tooltip-btm' content="Total contracted purchases or services forecasted to be incurred in Yr 3"/>
+                                            * Total Committed Cost Yr 3 (Capex): 
+                                        </span><br/>
+                                        <span class="valueFont fld-right-p"> <ui:outputCurrency value="{!v.ITPMRecs.Total_Committed_Cost_Yr_3_Capex__c}"/></span>
+                                    </div>
+                                </div><br/><br/>
+                            </div>
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12 box-fld-value-p">
+                                        <span class="slds-text-title_bold">
+                                            Total Remaining Budget Yr 3 (Capex): 
+                                        </span><br/>
+                                        <aura:if isTrue="{!greaterthan(v.ITPMRecs.Total_Remaining_Budget_Yr_3_Capex__c,-0.01)}">
+                                            <span class="valueFont"> 
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_3_Capex__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span class="valueFont" style="color:red;"> 
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_3_Capex__c}"/>
+                                                </span>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="slds-text-title_bold">
+                                        <lightning:helptext class='tooltip-btm' content="Year-to-date actual cost in Yr 3 based on hours charged to the project by internal developers/analysts for capitalizable work (design, build and test). PM, conversion, training, admin cost, process re-engineering, support and post-implementation hrs are OPEX"/>
+                                        Internal Actual Cost YTD Yr 3 (Capex): 
+                                    </span><br/>
+                                    <aura:if isTrue="{!v.ITPMRecs.Internal_Actual_Cost_YTD_Yr_3_Capex__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.Internal_Actual_Cost_YTD_Yr_3_Capex__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="slds-text-title_bold">
+                                        <lightning:helptext class='tooltip-btm' content="Total contracted services to complete the capitalizable work in Yr 3. This includes design, build, test, and project management. Conversion, training, admin cost, process re-engineering, support and post-implementation hours to be expensed (OPEX)"/>
+                                        * Committed External Cost Yr 3 (Capex): 
+                                    </span><br/>
+                                    <aura:if isTrue="{!v.ITPMRecs.Committed_External_Cost_Yr_3_Capex__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.Committed_External_Cost_Yr_3_Capex__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="slds-text-title_bold">
+                                        <lightning:helptext class='tooltip-btm' content="Total hardware purchases (>= $5K) incurred in Yr 3"/>
+                                        * Committed Hardware Cost Yr 3 (Capex): 
+                                    </span><br/>
+                                    <aura:if isTrue="{!v.ITPMRecs.Committed_Hardware_Cost_Yr_3_Capex__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.Committed_Hardware_Cost_Yr_3_Capex__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="slds-text-title_bold">
+                                        <lightning:helptext class='tooltip-btm' content="Total perpetual license purchases (>= $5K) incurred in Yr 3"/>
+                                        * Committed Software Cost Yr 3 (Capex): 
+                                    </span><br/>
+                                    <aura:if isTrue="{!v.ITPMRecs.Committed_Software_Cost_Yr_3_Capex__c == null}">
+                                    	<span class="valueFont fld-right-p">
+                                    		$0.00
+                                    	</span>
+                                    	<aura:set attribute="else">
+                                        	<span class="valueFont fld-right-p">
+                                    			<ui:outputCurrency value="{!v.ITPMRecs.Committed_Software_Cost_Yr_3_Capex__c}" />
+                                			</span>
+                                    	</aura:set>
+                                	</aura:if>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-box slds-box_xx-small">    
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12 box-left-p0">
+                                        <span class="slds-text-title_bold">
+                                            <lightning:helptext class='tooltip-btm' content="Total Opex budget approved for third year  including approved change requests"/>
+                                            Approved Budget Yr 3 (Opex): 
+                                        </span><br/>
+                                        <aura:if isTrue="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Opex_Budget_Yr_3__c == null}">
+                                    		<span class="valueFont fld-right-p">
+                                    			$0.00
+                                    		</span>
+                                    		<aura:set attribute="else">
+                                        		<span class="valueFont fld-right-p">
+                                    				<ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Opex_Budget_Yr_3__c}" />
+                                				</span>
+                                    		</aura:set>
+                                		</aura:if>
+                                       <!-- <span class="valueFont fld-right-p"><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Opex_Budget_Yr_3__c}" /></span> -->
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <span class="slds-text-title_bold">
+                                            <lightning:helptext class='tooltip-btm' content="Total contracted operating costs forecasted to be incurred in Yr 3"/>
+                                            * Total Committed Cost Yr 3 (Opex): 
+                                        </span><br/>
+                                        <aura:if isTrue="{!v.ITPMRecs.Total_Committed_Cost_Yr_3_Opex__c == null}">
+                                    		<span class="valueFont fld-right-p">
+                                    			$0.00
+                                    		</span>
+                                    		<aura:set attribute="else">
+                                        		<span class="valueFont fld-right-p">
+                                    				<ui:outputCurrency value="{!v.ITPMRecs.Total_Committed_Cost_Yr_3_Opex__c}" />
+                                				</span>
+                                    		</aura:set>
+                                		</aura:if>
+                                       <!-- <span class="valueFont fld-right-p"> <ui:outputCurrency value="{!v.ITPMRecs.Total_Committed_Cost_Yr_3_Opex__c}"/></span> -->
+                                    </div>
+                                </div><br/><br/>
+                            </div>
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12 box-fld-value-p">
+                                        <span class="slds-text-title_bold">
+                                            Total Remaining Budget Yr 3 (Opex): 
+                                        </span><br/>
+                                        <aura:if isTrue="{!greaterthan(v.ITPMRecs.Total_Remaining_Budget_Yr_3_Opex__c,-0.01)}">
+                                            <span class="valueFont">
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_3_Opex__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span class="valueFont" style="color:red;">
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_3_Opex__c}"/>
+                                                </span>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning:accordionSection>
+                    <center>
+                        <div class="slds-m-top_medium">
+                            <aura:if isTrue="{!v.displayButton}">
+                                <lightning:button disabled="{!v.ITPMRecs.Project_Status__c == 'Closed'}" label="Edit Project Financials" variant="brand" name="Edit Project Financials" onclick="{!c.handleEdit}"/>
+                            </aura:if>
+                        </div>
+                    </center><br/>      
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.isEdit == true}">
+                
+                <lightning:recordEditForm
+                                          
+                                          onsuccess="{!c.handleSuccess}"
+                                          recordId="{!v.recordId}"
+                                          objectApiName="IT_Portfolio_Management__c">
+                    <!-- the messages component is for error messages -->
+                    <lightning:messages />
+                    <!-- <h3 class="slds-section__title">
+                    <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                        <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                        <span class="slds-truncate" title="Section Title"> Summary </span>
+                    </button>
+                </h3> -->
+                    <div class="slds-p-left_medium">
+                        <div class="slds-grid">
+                            <div class="slds-col--padded slds-large-size--6-of-12">
+                                <span>Fiscal Year Start: </span><ui:outputText value="{!v.ITPMRecs.ITS_Intake_Request__r.Fiscal_Year_Start__c}" />
+                            </div>
+                            <div class="slds-col--padded slds-large-size--6-of-12">
+                                <span>Approved Hours [C]: </span><ui:outputNumber value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Total_Hrs_Multi_Year__c}"/>
+                            </div>
+                        </div><br/><br/>
+                    </div>
+                    <div class="slds-p-left_medium">
+                        <div class="slds-grid">
+                            <div class="slds-col--padded slds-large-size--6-of-12">
+                                <span>Total Capex Budget [A]: </span><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Total_Approved_Revised_Capex_Budget__c}" />
+                            </div>
+                            <div class="slds-col--padded slds-large-size--6-of-12">
+                                <span>Hours Burned [D]: </span>
+                                <aura:if isTrue="{!v.ITPMRecs.Hours_Burned_D__c==null}">
+                                    <span>0</span>
+                                <aura:set attribute="else">
+                                	<span>
+                                    	<ui:outputNumber value="{!v.ITPMRecs.Hours_Burned_D__c}"/>
+                                	</span>
+                                </aura:set>
+                                </aura:if>
+                                <!-- <aura:if isTrue="{!greaterthan(v.ITPMRecs.Hours_Burned_D__c, -1)}">
+                                    <span>
+                                        <ui:outputNumber value="{!v.ITPMRecs.Hours_Burned_D__c}" />
+                                    </span>
+                                    <aura:set attribute="else">
+                                        <span style="color:Red;">
+                                            (<ui:outputNumber value="{!v.ITPMRecs.Hours_Burned_D__c}" />)
+                                        </span>
+                                    </aura:set>
+                                </aura:if> -->
+                            </div>
+                        </div><br/><br/>
+                    </div>
+                    <div class="slds-p-left_medium">
+                        <div class="slds-grid">
+                            <div class="slds-col--padded slds-large-size--6-of-12">
+                                <lightning:inputField fieldName="Committed_Open_POs_B__c"/>
+                            </div>
+                            <div class="slds-col--padded slds-large-size--6-of-12">
+                                <span>Hours Variance [C - D]: </span>
+                                <aura:if isTrue="{!greaterthan(v.ITPMRecs.Remaining_Hours_CD__c, -1)}">
+                                    <span>
+                                        <ui:outputNumber value="{!v.ITPMRecs.Remaining_Hours_CD__c}" />
+                                    </span>
+                                    <aura:set attribute="else">
+                                        <span style="color:Red;">
+                                            (<ui:outputNumber value="{!v.ITPMRecs.Remaining_Hours_CD__c *-1}" />)
+                                        </span>
+                                    </aura:set>
+                                </aura:if>
+                               <!-- <ui:outputNumber value="{!v.ITPMRecs.Remaining_Hours_CD__c}"/> -->
+                            </div>
+                        </div><br/><br/>
+                    </div>
+                    <div class="slds-p-left_medium">
+                        <div class="slds-grid">
+                            <div class="slds-col--padded slds-large-size--6-of-12">
+                                <span>Total Remaining Capex Budget [A - B]: </span>
+                                <aura:if isTrue="{!greaterthan(v.ITPMRecs.Remaining_Capex_Budget_AB__c,-0.01)}">
+                                    <span>
+                                        <ui:outputCurrency value="{!v.ITPMRecs.Remaining_Capex_Budget_AB__c}" />
+                                    </span>
+                                    <aura:set attribute="else">
+                                        <span style="color:Red;">
+                                            <ui:outputCurrency value="{!v.ITPMRecs.Remaining_Capex_Budget_AB__c}" />
+                                        </span>
+                                    </aura:set>
+                                </aura:if>
+                               <!-- $<ui:outputNumber value="{!v.ITPMRecs.Remaining_Capex_Budget_AB__c}" /> -->
+                            </div>
+                            <div class="slds-col--padded slds-large-size--6-of-12">
+                                <span>% Hours Burned: </span>
+                                <aura:if isTrue="{!greaterthan(v.ITPMRecs.Hours_Burned__c, 100)}">
+                                    <span style="color:Red;">
+                                        <ui:outputNumber value="{!v.ITPMRecs.Hours_Burned__c}"/>%
+                                    </span>
+                                    <aura:set attribute="else">
+                                        <span>
+                                            <ui:outputNumber value="{!v.ITPMRecs.Hours_Burned__c}"/>%
+                                        </span>
+                                    </aura:set>
+                                </aura:if> 
+                               <!-- <ui:outputNumber value="{!v.ITPMRecs.Hours_Burned__c}"/>% -->
+                            </div>
+                        </div><br/><br/>
+                    </div>
+                    <div class="slds-p-left_medium">
+                        <div class="slds-grid">
+                            <div class="slds-col--padded slds-large-size--6-of-12">
+                                <span>Total Opex Budget [E]: </span><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Total_Approved_Revised_Opex_Budget__c}" />
+                            </div>
+                            <div class="slds-col--padded slds-large-size--6-of-12">
+                            </div>
+                        </div><br/><br/>
+                    </div>
+                    <div class="slds-p-left_medium">
+                        <div class="slds-grid">
+                            <div class="slds-col--padded slds-large-size--6-of-12">
+                                <lightning:inputField fieldName="Total_Committed_Opex_Open_POs_F__c"/>
+                            </div>
+                            <div class="slds-col--padded slds-large-size--6-of-12">
+                            </div>
+                        </div><br/><br/>
+                    </div>
+                    <div class="slds-p-left_medium">
+                        <div class="slds-grid">
+                            <div class="slds-col--padded slds-large-size--6-of-12">
+                                <span>Total Remaining Opex Budget [E - F]: </span>
+                                <aura:if isTrue="{!greaterthan(v.ITPMRecs.Total_Remaining_Opex_Budget_E_F__c, -0.01)}">
+                                    <span>
+                                        <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Opex_Budget_E_F__c}" />
+                                    </span>
+                                    <aura:set attribute="else">
+                                        <span style="color:Red;">
+                                            <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Opex_Budget_E_F__c}" />
+                                        </span>
+                                    </aura:set>
+                                </aura:if>
+                                <!-- <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Opex_Budget_E_F__c}" /> -->
+                            </div>
+                            <div class="slds-col--padded slds-large-size--6-of-12">
+                            </div>
+                        </div><br/><br/>
+                    </div>
+                    <h3 class="slds-section__title">
+                        <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                            <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                            <span class="slds-truncate" title="Section Title"> Details </span>
+                        </button>
+                    </h3>
+                    <lightning:accordionSection name="YEAR 1 BUDGET DETAIL" label="YEAR 1 BUDGET DETAIL" >
+                        <!-- <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action"> -->
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12 year-left">
+                                   <!-- <span class="slds-text-title_bold">YEAR 1 BUDGET DETAIL </span> -->
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="text">* Committed $ = Open POs </span>
+                                </div>
+                            </div>
+                        </div>
+                        <lightning:messages /><br/>
+                        <div class="slds-box slds-box_xx-small">
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12 box-left-p0">
+                                        <span >Approved Budget Yr 1 (Capex): </span><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Capex_Budget_Year_1__c}" />
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <span>* Total Committed Cost Yr 1 (Capex): </span> <ui:outputCurrency value="{!v.ITPMRecs.Total_Committed_Cost_Yr_1_Capex__c}"/>
+                                    </div>
+                                </div><br/><br/>
+                            </div>
+                            
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <span>Total Remaining Budget Yr 1 (Capex): </span>
+                                        
+                                        <aura:if isTrue="{!greaterthan(v.ITPMRecs.Total_Remaining_Budget_Yr_1_Capex__c,-0.01)}">
+                                            <span >
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_1_Capex__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span style="color:Red;">
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_1_Capex__c}"/>
+                                                </span>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span>Approved Internal Cost Yr 1 (Capex): </span><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Internal_Cost_Yr_1_Capex__c}" />
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <lightning:inputField fieldName="Internal_Actual_Cost_YTD_Yr_1_Capex__c"/>
+                                </div>
+                            </div><br/><br/>
+                        </div>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span>Internal Cost Yr 1 (Capex) Variance: </span> 
+                                    <aura:if isTrue="{!greaterthan(v.ITPMRecs.Internal_Cost_Yr_1_Capex_Variance__c, -0.01)}">
+                                            <span class="valueFont">
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Internal_Cost_Yr_1_Capex_Variance__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span class="valueFont" style="color:red;">
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Internal_Cost_Yr_1_Capex_Variance__c}"/>
+                                                </span>
+                                            </aura:set>
+                                     </aura:if>
+                                </div>
+                            </div><br/><br/>
+                        </div>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span>Approved External Cost Yr 1 (Capex): </span><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Prof_Svcs_Cost_Yr_1_Capex__c}" />
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <lightning:inputField fieldName="Committed_Prof_Svcs_Cost_Yr_1_Capex__c"/>
+                                </div>
+                            </div><br/><br/>
+                        </div>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span>External Cost Yr 1 (Capex) Variance: </span>
+                                    <aura:if isTrue="{!greaterthan(v.ITPMRecs.Remaining_Prof_Svcs_Cost_Yr_1_Capex__c, -0.01)}">
+                                            <span class="valueFont">
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Remaining_Prof_Svcs_Cost_Yr_1_Capex__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span class="valueFont" style="color:red;">
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Remaining_Prof_Svcs_Cost_Yr_1_Capex__c}"/>
+                                                </span>
+                                            </aura:set>
+                                     </aura:if>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span>Approved Hardware Cost Yr 1 (Capex): </span><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Hardware_Cost_Yr_1_Capex__c}" />
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <lightning:inputField fieldName="Committed_Hardware_Cost_Yr_1_Capex__c"/>
+                                </div>
+                            </div><br/><br/>
+                        </div>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span >Hardware Cost Yr 1 (Capex) Variance: </span>
+                                    <aura:if isTrue="{!greaterthan(v.ITPMRecs.Remaining_Hardware_Cost_Yr_1_Capex__c, -0.01)}">
+                                            <span class="valueFont">
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Remaining_Hardware_Cost_Yr_1_Capex__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span class="valueFont" style="color:red;">
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Remaining_Hardware_Cost_Yr_1_Capex__c}"/>
+                                                </span>
+                                            </aura:set>
+                                     </aura:if>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span>Approved Software Cost Yr 1 (Capex): </span><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Software_Cost_Yr_1_Capex__c}" />
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <lightning:inputField fieldName="Committed_Software_Cost_Yr_1_Capex__c"/>
+                                </div>
+                            </div><br/><br/>
+                        </div>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span>Software Cost Yr 1 (Capex) Variance: </span>
+                                    <aura:if isTrue="{!greaterthan(v.ITPMRecs.Remaining_Software_Cost_Yr_1_Capex__c, -0.01)}">
+                                            <span class="valueFont">
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Remaining_Software_Cost_Yr_1_Capex__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span class="valueFont" style="color:red;">
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Remaining_Software_Cost_Yr_1_Capex__c}"/>
+                                                </span>
+                                            </aura:set>
+                                     </aura:if>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span>Approved Contingency Yr 1 (Capex): </span><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Contingency_Yr_1_Capex__c}" />
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <lightning:inputField fieldName="Remaining_Contingency_Yr_1_Capex_Cur__c"/>
+                                </div>
+                            </div><br/><br/>
+                        </div>
+                        <div class="slds-box slds-box_xx-small">
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12 box-left-p0">
+                                        <span>Approved Budget Yr 1 (Opex): </span><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Opex_Budget_Year_1__c}" />
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <lightning:inputField fieldName="Total_Committed_Cost_Yr_1_Opex__c"/>
+                                    </div>
+                                </div><br/><br/>
+                            </div>
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <span>Total Remaining Budget Yr 1 (Opex): </span>
+                                        
+                                        <aura:if isTrue="{!greaterthan(v.ITPMRecs.Total_Remaining_Budget_Yr_1_Opex__c,-0.01)}">
+                                            <span>
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_1_Opex__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span  style="color:Red;">
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_1_Opex__c}"/>
+                                                </span>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning:accordionSection>
+                    <lightning:accordionSection name="YEAR 2 BUDGET DETAIL" label="YEAR 2 BUDGET DETAIL" >
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12 year-left">
+                                   <!-- <span class="slds-text-title_bold">YEAR 2 BUDGET DETAIL </span> -->
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="text">* Committed $ = Open POs </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-box slds-box_xx-small">
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12 box-left-p0">
+                                        <span>Approved Budget Yr 2 (Capex): </span><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Capex_Budget_Yr_2__c}" />
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <span>* Total Committed Cost Yr 2 (Capex): </span> <ui:outputCurrency value="{!v.ITPMRecs.Total_Committed_Cost_Yr_2_Capex__c}"/>
+                                    </div>
+                                </div><br/><br/>
+                            </div>
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <span >Total Remaining Budget Yr 2 (Capex): </span> 
+                                        <aura:if isTrue="{!greaterthan(v.ITPMRecs.Total_Remaining_Budget_Yr_2_Capex__c,-0.01)}">
+                                            <span>
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_2_Capex__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span style="color:Red;">
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_2_Capex__c}"/>
+                                                </span>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <lightning:inputField fieldName="Internal_Actual_Cost_YTD_Yr_2_Capex__c"/>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <lightning:inputField fieldName="Committed_External_Cost_Yr_2_Capex__c"/>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <lightning:inputField fieldName="Committed_Hardware_Cost_Yr_2_Capex__c"/>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <lightning:inputField fieldName="Committed_Software_Cost_Yr_2_Capex__c"/>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-box slds-box_xx-small">    
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12 box-left-p0">
+                                        <span>Approved Budget Yr 2 (Opex): </span><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Opex_Budget_Yr_2__c}" />
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <lightning:inputField fieldName="Total_Committed_Cost_Yr_2_Opex__c"/>
+                                    </div>
+                                </div><br/><br/>
+                            </div>
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <span>Total Remaining Budget Yr 2 (Opex): </span> 
+                                        
+                                        <aura:if isTrue="{!greaterthan(v.ITPMRecs.Total_Remaining_Budget_Yr_2_Opex__c,-0.01)}">
+                                            <span >
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_2_Opex__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span style="color:Red;">
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_2_Opex__c}"/>
+                                                </span>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning:accordionSection>
+                    <lightning:accordionSection name="YEAR 3 BUDGET DETAIL" label="YEAR 3 BUDGET DETAIL" >
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12 year-left">
+                                   <!-- <span class="slds-text-title_bold">YEAR 3 BUDGET DETAIL </span> -->
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <span class="text">* Committed $ = Open POs </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-box slds-box_xx-small">
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12 box-left-p0">
+                                        <span >Approved Budget Yr 3 (Capex): </span><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Capex_Budget_Yr_3__c}" />
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <span>*Total Committed Cost Yr 3 (Capex): </span> <ui:outputCurrency value="{!v.ITPMRecs.Total_Committed_Cost_Yr_3_Capex__c}"/>
+                                    </div>
+                                </div><br/><br/>
+                            </div>
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <span>Total Remaining Budget Yr 3 (Capex): </span>
+                                        <aura:if isTrue="{!greaterthan(v.ITPMRecs.Total_Remaining_Budget_Yr_3_Capex__c,-0.01)}">
+                                            <span >
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_3_Capex__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span  style="color:Red;">
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_3_Capex__c}"/>
+                                                </span>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <lightning:inputField fieldName="Internal_Actual_Cost_YTD_Yr_3_Capex__c"/>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <lightning:inputField fieldName="Committed_External_Cost_Yr_3_Capex__c"/>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <lightning:inputField fieldName="Committed_Hardware_Cost_Yr_3_Capex__c"/>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-p-left_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <lightning:inputField fieldName="Committed_Software_Cost_Yr_3_Capex__c"/>
+                                </div>
+                            </div>
+                        </div><br/><br/>
+                        <div class="slds-box slds-box_xx-small">    
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12 box-left-p0">
+                                        <span>Approved Budget Yr 3 (Opex): </span><ui:outputCurrency value="{!v.ITPMRecs.ITS_Intake_Request__r.Revised_Opex_Budget_Yr_3__c}" />
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <lightning:inputField fieldName="Total_Committed_Cost_Yr_3_Opex__c"/>
+                                    </div>
+                                </div><br/><br/>
+                            </div>
+                            <div class="slds-p-left_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                    </div>
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <span>Total Remaining Budget Yr 3 (Opex): </span> 
+                                        
+                                        <aura:if isTrue="{!greaterthan(v.ITPMRecs.Total_Remaining_Budget_Yr_3_Opex__c,-0.01)}">
+                                            <span >
+                                                <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_3_Opex__c}"/>
+                                            </span>
+                                            <aura:set attribute="else">
+                                                <span  style="color:Red;">
+                                                    <ui:outputCurrency value="{!v.ITPMRecs.Total_Remaining_Budget_Yr_3_Opex__c}"/>
+                                                </span>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning:accordionSection>
+                    <center>
+                        <div class="slds-m-top_medium">
+                            <lightning:button variant="brand" type="submit" name="Save project Financials" label="Save project Financials" />
+                            <lightning:button label="Cancel" name="Cancel" onclick="{!c.handleCancel}"/>
+                        </div>
+                    </center><br/>
+                </lightning:recordEditForm>
+            </aura:if>
+        </div>
+    </lightning:accordion>
+</aura:component>

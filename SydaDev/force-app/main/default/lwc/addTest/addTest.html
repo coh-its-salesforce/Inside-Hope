@@ -1,0 +1,328 @@
+<template>
+	
+	<lightning-tabset variant="scoped">
+		<lightning-tab label="Add Insurance">
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" size="4" padding="horizontal-small">
+					<div class="slds-text-heading_medium">Primary Insurance08
+					</div>
+				</lightning-layout-item>
+
+				<lightning-layout-item flexibility="auto" size="8" padding="horizontal-small"
+					class="slds-text-align_right">
+					<lightning-button variant="brand-outline" label="Add Insurance" title="Add Insurance"
+						onclick={handleAddInsuranceButton} class="slds-m-left_x-small"></lightning-button>
+					<lightning-button variant="brand-outline" label="Copy Patient" title="Copy Patient"
+						onclick={handleCopyPatienteButton} class="slds-m-left_x-small"></lightning-button>
+
+
+				</lightning-layout-item>
+
+                
+			</lightning-layout>
+<lightning-layout>
+
+    <lightning-record-edit-form
+    object-api-name="Epic_Account_Data__c"
+    
+>
+    <lightning-input-field field-name="Insurance_Gender_1__c"> </lightning-input-field>
+    <div class="slds-var-m-top_medium">
+        <lightning-button variant="brand" type="submit" label="Save">
+        </lightning-button>
+    </div>
+</lightning-record-edit-form>
+</lightning-layout>
+
+
+ <lightning-record-edit-form
+    object-api-name="Epic_Account_Data__c"
+    
+>
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" padding="horizontal-small">
+					<lightning-input-field field-name="Patient_Relationship_to_Subscriber_1__c"> </lightning-input-field>
+
+				</lightning-layout-item>
+
+			</lightning-layout>
+
+
+
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input-field field-name="Insurance_Subscriber_First_Name_1__c" label="First Name" required ></lightning-input-field>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input-field field-name="Insurance_Subscriber_Last_Name_2__c" label="Last Name" required ></lightning-input-field>
+				</lightning-layout-item>
+
+			</lightning-layout>
+</lightning-record-edit-form>
+
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="middleName" label="Middle Name" class="spec-req"></lightning-input>
+				</lightning-layout-item>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<template if:true={genderPicklist.data}>
+						<lightning-combobox name="gender" label="Gender" value={gender} class="spec-req" required
+							options={genderPicklist.data.values} onchange={handleChange}>
+						</lightning-combobox>
+					</template>
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="birthdate" label="Birthdate" type="date" class="spec-req" required>
+					</lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="socialsecuritynumber" label="Social Security Number" type="number"
+						class="spec-req" required></lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="subscriberStreetAddress" label="Subscriber's Street Address"
+						class="spec-req" required></lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="subscribercity" label="Subscriber's City" class="spec-req"
+						required></lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+                    <template if:true={statePicklist.data}>
+						<lightning-combobox name="subscriberstate" label="Subscriber's State" value={subscriberstate} class="spec-req" required
+							options={statePicklist.data.values} onchange={handleChange}>
+						</lightning-combobox>
+					</template>
+					
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="subscriberzip" label="Subscriber's Zip/Postal Code"
+						class="spec-req" required></lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+
+  <template if:true={countryPicklist.data}>
+						<lightning-combobox name="subscribercountry" label="Subscriber's Country" value={subscribercountry} class="spec-req" required
+							options={countryPicklist.data.values} onchange={handleChange}>
+						</lightning-combobox>
+					</template>
+				
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+				</lightning-layout-item>
+
+			</lightning-layout>
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+
+					<lightning-input name="insurancePlan" label="Insurance Plan" class="spec-req" required>
+					</lightning-input>
+
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="subscriberId" label="Subscriber ID" class="spec-req" required>
+					</lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="memberId" label="Member Id" class="spec-req" required>
+					</lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="groupNumber" label="Group Number" type="number" class="spec-req">
+					</lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="authorizationNumber" label="Authorization Number" type="number"
+						class="spec-req"></lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+
+					<lightning-input name="effectiveFrom" label="Effective From" type="date" class="spec-req"
+						required></lightning-input>
+
+				</lightning-layout-item>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<div class="slds-text-heading_medium slds-p-around_small">Referring Provider Information</div>
+
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+
+					<lightning-input name="originalReferringProvider" label="Original Referring Provider"
+						type="phone" class="spec-req" required></lightning-input>
+
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+
+				</lightning-layout-item>
+			</lightning-layout>
+
+
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" padding="horizontal-small" class="slds-text-align_right">
+
+					<lightning-button variant="brand" label="Next" title="Next" onclick={handleNext}
+						class="slds-m-left_x-small"></lightning-button>
+					<lightning-button variant="brand" label="Save" title="Save" onclick={handleSavePatient1Button}
+						class="slds-m-left_x-small"></lightning-button>
+
+
+				</lightning-layout-item>
+			</lightning-layout>
+
+		</lightning-tab>
+
+
+		<!-- Guarantor lightning-tab -->
+		<lightning-tab label="Guarantor">
+			<lightning-layout-item flexibility="auto" size="4" padding="horizontal-small">
+				<div class="slds-text-heading_medium">Guarantor Information
+				</div>
+			</lightning-layout-item>
+
+
+			<lightning-layout>
+
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="patientRelationshipToGuarantor"
+						label="Patient Relationship to Guarantor" required></lightning-input>
+				</lightning-layout-item>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="street" label="Street" required></lightning-input>
+				</lightning-layout-item>
+
+			</lightning-layout>
+
+
+
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="guarantorType" label="Guarantor Type" required></lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="city" label="City" required></lightning-input>
+				</lightning-layout-item>
+
+			</lightning-layout>
+
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="firstName" label="First Name" class="spec-req"></lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" padding="horizontal-small">
+					<lightning-input name="state" label="State" class="spec-req" required></lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="middleName" label="Middle Name" class="spec-req" required>
+					</lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="zipCode" label="Zip/Postal Code" class="spec-req" required>
+					</lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="lastName" label="Last Name" class="spec-req" required>
+					</lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="country" label="Country" class="spec-req" required>
+					</lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="SSN" label="SSN" class="spec-req" type="number" required>
+					</lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="homePhone" label="Home Phone" type="Phone" class="spec-req"
+						required></lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="gender" label="Gender" class="spec-req" required></lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="mobilePhone" label="Mobile Phone" type="Phone" class="spec-req"
+						required></lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="birthDate" label="Birthdate" type="date" class="spec-req" required>
+					</lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="workPhone" label="Work Phone" type="Phone" class="spec-req"
+						required></lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+
+
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" padding="horizontal-small"
+					class="slds-text-align_right slds-p-top_medium">
+
+					<lightning-button variant="brand" label="Next" title="Next" onclick={handleAddInsuranceButton}
+						class="slds-m-left_x-small"></lightning-button>
+					<lightning-button variant="brand" label="Update" title="Update" onclick={handleCopyPatienteButton}
+						class="slds-m-left_x-small"></lightning-button>
+
+				</lightning-layout-item>
+			</lightning-layout>
+
+		</lightning-tab>
+
+		<!-- Insurances View lightning-tab -->
+		<lightning-tab label="Insurances">
+
+		</lightning-tab>
+	</lightning-tabset>
+</template>

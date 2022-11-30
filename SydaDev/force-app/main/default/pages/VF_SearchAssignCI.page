@@ -1,0 +1,91 @@
+<!--
+@author : veenesh.vikram
+@Name : VF_SearchAssignCI
+@Description : VF Page to display CI's assigned to the client
+               and also lets assign new CI's to Client.  
+@Date : 1 July 2015
+-->
+<apex:page StandardController="BMCServiceDesk__BMC_BaseElement__c" sidebar="true" showHeader="false" showChat="false" extensions="VFC_SearchAssignCI" id="thePage">
+<!-- CSS -->
+<style>
+.searchClass {
+  font-weight: bold;
+  padding: 2px 5px 2px 2px;
+}
+.tabClass{
+  background-image:none;
+  background-color: #ffffff;
+  color: #000;
+  border-bottom-color: #C0C0C0;
+  border-right-color: #C0C0C0;
+  border-left-color: #C0C0C0;
+  font-size: 11px;
+  font-family: Arial;
+}
+</style>
+<apex:pagemessages escape="false"></apex:pagemessages>
+<apex:form id="theForm">
+<apex:tabPanel id="thePanel">
+<apex:tab label="CI's Assigned to User" styleClass="tabClass" id="theTab1">
+    <apex:pageBlock id="thePageblock" >    
+        <apex:pageblockSection columns="1" title="{!assignResults}" collapsible="false" id="theSection1">
+            <apex:pageBlockTable value="{!CIList }" var="ci">
+                <apex:column headerValue="Name" value="{!ci.name}"/>
+                <apex:column headerValue="MFG" value="{!ci.BMCServiceDesk__ManufacturerName__c}" />
+                <apex:column headerValue="Model" value="{!ci.BMCServiceDesk__Model__c}"/>
+                <apex:column headerValue="MFG SN" value="{!ci.BMCServiceDesk__SerialNumber__c}"/>
+                <apex:column headerValue="Asset Tag" value="{!ci.BMCServiceDesk__CITag__c}"/>
+                <apex:column headerValue="Assigned to">
+                    <apex:outputField value="{!ci.BMCServiceDesk__PrimaryClient__c}"></apex:outputField>
+                </apex:column>  
+            </apex:pageBlockTable>
+        </apex:pageblockSection>
+    </apex:pageBlock>
+</apex:tab>
+
+<apex:tab label="Search and Assign" styleClass="tabClass" id="theTab2">
+
+    <apex:pageBlock id="thePageblock2">
+        <apex:pageBlockSection columns="2" >
+            <apex:pageBlockSectionItem >
+                <apex:outputPanel ><apex:outputLabel styleClass="searchClass">Search</apex:outputLabel>&nbsp;
+                <apex:inputText value="{!searchStr}"/>&nbsp;&nbsp;
+                <apex:commandButton value="Go!" action="{!SearchItems}"/> 
+                </apex:outputPanel>  
+                         
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:commandButton action="{!saveme}" id="saveButton" value="Assign Client"/>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>            
+        </apex:pageBlockSection>
+
+        <apex:pageblockSection columns="1" title="{!searchResults }" collapsible="false" id="theSection2" >
+            <apex:pageBlockTable value="{!SearchList }" var="ci">
+                <apex:column headerValue="Name" value="{!ci.name}"/>
+                <apex:column headerValue="MFG" value="{!ci.BMCServiceDesk__ManufacturerName__c}" />
+                <apex:column headerValue="Model" value="{!ci.BMCServiceDesk__Model__c}"/>
+                <apex:column headerValue="MFG SN" value="{!ci.BMCServiceDesk__SerialNumber__c}"/>
+                <apex:column headerValue="Asset Tag" value="{!ci.BMCServiceDesk__CITag__c}"/>
+                <apex:column headerValue="Assigned to"  width="150px">
+                    <apex:outputField value="{!ci.BMCServiceDesk__PrimaryClient__c}">
+                        <apex:inlineEditSupport showOnEdit="saveButton" hideOnEdit="" event="ondblclick" resetFunction="resetInlineEdit"/>
+                    </apex:outputField>
+                </apex:column>  
+            </apex:pageBlockTable>
+        </apex:pageblockSection>
+    </apex:pageBlock>
+</apex:tab>
+</apex:tabPanel>
+</apex:form>
+
+<!-- javaScript -->
+<script>
+window.onload=function(){
+var divNxt = document.getElementById("{!$Component.theForm.thePageblock3.theSection3.client}").parentNode.parentNode.firstChild;
+divNxt.style.display='none';
+};
+</script>
+</apex:page>

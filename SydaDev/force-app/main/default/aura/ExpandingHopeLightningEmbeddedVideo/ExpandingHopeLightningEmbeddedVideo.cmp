@@ -1,0 +1,5 @@
+<aura:component >
+    <aura:attribute name="VideoLink" type="String" />
+		<!--<iframe width="400" height="266" src="https://players.brightcove.net/5069692884001/default_default/index.html?videoId=6051898941001"></iframe>	-->
+		<iframe width="400" height="266" src="{!v.VideoLink}"></iframe>
+</aura:component>

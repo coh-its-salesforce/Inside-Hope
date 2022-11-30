@@ -1,0 +1,28 @@
+<aura:component implements="flexiPage:availableForAllPageTypes,force:hasRecordId" controller="COH_ITSAssetRequest_IframeController">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:attribute name="mITSAssetRequest" type="String"/>
+    <aura:attribute name="mURL" type="String"/>
+    <aura:attribute name="mWidth" type="String"/>
+    <aura:attribute name="mHeight" type="String"/>
+    <aura:attribute name="mStyle" type="String"/>
+    <aura:attribute name="mScrolling" type="String"/>
+    <aura:attribute name="mFrameBorder" type="String"/>
+    <aura:attribute name="mSandbox" type="String"/>
+    <aura:attribute name="mLoading" type="Boolean" default="true"/>
+    <aura:attribute name="mName" type="String" default=""/>
+
+    <aura:if isTrue="{!not(v.mLoading)}">
+        <iframe height="{!v.mHeight}"
+                aura:id="iframeComponent"
+                frameBorder="{!v.mFrameBorder}"
+                sandbox="{!v.mSandbox}"
+                scrolling="{!v.mScrolling}"
+                src="{!v.mURL}"
+                style="{!v.mStyle}"
+                width="{!v.mWidth}"/>
+
+        <aura:set attribute="else">
+            <lightning:spinner />
+        </aura:set>
+    </aura:if>    
+</aura:component>

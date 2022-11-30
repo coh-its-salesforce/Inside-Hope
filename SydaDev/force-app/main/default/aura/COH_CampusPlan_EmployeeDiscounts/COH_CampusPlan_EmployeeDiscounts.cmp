@@ -1,0 +1,32 @@
+<aura:component >
+   
+   <aura:registerEvent name="openRivergrade" type="c:CampusPlan_RivergradeEvent" />
+   <aura:attribute name="ShuttleSchedule" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.ShuttleSchedule}">
+    <div style="padding-left: 60px;padding-right:60px;">
+    	<div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_7-of-12" >
+      			<div class="container">
+      				<img src = "{!$Resource.EmployeeDiscounts}" class="image1"/> 
+      			</div>
+      		</div>
+           <div class="slds-col slds-size_5-of-12 text-container" >
+      	   		<div style="margin-top:100px;color: rgb(0, 128, 255);">
+                    <div class = "Profile2">
+                 <span> Rivergrade </span>
+                    </div><br/>
+      				<span style="font-size: 30px;"> Employee Discounts </span>
+      			</div>
+      		</div>
+      	</div><br/>
+        Nearly all City of Hope patients undergo multiple imaging tests before, during and after their cancer treatment, visiting our Department of Diagnostic Radiology an average of at least five times a year. Over the past eight years, the number of exams performed by the department has nearly tripled, from approximately 45 thousand in 2011 to approximately 125 thousand in 2019. Diagnostic imaging also play a crirical role in scientific research by measuring and tracking the effectiveness of the many novel therapies being studied in clinical trials at City of Hope.<br/><br/>
+        Currently, our Department of Diagnostic Radiology located primarily in Helford Hospital is operating at max capacity. Before the addition of two mobile imaging units, patients were waiting for weeks to get scanned, which can prolong treatment decisions and increases patient anxiety. Despite more than doubling the radiology staff, it has been difficult to keep up with our rapid patient growth due to limited imaging equipment and a limited space footprint. To address this, City of Hope is moving forward with building an outpatient Radiology Imaging Center (RIC) on the Duarte Campus that will nearly double our fleet of imaging technologies.<br/><br/>
+        In order to compress schedule and limit disruption on campus, the RIC will be a prefabricated building comprised of transportable modules that will be construced off-site and then transported to campus and positioned on foundations. Much of the equipment in the RIC will eventually be relocated to the Duarte Outpatient Clinic, our multi-story ambulatory care buildings scheduled to open in 2024.<br/><br/>
+        "The Radiology Imaging Center was designed to speed access to our advanced imaging tests," explained Joel Helmke, senior vice president of operations. "Instead of waiting almost five years for the Duarte Outpatient Clinic to be built, the RIC will give physicians and researchers access to the additional state-of-the-art equipment as early as next year. This building is yet another example of how City of Hope is investing and expanding our campus to help bring tommorrow's discoveries to patients who need them today."<br/><br/>
+  			
+          <!--<div class="backbutton" onclick="{!c.goBackToResourceToHelp}" ><lightning:icon iconName="utility:back" size="x-small" variant="inverse" />&nbsp;&nbsp;&nbsp;&nbsp;Back  
+    </div>-->
+       </div><br/></aura:if>
+    
+    
+</aura:component>

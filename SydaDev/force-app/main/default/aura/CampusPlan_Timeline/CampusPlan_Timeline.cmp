@@ -1,0 +1,459 @@
+<aura:component controller="COH_CampusPlanController">
+   
+	<!--<ltng:require 
+
+        styles="{!$Resource.CampusPlanTimeline + '/campusplan/css/timeline2.css'}"
+
+                  scripts="{!join(',',$Resource.JqueryLib2,$Resource.CampusPlanTimeline + '/campusplan/js/campus-plan.js')}"
+
+        afterScriptsLoaded="{!c.doInit}" />-->
+    <!--<ltng:require 
+
+        styles="{!$Resource.TimelineCSS2}"
+
+                  scripts="{!join(',',$Resource.JqueryVer3,$Resource.CampusPlanTimeline + '/campusplan/js/campus-plan.js')}"
+
+        afterScriptsLoaded="{!c.doInit}" />-->
+    <ltng:require styles="{!$Resource.TimelineCSS2}" scripts="{!$Resource.JqueryVer3}" afterScriptsLoaded="{!c.doInit}" />
+    <aura:registerEvent name="TimelineEvent" type="c:CampusPlan_TimelineEvent" />
+    <aura:attribute name = "LandingPage" type = "String" />
+    <aura:attribute name = "timelinewrap" type = "COH_CampusPlanController.timelinewrap" />
+    <aura:attribute name = "year2018" type = "Campus_Plan_Timeline__c[]" />
+    <aura:attribute name = "year2019" type = "Campus_Plan_Timeline__c[]" />
+    <aura:attribute name = "year2020" type = "Campus_Plan_Timeline__c[]" />
+    <aura:attribute name = "year2021" type = "Campus_Plan_Timeline__c[]" />
+    <aura:attribute name = "year2022" type = "Campus_Plan_Timeline__c[]" />
+    <aura:attribute name = "year2023" type = "Campus_Plan_Timeline__c[]" />
+    <aura:attribute name = "year2024" type = "Campus_Plan_Timeline__c[]" />
+    <aura:attribute name = "year2025" type = "Campus_Plan_Timeline__c[]" />
+    <aura:attribute name = "year2026" type = "Campus_Plan_Timeline__c[]" />
+    <aura:attribute name = "year2027" type = "Campus_Plan_Timeline__c[]" />
+    <aura:attribute name = "tlRec" type = "Campus_Plan_Timeline__c" />
+
+	<div>
+    <div class="timeline-container">       
+        <div class="timeline-scroll">                            
+           <aura:if isTrue="{!v.LandingPage=='Orange County'}">
+                <div class="orange-timeline"> </div>
+                <!--<aura:set attribute="else">
+                    <div class="blue-timeline"></div>
+                </aura:set>-->
+            </aura:if>
+             
+            <div class="timeline-wrapper">
+                <ul>
+                  
+                     <li aura:id="year2018" class="active slds-show" >   
+                       <aura:if isTrue="{!not(empty(v.year2018))}">
+                        <div class="dot"></div>
+                        <div class="year">2018</div>
+                        <ul class="timeline-ul">
+                           
+                            <aura:iteration items="{!v.year2018}" var="t">
+                            <li>
+                                <div class="timeline-image">
+                                        <aura:unescapedHtml value="{!t.Timeline_Image__c}" />
+                                </div>
+                                <div class="timeline-content">
+                                    <h3>
+                                       <!-- <lightning:formattedDateTime value="{!t.Date_of_Event__c}" year="numeric" day="2-digit" month="long" /> -->
+                                        {!t.Date_Text__c}
+                                    </h3>
+                                    <div class="timeline-description">
+                                        <p>
+                                            {!t.Title__c}
+                                        </p>
+                                    </div>
+                                    <div class="timeline-readmore">                                    	
+                                        <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Home')}">
+                                        <a class="readmore-a">Hover for More
+                                             <div class="cust-tooltip">
+                                                 <aura:unescapedHtml value="{!t.Description__c}" />
+                                             </div>
+                                          </a>
+                                        </aura:if>
+                                        <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Orange County')}">
+                                        	<a onclick="{!c.openTimelinePage}" id="{!t.Id}">Read More</a>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </li>
+                            
+                           </aura:iteration>
+                             
+                        </ul>
+                   </aura:if> 
+                    </li>
+
+                    
+                    	
+                    <li aura:id="year2019"  class="slds-show">  
+                            <aura:if isTrue="{!not(empty(v.year2019))}">
+                        <div class="dot"></div>
+                        <div class="year">2019</div>
+                        <ul class="timeline-ul">
+                           
+                            <aura:iteration items="{!v.year2019}" var="t">
+                            <li>
+                                <div class="timeline-image">
+                                        <aura:unescapedHtml value="{!t.Timeline_Image__c}" />
+                                </div>
+                                <div class="timeline-content">
+                                    <h3>
+                                       <!-- <lightning:formattedDateTime value="{!t.Date_of_Event__c}" year="numeric" day="2-digit" month="long" /> -->
+                                        {!t.Date_Text__c}
+                                    </h3>
+                                    <div class="timeline-description">
+                                        <p>
+                                            {!t.Title__c}
+                                        </p>
+                                    </div>
+                                    <div class="timeline-readmore">                                    	
+                                        <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Home')}">
+                                        <a class="readmore-a">Hover for More
+                                             <div class="cust-tooltip">
+                                                 <aura:unescapedHtml value="{!t.Description__c}" />
+                                             </div>
+                                          </a>
+                                        </aura:if>
+                                        <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Orange County')}">
+                                        	<a onclick="{!c.openTimelinePage}" id="{!t.Id}">Read More</a>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </li>
+                            
+                           </aura:iteration>
+                         
+                        </ul>
+                     </aura:if>    
+                    </li>
+                 
+                   
+                    <li  aura:id="year2020" class="active">
+					<aura:if isTrue="{!not(empty(v.year2020))}">                        
+                        <div class="dot"></div>
+                        <div class="year">2020</div>
+                        <ul class="timeline-ul">
+                           <!-- <aura:if isTrue="{!not(empty(v.year2020))}"> -->
+                            <aura:iteration items="{!v.year2020}" var="t">
+                            <li>
+                                <div class="timeline-image">
+                                        <aura:unescapedHtml value="{!t.Timeline_Image__c}" />
+                                </div>
+                                <div class="timeline-content">
+                                    <h3>
+                                       <!-- <lightning:formattedDateTime value="{!t.Date_of_Event__c}" year="numeric" day="2-digit" month="long" /> -->
+                                        {!t.Date_Text__c}
+                                    </h3>
+                                    <div class="timeline-description">
+                                        <p>
+                                            {!t.Title__c}
+                                        </p>
+                                    </div>
+                                    <div class="timeline-readmore">                                    	
+                                        <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Home')}">
+                                        <a class="readmore-a">Hover for More
+                                             <div class="cust-tooltip">
+                                                 <aura:unescapedHtml value="{!t.Description__c}" />
+                                             </div>
+                                          </a>
+                                        </aura:if>
+                                        <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Orange County')}">
+                                        	<a onclick="{!c.openTimelinePage}" id="{!t.Id}">Read More</a>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </li>
+                            
+                           </aura:iteration>
+                         <!-- </aura:if> -->      
+                        </ul>
+                        </aura:if>    
+                    </li>
+                    <li>
+                        <aura:if isTrue="{!not(empty(v.year2021))}">
+                        <div class="dot"></div>
+                        <div class="year">2021</div>                        
+                         <ul class="timeline-ul">
+                           <!-- <aura:if isTrue="{!not(empty(v.year2021))}"> -->
+                            <aura:iteration items="{!v.year2021}" var="t">
+                            <li>
+                                <div class="timeline-image">
+                                        <aura:unescapedHtml value="{!t.Timeline_Image__c}" />
+                                </div>
+                                <div class="timeline-content">
+                                    <h3>
+                                       <!-- <lightning:formattedDateTime value="{!t.Date_of_Event__c}" year="numeric" day="2-digit" month="long" /> -->
+                                    	{!t.Date_Text__c}
+                                    </h3>
+                                    <div class="timeline-description">
+                                        <p>
+                                        	{!t.Title__c}
+                                        </p>                                       
+                                    </div>
+                                    <div class="timeline-readmore">                                    	
+                                      <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Home')}">
+                                         <a class="readmore-a">Hover for More
+                                         <div class="cust-tooltip">
+                                             <aura:unescapedHtml value="{!t.Description__c}" />
+                                         </div>
+                                          </a>
+                                        </aura:if>
+                                        <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Orange County')}">
+                                        <a onclick="{!c.openTimelinePage}" id="{!t.Id}">Read More</a>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </li>                            
+                           </aura:iteration>
+                          <!-- </aura:if> -->     
+                        </ul>
+                        </aura:if>
+                    </li>
+                    <li>
+                        <aura:if isTrue="{!not(empty(v.year2022))}">
+                        <div class="dot"></div>
+                        <div class="year">2022</div>
+                        <ul class="timeline-ul">
+                           <!-- <aura:if isTrue="{!not(empty(v.year2022))}"> -->
+                            <aura:iteration items="{!v.year2022}" var="t">
+                            <li>
+                                <div class="timeline-image">
+                                        <aura:unescapedHtml value="{!t.Timeline_Image__c}" />
+                                </div>
+                                <div class="timeline-content">
+                                    <h3>
+                                       <!-- <lightning:formattedDateTime value="{!t.Date_of_Event__c}" year="numeric" day="2-digit" month="long" /> -->
+                                    	{!t.Date_Text__c}
+                                    </h3>
+                                    <div class="timeline-description">
+                                        <p>
+                                        	{!t.Title__c}
+                                        </p>
+                                    </div>
+                                    <div class="timeline-readmore">                                    	
+                                       <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Home')}">
+                                         <a class="readmore-a">Hover for More
+                                         <div class="cust-tooltip">
+                                             <aura:unescapedHtml value="{!t.Description__c}" />
+                                         </div>
+                                          </a>
+                                        </aura:if>
+                                        <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Orange County')}">
+                                        <a onclick="{!c.openTimelinePage}" id="{!t.Id}">Read More</a>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </li>                            
+                           </aura:iteration>
+                         <!-- </aura:if> -->     
+                        </ul>
+                        </aura:if>
+                    </li>
+                    <li>
+                        <aura:if isTrue="{!not(empty(v.year2023))}">
+                        <div class="dot"></div>
+                        <div class="year">2023</div>                        
+                        <ul class="timeline-ul">
+                            <!-- <aura:if isTrue="{!not(empty(v.year2023))}"> -->
+                            <aura:iteration items="{!v.year2023}" var="t">
+                            <li>
+                                <div class="timeline-image">
+                                     <aura:unescapedHtml value="{!t.Timeline_Image__c}" />
+                                </div>
+                                <div class="timeline-content">
+                                    <h3>
+                                       <!-- <lightning:formattedDateTime value="{!t.Date_of_Event__c}" year="numeric" day="2-digit" month="long" /> -->
+                                    	{!t.Date_Text__c}
+                                    </h3>
+                                    <div class="timeline-description">
+                                        <p>
+                                        	{!t.Title__c}
+                                        </p>
+                                    </div>
+                                    <div class="timeline-readmore">                                    	
+                                       <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Home')}">
+                                         <a class="readmore-a">Hover for More
+                                         <div class="cust-tooltip">
+                                             <aura:unescapedHtml value="{!t.Description__c}" />
+                                         </div>
+                                          </a>
+                                        </aura:if>
+                                        <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Orange County')}">
+                                        	<a onclick="{!c.openTimelinePage}" id="{!t.Id}">Read More</a>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </li>                            
+                           </aura:iteration>
+                         <!-- </aura:if> -->  
+                        </ul>
+                        </aura:if>
+                    </li>
+                    <li>
+                        <aura:if isTrue="{!not(empty(v.year2024))}">
+                        <div class="dot"></div>
+                        <div class="year">2024</div>                
+                        <ul class="timeline-ul">
+                           <!-- <aura:if isTrue="{!not(empty(v.year2024))}"> -->
+                            <aura:iteration items="{!v.year2024}" var="t">
+                            <li>
+                                <div class="timeline-image">
+                                     <aura:unescapedHtml value="{!t.Timeline_Image__c}" />
+                                </div>
+                                <div class="timeline-content">
+                                    <h3>
+                                       <!-- <lightning:formattedDateTime value="{!t.Date_of_Event__c}" year="numeric" day="2-digit" month="long" /> -->
+                                        {!t.Date_Text__c}
+                                    </h3>
+                                    <div class="timeline-description">
+                                        <p>
+                                        	{!t.Title__c}
+                                        </p>
+                                    </div>
+                                    <div class="timeline-readmore">                                    	
+                                       <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Home')}">
+                                        <a class="readmore-a">Hover for More
+                                         <div class="cust-tooltip">
+                                             <aura:unescapedHtml value="{!t.Description__c}" />
+                                         </div>
+                                          </a>
+                                        </aura:if>
+                                        <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Orange County')}">
+                                        <a onclick="{!c.openTimelinePage}" id="{!t.Id}">Read More</a>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </li>                            
+                           </aura:iteration>
+                          <!-- </aura:if> -->      
+                        </ul>
+                        </aura:if>
+                    </li>
+                    <li>
+                        <aura:if isTrue="{!not(empty(v.year2025))}">
+                        <div class="dot"></div>
+                        <div class="year">2025</div>           
+                        <ul class="timeline-ul">
+                           <!-- <aura:if isTrue="{!not(empty(v.year2025))}"> -->
+                            <aura:iteration items="{!v.year2025}" var="t">
+                            <li>
+                                <div class="timeline-image">
+                                     <aura:unescapedHtml value="{!t.Timeline_Image__c}" />
+                                </div>
+                                <div class="timeline-content">
+                                    <h3>
+                                       <!-- <lightning:formattedDateTime value="{!t.Date_of_Event__c}" year="numeric" day="2-digit" month="long" /> -->
+                                    	{!t.Date_Text__c}
+                                    </h3>
+                                    <div class="timeline-description">
+                                        <p>
+                                        	{!t.Title__c}
+                                        </p>
+                                    </div>
+                                    <div class="timeline-readmore">                                    	
+                                       <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Home')}">
+                                         <a class="readmore-a">Hover for More
+                                         <div class="cust-tooltip">
+                                             <aura:unescapedHtml value="{!t.Description__c}" />
+                                         </div>
+                                          </a>
+                                        </aura:if>
+                                        <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Orange County')}">
+                                        <a onclick="{!c.openTimelinePage}" id="{!t.Id}">Read More</a>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </li>                            
+                           </aura:iteration>
+                          <!-- </aura:if> -->    
+                        </ul>
+                        </aura:if>
+                    </li>
+                    <li aura:id="year2026" class="slds-show">
+                        <aura:if isTrue="{!not(empty(v.year2026))}">
+                        <div class="dot"></div>
+                        <div class="year">2026</div>       
+                        <ul class="timeline-ul">
+                            <!-- <aura:if isTrue="{!not(empty(v.year2026))}"> -->
+                            <aura:iteration items="{!v.year2026}" var="t">
+                            <li>
+                                <div class="timeline-image">
+                                     <aura:unescapedHtml value="{!t.Timeline_Image__c}" />
+                                </div>
+                                <div class="timeline-content">
+                                    <h3>
+                                       <!-- <lightning:formattedDateTime value="{!t.Date_of_Event__c}" year="numeric" day="2-digit" month="long" /> -->
+                                        {!t.Date_Text__c}
+                                    </h3>
+                                    <div class="timeline-description">
+                                        <p>
+                                        	{!t.Title__c}
+                                        </p>
+                                    </div>
+                                    <div class="timeline-readmore">                                    	
+                                      <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Home')}">
+                                        <a class="readmore-a">Hover for More
+                                         <div class="cust-tooltip">
+                                             <aura:unescapedHtml value="{!t.Description__c}" />
+                                         </div>
+                                          </a>
+                                        </aura:if>
+                                        <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Orange County')}">
+                                        <a onclick="{!c.openTimelinePage}" id="{!t.Id}">Read More</a>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </li>                            
+                           </aura:iteration>
+                         <!-- </aura:if> -->     
+                        </ul>
+                        </aura:if> 
+                    </li>
+                    <aura:if isTrue="{!not(empty(v.year2027))}">
+                    <li aura:id="year2027" class="slds-show">
+                        <div class="dot"></div>
+                        <div class="year">2027</div>    
+                        <ul class="timeline-ul">
+                            <!-- <aura:if isTrue="{!not(empty(v.year2027))}"> -->
+                            <aura:iteration items="{!v.year2027}" var="t">
+                            <li>
+                                <div class="timeline-image">
+                                     <aura:unescapedHtml value="{!t.Timeline_Image__c}" />
+                                </div>
+                                <div class="timeline-content">
+                                    <h3>
+                                       <!-- <lightning:formattedDateTime value="{!t.Date_of_Event__c}" year="numeric" day="2-digit" month="long" /> -->
+                                        {!t.Date_Text__c}
+                                    </h3>
+                                    <div class="timeline-description">
+                                        <p>
+                                        	{!t.Title__c}
+                                        </p>
+                                    </div>
+                                    <div class="timeline-readmore">                                    	
+                                       <aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Home')}">
+                                         <a class="readmore-a">Hover for More
+                                         <div class="cust-tooltip">
+                                             <aura:unescapedHtml value="{!t.Description__c}" />
+                                         </div>
+                                             </a>
+                                        </aura:if>
+                                       	<aura:if isTrue="{!and(not(empty(t.Description__c)),t.Landing_Page__c=='Orange County')}">
+                                        <a onclick="{!c.openTimelinePage}" id="{!t.Id}">Read More</a>
+                                        </aura:if>
+                                    </div>
+                                </div>
+                            </li>                            
+                           </aura:iteration>
+                         <!-- </aura:if> -->      
+                        </ul>
+                    </li>
+                    </aura:if>
+                </ul>
+            </div>
+        </div>
+    </div>
+    </div>
+</aura:component>

@@ -1,0 +1,349 @@
+<aura:component controller="COH_UIR_IntakeRequestFormController">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:method name="validateFields" action="{!c.validateFields}"/>
+    <aura:attribute name="mIntakeRequest" type="COH_UniversalIntakeRequest__c"/>    
+    <aura:attribute name="mPicklists" type="Map" />
+    
+    <div class="slds-form-horizontal">
+        <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_small">
+            Labor Request
+        </h3>
+        
+        <!-- Funding Department, Funding Cost Center -->
+        <div class="slds-grid slds-wrap">        
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input name="COH_UIR_LBR_FundingDepartment__c" 
+                                     label="Funding Department" 
+                                     value="{!v.mIntakeRequest.COH_UIR_LBR_FundingDepartment__c}"
+                                     aura:id="intakeRequestFormLabor"
+                                     required="true"/>            
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input name="COH_UIR_LBR_FundingCostCenter__c" 
+                                     label="Funding Cost Center" 
+                                     value="{!v.mIntakeRequest.COH_UIR_LBR_FundingCostCenter__c}"
+                                     aura:id="intakeRequestFormLabor"
+                                     required="true"/>                    
+                </div>         
+            </div>
+        </div>
+        
+        <!-- Hiring Manager, Department/SVP -->
+        <div class="slds-grid slds-wrap">        
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                            mSelectedRecord="{!v.mIntakeRequest.COH_UIR_LBR_HiringManager__c}" 
+                                            mLabel="Hiring Manager"
+                                            mPrimaryFieldAPIName="Name"
+                                            mSecondaryFieldAPIName="Title"
+                                            mAdditionalSelectFields="IsActive"
+                                            mAdditionalSearchConditions="AND IsActive = true"
+                                            mRequired="true"
+                                            aura:id="childComponent"/>             
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                            mSelectedRecord="{!v.mIntakeRequest.COH_UIR_LBR_DepartmentSVP__c}" 
+                                            mLabel="Department S/VP"
+                                            mPrimaryFieldAPIName="Name"
+                                            mSecondaryFieldAPIName="Title"
+                                            mAdditionalSelectFields="IsActive"
+                                            mAdditionalSearchConditions="AND IsActive = true"
+                                            mRequired="true"
+                                            aura:id="childComponent"/>
+                </div>         
+            </div>
+        </div>
+        
+        <!-- Job Code, Primary Hire Location -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input name="COH_UIR_LBR_JobCodeNumber__c" 
+                                     label="Job Code" 
+                                     value="{!v.mIntakeRequest.COH_UIR_LBR_JobCodeNumber__c}"
+                                     aura:id="intakeRequestFormLabor"
+                                     required="true"/>             
+                </div>         
+            </div>            
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input name="COH_UIR_LBR_PrimaryHireLocation__c" 
+                                     label="Primary Hire Location" 
+                                     value="{!v.mIntakeRequest.COH_UIR_LBR_PrimaryHireLocation__c}"
+                                     aura:id="intakeRequestFormLabor"
+                                     required="true"/>             
+                </div>         
+            </div>         
+        </div>
+        
+        <!-- Need for position, Fixed or flex -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select name="COH_UIR_LBR_NeedForPosition__c" 
+                                      label="Need for position" 
+                                      value="{!v.mIntakeRequest.COH_UIR_LBR_NeedForPosition__c}"
+                                      aura:id="intakeRequestFormLabor"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_LBR_NeedForPosition__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_LBR_NeedForPosition__c}">{!currentPicklistOption.label}</option>
+                        </aura:iteration>
+                    </lightning:select>         
+                </div>         
+            </div>            
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select name="COH_UIR_LBR_FixedOrFlex__c" 
+                                      label="Fixed or Flex" 
+                                      value="{!v.mIntakeRequest.COH_UIR_LBR_FixedOrFlex__c}"
+                                      aura:id="intakeRequestFormLabor"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_LBR_FixedOrFlex__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_LBR_FixedOrFlex__c}">{!currentPicklistOption.label}</option>
+                        </aura:iteration>
+                    </lightning:select>           
+                </div>         
+            </div>         
+        </div>
+        
+        <!-- Employee being replaced, current hourly rate, FTE allotment, Last day of employeement at coh, vacant positions in job code -->
+        <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_LBR_NeedForPosition__c == 'Replacement Position'}">
+            
+            <!-- Employee being replaced, current hourly rate -->
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:input name="COH_UIR_LBR_ReplacedEmployeeID__c" 
+                                         label="Employee being replaced" 
+                                         value="{!v.mIntakeRequest.COH_UIR_LBR_ReplacedEmployeeID__c}"
+                                         aura:id="intakeRequestFormLabor"
+                                         required="true"/>             
+                    </div>         
+                </div>            
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:input name="COH_UIR_LBR_CurrentHourlyRate__c" 
+                                         label="Current hourly rate" 
+                                         value="{!v.mIntakeRequest.COH_UIR_LBR_CurrentHourlyRate__c}"
+                                         aura:id="intakeRequestFormLabor"
+                                         required="true"/>              
+                    </div>         
+                </div>         
+            </div>
+            
+            <!-- FTE allotment, Last day of employeement at coh  -->
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:input name="COH_UIR_LBR_FTEAllotment__c" 
+                                         label="FTE Allotment" 
+                                         value="{!v.mIntakeRequest.COH_UIR_LBR_FTEAllotment__c}"
+                                         aura:id="intakeRequestFormLabor"
+                                         required="true"/>
+                    </div>                  
+                </div>  			
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:input name="COH_UIR_LBR_LastDayOfEmployeement__c" 
+                                         label="Last Day of Employment at COH" 
+                                         value="{!v.mIntakeRequest.COH_UIR_LBR_LastDayOfEmployeement__c}"
+                                         aura:id="intakeRequestFormLabor"
+                                         required="true"/>
+                    </div>                  
+                </div>
+            </div>
+            
+            <!-- vacant positions in job code  -->
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:input name="COH_UIR_LBR_VacantPositionJobCode__c" 
+                                         label="Vacant positions in job code" 
+                                         value="{!v.mIntakeRequest.COH_UIR_LBR_VacantPositionJobCode__c}"
+                                         aura:id="intakeRequestFormLabor"
+                                         required="true"/>
+                    </div>                  
+                </div>                
+            </div>
+            
+        </aura:if>
+        
+        <!-- Associated Cost of Position, IT Needs -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input name="COH_UIR_LBR_AssociatedCostsOfPosition__c" 
+                                     label="What are the associated costs of the position (salary comp from HR, equipment, IT access, facilities, etc.)?" 
+                                     value="{!v.mIntakeRequest.COH_UIR_LBR_AssociatedCostsOfPosition__c}"
+                                     aura:id="intakeRequestFormLabor"
+                                     required="true"/>             
+                </div>         
+            </div>            
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input name="COH_UIR_LBR_ITNeeds__c" 
+                                     label="IT Needs" 
+                                     value="{!v.mIntakeRequest.COH_UIR_LBR_ITNeeds__c}"
+                                     aura:id="intakeRequestFormLabor"
+                                     required="true"/>             
+                </div>         
+            </div>         
+        </div>
+        
+        <!-- Facilities, Compensation -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input name="COH_UIR_LBR_Facilities__c" 
+                                     label="Facilities" 
+                                     value="{!v.mIntakeRequest.COH_UIR_LBR_Facilities__c}"
+                                     aura:id="intakeRequestFormLabor"
+                                     required="true"/>               
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input name="COH_UIR_LBR_Compensation__c" 
+                                     label="Compensation" 
+                                     value="{!v.mIntakeRequest.COH_UIR_LBR_Compensation__c}"
+                                     aura:id="intakeRequestFormLabor"
+                                     required="true"/>
+                </div>                  
+            </div>              
+        </div>
+        
+        <!-- Value of Position, Impact if not filled -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input name="COH_UIR_LBR_ValueOfPosition__c" 
+                                     label="What is the value of this position and how does it align with the COH strategic priority initiatives?" 
+                                     value="{!v.mIntakeRequest.COH_UIR_LBR_ValueOfPosition__c}"
+                                     aura:id="intakeRequestForm"
+                                     required="true"/>             
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input name="COH_UIR_LBR_ImpactIfNotFilled__c" 
+                                     label="What is the impact on the organization if position is not filled?" 
+                                     value="{!v.mIntakeRequest.COH_UIR_LBR_ImpactIfNotFilled__c}"
+                                     aura:id="intakeRequestForm"
+                                     required="true"/>
+                </div>                  
+            </div>              
+        </div>
+        
+        <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_LBR_FixedOrFlex__c == 'Flex'}">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-1 slds-p-horizontal_medium">
+                    <div class="slds-box slds-box_small slds-m-vertical_x-small">
+                        <p>Describe the labor standard for this business unit below</p>
+                        <p>• New volume driven positions require three months of favorable trending against labor standard.</p>
+                        <p>• Backfill positions require one month of favorable trending against labor standard.</p>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                <div class="slds-form-element__control">
+                                    <lightning:input name="COH_UIR_LBR_MTDBudgetHours__c" 
+                                                     label="MTD budget hours per unit of service" 
+                                                     value="{!v.mIntakeRequest.COH_UIR_LBR_MTDBudgetHours__c}"
+                                                     aura:id="intakeRequestFormLabor"
+                                                     required="true"/>            
+                                </div>         
+                            </div>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                <div class="slds-form-element__control">
+                                    <lightning:input name="COH_UIR_LBR_MTDActualHours__c" 
+                                                     label="MTD actual hours per unit of service" 
+                                                     value="{!v.mIntakeRequest.COH_UIR_LBR_MTDActualHours__c}"
+                                                     aura:id="intakeRequestFormLabor"
+                                                     required="true"/>
+                                </div>                  
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                <div class="slds-form-element__control">
+                                    <lightning:input name="COH_UIR_LBR_FavorableTrendingHours__c" 
+                                                     label="Periods of favorable trending" 
+                                                     value="{!v.mIntakeRequest.COH_UIR_LBR_FavorableTrendingHours__c}"
+                                                     aura:id="intakeRequestFormLabor"
+                                                     required="true"/>            
+                                </div>         
+                            </div>
+                        </div>                        
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                <div class="slds-form-element__control">
+                                    <lightning:input name="COH_UIR_LBR_MTDBudgetLaborDollars__c" 
+                                                     label="MTD budget labor dollars per unit of service" 
+                                                     value="{!v.mIntakeRequest.COH_UIR_LBR_MTDBudgetLaborDollars__c}"
+                                                     aura:id="intakeRequestFormLabor"/>            
+                                </div>         
+                            </div>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                <div class="slds-form-element__control">
+                                    <lightning:input name="COH_UIR_LBR_MTDActualLaborDollars__c" 
+                                                     label="MTD actual labor dollars per unit of service" 
+                                                     value="{!v.mIntakeRequest.COH_UIR_LBR_MTDActualLaborDollars__c}"
+                                                     aura:id="intakeRequestFormLabor"/>
+                                </div>                  
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                <div class="slds-form-element__control">
+                                    <lightning:input name="COH_UIR_LBR_FavorableTrendingDollars__c" 
+                                                     label="Periods of favorable trending" 
+                                                     value="{!v.mIntakeRequest.COH_UIR_LBR_FavorableTrendingDollars__c}"
+                                                     aura:id="intakeRequestFormLabor"
+                                                     required="true"/>            
+                                </div>         
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                <div class="slds-form-element__control">
+                                    <lightning:input name="COH_UIR_LBR_CurrentActionOIPercentile__c" 
+                                                     label="Current action OI percentile for this dept. Hours work per APC" 
+                                                     value="{!v.mIntakeRequest.COH_UIR_LBR_CurrentActionOIPercentile__c}"
+                                                     aura:id="intakeRequestFormLabor"
+                                                     required="true"/>            
+                                </div>         
+                            </div>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                <div class="slds-form-element__control">
+                                    <lightning:input name="COH_UIR_LBR_CostCenterYTDUseOfLabor__c" 
+                                                     label="Enter and explain the cost center’s year-to-date full labor picture, incl. OT, registry, etc." 
+                                                     value="{!v.mIntakeRequest.COH_UIR_LBR_CostCenterYTDUseOfLabor__c}"
+                                                     aura:id="intakeRequestFormLabor"
+                                                     required="true"/>
+                                </div>                  
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                <div class="slds-form-element__control">
+                                    <lightning:input name="COH_UIR_LBR_AdditionalInformation__c" 
+                                                     label="Provide any additional information that may be helpful for the labor review committee (operational metrics, volumes, overtime, turnaround time, previous year’s performance against budget, etc.)." 
+                                                     value="{!v.mIntakeRequest.COH_UIR_LBR_AdditionalInformation__c}"
+                                                     aura:id="intakeRequestFormLabor"
+                                                     required="true"/>            
+                                </div>         
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>        
+        </aura:if>
+    </div>
+</aura:component>

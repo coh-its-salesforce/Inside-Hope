@@ -1,0 +1,40 @@
+.THIS {
+      box-sizing: border-box;
+}
+.THIS .slider {
+      /*width: 100%;*/
+    width: 90%;
+      margin: 10px auto;
+}
+.THIS .slick-slide img {
+      width: 100%;
+  	  object-fit:cover;
+}
+.THIS .slick-prev:before,
+.THIS .slick-next:before {
+      color: black !important;
+}
+.THIS .slick-slide {
+      margin: 0 15px;
+      transition: all ease-in-out .3s;
+      opacity: .2;
+}
+    
+.THIS .slick-active {
+      opacity: 1;
+}
+
+.THIS .slick-current {
+      opacity: 1;
+}
+.THIS .slick-prev{
+  	 margin-left: 0;
+    margin-top: 1px;
+    z-index: 1;
+    font-size: 0;
+    top: 30%;
+}
+.THIS .slick-next{
+    font-size: 0;
+    top: 30%;
+}

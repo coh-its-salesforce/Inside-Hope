@@ -1,0 +1,49 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global">
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="disabled" type="Boolean" default="false" />
+    <aura:attribute name="saved" type="Boolean" default="false" />
+    <aura:attribute name="showSpinner" type="Boolean" default="true" />
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner />
+    </aura:if>
+    <aura:if isTrue="{!!v.saved}">
+        <lightning:card iconName="standard:Campus_Plan_Article__c" title="">
+        <lightning:recordEditForm
+            aura:id="createAccountForm"
+            onload="{!c.handleLoad}"
+            onsubmit="{!c.handleSubmit}"
+            onsuccess="{!c.handleSuccess}"
+            recordId="{!v.recordId}"
+            objectApiName="Campus_Plan_Article__c">
+            
+            <lightning:messages/>
+                
+                <lightning:inputField fieldName="Title__c"/>
+            	<lightning:inputField fieldName="Article_Order__c"/>
+            	<lightning:inputField fieldName="Menu_Name__c"/>
+                <lightning:inputField fieldName="Location__c"/>
+            	<lightning:inputField fieldName="Landing_Page_Title__c"/>
+                <lightning:inputField fieldName="Designative_Type__c" />
+            	<lightning:inputField fieldName="Hide_Landing_Page__c" />
+                <lightning:inputField fieldName="Article_Date__c" />
+                <lightning:inputField fieldName="Url_Link__c" />
+                <lightning:inputField fieldName="ImageURL__c" />
+            	<lightning:inputField fieldName="Start_Date__c" />
+                <lightning:inputField fieldName="Stop_Date__c" />
+                <lightning:inputField fieldName="Carousel_Image__c"/>
+            	<lightning:inputField fieldName="Article_Content_Next_to_Image__c"/>
+                <lightning:inputField fieldName="Image__c"/>
+            	<!-- <lightning:inputField fieldName="Article_Description__c"/> -->
+               
+                <lightning:inputField fieldName="IsActiveNavigationLink__c"/>
+                
+            <div class="slds-m-top_medium"><center>
+                <lightning:button disabled="{!v.disabled}" variant="brand" type="submit" name="save" label="Save" />
+                <lightning:button variant="Neutral" name="Cancel" label="Cancel" /></center>
+            </div>
+        </lightning:recordEditForm> </lightning:card>
+        <aura:set attribute="else">
+            <p>Saved!</p>
+        </aura:set>
+    </aura:if>
+</aura:component>

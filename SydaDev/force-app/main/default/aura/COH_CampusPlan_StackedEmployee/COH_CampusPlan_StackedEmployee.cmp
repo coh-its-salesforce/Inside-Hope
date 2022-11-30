@@ -1,0 +1,44 @@
+<aura:component >
+     <aura:registerEvent name="openResourcestoHelp" type="c:CampusPlan_ResourcestoHelpEvent" />
+    <aura:attribute name="openMedicalBuildings" type="boolean" default="false"/>
+    <aura:attribute name="RadiologyImagingCenter" type="boolean" default="false"/>
+   <aura:attribute name="StackedEmployee" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.StackedEmployee}">
+        <div class="banner-container">
+    	<div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+                    <div class="banner-image">
+      				<img src = "{!$Resource.StackedEmployee}"/> 
+      				</div>
+      		</div>
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12">
+               <div class="banner-content">
+                   <h2>Stacked Employee Parking in Flash Lot</h2>
+                   <p class="banner-p">
+                       <ul class="banner-ul">
+                           <li>We have added an additional 102 staff parking spaces in the Flash Lot (Circled in red below), by implementing stacked parking between 8:00 a.m. and 6:00 p.m.</li> 
+                           <li>Dedicated valets will provide claim tickets to drivers to reclaim their vehicles/keys.</li>
+                           <li>Employees needing to retrieve their keys after 6 p.m. can go to the security office in Flash, Room 1150, which is open 24/7.</li>
+                           <li>You can also ring the security dispatch buzzer located in the front hallway of the building entrance.</li>
+                       </ul>
+                   </p>
+               </div>
+      		</div>
+      	</div>            
+       </div>
+        <div class="profile-content">
+            <!-- FS Commented out 20200327. We are moving this text above. Julie will reach out to me tomorrow
+        	<p>
+                We have added an additional 102 staff parking spaces in the Flash Lot (Circled in red below), by implementing stacked parking between 8:00 a.m. and 6:00 p.m. stacked parking takes advantage of aisle space to double-park vehicles without disrupting traffic circulation.
+            </p>
+            <p>
+        Dedicated valets will provide claim tickets to drivers to reclaim their vehicles/keys. Employees who need to retrieve their keys after 6 p.m., will turn in their claim ticket to the security office located in the Flash building, Room 1150, which is open 24 hours a day. You can also ring the security dispatch buzzer located at the front of the Flash building.
+            </p>
+-->
+		</div>
+            <!--<div class="backbutton" onclick="{!c.goBackToResourceToHelp}" ><lightning:icon iconName="utility:back" size="x-small" variant="inverse" />&nbsp;&nbsp;&nbsp;&nbsp;Back  
+    </div>-->
+       </aura:if>
+    
+    
+</aura:component>

@@ -1,0 +1,5 @@
+<design:component>
+	<design:attribute name="pageName" description="Unique Page Name as per object HR Portal Page Content objects' Unique Page Name field " 
+                    required="true"/>
+    
+</design:component>

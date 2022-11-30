@@ -1,0 +1,9 @@
+<design:component>
+	<design:attribute name="title" required="true" label="URL Label" description="Label will show on UI as URL link label" />
+	<design:attribute name="subtitle" label="Sub title" description="This text will show under title"/>
+    <design:attribute name="iconName" label="Icon Name" description="Enter Icon Name" default="standard:entitlement_policy" />
+    <design:attribute name="target" required="true" datasource="_blank,_self" default="_blank" />
+    <design:attribute name="url" required="true" label="URL" default="#"/>
+    <design:attribute name="fontcolor" label="Font-color" default="white"/>
+    <design:attribute name="backgroundcolor" label="Background-Color" default="#5BC2E7"/>
+</design:component>

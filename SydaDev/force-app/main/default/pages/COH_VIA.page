@@ -1,0 +1,177 @@
+<apex:page standardController="Values_in_Action__c" extensions="VIA_valuesinactionController" showHeader="false" sidebar="false" >
+    <apex:includeScript value="{!$Resource.JQuery1}"/>
+        <style>
+            .LabelClass{
+                     font-weight: bold;
+            }
+            
+            .Mandatory{
+                color: red;
+            }
+            td{
+                border:none !important;
+            }
+            
+            .hideDropdown select{
+            visibility: hidden !important;
+            display: block !important;
+            }
+        }
+       
+            .pbSubheader{
+             font-size:22px;
+    }
+    h3{
+    font-size:22px !important;
+    }
+    
+        </style>
+        <script>
+            $(document).ready(function(){
+                $("div[id$='TDPanel']").css({"background":"white","border":"none"});
+                $("select[name*='mlktp']").remove();
+            });
+            $(document).click(function(){
+                $("div[id$='TDPanel']").css({"background":"white","border":"none"});
+            });
+            function backgrndclr(){
+            $("div[id$='TDPanel']").css({"background":"white","border":"none"});
+            $("select[name*='mlktp']").remove();
+            }
+            /*Changes Made by Sanjay :: Date 05/18/2019 */
+            /* Total Character conunter-CHanges -Start */
+            function calculateCharacters(elem){
+                //alert(elem.value);
+                if(elem.value  != ''){
+                    document.getElementById('count').innerHTML = elem.value.length;
+                }else{
+                    document.getElementById('count').innerHTML = '0';
+                }
+            }
+            /* Total Character conunter-CHanges -END */
+        </script>
+      <apex:form >
+      <!--<apex:pagemessage Rendered="{!pageMessage}" severity="Error"></apex:pagemessage>-->
+      <apex:pageBlock title="Values in Action Nomination Form" id="TDPanel" >
+      <apex:pageMessages ></apex:pageMessages>
+      <apex:outputText value="* Required" styleClass="Mandatory"></apex:outputText>
+      <div style='text-align: center;'>
+     <!-- <apex:image value="{!$Resource.Values}"/>-->
+      </div>
+      <apex:pageblockButtons >
+      <apex:commandButton value="Submit" action="{!Save}" />
+      <apex:commandButton value="Cancel" action="{!cancel}"/>
+      </apex:pageblockButtons>
+      <apex:pageblockSection columns="1" title="Nominee's Information">
+        <!-- Changes made by Sanjay-05/24/2018 
+         Added Type of Nominee Selection --> 
+        <apex:outputPanel >
+            Please select Type of Nominee:
+            <apex:selectRadio value="{!Values_in_Action__c.Type_Of_Nominee__c}" required="true">
+                <apex:selectOption Itemvalue="Individual" itemlabel="Individual"/>
+                <apex:selectOption Itemvalue="Group" itemlabel="Group" />
+                <apex:actionSupport event="onchange" rerender="nomineePanel" status="st1"/>
+            </apex:selectRadio>
+            <apex:actionStatus id="st1" startText="Please wait.." >
+                
+            </apex:actionStatus>
+        </apex:outputPanel>
+     <!-- Changes made by Sanjay-05/24/2018 
+        added individual select and group select panel inside main panel -->
+      <apex:outputPanel id="nomineePanel">
+          <apex:outputPanel rendered="{!Values_in_Action__c.Type_Of_Nominee__c == 'Individual'}">
+              <apex:outputLabel value="Please select nominee" styleClass="LabelClass"> 
+                    <span class='Mandatory'>: *</span>
+              </apex:outputLabel>
+              <apex:outputtext value="Error : Please Select nominee" style="color:red;" Rendered="{!usernull}"></apex:outputtext> 
+              <apex:outputPanel >
+              <apex:inputField value="{!Values_in_Action__c.User__c}" label="" /> 
+              </apex:outputPanel>
+              
+          </apex:outputPanel>
+          <apex:outputPanel rendered="{!Values_in_Action__c.Type_Of_Nominee__c == 'Group'}">
+              <!-- Changes made by Sanjay Singh::05/08/2018---->
+              <apex:outputLabel value="Please select nominees" styleClass="LabelClass"> <span class='Mandatory'>: *</span></apex:outputLabel>
+                <apex:outputtext value="Error : Please Select at least one nominee" style="color:red;" Rendered="{!usernull}"></apex:outputtext> 
+                <!-- Changes made by Sanjay Singh::05/02/2018---->
+                <!-- Removed the lookup field and replaced with select list -->
+                <!--<apex:inputField value="{!Values_in_Action__c.User__c}" label="" >
+                  <apex:actionsupport event="onchange" action="{!modifyTD}" reRender="TDPanel" oncomplete="backgrndclr()"/>
+                  </apex:inputField>-->
+                <!-- Added by Sanjay Singh::05/08/2018---->  
+                <apex:outputPanel >
+                    <!-- changes by Sanjay :: Date 05/08/2019 :: multiple user selection-->
+                    <apex:outputPanel >
+                        
+                        Search User &nbsp;
+                        <apex:inputText value="{!userKeyword}" />&nbsp;
+                        <apex:outputPanel >
+                            <apex:actionStatus id="st">
+                                <apex:facet name="start">
+                                    <apex:commandButton value="Searching.." disabled="true"></apex:commandButton>            
+                                </apex:facet>
+                                <apex:facet name="stop">
+                                    <apex:commandButton value="Search" action="{!doSearchUser}" status="st" reRender="userList"></apex:commandButton>
+                                </apex:facet>
+                            </apex:actionStatus>
+                            
+                        </apex:outputPanel>
+                        
+                    </apex:outputPanel>
+                    <apex:outputPanel id="userList">
+                      <!-- changes by Sanjay :: Date 05/08/2019 :: multiple user selection-->  
+                       <c:MultiselectPicklist leftLabel="Available Users"
+                                                leftOptions="{!availableUsers}"
+                                                rightLabel="Selected User"
+                                                rightOptions="{!selectedusers}"
+                                                size="10"
+                                                width="250px"/>
+                    </apex:outputPanel>
+                    
+                   
+                  </apex:outputPanel>
+              </apex:outputPanel>
+          </apex:outputPanel>
+          <apex:outputLabel value="Select one core value which the above individual exemplifies" styleClass="LabelClass"><span class='Mandatory'>: *</span></apex:outputLabel>
+          
+          <apex:selectRadio value="{!Values_in_Action__c.Individual_Category__c}" layout="pageDirection" label="" >
+          <apex:outputtext value="Error : Please select atleast one value" style="color:red;" Rendered="{!nomineeCategory}"></apex:outputtext>
+             <apex:selectOptions value="{!categoryList}" />
+    
+          </apex:selectRadio>
+          <!-- Commented by Sanjay :: Date 05/07/2018 -->      
+           <!--<apex:inputField value="{!Values_In_Action__c.Select_one_core_value_which_the_above_in__c}" label="Select one core value which the above individual exemplifies:"/>
+          <apex:outputLabel value="{!$ObjectType.Values_in_Action__c.fields.Title__c.Label}" styleClass="LabelClass"><span class='Mandatory'>: *</span></apex:outputLabel>   <apex:outputText value="{!Values_in_Action__c.Title__c}" Label=""/>
+            <apex:outputLabel value="{!$ObjectType.Values_in_Action__c.fields.Department__c.Label}" styleClass="LabelClass"><span class='Mandatory'>: *</span> </apex:outputLabel> 
+            <apex:OUTputText value="{!Values_in_Action__c.Department__c}" label=""/>
+           -->
+            <apex:outputLabel value="Describe how the nominee goes above and beyond when demonstrating the core value selected. Please be specific and provide examples" styleClass="LabelClass" ><span class='Mandatory'>: *</span> </apex:outputLabel>
+                <apex:outputtext value="Error : Please provide the Description" style="color:red;" Rendered="{!nomineeDesc}"> <br/></apex:outputtext> <apex:outputtext value="Error : Please provide more details." style="color:red;" Rendered="{!errormsg}"><br/></apex:outputtext>  
+                <apex:outputPanel >
+                <!-- Changes Made by Sanjay :: Date 05/18/2018 --> 
+                <!-- Total Character conunter-CHanges --Start-->
+                <apex:inputTextarea value="{!Values_in_Action__c.Describe_how_nominee_goes__c}" label="" 
+                        style="margin: 0px; width: 519px; height: 97px;" onkeyup="calculateCharacters(this);" onkeypress="calculateCharacters(this);"/>
+                <div>
+                    <I> Total characters: <B id="count">{!LEN(Values_in_Action__c.Describe_how_nominee_goes__c)}</B> (More than 500 characters required)</I>
+                </div>
+                <!-- Total Character counter--changes end-->
+                </apex:outputPanel>
+                
+          </apex:pageblockSection>
+       <apex:pageblockSection columns="1" title="Nominator's Information" id="NominatorSec">
+           <apex:outputLabel value="{!$ObjectType.Values_in_Action__c.fields.First_and_Last_Name__c.Label}" styleClass="LabelClass"> <span class='Mandatory'>: *</span></apex:outputLabel>
+        <apex:outputtext value="Error : Please provide First and Last Name" style="color:red;" Rendered="{!nominatorsName}"></apex:outputtext> <apex:inputField value="{!Values_in_Action__c.Nominator_Name__c}" label="" >
+          <apex:actionsupport event="onchange" action="{!modifyTD}" reRender="NominatorSec" oncomplete="backgrndclr()"/>
+          </apex:inputField>
+           <!--<apex:outputLabel value="{!$ObjectType.Values_in_Action__c.fields.First_and_Last_Name__c.Label}" styleClass="LabelClass"> <span class='Mandatory'>: *</span></apex:outputLabel><apex:outputText value="{!Values_in_Action__c.First_and_Last_Name__c}" Label=""/>--> 
+           <apex:outputLabel value="{!$ObjectType.Values_in_Action__c.fields.Employee_ID__c.Label}" styleClass="LabelClass"><span class='Mandatory'>: *</span> </apex:outputLabel><apex:outputText value="{!Values_in_Action__c.Employee_ID__c}" Label=""/>
+           <apex:outputLabel value="{!$ObjectType.Values_in_Action__c.fields.COH_Email_Address__c.Label}" styleClass="LabelClass"><span class='Mandatory'>: *</span> </apex:outputLabel><apex:outputText value="{!Values_in_Action__c.COH_Email_Address__c}" Label=""/>
+          <apex:outputLabel value="{!$ObjectType.Values_in_Action__c.fields.Nominator_Title__c.Label}" styleClass="LabelClass"><span class='Mandatory'>: *</span> </apex:outputLabel> <apex:outputText value="{!Values_in_Action__c.Nominator_Title__c}" Label=""/>
+          <apex:outputLabel value="{!$ObjectType.Values_in_Action__c.fields.Nominator_Department__c.Label}" styleClass="LabelClass"> <span class='Mandatory'>: *</span></apex:outputLabel> <apex:outputText value="{!Values_in_Action__c.Nominator_Department__c}" Label=""/>
+       </apex:pageblockSection>
+      </apex:pageBlock>
+      </apex:form>
+    
+                
+    </apex:page>

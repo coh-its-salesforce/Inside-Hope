@@ -1,0 +1,120 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" controller="publishEvent">
+    <!-- attributes -->
+    <aura:attribute name="showProgressBar" type="Boolean" default="false"/>
+    <aura:attribute name="caseStatus" type="String" default="New"/>
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:attribute name="caseRecord" type="Object"/>
+    <aura:attribute name="recordLoadError" type="String"/>
+    <aura:attribute name="showSaveAll" type="Boolean" default="true"/>
+    
+    <aura:attribute name="clinical" type="Boolean" default="false"/>
+    <aura:attribute name="appointment" type="Boolean" default="false"/>
+    <aura:attribute name="schguidelines" type="Boolean" default="false"/>
+    <aura:attribute name="cancelation" type="Boolean" default="false"/>
+    <aura:attribute name="numberOfForms" type="List" default="[]"/>
+    <aura:attribute name="runOnce" type="Boolean" default="true"/>
+    <aura:attribute name="caseStatusNew" type="String"/>
+    
+    <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+    <aura:attribute name="server" type="boolean" default="false"/>
+    <aura:handler event="c:announceErrors" action="{!c.countSuccess}"/>
+    <aura:handler event="c:initCount" action="{!c.initCount}"/>
+    <aura:handler event="c:callSaveAll" action="{!c.saveAll}"/>
+    
+    <aura:attribute name="successCount" type="Integer" default="0"/>
+    <aura:attribute name="initCount" type="Integer" default="0"/>
+    <aura:attribute name="spinner" type="boolean" default="false"/>
+    <aura:attribute name="timer" type="Integer"/>
+    <aura:if isTrue="{!v.spinner}">
+        <lightning:spinner alternativeText="Loading" size="large" />
+      
+    </aura:if>
+    
+    <force:recordData aura:id="recordLoader"
+                      recordId="{!v.recordId}"
+                      fields="Status"
+                      targetFields="{!v.caseRecord}"
+                      targetError="{!v.recordLoadError}"
+                      recordUpdated="{!c.handleRecordUpdated}"
+                      mode="EDIT"
+                      />
+    
+    <aura:if isTrue="{!v.isModalOpen}">
+             
+            <!-- Modal/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box Header Starts here-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit Dependencies</h2>
+                    </header>
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium slds-is-relative" id="modal-content-id-1">
+                        <aura:if isTrue="{!v.server}">
+                        <lightning:spinner alternativeText="Loading" size="large" />
+                            </aura:if>
+                        <lightning:recordEditForm recordId="{!v.recordId}" objectApiName="Case" onload="{!c.handleOnLoad}"
+                              onsubmit="{!c.handleOnSubmit}" onsuccess="{!c.handleOnSuccess}" onerror ="{!c.handleError}">
+                            <lightning:messages />
+                            
+                            <lightning:inputField fieldName="Status" value ="{!if(v.caseStatusNew == 'Inquiry','Inquiry','Closed - Selected COH')}"/>
+                            <lightning:inputField fieldName="Closed_Reason__c" />
+                            <lightning:inputField fieldName="Inquiry_Type__c" />
+                            <lightning:inputField fieldName="Patient_Referral_Services_Status__c" />
+                            <footer class="slds-modal__footer">
+                                <lightning:button variant="neutral"
+                                                  label="Cancel"
+                                                  title="Cancel"
+                                                  onclick="{! c.closeModel }"/>
+                                <lightning:button class="slds-m-top_small" variant="brand" type="submit" name="update" label="Save" />
+                            </footer>
+                        </lightning:recordEditForm>
+                    </div>
+                   
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+    
+    
+    <lightning:card>
+        <aura:if isTrue="{!v.showProgressBar}">
+            <div style="padding:10px;">
+                <p style="display: inline-block;width: 85%;"> 
+                    <lightning:progressIndicator  currentStep="{!v.caseStatus}" type="path" variant="base">
+                        <lightning:progressStep onstepfocus ="{!c.indicatorCalled}" label="New" value="New"/>
+                        <lightning:progressStep onstepfocus ="{!c.indicatorCalled}" label="Inquiry" value="Inquiry"/>
+                        <lightning:progressStep onstepfocus ="{!c.indicatorCalled}" label="Registered" value="Registered"/>
+                        <lightning:progressStep onstepfocus ="{!c.indicatorCalled}" label="Nursing Review" value="Nursing Review"/>
+                        <lightning:progressStep onstepfocus ="{!c.indicatorCalled}" label="Records Procurement" value="Records Procurement"/>
+                        <aura:if isTrue="{!v.caseStatus == 'Closed - Not Selected'}">
+                            <lightning:progressStep onstepfocus ="{!c.indicatorCalled}" label="Closed" value="Closed - Not Selected"/>
+                        </aura:if>
+                        <aura:if isTrue="{!v.caseStatus == 'Closed - Selected COH'}">
+                            <lightning:progressStep onstepfocus ="{!c.indicatorCalled}" label="Closed" value="Closed - Selected COH"/>
+                        </aura:if>
+                        <aura:if isTrue="{!and(v.caseStatus != 'Closed - Selected COH',v.caseStatus != 'Closed - Not Selected')}">
+                            <lightning:progressStep onstepfocus ="{!c.indicatorCalled}" label="Closed" value="Closed"/>
+                        </aura:if>
+                    </lightning:progressIndicator></p>&nbsp;
+                <!--<p style="display: inline-block;">  <lightning:button variant="brand" label="Validate and Change Status" onclick="{! c.saveAll }"/></p>-->
+                <p style="display: inline-block;">
+                    <aura:if isTrue="{!v.showSaveAll}">
+                        <lightning:button variant="brand" label="Save All" onclick="{! c.saveAll }"/>
+                        <aura:set attribute="else">
+                            <lightning:button variant="brand" label="Mark as Current Status" onclick="{! c.saveAllServer }"/>
+                        </aura:set>
+                    </aura:if>
+                    
+                    
+                </p>
+                 
+            </div>
+        </aura:if>
+    </lightning:card>
+</aura:component>

@@ -1,0 +1,126 @@
+<aura:component controller="COH_CampusPlanController">
+    <aura:registerEvent name="OpenOrangeCounty" type="c:CampusPlan_OrangeCountyEvent" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="CollapseSection" type="String[]"/>
+    <aura:attribute name="OCFAQList" type="Campus_Plan_FAQ__c[]"/>
+    <aura:attribute name="FAQRecs" type="COH_CampusPlanController.ParkingFAQs"/>
+    <aura:attribute name="OCsectionData" type="Object" description="Used to store section data"/>
+    <aura:attribute name="OCHeader" type="String"/>
+   <aura:attribute name="OCFAQ" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.OCFAQ}">
+     <div>
+         <div class="banner-container">
+             <div class="slds-grid slds-wrap">
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12" >
+                     <div class="banner-image">
+                         <img src = "{!$Resource.CampusPlanOCFAQ}"/> 
+                     </div>
+                 </div>
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12">
+                     <div class="banner-content">
+                         <h4 class="label-header"><label class="orange-bg">Orange County</label></h4>
+
+                         <h2> FAQs to Keep You Informed </h2>
+                           <p class="banner-p">
+                              Here are answers to frequently asked questions about the Orange County expansion. We are always updating this section, so watch for new information as the initiative unfolds.
+                           </p>
+
+                     </div>
+                 </div>
+             </div>            
+         </div>
+        <div class="profile-content">
+<!--        	<p>                : 20200326 Frank Salinas moved this to header area above
+                <Strong>FAQs TO KEEP YOU INFORMED</Strong><br/>
+				Here are answers to frequently asked questions about the Orange County expansion. We are always updating this section, so watch for new information as the initiative unfolds.
+            </p>
+-->
+           <!-- <p>            	
+                <strong>Why are we expanding into Orange County?</strong>
+                <ul class="content-ul">
+                    <li>
+                    	<strong>Our patients are calling us.</strong> In Orange County, nearly 20 percent of those diagnosed with cancer leave the area for advanced cancer care, with many traveling to Duarte – an up to 2-hour commute. About 3,200 patients travel annually to Duarte from Orange County, which creates unnecessary hardship.
+                    </li>
+                    <li>
+                    	<strong>The cancer rate in Orange County is projected to grow by 18 percent in the next 10 years.</strong> Cancer risk increases with age and Orange County is aging faster than the national average.
+					</li>
+                    <li>
+                    	<strong>City of Hope is responding to the needs of the community.</strong> This unprecedented initiative is part of our commitment to speeding pioneering treatments and lifesaving research to the people who need them today. 
+					</li>
+                </ul>
+            </p> 
+            <p>
+               <strong>What will the Irvine cancer campus will include?</strong>
+                <ul class="content-ul">
+                    <li>
+                    	An outpatient cancer center offering access to a wide range of solid tumor and blood cancer specialists, diagnostic imaging and screenings, precision medicine and early detection, medical oncology, chemotherapy, radiation therapy, surgical oncology and ambulatory surgery.
+                	</li>
+                    <li>
+                        Orange County’s only specialty hospital focused exclusively on treating and curing cancer, to open in 2025.
+                    </li>
+                    <li>
+                    	A clinical research center offering phase 1-3 clinical trials.
+                    </li>
+                    <li>
+                    	Personalized supportive care services to address the many emotional and psychological needs that can arise during or after cancer treatment.
+                    </li>
+                </ul>
+            </p>
+            
+            <p>
+            	<strong>What makes this initiative so unique?</strong><br/>
+                The Orange County initiative is the most ambitious expansion in our organization’s history. By bringing City of Hope to Orange County, we are opening a market for highly specialized cancer care. We are extending the traditional boundaries of a comprehensive cancer campus like Duarte and bringing our highly specialized care, culture and innovations to Irvine.
+            </p>
+            <p>
+                <strong>Are we able to test new programs and workflows in Orange County?</strong><br/>
+                Health care is in a new era of transformation and innovation, which is exciting. City of Hope is leveraging this time to advance its growth, cost, quality, and, most-importantly, the patient experience. Orange County serves as an open greenfield to test new opportunities from care delivery enhancements to new partnerships, services and technology that align to the goal of delivering best in class research, treatment and patient/family experience. Opportunities will be evaluated and prioritized as appropriate within the program planning and governance process.
+            </p>
+            <p>
+            	<strong>What sets City of Hope apart from other health systems in Orange County? </strong><br/>
+                The health care market in Orange County is highly competitive – with 13 health systems, 37 hospitals and many independent health providers. None have our singular focus on cancer or our world-renowned expertise and cutting-edge research.
+            </p>
+            <p>
+            	<strong>What phase is the OC expansion currently in?</strong><br/> 
+				Our Newport Beach location, which opened in January 2020, is the first phase of our regional cancer network. For the first time, Orange County residents have local access to City of Hope’s highly specialized physicians, many of whom are practicing in Duarte and Newport Beach. The Irvine cancer campus is still in the planning and design phases.
+            </p>
+            <p>
+            	<strong>What is happening during these planning and design meetings?</strong><br/>
+				Throughout 2020, the OC expansion team is meeting with key stakeholders, from frontline to the executive level, across various departments to discuss standardization, hospital design and build, and workflows. This input will allow us to act on ideas both simple and complex that will re-shape the delivery of cancer care and create the best possible environment for patients, families, and staff so that they can focus on treatment and healing.
+            </p>
+            <p>
+            	<strong>Who should I contact if I have questions? </strong><br/> 
+				We will inform you about milestone decisions through City of Hope’s internal communication channels. If you have questions or ideas, please send them to <a href="mailto:OCExpansion@coh.org" target="_blank">OCExpansion@coh.org;</a> our team will respond as quickly as possible.
+            </p> -->
+            <!-- Commented out by Frank 20200330
+            <aura:if isTrue="{!not(empty(v.OCFAQList))}">
+            <h1 class="faq-h1">{!v.OCHeader}</h1>
+            <lightning:accordion>
+                <aura:iteration items="{!v.OCFAQList}" var="f"  indexVar="index">
+                  <lightning:accordionSection name="{!f.Question__c}" label="{!f.Question__c}">
+                   <aura:unescapedHtml value="{!f.Answer__c}" />
+                  </lightning:accordionSection>                         
+                </aura:iteration>
+           	</lightning:accordion>
+            </aura:if>
+			-->
+            <aura:if isTrue="{!not(empty(v.OCsectionData.groupList))}">
+            <h2>{!v.OCsectionData.sectionName}</h2>
+             <lightning:accordion>
+                <aura:iteration items="{!v.OCsectionData.groupList}" var="gd"  indexVar="index">
+                  <lightning:accordionSection name="{!gd.groupName}" label="{!gd.groupName}">
+                      <lightning:accordion>
+                          <aura:iteration items="{!gd.gQuestions}" var="gq"  indexVar="index">
+                              <lightning:accordionSection name="{!gq.Question__c}" label="{!gq.Question__c}">
+                               <aura:unescapedHtml value="{!gq.Answer__c}" />
+                              </lightning:accordionSection>                         
+                            </aura:iteration>
+                      </lightning:accordion>
+                  </lightning:accordionSection>                         
+                </aura:iteration>
+           	</lightning:accordion>
+            </aura:if>
+		</div>
+       </div>
+           
+       </aura:if>
+</aura:component>

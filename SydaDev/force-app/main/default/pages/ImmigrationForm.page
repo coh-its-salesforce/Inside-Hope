@@ -1,0 +1,294 @@
+<apex:page standardController="Visa__c" extensions="immigrationServicesCtl" sidebar="false">
+    <style>
+        .alignTop {
+        vertical-align: top;
+        }
+        .headerSearchContainer
+        {
+        display: none;
+        }
+        .pbTitle
+        {
+        display: none;
+        }
+        .activeTab {background-color: #1797C0; color:white; background-image:none}
+        
+        .inactiveTab { background-color: lightgrey; color:black; background-image:none}
+        
+        j_id0:j_id2:j_id3:panelGrid > tr > td:first-child  {width: 15% !important;}
+    </style>
+    <apex:form >
+        <apex:pageblock mode="edit">
+            
+            <center> <apex:pageBlockSection columns="1" title="VISA REQUEST FORM">
+                </apex:pageBlockSection></center>
+            <div style='margin: 0 auto; width: 270px;'>
+                <apex:outputLabel >Application Status: &nbsp;&nbsp;&nbsp;&nbsp;</apex:outputLabel>
+                <apex:outputField value="{!CaseRec.Status__c}"/>
+            </div>   
+        </apex:pageblock>
+        
+        
+        <apex:panelGrid columns="2" columnClasses="alignTop,alignTop" cellspacing="10" id="panelGrid">
+            
+            <apex:pageBlock >
+                <apex:pageBlockSection columns="1" >
+                    
+                    <apex:image value="{!userdetails.FullPhotoUrl}"/>
+                    <div class="sidebarHeading">
+                        <b><span class="headinglabel">Contact</span></b>
+                        <hr class="saperater"/>
+                        <apex:OutputField value="{!con.Name}"/> 
+                        <apex:OutputField value="{!con.email}"/>
+                    </div>
+                </apex:pageBlockSection>
+                
+            </apex:pageBlock>
+            
+            <apex:tabPanel switchType="client" selectedTab="name1" id="ImmigrationTabPanel" tabClass="activeTab" inactiveTabClass="inactiveTab" >
+                <apex:tab label="Basic Information" name="name1" id="tabOne" >
+                    
+                    <apex:pageblock rendered="{!NOT(editPage)}">
+                        
+                        <apex:pageBlockSection columns="2" title="Applicant Information">
+                            <apex:OutputText value="{!caseRec.Proposed_Individual_First_Name__c}"/>
+                            <apex:OutputText value="{!caseRec.Proposed_Individual_Last_Name__c}"/>
+                            <apex:OutputText value="{!caseRec.Applicant_Phone_Number__c}"/>
+                            <apex:OutputText value="{!caseRec.Applicant_Email_Id__c}"/>
+                            <apex:OutputText value="{!caseRec.Birth_Date__c}"/>
+                            <apex:OutputText value="{!caseRec.immi_City_of_Birth__c}"/>
+                            
+                            
+                            
+                            <apex:OutputText value="{!caseRec.immi_Country_of_Birth__c}"/>
+                            <apex:OutputText value="{!caseRec.immi_Nationality__c}"/>
+                            <apex:OutputText value="{!caseRec.Citizenship1__c}"/>
+                            <apex:OutputText value="{!caseRec.Country_of_last_legal_residence__c}" />
+                            <apex:OutputText value="{!caseRec.Current_Visa_Status__c}"/>
+                            <apex:OutputText value="{!caseRec.Current_Visa_Expiration_Date__c}"/>
+                            
+                            
+                            
+                            
+                            <apex:OutputText value="{!caseRec.Ever_Participated_in_a_H_1B_Program__c}"/>
+                            <!--<apex:OutputText value="{!caseRec.If_Yes_indicate_Last_Program__c}"/>
+Saidaiah changed the fields format type for below two fields and 'birth date' in dependents information section-->
+                            <apex:outputText value="{0,date,MM/dd/yy}" label="If yes, Current/Last Program Start Date"> <apex:param value="{!caseRec.If_Yes_indicate_Last_Program__c}" /> </apex:outputText>
+                            
+                            <!--<apex:OutputText value="{!caseRec.If_Yes_H1BIndicate_Last_Program_End_Date__c}"/>-->
+                            <apex:outputText value="{0,date,MM/dd/yy}" label="If yes, Current/Last Program End Date"> <apex:param value="{!caseRec.If_Yes_H1BIndicate_Last_Program_End_Date__c}" /> </apex:outputText> 
+                            
+                            <apex:OutputText value="{!caseRec.Country__c}"/>
+                            <apex:OutputText value="{!caseRec.Country__c}"/>
+                            
+                            
+                            <apex:OutputText value="{!caseRec.Highest_Level_of_Degree_Obtained__c}" />
+                            <apex:OutputText value="{!caseRec.Major__c}"/>
+                            
+                            <apex:OutputText value="{!caseRec.Number_of_Dependencies__c}"/>
+                            <apex:OutputText value="{!caseRec.Immigration_Comments__c}"/>
+                            
+                        </apex:pageblockSection>
+                        <apex:pageBlockSection columns="2" title="USA Address">
+                            <apex:OutputText value="{!caseRec.Street_Name__c}"/>
+                            <apex:OutputText value="{!caseRec.Province_Territory__c}"/>
+                            <apex:OutputText value="{!caseRec.State__c}"/>
+                            <apex:OutputText value="{!caseRec.Postal_Code_Zip_Code__c}"/>
+                            
+                            
+                            <apex:OutputText value="{!caseRec.Country__c}"/>
+                            <apex:OutputText value="{!caseRec.USA_Phone_Number__c}"/>
+                            
+                        </apex:pageblockSection>
+                        
+                        <apex:pageBlockSection columns="2" title="Fedex Address">
+                            <apex:OutputText value="{!caseRec.Fedex_Street_Name__c}"/>
+                            <apex:OutputText value="{!caseRec.Fedex_Province_Territory__c}"/>
+                            <apex:OutputText value="{!caseRec.Fedex_City__c}"/>
+                            <apex:OutputText value="{!caseRec.Fedex_Postal_Code_Zip_Code__c}"/>
+                            
+                            <apex:OutputText value="{!caseRec.Fedex_State__c}"/>
+                            <apex:OutputText value="{!caseRec.Phone_number_for_FedEx_mailing__c}"/>
+                            
+                            <apex:OutputText value="{!caseRec.Fedex_Country__c}"/>
+                            
+                            
+                        </apex:pageblockSection>
+                        
+                        <!-- <apex:pageblockButtons style="text-align:center;" rendered="{!IF(CaseRec.Status__c == 'New' || CaseRec.Status__c == 'Pending' || CaseRec.Status__c == 'Submitted' || CaseRec.Status__c == 'Approvals Pending' || CaseRec.Status__c == 'In Process' || CaseRec.Status__c == 'Waiting for Missing Documents' || CaseRec.Status__c == 'Approved',true,false)}"> -->     
+                        <apex:pageblockButtons style="text-align:center;" rendered="True">
+                            <apex:outputText value="Press 'Edit' to edit the record. Press 'Submit and Notify ISSO Team' when the forms are completed and documents uploaded" label="Instructions"/> <br/><br/>
+                            <apex:commandButton value="Edit" action="{!EditRec}" status="counterStatus"/>
+                            <apex:commandButton value="Submit and Notify ISSO Team" action="{!submitandSendtoISSOTeam}" status="counterStatus"/>
+                        </apex:pageblockButtons>
+                    </apex:pageblock>
+                    
+                    
+                    
+                    <apex:pageblock rendered="{!editPage}">
+                        <apex:pageBlockSection columns="2" title="Applicant Information" >
+                            <apex:inputField value="{!caseRec.Proposed_Individual_First_Name__c}" required="true"/>
+                            <apex:inputField value="{!caseRec.Proposed_Individual_Last_Name__c}" required="true"/>
+                            <apex:inputField value="{!caseRec.Applicant_Phone_Number__c}"/>
+                            <apex:inputField value="{!caseRec.Applicant_Email_Id__c}" required="true"/>
+                            <apex:inputField value="{!caseRec.Gender__c}"/>
+                            <apex:inputField value="{!caseRec.Birth_Date__c}"/>
+                            <apex:inputField value="{!caseRec.immi_Country_of_Birth__c}"/>
+                            <apex:inputField value="{!caseRec.immi_City_of_Birth__c}"/>
+                            <apex:inputField value="{!caseRec.immi_Nationality__c}"/>
+                            <apex:inputField value="{!caseRec.Citizenship1__c}"/>
+                            
+                            
+                            <apex:inputField value="{!caseRec.Country_of_last_legal_residence__c}" required="true"/>
+                            <apex:inputField value="{!caseRec.Current_Visa_Status__c}"/>
+                            <apex:inputField value="{!caseRec.Current_Visa_Expiration_Date__c}"/>
+                            <apex:inputField value="{!caseRec.Applicant_ever_participated_in_J_1_Prgm__c}"/>
+                            <apex:inputField value="{!caseRec.If_yes_indicate_last_program_Start_Date__c    }"/>
+                            <apex:inputField value="{!caseRec.If_yes_indicate_Last_program_End_Date__c}"/>
+                            <apex:inputField value="{!caseRec.Highest_Level_of_Degree_Obtained__c}" required="true"/>
+                            <apex:inputField value="{!caseRec.Major__c}"/>
+                            <apex:inputField value="{!caseRec.Ever_Participated_in_a_H_1B_Program__c}"/>
+                            <apex:inputField value="{!caseRec.If_Yes_indicate_Last_Program__c}"/>
+                            <apex:inputField value="{!caseRec.If_Yes_H1BIndicate_Last_Program_End_Date__c}"/>
+                            <apex:selectList value="{!selectedDependencyOption}" multiselect="false" size="1" required="true">
+                                <apex:actionSupport event="onchange" action="{!updateDependentsList}" />
+                                Number of Dependencies&nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;&nbsp;<apex:selectOptions value="{!DependencyOptions}"/>
+                                Current: {!caserec.Number_of_Dependencies__c} &nbsp;&nbsp;
+                            </apex:selectList>
+                            <apex:inputField value="{!caseRec.Immigration_Comments__c}"/>
+                            <apex:outputtext style="font-weight:800" value="Please fill in dependent information (See Dependents Information on the top of this form)" rendered="{!IF(conList.size > 0,true,false)}"/>
+             
+                        </apex:pageblockSection>
+                        
+                        <apex:pageBlockSection columns="2" title="USA Address" >
+                            <apex:inputField value="{!caseRec.Street_Name__c}"/>
+                            
+                            <apex:inputField value="{!caseRec.City__c}"/>
+                            <apex:inputField value="{!caseRec.Postal_Code_Zip_Code__c}"/>
+                            
+                            <apex:inputField value="{!caseRec.State__c}"/>
+                            <apex:inputField value="{!caseRec.USA_Phone_Number__c}"/>
+                            <apex:inputField value="{!caseRec.Country__c}"/>
+                            <apex:inputField value="{!caseRec.Province_Territory__c}"/>
+                            
+                        </apex:pageblockSection>
+                        
+                        <apex:pageBlockSection columns="2" title="Fedex Address" >
+                            <apex:inputField value="{!caseRec.Fedex_Street_Name__c}"/>
+                            <apex:inputField value="{!caseRec.Fedex_City__c}"/>
+                            <apex:inputField value="{!caseRec.Fedex_State__c}"/>
+                            <apex:inputfield value="{!caseRec.Fedex_Postal_Code_Zip_Code__c}"/>
+                            <apex:inputField value="{!caseRec.Fedex_Country__c}"/>
+                            <apex:inputField value="{!caseRec.Phone_number_for_FedEx_mailing__c}"/>      
+                            <apex:inputField value="{!caseRec.Fedex_Province_Territory__c}"/>
+                            <apex:inputField value="{!caseRec.Phone_number_for_FedEx_mailing__c}"/>
+                        </apex:pageblockSection>
+                        
+                        <apex:pageblockButtons style="text-align: center;">
+                            <apex:outputText value="Press 'Save' to save the record and work on it later. Press 'Submit and Notify ISSO Team' when the forms are completed and documents uploaded" label="Instructions"/> <br/><br/>
+                            <apex:commandButton value="Save" action="{!saveRecord}" status="counterStatus" /> 
+                            <apex:commandButton value="Cancel" onclick="window.parent.location.href='/InternationalServices/s/immigration-services-'"/>
+                            <apex:commandButton value="Submit and Notify ISSO Team" action="{!submitandSendtoISSOTeam}" status="counterStatus"/>
+                        </apex:pageblockButtons>
+                    </apex:pageblock>
+                    
+                </apex:tab>
+                <apex:tab label="Dependents Information" name="tab2" id="tabTwo">
+                    
+                    
+                    <apex:pageblock rendered="{!NOT(editPage)}">
+                        <apex:variable var="count" value="{!1}"   />
+                        <apex:repeat value="{!conList}" var="con">
+                            <apex:pageblocksection title="{!IF(true,'Dependent '&TEXT(count)&' Information','')}">
+                                <apex:outputText value="{!con.firstName}" label="First Name"/>
+                                <apex:outputText value="{!con.LastName}" label="Last Name"/>
+                                <apex:outputText value="{!con.Dependent1_Email_Address__c}" label="Email Address"/>                    
+                                <apex:outputText value="{!con.Relationship1__c}" label="Relationship"/>
+                                <apex:outputText value="{!con.Nationality1__c }" label="Nationality"/>
+                                <apex:outputText value="{!con.Birth_City1__c}" label="Birth City"/>                                
+                                <apex:outputText value="{!con.Last_Legal_Residence_Country__c}" label="Last Country of Legal Residence"/>
+                                <!--<apex:outputText value="{!con.Birth_Date1__c}" label="Birth Date"/>-->
+                                
+                                <apex:outputText value="{0,date,MM/dd/yy}" label="Birth Date"> <apex:param value="{!con.Birth_Date1__c}" /> </apex:outputText> 
+                                
+                            </apex:pageblocksection>
+                            <apex:variable value="{!count+1}" var="count"/>
+                        </apex:repeat>   
+                    </apex:pageblock>
+                    <apex:pageblock id="DependentsList" rendered="{!editPage}">
+                        <apex:variable var="count" value="{!1}"   />
+                        <apex:repeat value="{!conList}" var="con">
+                            <apex:pageblocksection title="{!IF(true,'Dependent '&TEXT(count)&' Information','')}">
+                                <apex:inputField value="{!con.firstName}" label="First Name"/>
+                                <apex:inputField value="{!con.LastName}" label="Last Name"/>
+                                <apex:inputField value="{!con.Dependent1_Email_Address__c}" label="Email Address"/>
+                                <apex:inputField value="{!con.Relationship1__c}" label="Relationship"/>
+                                <apex:inputField value="{!con.Nationality1__c }" label="Nationality"/>
+                                <apex:inputField value="{!con.Birth_Date1__c}"/>
+                                <apex:inputField value="{!con.Birth_City1__c}" label="Birth City"/>
+                                <apex:inputField value="{!con.Birth_Country1__c}" label="Birth Country"/>
+                                <apex:inputField value="{!con.Last_Legal_Residence_Country__c}" label="Last Country of Legal Residence"/>
+                                
+                            </apex:pageblocksection>
+                            <apex:variable value="{!count+1}" var="count"/>
+                        </apex:repeat>
+                        
+                        <apex:pageblockButtons style="text-align: center;">
+                            <apex:outputText value="Press 'Save' to save the record and work on it later. Press 'Submit and Notify ISSO Team' when the forms are completed and documents uploaded" label="Instructions"/> <br/><br/>
+                            <apex:commandButton value="Save" action="{!saveRecord}" status="counterStatus" /> 
+                            <apex:commandButton value="Cancel" onclick="window.parent.location.href='/InternationalServices/s/immigration-services-'"/>
+                            <apex:commandButton value="Submit and Notify ISSO Team" action="{!submitandSendtoISSOTeam}" status="counterStatus"/>
+                        </apex:pageblockButtons>
+                    </apex:pageblock>   
+                </apex:tab>
+                <apex:tab label="Documents" name="tab3" id="tabThree">
+                    <apex:pageblock >
+                        <apex:pageblockSection id="docSection">
+                            <apex:pageblockTable value="{!J1List}" var="j" rendered="{!IF(selectedDoc =='J-1',true,false)}" style="width:80%" >
+                                <apex:column value="{!j.doc}" style="white-space: nowrap !important;"/>
+                                <apex:column ><apex:inputfile value="{!j.att.body}" filename="{!j.att.name}"></apex:inputfile></apex:column>
+                            </apex:pageblockTable>
+                            <apex:pageblockTable value="{!F1List}" var="j" rendered="{!IF(selectedDoc =='F-1',true,false)}">
+                                <apex:column value="{!j.doc}" />
+                                <apex:column ><apex:inputfile value="{!j.att.body}" filename="{!j.att.name}"></apex:inputfile></apex:column>
+                            </apex:pageblockTable>
+                            <apex:pageblockTable value="{!STEMList}" var="j" rendered="{!IF(selectedDoc =='STEM/OPT',true,false)}">
+                                <apex:column value="{!j.doc}" />
+                                <apex:column ><apex:inputfile value="{!j.att.body}" filename="{!j.att.name}"></apex:inputfile></apex:column>
+                            </apex:pageblockTable>
+                            <style>
+                                th {white-space: pre-line !important;}
+                            </style>
+                            
+                        </apex:pageblockSection>
+                        <apex:pageblockSection columns="4">
+                            
+                            <apex:selectList value="{!selectedDoc}" multiselect="false" size="1">
+                                <apex:actionSupport event="onchange" action="{!changedDoc}" />
+                                Document Type&nbsp;&nbsp;&nbsp; : &nbsp;&nbsp;&nbsp;<apex:selectOptions value="{!visaOptions}"/>
+                            </apex:selectList>
+                        </apex:pageblockSection>
+                        <apex:pageblockSection columns="4">
+                            <!--<apex:inputfile value="{!att.body}" filename="{!att.name}"></apex:inputfile>-->
+                            <apex:commandButton value="Upload" action="{!uploadDocument}"/>
+                        </apex:pageblockSection>
+                        <apex:pageblockSection title="Document details">
+                            <apex:pageblockTable value="{!attList}" var="doc">
+                                <apex:column headerValue="Name" value="{!doc.docName}"/>
+                                <apex:column headerValue="Type" value="{!doc.Description}"/>
+                                <apex:column headerValue="Open" >
+                                    <apex:outputLink value="{!doc.docId}">{!doc.docName}</apex:outputLink>
+                                </apex:column>
+                                
+                            </apex:pageblockTable>
+                        </apex:pageblockSection>
+                        
+                    </apex:pageblock>
+                </apex:tab>
+            </apex:tabPanel>
+            
+        </apex:panelGrid>
+        
+    </apex:form>
+    
+</apex:page>

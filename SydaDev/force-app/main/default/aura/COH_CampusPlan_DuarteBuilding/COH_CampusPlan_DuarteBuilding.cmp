@@ -1,0 +1,113 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="COH_CampusPlanController" >
+    <aura:attribute name="DuarteBuildings" type="Boolean" default="true"/>
+    <aura:attribute name="profile1" type="Boolean" default="false"/>
+    <aura:attribute name="profile2" type="Boolean" default="false"/>
+    <aura:attribute name="profile3" type="Boolean" default="false"/>
+    <aura:attribute name="profile4" type="Boolean" default="false"/>
+    <aura:attribute name="profile5" type="Boolean" default="false"/>
+    <aura:attribute name="profile6" type="Boolean" default="false"/>
+    <aura:attribute type="Campus_Plan_Article__c[]" name="comment"  default=""/>
+    <aura:attribute name = "article" type = "Campus_Plan_Article__c" default="{'Designative_Type__c': 'Duarte Building'}"/>
+    <aura:attribute type="String" name="pagesource" default=""/>
+      <div >
+        
+    <aura:if isTrue="{!v.DuarteBuildings}">
+       
+        <div class="banner-container">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+                    <div class="banner-image">
+                        <img src ="{!$Resource.DuarteBuildingDirectory}"/>
+                    </div> 
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12">
+                    <div class="banner-content">
+                        <h4 class="label-header"><label class=" blue-bg">Duarte</label></h4>
+                        <h2>Expanding Hope</h2>
+                        <p class="banner-p">We are transforming the Duarte campus to better serve our patients and support our faculty and staff. <br/><br/>Several major projects are underway representing more than a $1 billion investment. They will result in increased patient care capacity, support our clinical and research missions, and strengthen our infrastructure. </p>
+                    </div>
+                </div>
+             </div>        
+        </div>
+        <div class="profile-content">
+        	<h2>Duarte Transformation</h2>
+            <p>The goal of our expansion is to create a more advanced, attractive and cohesive campus environment. In addition to new facilities, we will be renovating and upgrading some of our existing facilities, improving and widening our campus road systems, preserving our green spaces and continuing to improve our landscaping and walkways. <br/><br/>Improvements include:<br/>
+                <ul style="content-ul;list-style-type:disc !important;padding-left: 40px;">
+                    <li>Increased clinical, research and office space</li>
+                    <li>Expanding guest parking</li>
+                    <li>Providing new open spaces and landscaped walkways</li>
+                    <li>Serving more patients with state-of-the-art outpatient and guest accommodations</li>
+                    <li>Modernizing our infrastructure and increasing sustainability</li>
+                </ul>
+             </p>
+			<p>
+    			Over the next few years, there will be a lot change on campus. But some things will remain the same including our commitment to compassion, service and putting patients first.
+            </p>
+        </div>  					
+        <div class="duarte-profiles">
+        	<ul class="slds-grid slds-wrap">
+            	<li class="slds-col slds-size_1-of-2 slds-medium-size_4-of-12 slds-large-size_3-of-12">
+              		<img src ="{!$Resource.cpMedicalOfficeBuildingTile}" onclick="{!c.getContent}" id="cpMedicalOfficeBuilding"/>
+                </li>
+                <li class="slds-col slds-size_1-of-2 slds-medium-size_4-of-12 slds-large-size_3-of-12">
+                    <img src ="{!$Resource.RadiologyImagingCenterTile}" onclick="{!c.getContent}" id="RadiologyImagingCenter"/>
+				</li>
+                <li class="slds-col slds-size_1-of-2 slds-medium-size_4-of-12 slds-large-size_3-of-12">
+                   <img src ="{!$Resource.NewHopeVillageTile}" onclick="{!c.getContent}" id="NewHopeVillage"/>
+
+                </li>
+                <li class="slds-col slds-size_1-of-2 slds-medium-size_4-of-12 slds-large-size_3-of-12">
+                    <img src ="{!$Resource.DuarteOutpatientClinicTile}" onclick="{!c.getContent}" id="DuarteOutpatientClinic"/>
+                </li>
+                <li class="slds-col slds-size_1-of-2 slds-medium-size_4-of-12 slds-large-size_3-of-12">
+                    <img src ="{!$Resource.PatientParkingStructureTile}" onclick="{!c.getContent}" id="PatientParkingStructure"/>
+                </li>
+                <!--<li class="slds-col">
+                    <img src ="{!$Resource.StackedEmployee}" onclick="{!c.getContent}" id="DuarteFAQ"/>
+                </li> -->
+            </ul>
+            <c:CampusPlan_LeaveaComment article="{!v.article}"/>
+        </div>
+        <table width="900">
+      		<tr border="2">
+          		<td ><br/><br/>
+             		
+          		</td>
+          		<td >
+          			
+          		</td>
+          		<td >
+          			
+          		</td>
+          		<td >
+          			 <br/><br/>
+          			
+          		</td>
+          		<td >
+          			 <br/><br/>
+          			
+          		</td>
+      		</tr>
+        </table><br/><br/><br/><br/>
+        </aura:if>
+        <aura:if isTrue="{!v.profile1}">
+            <c:COH_CampusPlan_MedicalOfficeProfile/>
+        </aura:if>
+        <aura:if isTrue="{!v.profile2}">
+             <c:COH_CampusPlan_RadiologyImagingCenterProfile/>
+        </aura:if>
+        <aura:if isTrue="{!v.profile3}">
+             <c:COH_CampusPlan_NewHopeVillageProfile/>
+        </aura:if>
+        <aura:if isTrue="{!v.profile4}">
+             <c:COH_CampusPlan_MainContainerDuarteBuilding/>
+        </aura:if>
+        <aura:if isTrue="{!v.profile5}">
+             <c:COH_CampusPlan_PatientParkingStructureProfile/>
+        </aura:if>
+        <aura:if isTrue="{!v.profile6}">
+             <c:COH_CampusPlan_DuarteFAQPage/>
+        </aura:if>
+    </div>
+       <!-- <c:CampusPlan_LeaveaComment PageSource ="Duarte Buildings" /> -->
+</aura:component>

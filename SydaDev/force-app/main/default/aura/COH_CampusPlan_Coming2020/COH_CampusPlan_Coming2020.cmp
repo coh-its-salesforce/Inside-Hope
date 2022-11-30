@@ -1,0 +1,34 @@
+<aura:component >
+   <aura:attribute name="Milestone" type="boolean" default="false"/>
+   <aura:attribute name="milestonepage6" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.milestonepage6}">
+     <div>
+         <div class="banner-container">
+             <div class="slds-grid slds-wrap">
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+                     <div class="banner-image">
+                         <img src = "{!$Resource.CampusPlanNewportBeach}"/> 
+                     </div>
+                 </div>
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12">
+                     <div class="banner-content">
+                         <h4 class="label-header"><label class="orange-bg">Orange County</label></h4>
+                         <h2> Coming 2020 </h2>
+                         <p class="banner-p"> Orange County Regional Cancer Network Expanding </p>
+                         <p class="banner-p"> City of Hope Orange County will continue to develop more clinical practice locations to build out its regional network of care. </p>
+                     </div>
+                 </div>
+             </div>            
+         </div>
+        <div class="profile-content">
+            <p> City of Hope Orange County will be more than the Irvine campus. We are working to develop several spokes to our cancer network throughout the Orange County region. Stay tuned to this site for developments. </p>
+         </div>
+       <div class="backbutton" onclick="{!c.goBackToMilestone}" ><lightning:icon iconName="utility:back" size="x-small" variant="inverse" />
+           Back  
+       </div>
+    </div>
+       </aura:if>
+    <aura:if isTrue="{!v.Milestone}">
+        <c:COH_CampusPlan_Milestone/>
+    </aura:if>
+</aura:component>

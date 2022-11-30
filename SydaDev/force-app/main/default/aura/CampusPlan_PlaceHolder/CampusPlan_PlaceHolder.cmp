@@ -1,0 +1,103 @@
+<aura:component controller="COH_CampusPlanController">
+    <ltng:require styles="{!$Resource.CampusPlanPlaceHolder}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.parkingLots}"/>
+    <aura:attribute name="ParkingWrap" type="COH_CampusPlanController.ParkingWrap[]"/>
+    <aura:attribute name = "Article" type = "Campus_Plan_Article__c" />
+		<div>
+			<div class="slds-grid slds-wrap boxes-wrap">
+    			<aura:if isTrue="{!v.Article.Designative_Type__c=='Parking and Transportation'}">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                    
+    				<div class="box">
+                        <div class="image-title-area">
+                            <div class="image-div">
+                                <img src="{!$Resource.CampusPlanFrogAppLogo}" />
+                            </div>
+                            <div class="image-title-div">
+                                <h3>Duarte On-campus Parking </h3>
+                            </div>
+                        </div>
+                        <div class="box-content">
+        					<!--<p style="text-align: center; font-size:25px; color: orange;">Coming Soon!</p>-->
+                            <ul class="box-ul"> 
+                                <li>Go to the App Store (iPhone) or Google Play Store (Android) to download the app called Parking at City of Hope on your mobile phone to install. <a href="https://frogparking.com/cityofhope/" target="_blank">Click here</a> for a user guide that provides “how to” directions. The app is free. You will need your COH email address and the password you set up during registration to log in. Once you log in, you will need to enter your vehicle license plate information.</li>  
+                                <!--<li><a href="https://frogparking.com/cityofhope/" target="_blank">Frogparking App User Guide</a></li>-->
+                            </ul>                      
+                        </div>
+    				</div>
+                        </div>
+    			</aura:if> 
+                <aura:if isTrue="{!v.Article.Designative_Type__c=='Parking and Transportation'}">
+
+                    
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+    				<div class="box box-bg2">
+                        <div class="image-title-area">
+                            <div class="image-div">
+        						<img src="{!$Resource.CampusPlanParkingLogo}" /><!-- {!$Resource.CampusPlanParkingIncentiveLogo} -->
+                            </div>
+                            <div class="image-title-div">
+                                <h3>Off-site Parking</h3><!-- Parking Incentives Removed 20200608 -->
+                            </div>
+                        </div>
+                        <div class="box-content">    
+                        	<ul class="box-ul">
+                                <li><a href="/apex/apex/ExpandingHopePageViewer?id=aBh3o000000kBq2CAE">Irwindale Speedway Parking Overview</a></li>
+                                <li>To register for an Off-Site Irwindale Speedway Parking permit, <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=oz4ql3n5dUiiuM_wAatp59hsoYXkpRRCuF1-aQnSICRUOU9QRTRKNlJJMlBSMFlUOFFFRVhRM0lSVS4u" target="_blank">click here</a></li>
+                              <!--   <li><a href="https://cityofhopec.na118.visual.force.com/apex/apex/ExpandingHopePageViewer?id=aBh3o000000kCj7CAE">Irwindale Speedway Aerial Parking</a></li>-->
+                              <!--  <li><a>Amenities – coming soon (food truck, car wash, dry cleaning)</a></li>-->
+                            </ul>
+                        </div>
+    				</div>
+                </div>
+
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                    <div class="box">
+                        <div class="image-title-area">
+                            <div class="image-div">
+        						<img src="{!$Resource.CampusPlanAlternativeParking}" id="parkingLogo" /><!-- CampusPlanParkingLogo Removed 20200608-->
+                            </div>
+                            <div class="image-title-div">
+                                <h3>Alternative Transportation</h3><!-- Parking Lots removed 20200608-->
+                            </div>
+                        </div>
+                        <div class="box-content">        					
+                            <!-- 20200608 FSalinas for now, we will not be using Campus Plan Parking Information object
+                            <aura:iteration items="{!v.ParkingWrap}" var="pw">
+                                <div class="parking-notice-info">
+                                    <span>{!pw.NoticeDate}</span>
+                                    <span>{!pw.Information}</span>
+                               	</div>
+                            </aura:iteration>                    
+							-->
+                        	<ul class="box-ul">
+                                <li><a href="https://cityofhope.commuterportal.com/" target="_blank">Commuter Program</a></li>
+                            </ul>
+                        </div>
+    			</div>
+                    </div>
+    				
+                </aura:if>    
+                
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+    			<div class="box box-bg2">
+                        <div class="image-title-area">
+                            <div class="image-div">
+        						<img src="{!$Resource.CampusPlanShuttleInformation}"/><!-- CampusPlanCOHLogo Removed 20200608-->
+                            </div>
+                            <div class="image-title-div">
+                                <h3>Incentives and Subsidies</h3><!-- Getting to Campus Removed 20200608-->
+                            </div>
+                        </div>
+                        <div class="box-content">    
+        					<!--<p style="text-align: center; font-size:25px; color: green;">Coming Soon!</p>-->
+                        	<ul class="box-ul">
+                                <li><a>Enhanced incentives and subsidies will be available September 1 (subsidies to increase from $100 up to $270 per month). </a></li>
+                                <li><a>Check back for more details</a></li>
+                            </ul>
+                        </div>
+    			</div>
+                </div>
+			</div>
+    </div>  
+</aura:component>

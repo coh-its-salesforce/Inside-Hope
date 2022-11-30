@@ -1,0 +1,129 @@
+<apex:page controller="ProviderSearchController" tabStyle="Physician_Search__tab">
+  <apex:sectionHeader title="Physician / Extender Search"/>
+  <!--<apex:sectionHeader title="Provider/Extender Search"/>-->
+  
+  <apex:form >
+      <apex:pageBlock id="block">
+          <apex:pageblockSection columns="1" title="Search Filters">
+              <apex:inputText value="{!keyword}"  label="Provide/Extender Name"/>
+              <apex:inputField value="{!conObj.Division__c}"/>
+              <apex:inputField value="{!conObj.Specialty__c}"/>
+                
+              <apex:pageBlockSectionItem >
+                  <apex:outputLabel ></apex:outputLabel>
+                  <apex:outputPanel >
+                   <apex:actionStatus id="srerchSt">
+                        <apex:facet name="start">
+                            <apex:commandButton value="Searching.." disabled="true"/>
+                        </apex:facet>  
+                       <apex:facet name="stop">
+                            <apex:commandButton value="Search" action="{!findRecord}" reRender="block,msg" status="srerchSt"/>
+                       </apex:facet>  
+                   </apex:actionStatus>
+                    
+                </apex:outputPanel>
+              </apex:pageBlockSectionItem>
+             
+          </apex:pageblockSection>
+          <apex:pagemessages id="msg"></apex:pagemessages>
+          
+          <apex:pageblockSection columns="1" id="result" collapsible="false;" rendered="{!AND(NOT(ISNULL(result)), result.size > 0)}">
+              <apex:facet name="header" >
+                  <apex:actionStatus id="loadSt">
+                      <apex:facet name="start">
+                          <apex:outputPanel >
+                              <img src="/img/loading.gif"/> &nbsp; Please Wait....
+                          </apex:outputPanel>
+                      </apex:facet>
+                      <apex:facet name="stop">
+                          <apex:outputPanel >Results</apex:outputPanel>
+                      </apex:facet>
+                  </apex:actionStatus>
+              </apex:facet>
+              <apex:outputPanel rendered="{!AND(NOT(ISNULL(result)), result.size > 0)}">
+                    <apex:pageblockTable value="{!result}" var="cont" >
+                      <apex:column headerValue="Action">
+                          <a href="/apex/ProviderDetail?id={!cont.id}" target="blank">View</a>
+                      </apex:column>
+                      <apex:column value="{!cont.FirstName}">
+                        <apex:facet name="header">
+                            <apex:commandLink action="{!sortRecord}" reRender="result" status="loadSt">
+                                First Name 
+                                <apex:image rendered="{!AND(sortBy == 'FirstName', sortDir == 'ASC')}" url="/img/sort_asc_arrow.gif" alt="Sorted Ascending"  title="Sorted Ascending"/>
+                                <apex:image rendered="{!AND(sortBy == 'FirstName', sortDir == 'DESC')}" url="/img/sort_desc_arrow.gif" alt="Sorted Descending"  title="Sorted Ascending"/>
+                                <apex:param name="sortBy" value="FirstName" assignTo="{!sortBy}"/>
+                            </apex:commandLink>
+                        </apex:facet>
+                      </apex:column>    
+                      <apex:column value="{!cont.LastName}">
+                        <apex:facet name="header">
+                            <apex:commandLink action="{!sortRecord}" reRender="result" status="loadSt">
+                                Last Name 
+                                 <apex:image rendered="{!AND(sortBy == 'LastName', sortDir == 'ASC')}" url="/img/sort_asc_arrow.gif" alt="Sorted Ascending"  title="Sorted Ascending"/>
+                                 <apex:image rendered="{!AND(sortBy == 'LastName', sortDir == 'DESC')}" url="/img/sort_desc_arrow.gif" alt="Sorted Descending"  title="Sorted Ascending"/>
+                                 <apex:param name="sortBy" value="LastName" assignTo="{!sortBy}"/>
+                            </apex:commandLink>
+                          </apex:facet>
+                      </apex:column>    
+                      <apex:column value="{!cont.Email}">
+                          <apex:facet name="header">
+                            <apex:commandLink action="{!sortRecord}" reRender="result" status="loadSt">
+                                Email
+                                 <apex:image rendered="{!AND(sortBy == 'Email', sortDir == 'ASC')}" url="/img/sort_asc_arrow.gif" alt="Sorted Ascending"  title="Sorted Ascending"/>
+                                 <apex:image rendered="{!AND(sortBy == 'Email', sortDir == 'DESC')}" url="/img/sort_desc_arrow.gif" alt="Sorted Descending"  title="Sorted Ascending"/>
+                                 <apex:param name="sortBy" value="Email" assignTo="{!sortBy}"/>
+                            </apex:commandLink>
+                          </apex:facet>
+                      </apex:column>    
+                      <apex:column value="{!cont.Phone}">
+                        <apex:facet name="header">
+                            <apex:commandLink action="{!sortRecord}" reRender="result" status="loadSt">
+                                 Phone
+                                 <apex:image rendered="{!AND(sortBy == 'Phone', sortDir == 'ASC')}" url="/img/sort_asc_arrow.gif" alt="Sorted Ascending"  title="Sorted Ascending"/>
+                                 <apex:image rendered="{!AND(sortBy == 'Phone', sortDir == 'DESC')}" url="/img/sort_desc_arrow.gif" alt="Sorted Descending"  title="Sorted Ascending"/>
+                                 <apex:param name="sortBy" value="Phone" assignTo="{!sortBy}"/>
+                            </apex:commandLink>
+                          </apex:facet>
+                       </apex:column>   
+                      <apex:column value="{!cont.Division__c}">
+                        <apex:facet name="header">
+                            <apex:commandLink action="{!sortRecord}" reRender="result" status="loadSt">
+                                Division
+                                 <apex:image rendered="{!AND(sortBy == 'Division__c', sortDir == 'ASC')}" url="/img/sort_asc_arrow.gif" alt="Sorted Ascending"  title="Sorted Ascending"/>
+                                 <apex:image rendered="{!AND(sortBy == 'Division__c', sortDir == 'DESC')}" url="/img/sort_desc_arrow.gif" alt="Sorted Descending"  title="Sorted Ascending"/>
+                                 <apex:param name="sortBy" value="Division__c" assignTo="{!sortBy}"/>
+                            </apex:commandLink>
+                          </apex:facet>
+                      </apex:column> 
+                      <apex:column value="{!cont.Specialty__c}"/>
+                          <!--<apex:facet name="header">
+                                <apex:commandLink action="{!sortRecord}" reRender="result" status="loadSt">
+                                    Speciality
+                                     <apex:image rendered="{!AND(sortBy == 'Specialty__c', sortDir == 'ASC')}" url="/img/sort_asc_arrow.gif" alt="Sorted Ascending"  title="Sorted Ascending"/>
+                                     <apex:image rendered="{!AND(sortBy == 'Specialty__c', sortDir == 'DESC')}" url="/img/sort_desc_arrow.gif" alt="Sorted Descending"  title="Sorted Ascending"/>
+                                     <apex:param name="sortBy" value="Specialty__c" assignTo="{!sortBy}"/>
+                                </apex:commandLink>
+                          </apex:facet>
+                      </apex:column> -->
+                      <apex:facet name="footer">
+                          <apex:outputPanel >
+                          <apex:outputText >{!(con.pageNumber * size)+1-size}-{!IF((con.pageNumber * size)>noOfRecords, noOfRecords,(con.pageNumber * size))} of {!noOfRecords}</apex:outputText>
+                    
+                          </apex:outputPanel>  
+                      </apex:facet>  
+                  </apex:pageblockTable>
+                 
+                  <apex:panelGrid columns="5">
+                    <apex:commandButton status="fetchStatus" reRender="result" value="|<" action="{!first}" disabled="{!!hasPrevious}" title="First Page"/>
+                    <apex:commandButton status="fetchStatus" reRender="result" value="<" action="{!previous}" disabled="{!!hasPrevious}" title="Previous Page"/>
+                    <apex:commandButton status="fetchStatus" reRender="result" value=">" action="{!next}" disabled="{!!hasNext}" title="Next Page"/>
+                    <apex:commandButton status="fetchStatus" reRender="result" value=">|" action="{!last}" disabled="{!!hasNext}" title="Last Page"/>
+                    <apex:outputPanel style="color:#4AA02C;font-weight:bold">
+                        <apex:actionStatus id="fetchStatus" startText="Fetching..." stopText=""/>
+                    </apex:outputPanel>
+                </apex:panelGrid>
+              </apex:outputPanel>
+          </apex:pageblockSection>
+      </apex:pageBlock>
+  </apex:form>
+</apex:page>

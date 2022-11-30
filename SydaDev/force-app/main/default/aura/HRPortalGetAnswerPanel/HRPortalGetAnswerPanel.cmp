@@ -1,0 +1,17 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+    
+    <div class="customcss" style="background-color: #5BC2E7 !important;color: white;padding: 8px;border-radius: 8px;">
+        <div class="slds-media slds-media_center ">
+            <div class="slds-media__figure">
+                <span class="slds-avatar slds-avatar_small">
+                    <lightning:icon iconName="utility:light_bulb" size="small" class="iconcss"/>
+                </span>
+            </div>
+            <div class="slds-media__body">
+                <a target="_blank" href="https://cityofhope--c.na118.content.force.com/sfc/servlet.shepherd/document/download/0693o000009wqNWAAY?operationContext=S1" style="font-size:12px;color:white;"><b>How to…</b></a><br/>
+                <p style="font-size:10px;">Links to HR Job Aids</p>
+            </div>
+        </div>
+    </div>
+</aura:component>

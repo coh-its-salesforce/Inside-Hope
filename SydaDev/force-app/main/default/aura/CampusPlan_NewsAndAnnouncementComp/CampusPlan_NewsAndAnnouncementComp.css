@@ -1,0 +1,16 @@
+.THIS .news {
+    background-color: #ffffff;
+    width: 90vw;
+    margin-left: 40px;
+}
+@media only screen 
+and (min-device-width : 375px) 
+    and (max-device-width : 667px) {
+    
+    .THIS .news {
+    background-color:LightGrey;
+    width: 350px;
+    margin-left: 40px;
+}
+    
+}

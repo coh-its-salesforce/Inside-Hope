@@ -1,0 +1,47 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+  
+   <aura:registerEvent name="openRivergrade" type="c:CampusPlan_RivergradeEvent" />
+   <aura:attribute name="RivergradeOverView" type="boolean" default="true"/>
+	
+    <aura:attribute name="RivergradeRecord"  type="Campus_Plan_News__c" />
+    
+    <aura:if isTrue="{!v.RivergradeOverView}">
+       <div class="banner-container">
+    	<div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12" >
+                    <div class="banner-image">
+      				<!--img src = "{!$Resource.CampusPlanRivergradeOverview}"/--> 
+                    <img src = "{!v.RivergradeRecord.PhotoURL__c}"/> 
+      				</div>
+      		</div>
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12">
+               <div class="banner-content">
+                   <h4 class="label-header"><label class="blue-bg" >{!v.RivergradeRecord.Location__c}</label></h4>
+                   <h2> {!v.RivergradeRecord.Title__c}</h2>			
+                  <!-- <p class="banner-p"><strong>Departments by Building:</strong></p>
+                   <p class="banner-p">
+                       <u>4920 Building:</u><br/>
+                       HR, Philanthropy, Marketing and Communications, Finance/Accounting, Payroll            
+                   </p>
+                   <p class="banner-p">
+                       <u>4910 Building:</u><br/>
+                       EPIC/IT
+                   </p>
+                   <p class="banner-p">
+                       <u>4900 Building:</u><br/>
+                       Foundation
+                   </p> -->
+                   <ui:outputRichText class="" value="{!v.RivergradeRecord.News_Content_Next_to_Image__c}"/>
+                   
+                    <!--lightning:formattedRichText value="{!v.RivergradeRecord.News_Content_Next_to_Image__c}" /-->
+               </div>
+      		</div>
+      	</div>
+       </div>
+        <div class="profile-content">
+            <ui:outputRichText class="" value="{!v.RivergradeRecord.Detailed_Description__c}"/>
+		</div>
+        <!--<div class="backbutton" onclick="{!c.goBackToRiverGrade}" ><lightning:icon iconName="utility:back" size="x-small" variant="inverse" />&nbsp;&nbsp;&nbsp;&nbsp;Back  
+    </div>-->
+       </aura:if>
+</aura:component>

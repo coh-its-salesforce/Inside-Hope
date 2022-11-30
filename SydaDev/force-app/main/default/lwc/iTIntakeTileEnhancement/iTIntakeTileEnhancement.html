@@ -1,0 +1,24 @@
+<template>
+    <template if:true={intakeRecords}>
+        <div class="slds-m-around_xxx-small">
+        <lightning-card title={intakeRecords.Name} onclick={handleOpenRecordDetail} icon-name="custom:custom55" style=background:#5679C0>
+            <div class="slds-m-around_small">
+                <p>
+                    <strong>Request ID: </strong> <a href="">{intakeRecords.Name}</a> <br />
+                    <strong>Requester Name: </strong> <template if:true={intakeRecords.Requester_Name__c}>{intakeRecords.Requester_Name__r.Name}</template><br />
+                    <strong>Short Description of Request: </strong> {intakeRecords.Project_Short_Description__c}<br />
+                    <strong>Request Created Date: </strong> <lightning-formatted-date-time value={intakeRecords.CreatedDate} year="numeric" month="numeric" day="numeric"></lightning-formatted-date-time><br />
+                    <strong>Approval Status: </strong> {intakeRecords.Request_Status__c}<br />
+                    <strong>Approval Disposition: </strong> {intakeRecords.Approval_Status__c}<br />
+                    <strong>Analyst: </strong> <template if:true={intakeRecords.Assigned_Technical_Analyst__c}>{intakeRecords.Assigned_Technical_Analyst__r.Name}</template><br />
+                    <strong>Assigned Bundle/Release Date: </strong> {intakeRecords.Assigned_Release_monthly_bundle__c}<br />
+                    <strong>Build Status: </strong> {intakeRecords.Current_IT_PM_Lifecycle_Project_Status__c}<br />
+                </p>
+                <p class="slds-m-around_small">
+                    <lightning-button label="Open Record Detail" variant="brand" onclick={handleOpenRecordDetail}></lightning-button>
+                </p>
+            </div>
+        </lightning-card>
+        </div>
+    </template>
+</template>

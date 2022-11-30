@@ -1,0 +1,21 @@
+/*.THIS .carousel__image {
+    
+    height: 300px !important;
+}
+
+.THIS .slds-carousel__stage{
+    height: 400px !important;
+}
+
+.THIS .slds-carousel__image{
+    height: 250px !important;
+}
+*/
+.THIS.slds-box {
+    padding: 0px !important;
+    border:none !important;
+}
+
+.THIS .slds-carousel__content {
+    display:none !important;
+}

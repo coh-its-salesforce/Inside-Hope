@@ -1,0 +1,11 @@
+<aura:component controller="HRPortalNewEmployeeDetailController"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes" access="global" >
+    <aura:attribute name="user" type="User" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <h1 style="font-size: 20px ;font-weight: bold;">Welcome, {!v.user.Name}</h1><br/><br/>
+    <!--<p style="font-size:18px;"><b>Announcements</b> from your HR Team.</p><br/>-->
+    
+    <c:HRPortalCommonPageContent pageName="Regular_Employee"></c:HRPortalCommonPageContent>
+    
+</aura:component>

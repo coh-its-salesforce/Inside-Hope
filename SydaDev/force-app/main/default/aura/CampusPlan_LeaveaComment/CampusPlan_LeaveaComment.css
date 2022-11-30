@@ -1,0 +1,26 @@
+.THIS .submit-comment-area{
+    /*padding: 15px 10vw 15px 4vw;*/
+    padding: 10px 15px;
+    margin: 0;
+    clear: both;
+}
+.THIS h3{
+    color: #0075bc;
+}
+.THIS p{
+    text-align: left;
+    margin-bottom: 15px;
+}
+.THIS .content{
+    color: #0075bc;
+}
+.THIS .uiButton--default .label{
+    color: #ffffff !important
+}
+.THIS .uiButton--default:hover .label{
+    color: #ffffff !important
+}
+.THIS .comments{
+    color:  DodgerBlue;
+    font-size: 1rem;
+}

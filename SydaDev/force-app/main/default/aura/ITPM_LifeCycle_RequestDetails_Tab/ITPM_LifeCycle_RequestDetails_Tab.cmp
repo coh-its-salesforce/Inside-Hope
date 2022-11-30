@@ -1,0 +1,377 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,lightning:isUrlAddressable" controller="ITPM_LifeCycle_Tabs_Controller">
+   
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:attribute name="ITPMObj" type="IT_Portfolio_Management__c" default=""/>
+    <aura:attribute name="link1" type="String"/>
+     <aura:attribute name="link2" type="String"/>
+    <aura:attribute name="link3" type="String"/>
+      <aura:attribute name="link4" type="String"/>
+    <aura:attribute name="link5" type="String"/>
+  
+    
+   
+    
+     <div class="slds-card slds-card_boundary" style="box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.16);">
+        <div class="slds-section slds-is-open slds-m-top_none">
+            <h3 class="slds-section__title">
+                <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                    <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                    <span class="slds-truncate" title="Section Title"> Request Details </span>
+                </button>
+            </h3>
+       
+        <lightning:messages /><br/>
+        <div class="slds-p-left_medium">
+          <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Request Date: </span>
+                                                     <div class="slds-form-element__control">
+                                                         <span class="valueFont"><ui:outputDate format="MM/dd/yyyy" value="{!v.ITPMObj.ITS_Intake_Request__r.Request_Date__c}"/></span></div>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Project Category: </span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Investment_Category__c}" /></span></div>
+                </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Project ID: </span>
+                                                     <div class="slds-form-element__control">
+                                                         <span class="valueFont"><a href="{!v.link1}"  target="_blank"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Name}"/></a></span></div>
+                </div>
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Audit Type: </span>
+                                                     <div class="slds-form-element__control">
+                                                         <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Audit_Type__c}" /></span></div>
+                </div>
+          </div><br/><br/>
+          <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Request Type: </span>
+                                                     <div class="slds-form-element__control">
+                                                         <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Request_Type__c}" /></span></div>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Audit Subject: </span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Audit_Subject__c}" /></span></div>
+                   
+                </div>
+          </div><br/><br/>
+          <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Project Name: </span>
+                                                     <div class="slds-form-element__control">
+                                                         <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Request_Name__c}"/></span></div>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Audit Due Date: </span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="valueFont"><ui:outputDate value="{!v.ITPMObj.ITS_Intake_Request__r.Audit_Due_Date__c}" format="MM/dd/yyyy"/></span></div>
+                   
+                </div>
+            </div><br/><br/>
+              <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Project Short Description: </span>
+                                                     <div class="slds-form-element__control">
+                                                         <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Project_Short_Description__c}" /></span></div>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Audit Reference ID: </span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Audit_Reference_ID__c}"/></span></div>
+                   
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Program: </span>
+                                                     <div class="slds-form-element__control">
+                                                         <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Program__c}" /></span></div>
+                </div>
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Business Drivers: </span>
+                     <div class="slds-form-element__control">
+                         <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Request_Category__c}"/></span></div>
+                     
+                 </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                    </div>
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Regulatory/Compliance Date Mandated: </span>
+                     <div class="slds-form-element__control">
+                         <span class="valueFont"><ui:outputDate value="{!v.ITPMObj.ITS_Intake_Request__r.Regulatory_Due_Date__c}" format="MM/dd/yyyy"/></span></div>
+                     
+                 </div>
+
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Primary ISC: </span>
+                                                     <div class="slds-form-element__control">
+                                                         <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Primary_ISC__c}" /></span></div>
+                </div>
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Budget Category: </span>
+                     <div class="slds-form-element__control">
+                         <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Budget_Category__c}" /></span></div>
+                     
+                 </div>
+
+          </div><br/><br/>
+            
+            <div class="slds-grid">
+                <div class="slds-col--padded slds-large-size--6-of-12"> <span class="slds-text-title_bold">ISC Advisor: </span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="valueFont"><a href="{!v.link4}"  target="_blank"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.IT_Advisor1__r.Name}" /></a></span></div>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Funding Type: </span>
+                    <div class="slds-form-element__control">
+                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Funding_Type__c}" /></span></div>
+                    
+                </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                <div class="slds-col--padded slds-large-size--6-of-12"> <span class="slds-text-title_bold">ISC Project Manager: </span>
+                    <div class="slds-form-element__control">
+                        <span class="valueFont"><a href="{!v.link5}"  target="_blank"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.ISC_PM__r.Name}" /></a></span></div>                    
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Multi-Year?: </span>
+                    <div class="slds-form-element__control">
+                        <span class="valueFont"><ui:outputCheckbox value="{!v.ITPMObj.ITS_Intake_Request__r.Multi_Year_Project__c}" /></span></div>
+                    
+                </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                <div class="slds-col--padded slds-large-size--6-of-12"> <span class="slds-text-title_bold">Impacted ISCs: </span>
+                    <div class="slds-form-element__control">
+                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Impacted_ISC_s__c}" /></span></div>           
+                    </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Master Project?: </span>
+                    <div class="slds-form-element__control">
+                        <span class="valueFont"><ui:outputCheckbox value="{!v.ITPMObj.ITS_Intake_Request__r.Master_Project__c}" /></span></div>
+                </div>
+            </div><br/><br/>
+            <div class="slds-grid">
+                <div class="slds-col--padded slds-large-size--6-of-12"> 
+                    <span class="slds-text-title_bold">Requested Project Start Date: </span>
+                    <div class="slds-form-element__control">
+                        <span class="valueFont"><ui:outputDate value="{!v.ITPMObj.ITS_Intake_Request__r.Requested_Project_Start_Date__c}" format="MM/dd/yyyy"/></span></div>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Carryover?: </span>
+                    <div class="slds-form-element__control">
+                        <span class="valueFont"><ui:outputCheckbox value="{!v.ITPMObj.ITS_Intake_Request__r.CarryOver__c}" /></span></div>
+                </div>
+            </div><br/><br/>
+            <div class="slds-grid">
+                <div class="slds-col--padded slds-large-size--6-of-12"> <span class="slds-text-title_bold">Impacted ISCs: </span>
+                    <div class="slds-form-element__control">
+                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Impacted_ISC_s__c}" /></span></div>           
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Fiscal Year Start: </span>
+                    <div class="slds-form-element__control">
+                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Fiscal_Year_Start__c}" /></span></div>
+                </div>
+            </div><br/><br/>
+            <div class="slds-grid">
+                <div class="slds-col--padded slds-large-size--6-of-12">           
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Requested Project End Date: </span>
+                    <div class="slds-form-element__control">
+                        <span class="valueFont"><ui:outputDate value="{!v.ITPMObj.ITS_Intake_Request__r.Requested_Project_End_Date__c}" format="MM/dd/yyyy"/></span></div>
+                </div>
+            </div><br/><br/>
+           <br/>
+             
+            <h3 class="slds-section__title">
+                <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                    <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                    <span class="slds-truncate" title="Section Title">Intake Justification </span>
+                </button>
+            </h3><br/>
+           <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Executive Summary: </span>
+                                                     <div class="slds-form-element__control">
+                                                         <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Executive_Summary__c}" /></span></div>
+                
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Benefits: </span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Short_Term_Benefits__c}" /></span></div>
+              
+                    </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Problem Statement: </span>
+                                                     <div class="slds-form-element__control">
+                                                         <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Project_Background__c}" /></span></div>
+                
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">ROI: </span>
+                                                    <div class="slds-form-element__control">
+<span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.ROI__c}"/></span></div>
+                
+                    </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Goals and Objectives: </span>
+                                                     <div class="slds-form-element__control">
+                                                         <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Describe_goals_and_objectives__c}" /></span></div>
+                
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Key Assumptions: </span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Key_Assumptions__c}" /></span></div>
+            
+                    </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Current State: </span>
+                                                     <div class="slds-form-element__control">
+                                                         <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Current_State__c}" /></span></div>
+                  
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Key Dependencies: </span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Key_Dependencies__c}" /></span></div>
+                    
+                    </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">In Scope: </span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Scope_Considerations__c}" /></span></div>
+                 
+               </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Key Constraints: </span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Key_Constraints__c}" /></span></div>
+                    
+                    </div>
+            </div><br/><br/>
+            <div class="slds-grid">
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Out of Scope: </span>
+                    <div class="slds-form-element__control">
+                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Out_of_Scope__c}" /></span>
+                    </div>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">                  
+                </div>
+            </div><br/><br/>
+            <h3 class="slds-section__title">
+                <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                    <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                    <span class="slds-truncate" title="Section Title"> Sponsors/Owners/Functional Areas </span>
+                </button>
+            </h3><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold"> Executive Sponsor: </span>
+                                                     <div class="slds-form-element__control">
+                                                         <span class="valueFont"><a href="{!v.link3}"  target="_blank"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Business_Sponsor__r.Name}"/></a></span></div>
+                    
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    
+                    <span class="slds-text-title_bold">IT/Delivery Functional Area: </span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.IT_Functional_Area__c}" /></span></div>
+                      
+                    </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Business Owner: </span>
+                                                     <div class="slds-form-element__control">
+                                                         <span class="valueFont"><a href="{!v.link2}"  target="_blank"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Business_Owner__r.Name}" /></a></span></div>
+                
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">IT/Delivery Sub-Functional Area: </span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.IT_Functional_Sub_Area__c}" /></span></div>
+                    
+                    </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">IT/Delivery Sponsor: </span>
+                                                     <div class="slds-form-element__control">
+                                                         <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.IT_Sponsor__c}"/></span></div>
+                 
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">ConnectHope/Revenue Cycle Applications: </span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.ConnectHope_Sub_Apps__c}" /></span></div>
+                   
+                    </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">IT/Delivery Owner: </span>
+                                                     <div class="slds-form-element__control">
+                                                         <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.IT_Owner__c}"/></span></div>
+                    
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">IT/Delivery Cost Center: </span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.ITS_Cost_Center__c}" /></span></div>
+                   
+                    </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                           <span class="slds-text-title_bold">IT Notes: </span>
+                                                     <div class="slds-form-element__control">
+                                                         <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.ITS_Notes__c}" /></span></div>
+                  
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    
+                    <span class="slds-text-title_bold">Impacted Functional Areas: </span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Im__c}" /></span></div>
+                  
+                    </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                           </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    
+                    <span class="slds-text-title_bold">Other Impacted Applications: </span>
+                                                    <div class="slds-form-element__control">
+                                                        <span class="valueFont"><ui:outputText value="{!v.ITPMObj.ITS_Intake_Request__r.Impacted_Applications__c}" /></span></div>
+                  
+                    </div>
+          </div><br/><br/>
+         
+            <br/>
+            
+            </div>
+        </div>
+        </div>
+</aura:component>

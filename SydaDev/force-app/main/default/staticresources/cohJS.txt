@@ -1,0 +1,23 @@
+var stdLayoutScreenWidth = 671;
+var stdLayoutScreenHeight = 400;
+var page_CategoryTree = '/apex/COHCategoryTree';
+
+
+	function stdScreenLeft(){
+		return parseInt((screen.availWidth/2) - (stdLayoutScreenWidth/2));
+	}
+
+	function stdScreenTop(){
+		return parseInt((screen.availHeight/2) - (stdLayoutScreenHeight/2));
+	}
+	function openCategoryTree(recordId, parentField, childField, catName){
+		var popupWidth = 671;
+		var popupHeight = 530;
+		var left = stdScreenLeft();
+		var top = stdScreenTop();
+		var winParams = '?recordId='+recordId + '&parentField=' + parentField + '&childField=' + childField + '&catName=' + catName;
+
+		var windowFeatures = "width=" + popupWidth + ",height=" + popupHeight + ",status,resizable,scrollbars=no,left=" + left + ",top=" + top+',toolbar=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,modal=yes'; 
+		categoryTreeWindow = window.open(page_CategoryTree + winParams,recordId,windowFeatures);
+		categoryTreeWindow.focus();
+	}

@@ -1,0 +1,60 @@
+<aura:component >
+   <aura:attribute name="Milestone" type="boolean" default="false"/>
+   <aura:attribute name="milestonepage7" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.milestonepage7}">
+     <div>
+         <div class="banner-container">
+             <div class="slds-grid slds-wrap">
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+                     <div class="banner-image">
+                         <img src = "{!$Resource.CampusPlanIrvineBuilding}"/> 
+                     </div>
+                 </div>
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12">
+                     <div class="banner-content">
+                         <h4 class="label-header"><label class="orange-bg">Orange County</label></h4>
+                         <h2> Coming 2021 </h2>
+                         <p class="banner-p"> Cancer Complex Opens in Irvine, Heralding New Era of Care </p>
+                         <p class="banner-p"> Our approximately 190,000-square-foot facility will open in 2021, with new treatments and services immediately available to Orange County residents. </p>
+                     </div>
+                 </div>
+             </div>            
+         </div>
+        <div class="profile-content">
+            <p>
+            <strong>The cancer campus will include:</strong>
+            </p>
+            <ul class="content-ul">
+            	<li>
+            		<p>
+            			An outpatient cancer center offering access to a wide range of solid tumor and blood cancer specialists, diagnostic imaging and screenings, precision medicine and early detection, medical oncology, chemotherapy, radiation therapy, surgical oncology and ambulatory surgery.
+            		</p>
+            	</li>
+                <li>
+                	<p>
+                        Orange County’s only specialty hospital focused exclusively on treating and curing cancer, to open in 2025.
+                    </p>
+                </li>
+                <li>
+                	<p>
+                    	A clinical research center offering phase 1-3 clinical trials.
+                    </p>
+                </li>
+                <li>
+                	<p>
+                    	Personalized supportive care services to address the many emotional and psychological needs that can arise during or after cancer treatment.
+                    </p>
+                </li>
+             </ul>
+
+         </div>
+       	<div class="backbutton" onclick="{!c.goBackToMilestone}">
+           <lightning:icon iconName="utility:back" size="x-small" variant="inverse" />
+           Back  
+    	</div>
+       </div>
+       </aura:if>
+    <aura:if isTrue="{!v.Milestone}">
+        <c:COH_CampusPlan_Milestone/>
+    </aura:if>
+</aura:component>

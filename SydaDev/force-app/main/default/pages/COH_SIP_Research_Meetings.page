@@ -1,0 +1,55 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" 
+           applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">   
+    <html lang="en">
+        <head>            
+            <c:Head title="Research Seminars"></c:Head>            
+        </head>
+        <body>
+            <div class="Wrapper">
+                <apex:form >
+                    <!-- Header Bar---> 
+                    <c:COH_SIP_Header ></c:COH_SIP_Header>                     
+                    <!--search bar-->
+                    <c:COH_SIP_Search ></c:COH_SIP_Search>
+                    <!-- page Body Content-->
+                    <!-- Container -->
+                    <div class="container" style="padding: 150px 0 0 0;height: 100%;">
+                        <div class="container" style="color:#337ab7;text-align:center;font-weight: bold;">
+                            Research Seminars.
+                        </div>
+                        <div style="width: 20%; float: left;padding:10px;">
+                            <script type="text/javascript" src="https://www.trumba.com/scripts/spuds.js"></script>
+                            <script type="text/javascript">
+                                $Trumba.addSpud({
+                                    webName: "research-seminars",
+                                    spudType : "datefinder" });
+                            </script>
+                            <div style="padding-top:10px;">
+                                <script type="text/javascript">
+                                $Trumba.addSpud({
+                                    webName: "research-seminars",
+                                    spudType : "filter" });
+                                </script>                           
+                            </div>                                 
+                        </div> 
+                        <div style="width:80%; float: left;padding:10px;">
+                            <script type="text/javascript">
+                            $Trumba.addSpud({
+                                webName: "research-seminars",
+                                spudType : "monthlist" });
+                            </script>
+                            <br />
+                            <script type="text/javascript" src="http://www.trumba.com/scripts/spuds.js"></script>
+                            <script type="text/javascript">
+                                $Trumba.addSpud({
+                                    webName: "research-seminars",
+                                    spudType : "main" });
+                            </script>
+                        </div> 
+                    </div>
+                    <c:COH_SIP_Footer ></c:COH_SIP_Footer> 
+                </apex:form>
+            </div>            
+        </body>            
+    </html>     
+</apex:page>

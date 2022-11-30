@@ -1,0 +1,47 @@
+<apex:page standardController="COH_SI_NewsandAnnouncement__c" extensions="ext_NewsAnnouncement" sidebar="false" showHeader="false" standardStylesheets="false">
+    <head>        
+        <c:Head title="News - {!COH_SI_NewsandAnnouncement__c.Title__c}"></c:Head>
+        <style>
+            .right-dotted-border{
+            border-right:1px dotted gray;
+            }
+            .mini-section{
+            height:270px;
+            }
+        </style>        
+    </head>
+<div class="Wrapper">
+  <apex:form >
+  <apex:pageMessages />
+  <c:COH_SIP_Header ></c:COH_SIP_Header>     
+  <c:COH_SIP_Search ></c:COH_SIP_Search>   
+    <div class="MiddleCon">
+        <div class="DeparmentB">
+            <div class="DeparmentBLeft">            
+              <div class="DepxyxBox">
+                <table width="100%">
+                    <tr>
+                        <td width="60%">
+                            <h1> {!COH_SI_NewsandAnnouncement__c.Title__c}</h1>
+                        </td>
+                    </tr>
+                </table>
+                <!--<p><h4>{!COH_SI_NewsandAnnouncement__c.Title__c}</h4></p>-->
+                <p><apex:outputtext value="{!COH_SI_NewsandAnnouncement__c.Detailed_Description__c}" escape="false"></apex:outputtext></p>
+                </div>
+           </div>
+       </div>
+    </div>            
+<c:COH_SIP_Footer ></c:COH_SIP_Footer>  
+    
+  </apex:form>
+</div>
+<script type="text/javascript">
+var j$ = jQuery.noConflict();
+j$(document).ready(function(){
+    if ((j$(".AnnouBox") == null || j$(".AnnouBox").css("display") == null || j$(".AnnouBox").css('display') == 'none') && (j$(".PhyRBox") == null || j$(".PhyRBox").css("display") == null || j$(".PhyRBox").css('display') == 'none')){
+        j$(".DeparmentBLeft").css("width", "100%");    
+    }
+});
+</script>
+</apex:page>

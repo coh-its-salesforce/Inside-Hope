@@ -1,0 +1,19 @@
+<aura:component controller="COH_CampusPlanController">
+    <!--<ltng:require scripts="{!$Resource.HorizontalFloatingJS}" afterScriptsLoaded="{!c.doInit}"/>-->
+    <ltng:require scripts="{!join(',',$Resource.JqueryLib2,$Resource.HorizontalFloatingJS)}" afterScriptsLoaded="{!c.doInit}"/>
+    
+   <!-- <aura:attribute name = "MDTParam" type = "string" default="Campus plan Header Floating"/>
+    <aura:attribute name = "MDTRecord" type = "Sobject" /> -->
+    <aura:attribute name = "Announcements" type = "string[]" />
+    <div>
+        <div class="alert-news" id="Titles"> 
+            <ul>
+                <aura:iteration items="{!v.Announcements}" var="anc">
+                    <li title="{!anc.Title__c}">
+                        {!anc.Title__c}
+                    </li>
+                </aura:iteration>
+            </ul>
+          </div>
+    </div>
+</aura:component>

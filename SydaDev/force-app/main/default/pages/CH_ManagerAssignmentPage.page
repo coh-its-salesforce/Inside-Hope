@@ -1,0 +1,52 @@
+<apex:page controller="CH_ManuallyCreateCaseTeamMembers" action="{!AddMember}">
+	<apex:form >
+		<apex:includescript value="https://code.jquery.com/jquery-1.9.0.js"/>
+		<div align="Center" style="position: absolute;top: 200px; z-index: 0999;width:100%;">
+	        <apex:actionStatus id="actStatusId" >
+	            <apex:facet name="start" >
+	                <apex:image url="{!URLFOR($Resource.GridImages, 'GridImages/LoadingImage.gif')}" />                     
+	            </apex:facet>
+	        </apex:actionStatus>
+       	</div>
+       	<apex:pageMessages id="pagemeessages"/>
+		<apex:pageBLock id="assignmentpanel">
+			<apex:pageblocksection title="Assign Team Member" columns="4" >
+				<apex:outputLabel value="Assign team member for user role '{!selectedrole}' : " for="userid"/>
+		   		<apex:selectList multiselect="false" size="1" value="{!selecteduser}" id="userid" required="true" >
+		       		<apex:selectOptions value="{!users}" />
+	       		</apex:selectList>
+				<apex:outputLabel />
+				<apex:outputLabel />
+				<apex:outputLabel />
+				<apex:commandButton value="Save"  action="{!AddCaseteammember}" reRender="pagemeessages,refreshHidden" onclick="disablebutton(this);" oncomplete="hidepanel();" />
+			</apex:pageblocksection>
+		</apex:pageBLock>
+		<apex:pageBLock id="casepanel">
+			<apex:pageblocksection title="Case Details" columns="1" >
+				<apex:detail subject="{!caseID}" relatedList="false"/>
+			</apex:pageblocksection>
+		</apex:pageBLock>    
+		 
+		<apex:inputHidden id="refreshHidden" value="{!refreshPage}" />
+		
+		
+		<script type="text/javascript">
+	        window.onload = function removeButtons() {
+	        	var casepanel = document.getElementById('{!$Component.casepanel}');
+	        	$(casepanel).find("input[type=button]").hide();
+	        }
+	        function hidepanel(){
+	        	var refreshPage = document.getElementById('{!$Component.refreshHidden}');
+                    
+                if(refreshPage.value == 'true'){
+                    document.getElementById('{!$Component.assignmentpanel}').style.display = "none";
+                }  
+	        }
+	        function disablebutton(button){
+	        	$(button).attr("disabled",true);
+	        	$(button).css("cursor","wait");
+	        }
+	    </script>
+	</apex:form>
+	
+</apex:page>

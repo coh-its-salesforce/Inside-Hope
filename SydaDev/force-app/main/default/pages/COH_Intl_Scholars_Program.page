@@ -1,0 +1,430 @@
+<apex:page standardController="Contact" extensions="COH_Physician_ScholarsController" sidebar="false">
+    <style>
+        .alignTop {
+        vertical-align: top;
+        }
+        .headerSearchContainer
+        {
+        display: none;
+        }
+        .pbTitle
+        {
+        display: none;
+        }
+        .activeTab {background-color: #1797C0; color:white; background-image:none}
+        
+        .inactiveTab { background-color: lightgrey; color:black; background-image:none}
+        
+    </style>
+    
+    <apex:form >
+        <apex:pageBlock mode="edit" >
+            
+            <!--<div style="width:100%;">--> 
+            <center> <apex:pageBlockSection columns="1" title="APPLICATION FORM B">
+                <!--<br/>
+<center>THE VISITING INTERNATIONAL SCHOLARS (VIS) PROGRAM</center>
+<br/>
+<center>DEPARTMENT OF SURGERY - CITY OF HOPE</center>--> 
+                </apex:pageBlockSection></center>
+          <div style='margin: 0 auto; width: 360px;'> <apex:outputLabel >Application Status: &nbsp;&nbsp;&nbsp;&nbsp;</apex:outputLabel>
+                <apex:outputField value="{!con.Application_Status__c}"/></div><br/>
+            
+        </apex:pageBlock>
+        <apex:panelGrid columns="2" columnClasses="alignTop,alignTop" cellspacing="10">
+            <apex:pageBlock >
+                <apex:pageBlockSection columns="1" >
+                    <apex:outputtext value="{!Department}"/>
+                    <apex:image value="{!Photolink}"/>
+                    <apex:inputFile value="{!blobValue}" contentType="{!contentType}" fileName="{!filename}"/>
+                    <div class="sidebarHeading">
+                        <b><span class="headinglabel">Contact</span></b>
+                        
+                        <!--<apex:outputPanel rendered="{$userDetails.Contactid!}">
+<a style="float:right;" data-toggle="modal" href="#usereditModal">
+<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+</a>   
+</apex:outputPanel>-->
+                        
+                        
+                        
+                        
+                        <hr class="saperater"/>
+                        <apex:outputtext value="{!con.Name}"/> 
+                        <apex:outputtext value="{!con.email}"/>
+                    </div>
+                </apex:pageBlockSection>
+                
+            </apex:pageBlock>
+            <apex:tabPanel switchType="client" selectedTab="name1" id="AccountTabPanel" tabClass="activeTab" inactiveTabClass="inactiveTab">
+                <apex:tab label="Basic Information" name="name1" id="tabOne">
+                    
+                    <apex:pageBlock >
+                        
+                        <apex:outputLabel >Please select a Category:&nbsp; &nbsp;  <apex:inputField value="{!con.Select_Category__c}"/> </apex:outputlabel><br/><br/>
+                        <apex:pageBlockSection columns="2" title="Personal Information" >
+                            
+                            <apex:inputField value="{!con.FirstName}"/>
+                            <apex:inputField value="{!con.LastName}"/>
+                            <apex:inputField value="{!con.Nickname__c}" label="Nickname"/>
+                            <apex:inputField value="{!con.Legal_Name__c}" label="Legal Name Matching Passport"/>
+                            <apex:inputField value="{!con.Title}" html-placeholder="MD, PhD"/> 
+                            <apex:inputField value="{!con.Position__c}" html-placeholder="Assistant Professor, Private practice, etc" label="Current Position"/> 
+                            <apex:inputField value="{!con.Institution__c}" label="Current Institution"/>
+                            
+                            
+                            <apex:inputField value="{!con.Birthdate}" />
+                            <apex:inputField value="{!con.Gender__c}"/>
+                            <apex:inputField value="{!con.Nationality__c}"/>
+                            <apex:inputField value="{!con.Country_of_Residence__c}" label="Country of Residence Prior to coming to the US "/>
+                            
+                            
+                        </apex:pageBlockSection> 
+                        
+                        <apex:pageBlockSection columns="2" title="Home Mailing Address " >
+                            <apex:inputField value="{!con.MailingStreet}" label="Street"/>
+                            <apex:inputField value="{!con.MailingCity}" label="City"/>
+                            <apex:inputField value="{!con.MailingState}" label="State"/>
+                            <apex:inputField value="{!con.MailingPostalCode}" label="PostalCode"/>
+                            <apex:inputField value="{!con.MailingCountry}" label="Country"/>
+                            <apex:inputField value="{!con.Home_Phone__c}" label="Phone Number"/>
+                        </apex:pageBlockSection>
+                        
+                        <apex:pageBlockSection columns="2" title="Work Mailing Address" >
+                            <apex:inputField value="{!con.street__c}"/>
+                            <apex:inputField value="{!con.City__c}"/>
+                            <apex:inputField value="{!con.State__c}"/>
+                            <apex:inputField value="{!con.Postal_Code__c}"/>
+                            <apex:inputField value="{!con.Country__c}"/>
+                            <apex:inputField value="{!con.Work_Phone_Number__c}" label="Phone Number"/>
+                        </apex:pageBlockSection>
+                        
+                        <apex:pageBlockSection columns="2" title="Contact Information" >
+                            <apex:inputField value="{!con.Email}" label="Email Address"/>
+                            <apex:inputField value="{!con.Phone}" label="Primary Phone Number(Cell, Work, Home)"/>
+                            <apex:inputField value="{!con.OtherPhone}" label="Secondary Phone Number(Cell, Work, Home)"/>
+                            
+                        </apex:pageBlockSection>
+                        
+                        
+                        
+                        <apex:pageBlockSection title="Emergency Contact information" columns="2" >
+                            <apex:inputField value="{!con.Emergency_Name__c}" label="Emergency Contact Name"/> 
+                            <apex:inputField value="{!con.Emergency_Phone__c}" label="Emergency Contact Phone"/> 
+                            <apex:inputField value="{!con.Emergency_Email__c}" label="Emergency Contact Email"/> 
+                            <apex:inputField value="{!con.Relationship__c}" label="Emergency Contact Realtionship"/> 
+                        </apex:pageBlockSection>
+                        
+                        <apex:pageBlockSection columns="1" title="Proposed Dates of the Visit">
+                            Provide two time periods between one and three months in duration
+                            Reminder: the application process and preparation for your visit will take at least four months from the date of approval. No dates earlier than four months after submission of your complete application will be considered
+                            <apex:outputLabel >CHOICE #1: From &nbsp; &nbsp;
+                                <apex:outputpanel >
+                                    <apex:inputField value="{!con.Choice1StartDate__c}"/> 
+                                    &nbsp;&nbsp;To&nbsp;&nbsp;
+                                    <apex:inputField value="{!con.Choice1EndDate__c}"/>
+                                </apex:outputpanel>
+                            </apex:outputLabel>
+                            <apex:outputLabel >CHOICE #2: From &nbsp; &nbsp;
+                                <apex:outputpanel >
+                                    <apex:inputField value="{!con.Choice2StartDate__c}"/> 
+                                    &nbsp;&nbsp;To&nbsp;&nbsp;
+                                    <apex:inputField value="{!con.Choice2EndDate__c}"/>
+                                </apex:outputpanel>
+                            </apex:outputLabel>
+                        </apex:pageBlockSection>
+                        
+                        <apex:pageBlockSection title="Letter of Interest" columns="1" >
+                            <apex:inputField value="{!con.Faculty_Sponsor__c}"/>
+                            A short 300-500 words personal statement explaining why you would like to participate in our program, the goals, expectations, and clinical interests (this will help us ensure that we are able to provide you with the best experience during your visit as possible)<br/><br/>
+                            <apex:inputFile value="{!attachment10.body}" fileName="{!attachment10.name}"/>
+                        </apex:pageBlockSection>
+                        
+                        <apex:pageBlockSection columns="1" title="Required Documents" collapsible="false">
+                            
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="1. Curriculum Vitae" for="att1"/>
+                                <apex:inputFile value="{!attachment1.body}" fileName="{!attachment1.name}" id="att1"/>
+                            </apex:pageBlockSectionItem><br/>
+                            
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="2. Professional letter of recommendation" for="att2"/>
+                                <apex:inputFile value="{!attachment2.body}" fileName="{!attachment2.name}" id="att12"/>
+                            </apex:pageBlockSectionItem><br/>
+                            
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="3. Current color photograph of self" for="att3"/>
+                                <apex:inputFile value="{!attachment3.body}" fileName="{!attachment3.name}" id="att3"/>
+                            </apex:pageBlockSectionItem><br/>
+                            
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="4. Proof of funding (or expected funding)" for="att4"/>
+                                <apex:inputFile value="{!attachment4.body}" fileName="{!attachment4.name}" id="att4"/>
+                            </apex:pageBlockSectionItem><br/>
+                            
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="5. Proof of M.D. or Ph.D. or equivalent degree (copy of your medical diploma)" for="att5"/>
+                                <apex:inputFile value="{!attachment5.body}" fileName="{!attachment5.name}" id="att5"/>
+                            </apex:pageBlockSectionItem><br/>
+                            
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="6. Proof of employment" for="att6"/>
+                                <apex:inputFile value="{!attachment6.body}" fileName="{!attachment6.name}" id="att6"/>
+                            </apex:pageBlockSectionItem><br/>
+                            
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="7. Proof of health insurance (Coverage during your visit to the US)" for="att7"/>
+                                <apex:inputFile value="{!attachment7.body}" fileName="{!attachment7.name}" id="att7"/>
+                            </apex:pageBlockSectionItem><br/>
+                            <apex:pageBlockSectionItem helpText="{!$Label.Helptext}">
+                                <!-- <apex:pageBlockSectionItem helpText="As a Program Sponsor,">-->
+                                <apex:outputLabel value="8. Proof of English proficiency" for="at87"/>
+                                <apex:inputFile value="{!attachment8.body}" fileName="{!attachment8.name}" id="att8"/>
+                            </apex:pageBlockSectionItem><br/>
+                            
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="9. Expected date of visa approval" for="att9"/>
+                                <apex:inputFile value="{!attachment9.body}" fileName="{!attachment9.name}" id="att9"/>
+                            </apex:pageBlockSectionItem><br/>
+                            
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="10. Copy of Passport" for="att20"/>
+                                <apex:inputFile value="{!attachment16.body}" fileName="{!attachment16.name}" id="att20"/>
+                            </apex:pageBlockSectionItem><br/>
+                            
+                            
+                        </apex:pageBlockSection>
+                        <!--</div>-->
+                        <apex:pageblockTable value="{!allFileList }" var="atch">
+                            
+                            <apex:column headerValue="View">   
+                                <apex:outputLink value="{!URLFOR($Action.Attachment.Download,atch.id)}" target="_blank">Download</apex:outputLink>
+                            </apex:column>    
+                            <apex:column headerValue="Attachment Name">
+                                <apex:outputField value="{!atch.name}" id="fileName"/>
+                            </apex:column> 
+                            <apex:column headerValue="Last Modified Date">   
+                                <apex:outputField value="{!atch.LastModifiedDate}" id="LastModifiedDate"/>
+                            </apex:column> 
+                            <apex:column headerValue="{!$ObjectType.Attachment.fields.description.label}">   
+                                <apex:outputField value="{!atch.description}" id="description"/>
+                            </apex:column>                      
+                        </apex:pageblockTable>
+                        
+                        <apex:pageBlockButtons >
+                            <center><apex:commandButton value="Save" action="{!upload}" rendered="{!disableSave}"/> 
+                                <apex:commandButton value="Submit for Approval" action="{!Approval}" rendered="{!disableSave}"/></center>
+                        </apex:pageBlockButtons>
+                        <!--</div>-->
+                        
+                    </apex:pageBlock>
+                </apex:tab>
+                
+                <apex:tab label="Visa Information" name="name2" id="tabTwo" labelWidth="100%" >
+                    <apex:pageblock >
+                        <apex:pageblockSection title="Visa Information" >
+                        <apex:inputField value="{!visaInfo.City_of_Birth__c}" label="City of Birth"/>
+                        <apex:inputField value="{!visaInfo.Country_of_Birth__c}" label="Country of Birth"/>
+                        <apex:inputField value="{!visaInfo.Country_of_Legal_Residence__c}" label="Country of Legal Residence"/>
+                            <apex:inputField value="{!visaInfo.Visa_Status__c}" label="Current Visa Status"/>
+                            <apex:inputField value="{!visaInfo.Visa_Expiration_Date__c}" label="Current Visa Expiration Date (As Applicable) "/>
+                            <apex:pageBlockSectionItem helpText="{!$Label.J1_Visa_Status}">
+                                <apex:outputLabel value="Are you Currently in J-1 Status at another employer?" for="att16"/>
+                                <apex:inputField value="{!visaInfo.J_1_Status__c}" label="Are you Currently in J-1 Status at another employer?"/>
+                            </apex:pageBlockSectionItem>
+                            <!--<apex:inputField value="{!visaInfo.Funding_Amount__c}" label="Amount"/>-->
+                            
+                        </apex:pageblockSection>
+                        
+                        <apex:actionRegion >
+                            <apex:pageBlockSection title="Information" collapsible="false">
+                                <apex:inputField value="{!visaInfo.Funding__c}" >
+                                    <apex:actionSupport id="addrType" event="onchange" rerender="addrInfo">
+                                        <!--<apex:param name="TypeSelection" value="{!Con.Choose_the_Address__c}" />-->
+                                    </apex:actionSupport>
+                                </apex:inputField>
+                            </apex:pageBlockSection>
+                        </apex:actionRegion>
+                        
+                        <apex:outputPanel id="addrInfo">
+                            <apex:pageblocksection rendered="{!visaInfo.Funding__c ='Yes'}">
+                                <apex:InputField value="{!visaInfo.Amount__c}" />
+                                <apex:InputField value="{!visaInfo.Funding_Source__c}" />
+                            </apex:pageblocksection>
+                        </apex:outputPanel>
+                        
+                        <apex:actionRegion >
+                            <apex:pageBlockSection title="Visa Mailing Address" collapsible="false">
+                                <apex:inputField value="{!VisaInfo.Visa_Mailing_Address__c}" >
+                                    <apex:actionSupport id="addrType" event="onchange" rerender="addrHomeInfo">
+                                        <!--<apex:param name="TypeSelection" value="{!Con.Choose_the_Address__c}" />-->
+                                    </apex:actionSupport>
+                                </apex:inputField>
+                            </apex:pageBlockSection>
+                        </apex:actionRegion>
+                        
+                        <apex:outputPanel id="addrHomeInfo">
+                            <apex:pageblocksection rendered="{!VisaInfo.Visa_Mailing_Address__c ='Home'}">
+                                <apex:inputField value="{!con.MailingStreet}" label="Street"/>
+                                <apex:inputField value="{!con.MailingCity}" label="City"/>
+                                <apex:inputField value="{!con.MailingState}" label="State"/>
+                                <apex:inputField value="{!con.MailingPostalCode}" label="PostalCode"/>
+                                <apex:inputField value="{!con.MailingCountry}" label="Country"/>
+                                <apex:inputField value="{!con.Home_Phone__c}" label="Phone Number"/>
+                            </apex:pageblocksection>
+                            
+                            <apex:pageblocksection rendered="{!VisaInfo.Visa_Mailing_Address__c ='Work'}">
+                                <apex:inputField value="{!con.street__c}"/>
+                                <apex:inputField value="{!con.City__c}"/>
+                                <apex:inputField value="{!con.State__c}"/>
+                                <apex:inputField value="{!con.Postal_Code__c}"/>
+                                <apex:inputField value="{!con.Country__c}"/>
+                                <apex:inputField value="{!con.Work_Phone_Number__c}" label="Phone Number"/>
+                                
+                            </apex:pageblocksection>
+                            
+                            <apex:pageblocksection rendered="{!VisaInfo.Visa_Mailing_Address__c ='Other Address'}">
+                                <apex:inputField value="{!visaInfo.Other_mailing_Street__c}"/>
+                                <apex:inputField value="{!visaInfo.Other_mailing_City__c}"/>
+                                <apex:inputField value="{!visaInfo.Other_mailing_State__c}"/>
+                                <apex:inputField value="{!visaInfo.Other_mailing_Postal_code__c}"/>
+                                <apex:inputField value="{!visaInfo.Other_mailing_Country__c}"/>
+                                <apex:inputField value="{!visaInfo.Other_Phone_Number__c}"/>
+                            </apex:pageblocksection>
+                            
+                        </apex:outputPanel>
+                        
+                        
+                        
+                        <apex:pageblockSection Title="Dependent 1 Visa Application Information"  >
+                            <apex:inputField value="{!visaInfo.Dependent_Name1__c}" label="FirstName"/>
+                            <apex:inputField value="{!visaInfo.Dependent_lastName1__c}" label="LastName"/>
+                            <apex:inputField value="{!visaInfo.Gender1__c}" label="Gender"/>
+                            <!--<apex:inputField value="{!visaInfo.Phone_Number1__c}" label="Phone Number"/>-->
+                            <apex:inputField value="{!visaInfo.country_of_legal_residence1__c}" label="country of legal residence"/>
+                            <apex:inputField value="{!visaInfo.Dependent_Relationship1__c}" label="Relationship"/>
+                            <apex:inputField value="{!visaInfo.Dependent_Nationality1__c}" label="Nationality"/>
+                            <apex:inputField value="{!visaInfo.Dependent_Birthcity1__c}" label="Birth City"/>
+                            <apex:inputField value="{!visaInfo.Dependent_Birthcountry1__c}" label="Birth Country"/>
+                            <apex:inputField value="{!visaInfo.Dependent_BirthDate1__c}" label="Birth Date"/>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Copy of Passport" for="att11"/>
+                                <apex:inputFile value="{!attachment11.body}" fileName="{!attachment11.name}" id="att11"/>
+                            </apex:pageBlockSectionItem>
+                        </apex:pageblockSection>
+                        
+                        
+                        <apex:pageblockSection Title="Dependent 2 Visa Application Information" >
+                            <apex:inputField value="{!visaInfo.Dependent_firstName2__c}" label="FirstName"/>
+                            <apex:inputField value="{!visaInfo.Dependent_lastName2__c}" label="LastName"/>
+                            <apex:inputField value="{!visaInfo.Gender2__c}" label="Gender"/>
+                           <!-- <apex:inputField value="{!visaInfo.Phone_Number2__c}" label="Phone Number"/>-->
+                            <apex:inputField value="{!visaInfo.country_of_legal_residence2__c}" label="country of legal residence"/>
+                            <apex:inputField value="{!visaInfo.Dependent_Relationship2__c}" label="Relationship"/>
+                            <apex:inputField value="{!visaInfo.Dependent_Nationality2__c}" label="Nationality"/>
+                            <apex:inputField value="{!visaInfo.Dependent_Birthcity2__c}" label="Birth City"/>
+                            <apex:inputField value="{!visaInfo.Dependent_Birthcountry2__c}" label="Birth Country"/>
+                            <apex:inputField value="{!visaInfo.Dependent_BirthDate2__c}" label="Birth Date"/>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Copy of Passport" for="att12"/>
+                                <apex:inputFile value="{!attachment12.body}" fileName="{!attachment12.name}" id="att12"/>
+                            </apex:pageBlockSectionItem>
+                        </apex:pageblockSection>
+                        
+                        
+                        <apex:pageblockSection Title="Dependent 3 Visa Application Information" >
+                            <apex:inputField value="{!visaInfo.Dependent_firstName3__c}" label="FirstName"/>
+                            <apex:inputField value="{!visaInfo.Dependent_lastName3__c}" label="LastName"/>
+                            <apex:inputField value="{!visaInfo.Gender3__c}" label="Gender"/>
+                           <!-- <apex:inputField value="{!visaInfo.Phone_Number3__c}" label="Phone Number"/>-->
+                            <apex:inputField value="{!visaInfo.country_of_legal_residence3__c}" label="country of legal residence"/>
+                            <apex:inputField value="{!visaInfo.Dependent_Relationship3__c}" label="Relationship"/>
+                            <apex:inputField value="{!visaInfo.Dependent_Nationality3__c}" label="Nationality"/>
+                            <apex:inputField value="{!visaInfo.Dependent_Birthcity3__c}" label="Birth City"/>
+                            <apex:inputField value="{!visaInfo.Dependent_Birthcountry3__c}" label="Birth Country"/>
+                            <apex:inputField value="{!visaInfo.Dependent_BirthDate3__c}" label="Birth Date"/>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Copy of Passport" for="att13"/>
+                                <apex:inputFile value="{!attachment13.body}" fileName="{!attachment13.name}" id="att13"/>
+                            </apex:pageBlockSectionItem>
+                            
+                        </apex:pageblockSection>
+                        
+                        <apex:pageblockSection Title="Dependent 4 Visa Application Information"  >
+                            <apex:inputField value="{!visaInfo.Dependent_firstName4__c}" label="FirstName"/>
+                            <apex:inputField value="{!visaInfo.Dependent_LastName4__c}" label="LastName"/>
+                            <apex:inputField value="{!visaInfo.Gender4__c}" label="Gender"/>
+                            <!--<apex:inputField value="{!visaInfo.Phone_Number4__c}" label="Phone Number"/>-->
+                            <apex:inputField value="{!visaInfo.country_of_legal_residence4__c}" label="country of legal residence"/>
+                            <apex:inputField value="{!visaInfo.Dependent_Relationship4__c}" label="Relationship"/>
+                            <apex:inputField value="{!visaInfo.Dependent_Nationality4__c}" label="Nationality"/>
+                            <apex:inputField value="{!visaInfo.Dependent_Birthcity4__c  }" label="Birth City"/>
+                            <apex:inputField value="{!visaInfo.Dependent_Birthcountry4__c}" label="Birth Country"/>
+                            <apex:inputField value="{!visaInfo.Dependent_Birthdate4__c}" label="Birth Date"/>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Copy of Passport" for="att14"/>
+                                <apex:inputFile value="{!attachment14.body}" fileName="{!attachment14.name}" id="att14"/>
+                            </apex:pageBlockSectionItem>
+                        </apex:pageblockSection>
+                        
+                        
+                        <!--<apex:pageBlockSection columns="1" title="Upload Family Passports" collapsible="false">
+
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="1.Family Passport" for="att14"/>
+<apex:inputFile value="{!attachment14.body}" fileName="{!attachment14.name}" id="att14"/>
+</apex:pageBlockSectionItem><br/>
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="2.Family Passport" for="att15"/>
+<apex:inputFile value="{!attachment15.body}" fileName="{!attachment15.name}" id="att15"/>
+</apex:pageBlockSectionItem><br/>
+<apex:pageBlockSectionItem >
+<apex:outputLabel value="2.Family Passport" for="att16"/>
+<apex:inputFile value="{!attachment16.body}" fileName="{!attachment16.name}" id="att16"/>
+</apex:pageBlockSectionItem><br/>
+
+</apex:pageblockSection><br/><br/>-->
+                        
+                        
+                        <!--<apex:pageBlockSectionItem >--> 
+                        <!--<apex:pageblock title="Download File">-->
+                        <apex:pageblocksection title="Additional forms required" >
+                            
+                            <!--<apex:outputLabel > Additional Forms Required </apex:outputLabel> &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp; -->
+                            <apex:outputLink value="{!$Resource.Medical_Staff_Application}" target="_blank">Click here for medical staff application</apex:outputLink>
+                            
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Upload filled medical staff application here" for="att15"/>
+                                <apex:inputFile value="{!attachment15.body}" fileName="{!attachment15.name}" id="att15"/>
+                            </apex:pageBlockSectionItem>
+                        </apex:pageblocksection>
+                        <!--</apex:pageblock>-->
+                        <!--</apex:pageBlockSectionItem>-->
+                        
+                        <apex:pageblockTable value="{!allVisaFileList }" var="atch1">
+                            
+                            <apex:column headerValue="View">   
+                                <apex:outputLink value="{!URLFOR($Action.Attachment.Download,atch1.id)}" target="_blank">Download</apex:outputLink>
+                            </apex:column>    
+                            <apex:column headerValue="Attachment Name">
+                                <apex:outputField value="{!atch1.name}" id="fileName"/>
+                            </apex:column> 
+                            <apex:column headerValue="Last Modified Date">   
+                                <apex:outputField value="{!atch1.LastModifiedDate}" id="LastModifiedDate"/>
+                            </apex:column> 
+                            <apex:column headerValue="{!$ObjectType.Attachment.fields.description.label}">   
+                                <apex:outputField value="{!atch1.description}" id="description"/>
+                            </apex:column>                      
+                        </apex:pageblockTable>
+                        <apex:pageBlockButtons >
+                            <center><apex:commandButton value="Save" action="{!upload}" rendered="{!disableSave}" /></center>
+                        </apex:pageBlockButtons>
+                        
+                    </apex:pageblock>
+                </apex:tab>
+            </apex:tabPanel>
+        </apex:panelGrid>
+        
+    </apex:form>
+    
+</apex:page>

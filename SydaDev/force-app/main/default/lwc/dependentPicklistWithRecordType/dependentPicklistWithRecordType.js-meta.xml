@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>52.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Dependent Picklists (2) with RecordType</masterLabel>
+    <targets>
+        <target>lightning__HomePage</target>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="controllingField" label="Controlling Field" type="String" role="inputOnly" required="true"/>
+            <property name="controllingRequired" label="Require Controlling Field?" type="Boolean" role="inputOnly"/>
+            <property name="dependentField" label="Dependent Field" type="String" role="inputOnly"  required="true"/>
+            <property name="dependent1Required" label="Require Dependent 1 Field?" type="Boolean" role="inputOnly"/>
+            <property name="dependentField2" label="Dependent Field 2" type="String" role="inputOnly"  required="true"/>
+            <property name="dependent2Required" label="Require Dependent 2 Field?" type="Boolean" role="inputOnly"/>
+            <property name="objectApiName" label="Object Name" type="String" role="inputOnly" required="true"/>
+            <property name="userDefaultRecordTypeId" label="Default RecordType Id" type="String" role="inputOnly"/>
+            <property name="hideRecordTypeInput" label="Hide RecordType Input" type="Boolean" role="inputOnly"/>
+            <property name="disableRecordTypeSelection" label="Disable RecordType Selection" type="Boolean" role="inputOnly" />
+            <property name="controllingFieldValue" label="Controlling Field Value" type="String"/>
+            <property name="dependentFieldValue1" label="Dependent Field Value 1" type="String"/>           
+            <property name="dependentFieldValue2" label="Dependent Field Value 2" type="String"/>            
+            <property name="recordTypeId" label="Selected RecordType Id" type="String" role="outputOnly" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

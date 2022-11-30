@@ -1,0 +1,321 @@
+<template>
+	<lightning-spinner alternative-text="Loading" size="large" if:true={showSpinner}></lightning-spinner>
+
+	<template if:true={showForm}>
+		<lightning-card title=" ">
+			<div style="padding:10px">
+				<!--Insurance Matrix-->
+				<h1 class="insurance-title">Patient Access | Physician/Insurance Matrix</h1><br />
+				<h1 class="insurance-title"><u>Insurance</u></h1>
+				<lightning-layout multiple-rows>
+					<lightning-layout-item size="4" if:true={servicecategoriesoptions} padding="horizontal-small">
+						<lightning-combobox name="ServiceCategories" label="Service Categories" disabled="true"
+							value={servicecategoriesvalue} placeholder="Select Service Categories"
+							options={servicecategoriesoptions} onchange={handleChangeServiceCategories}>
+						</lightning-combobox>
+					</lightning-layout-item>
+					<lightning-layout-item size="4" if:true={plantypeoptions} padding="horizontal-small">
+						<lightning-combobox name="PlanType" label="Plan Type" value={plantypevalue}
+							placeholder="Select Plan Type" options={plantypeoptions} onchange={handleChangePlanType}
+							required>
+						</lightning-combobox>
+					</lightning-layout-item>
+					<lightning-layout-item size="4" if:true={lineofbusinessoptions} padding="horizontal-small">
+						<lightning-combobox name="LineofBusiness" label="Line of Business" value={lineofbusinessvalue}
+							placeholder="Select Line of Business" options={lineofbusinessoptions}
+							onchange={handleChangeLineofBusiness} required></lightning-combobox>
+					</lightning-layout-item>
+					<lightning-layout-item if:true={healthplanoptions} size="4" padding="horizontal-small">
+						<lightning-combobox name="HealthPlan" label="Health Plan" value={healthplanvalue}
+							placeholder="Select Health Plan" options={healthplanoptions}
+							onchange={handleChangeHealthPlan} required>
+						</lightning-combobox>
+					</lightning-layout-item>
+					<lightning-layout-item size="4" if:true={medicalgroupipaoptions} padding="horizontal-small">
+						<lightning-combobox name="MedicalGroupIPA" label="Medical Group / IPA"
+							value={medicalgroupipavalue} placeholder="Select Medical Group / IPA"
+							options={medicalgroupipaoptions} onchange={handleChangeMedicalGroupIPA} required>
+						</lightning-combobox>
+					</lightning-layout-item>
+					<lightning-layout-item size="4" padding="around-medium">
+						<div>
+							<lightning-button variant="brand" onclick={resetInsurancePicklistValues}
+								label="Reset Insurance Picklist Values" class="slds-m-left_x-small"></lightning-button>
+						</div>
+					</lightning-layout-item>
+					<lightning-layout-item size="6" if:true={authpicklistoptions} padding="horizontal-small">
+						<lightning-combobox name="AuthPickLists" label="Does patient have auth at time of scheduling?"
+							value={doespatienthaveauthvalueyesorno} placeholder="Select AuthPickListoptions"
+							options={authpicklistoptions} onchange={handleChangeAuthPickList} required>
+						</lightning-combobox>
+					</lightning-layout-item>
+					<lightning-layout-item size="6" if:true={isAuthAvaliable} padding="horizontal-small">
+						<lightning-input label="Auth #" value={doespatienthaveauthvalue}
+							onchange={handleChangeAuthvalue} required>
+						</lightning-input>
+					</lightning-layout-item>
+				</lightning-layout>
+
+				<template if:true={isToggleOn}>
+					<br />
+					<lightning-layout>
+						<div class="slds-grid">
+							<div style="width: 100%;">
+								<table class="slds-table slds-table_cell-buffer ins-tree-broder slds-scrollable"
+									style="table-layout: fixed;"
+									aria-labelledby="element-with-table-label other-element-with-table-label">
+									<tbody>
+										<tr class="slds-line-height_reset ins-tree-broder" scope="col">
+											<td>
+												<div class="slds-truncate" title="Primary Delivery of Care Center:">
+													<span style="font-size: 14pt;">Primary Delivery of Care
+														Center:</span>
+												</div>
+											</td>
+											<td>
+												<div><span
+														style="font-size: 14pt; color: rgb(0, 176, 80); font-weight: bold;">{guidelinesTable.formPrimaryDeliveryofCareCenter}&nbsp;</span>
+												</div>
+											</td>
+										</tr>
+										<tr class="slds-line-height_reset ins-tree-broder" scope="col">
+											<td class="ins-tree-broder">
+
+											</td>
+											<td class="ins-tree-broder">
+												<span style="font-size: 14pt; font-weight: bold;">National Medical
+													Center</span>
+												</p>
+											</td>
+											<td class="ins-tree-broder">
+												<span style="font-size: 14pt; font-weight: bold;">Clinical
+													Network</span>
+												</p>
+											</td>
+										</tr>
+										<tr class="slds-line-height_reset ins-tree-broder" scope="col">
+											<td class="ins-tree-broder">
+												<p class="ins-tree-table2">
+													<span style="font-size: 14pt;">Contract Status</span>
+												</p>
+											</td>
+											<td class="ins-tree-broder">
+												<p class="ins-tree-table2"><span
+														style="font-size: 14pt;">{guidelinesTable.recIMHospital.HOSPITAL_Contract_Status__c}</span>
+												</p>
+											</td>
+											<td class="ins-tree-broder">
+												<p class="ins-tree-table2"><span
+														style="font-size: 14pt;">{guidelinesTable.recIMProf.PROFESSIONAL_Contract_Status__c}</span>
+												</p>
+											</td>
+										</tr>
+										<tr class="slds-line-height_reset ins-tree-broder" scope="col">
+											<td class="ins-tree-broder">
+												<p class="ins-tree-table2">
+													<span style="font-size: 14pt;">Auth Needed</span>
+												</p>
+											</td>
+											<td class="ins-tree-broder ins-tree-style1">
+												<p class="ins-tree-table2"><span
+														style="font-size: 14pt;">{guidelinesTable.recIMHospital.Auth_Required__c}</span>
+												</p>
+											</td>
+											<td class="ins-tree-broder ins-tree-style1">
+												<p class="ins-tree-table2"><span
+														style="font-size: 14pt;">{guidelinesTable.recIMProf.Auth_Required__c}</span>
+												</p>
+											</td>
+										</tr>
+										<tr class="slds-line-height_reset ins-tree-broder" scope="col">
+											<td class="ins-tree-broder">
+												<p class="ins-tree-table2">
+													<span style="font-size: 14pt;">LOA Needed</span>
+												</p>
+											</td>
+											<td class="ins-tree-broder ins-tree-style1">
+												<p class="ins-tree-table2"><span
+														style="font-size: 14pt;">{guidelinesTable.formLOANeededHosp}</span>
+												</p>
+											</td>
+											<td class="ins-tree-broder ins-tree-style1">
+												<p class="ins-tree-table2"><span
+														style="font-size: 14pt;">{guidelinesTable.formLOANeededProf}</span>
+												</p>
+											</td>
+										</tr>
+										<!-- Changes done by Sanjay on 08/31/2022
+											<tr class="slds-line-height_reset ins-tree-broder" scope="col">
+											<td class="ins-tree-broder">
+												<p class="ins-tree-table2">
+													<span style="font-size: 14pt;">Avg Days to Auth</span>
+												</p>
+											</td>
+											<td class="ins-tree-broder ins-tree-style1">
+												<p class="ins-tree-table2"><span
+                                            style="font-size: 14pt;">{guidelinesTable.recIMHospital.Auth_Time_List__c}</span>
+												</p>
+											</td>
+											<td class="ins-tree-broder ins-tree-style1">
+												<p class="ins-tree-table2"><span
+                                            style="font-size: 14pt;">{guidelinesTable.recIMProf.Auth_Time_List__c}</span>
+												</p>
+											</td>
+										</tr>
+										<tr class="slds-line-height_reset ins-tree-broder" scope="col">
+											<td class="ins-tree-broder">
+												<p class="ins-tree-table2">
+													<span style="font-size: 14pt;">Comments</span>
+												</p>
+											</td>
+											<td class="ins-tree-broder ins-tree-style1">
+												<p class="ins-tree-table2 slds-cell-wrap"><span
+                                            style="font-size: 14pt;">{guidelinesTable.recIMHospital.Comments__c}</span>
+												</p>
+											</td>
+											<td class="ins-tree-broder ins-tree-style1">
+												<p class="ins-tree-table2 slds-cell-wrap"><span
+                                            style="font-size: 14pt;">{guidelinesTable.recIMProf.Comments__c}</span></p>
+											</td>
+										</tr>-->
+										<tr class="slds-line-height_reset ins-tree-broder" scope="col">
+											<td height="34" class="oa4 ins-tree-table1" width="299">
+												<p class="ins-tree-table2"><span style="font-size: 14pt;">Scheduling
+														Guidelines</span></p>
+											</td>
+											<td class="ins-tree-broder ins-tree-style1">
+												<template if:true={isSchedule}>
+													<p class="ins-tree-table2"><span style="font-size: 14pt;">Schedule
+															10 Days
+															Out</span></p>
+												</template>
+												<template if:false={isSchedule}>
+													<p class="ins-tree-table2 slds-cell-wrap">
+														<!--Changes done by Sanjay to replace formSchedulingGuidelinesHosp by recIMHospital.HOSP_Scheduling_Decision_Tree__c on 08/31/2022-->
+														<span
+															style="font-size: 14pt;">{guidelinesTable.recIMHospital.HOSP_Scheduling_Decision_Tree__c}</span>
+													</p>
+												</template>
+											</td>
+											<td class="ins-tree-broder ins-tree-style1">
+												<template if:true={isSchedule}>
+													<p class="ins-tree-table2"><span style="font-size: 14pt;">Schedule
+															10 Days
+															Out</span></p>
+												</template>
+												<template if:false={isSchedule}>
+													<p class="ins-tree-table2 slds-cell-wrap">
+														<!--Changes done by Sanjay to replace formSchedulingGuildelinesProf by recIMHospital.HOSP_Scheduling_Decision_Tree__c on 08/31/2022-->
+														<span
+															style="font-size: 14pt;">{guidelinesTable.recIMProf.PROF_Scheduling_Decision_Tree__c}</span>
+													</p>
+												</template>
+											</td>
+										</tr>
+										<tr class="slds-line-height_reset ins-tree-broder" scope="col">
+											<td height="36" class="oa4" width="299"
+												style="padding: 3.6pt 7.2pt; color: windowtext; font-size: 18pt; font-family: Arial; vertical-align: top; border: 1pt solid black; height: 26.9pt; width: 224pt;">
+												<p class="ins-tree-table2"><span style="font-size: 14pt;">Scheduling
+														Scripting:</span></p>
+											</td>
+											<td colspan="2" class="oa4" width="597"
+												style="padding: 3.6pt 7.2pt; color: windowtext; font-size: 18pt; font-family: Arial; vertical-align: top; width: 448pt;">
+												<p class="ins-tree-table2"><span style="font-size: 14pt;"><a
+															href={label.SchedulingScripting}>Sharepoint
+															Document</a></span></p>
+											</td>
+										</tr>
+										<tr class="slds-line-height_reset ins-tree-broder" scope="col">
+											<td class="ins-tree-broder">
+												<p class="ins-tree-table2">
+													<span style="font-size: 14pt;">Matrix Link</span>
+												</p>
+											</td>
+											<td class="ins-tree-broder ins-tree-style1">
+												<p class="ins-tree-table2"><span style="font-size: 14pt;"><a
+															data-name={guidelinesTable.recIMHospital.Id}
+															onclick={handelUrlClick}>{guidelinesTable.formHospLinkText}</a></span>
+												</p>
+											</td>
+											<td class="ins-tree-broder ins-tree-style1">
+												<p class="ins-tree-table2">
+													<span style="font-size: 14pt;"><a
+															data-name={guidelinesTable.recIMProf.Id}
+															onclick={handelUrlClick}>{guidelinesTable.formClinicalNetworkText}</a></span>
+												</p>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</lightning-layout>
+					<div class="slds-grid">
+						<div class="slds-card__footer slds-grid slds-grid_align-spread slds-var-p-horizontal_small">
+							<lightning-button variant="neutral" label="Hide Insurance Table" class="slds-float_right"
+								style="padding-left: 500px" onclick={handleToggleInsurenceOff}></lightning-button>
+						</div>
+					</div>
+				</template>
+
+				<!--Physician Matrix-->
+				<h1 style="font-size: 22px; font-weight: bold;"><u>Reason for Visit Screening</u></h1>
+				<lightning-layout multiple-rows>
+					<lightning-layout-item size="4" padding="horizontal-small" if:true={departmentoptions}>
+						<lightning-combobox name="Department" label="Department" value={departmentvalue}
+							placeholder="Select Department" options={departmentoptions}
+							onchange={handleChangeDepartment}>
+						</lightning-combobox>
+					</lightning-layout-item>
+					<lightning-layout-item size="4" padding="horizontal-small" if:true={servicelineoptions}>
+						<lightning-combobox name="ServiceLine" label="Service Line" value={servicelinevalue}
+							placeholder="Select Service Line" options={servicelineoptions}
+							onchange={handleChangeServiceLine}>
+						</lightning-combobox>
+					</lightning-layout-item>
+					<lightning-layout-item size="4" padding="horizontal-small" if:true={specialtyoptions}>
+						<label>Diagnostic /Procedure Categories</label>
+						<c-reusable-custom-pick-list-with-search options={specialtyoptions}
+							placeholder="Select Specialty" value={specialtyvalue} label={specialtyvalue}
+							onchange={handleChangeSpecialty}>
+						</c-reusable-custom-pick-list-with-search>
+					</lightning-layout-item>
+					<lightning-layout-item size="4" padding="horizontal-small" if:true={locationoptions}>
+						<lightning-combobox name="Location" label="Location" value={locationvalue}
+							placeholder="Select Location" options={locationoptions} onchange={handleChangeLocation}>
+						</lightning-combobox>
+					</lightning-layout-item>
+					<lightning-layout-item size="4" padding="horizontal-small" if:true={physicianoptions}>
+						<label>Physician</label>
+						<c-reusable-custom-pick-list-with-search options={physicianoptions}
+							placeholder="Select Physician" value={physicianvalue} label={physicianvalue}
+							onchange={handleChangePhysician}>
+						</c-reusable-custom-pick-list-with-search>
+					</lightning-layout-item>
+					<lightning-layout-item size="4" padding="around-medium">
+						<div style="text-align:right">
+							<lightning-button variant="brand" onclick={resetPhysicianPicklistValues}
+								label="Reset Physician Picklist Values" class="slds-m-left_x-small"></lightning-button>
+						</div>
+					</lightning-layout-item>
+				</lightning-layout>
+				<br />
+				<div>
+					<template if:true={recPhysicianMatrix}>
+						<div class="slds-m-around_large">
+							<div class="slds-grid slds-wrap">
+								<template for:each={recPhysicianMatrix} for:item="item">
+									<div class="slds-col slds-size_1-of-2 " key={item.Id}>
+										<c-patient-access-physician-decision-tile rec-physician-matrix={item}
+											onupdate={fireSearchEvent}>
+										</c-patient-access-physician-decision-tile>
+									</div>
+								</template>
+							</div>
+						</div>
+					</template>
+				</div>
+			</div>
+		</lightning-card>
+	</template>
+</template>

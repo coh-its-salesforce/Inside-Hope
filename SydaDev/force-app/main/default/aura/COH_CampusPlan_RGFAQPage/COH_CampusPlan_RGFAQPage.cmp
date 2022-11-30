@@ -1,0 +1,61 @@
+<aura:component controller="COH_CampusPlanController">
+   
+   <aura:registerEvent name="openRivergrade" type="c:CampusPlan_RivergradeEvent" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="CollapseSection" type="String[]"/>
+   <aura:attribute name="FAQRecs" type="COH_CampusPlanController.ParkingFAQs"/>
+    <aura:attribute name="RGsectionData" type="Object" description="Used to store section data"/>
+    <aura:attribute name="RGHeader" type="String"/>
+    <aura:attribute name="RGFAQList" type="Campus_Plan_FAQ__c[]"/>
+   <aura:attribute name="RivergradeFAQ" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.RivergradeFAQ}">
+      
+       <div class="banner-container">
+    	<div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12" >
+                    <div class="banner-image">
+      				<img src = "{!$Resource.StackedEmployee}"/> 
+      				</div>
+      		</div>
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12">
+               <div class="banner-content">
+                   <h4 class="label-header"><label class=" blue-bg">Duarte Patient Information</label></h4>
+                   <h2> Duarte Patient Information FAQ </h2>
+                   <p class="banner-p1-blue"><a href="https://cityofhope.my.salesforce.com/sfc/p/d0000000gcFM/a/3o000001dlcx/EQ4Fy3HoCR.aalat_p.EaRxjXa3SZSwAqcAbFlo7g9c" target="_blank">Duarte Patient Information FAQs</a></p>
+               </div>
+      		</div>
+      	</div>
+       </div>
+        <div class="profile-content">
+            <aura:if isTrue="{!not(empty(v.RGsectionData.groupList))}">
+            <h2>{!v.RGsectionData.sectionName}</h2>
+             <lightning:accordion>
+                <aura:iteration items="{!v.RGsectionData.groupList}" var="gd"  indexVar="index">
+                  <lightning:accordionSection name="{!gd.groupName}" label="{!gd.groupName}">
+                      <lightning:accordion>
+                          <aura:iteration items="{!gd.gQuestions}" var="gq"  indexVar="index">
+                              <lightning:accordionSection name="{!gq.Question__c}" label="{!gq.Question__c}">
+                               <aura:unescapedHtml value="{!gq.Answer__c}" />
+                              </lightning:accordionSection>                         
+                            </aura:iteration>
+                      </lightning:accordion>
+                  </lightning:accordionSection>                         
+                </aura:iteration>
+           	</lightning:accordion>
+            </aura:if>
+           <!-- <aura:if isTrue="{!not(empty(v.RGFAQList))}">
+            <h1 class="faq-h1">{!v.RGHeader}</h1>
+            <lightning:accordion>
+                <aura:iteration items="{!v.RGFAQList}" var="f"  indexVar="index">
+                  <lightning:accordionSection name="{!f.Question__c}" label="{!f.Question__c}">
+                   <aura:unescapedHtml value="{!f.Answer__c}" />
+                  </lightning:accordionSection>                         
+                </aura:iteration>
+           	</lightning:accordion>
+            </aura:if> -->
+		</div>
+           
+        <!--<div class="backbutton" onclick="{!c.goBackToRiverGrade}" ><lightning:icon iconName="utility:back" size="x-small" variant="inverse" />&nbsp;&nbsp;&nbsp;&nbsp;Back  
+    </div>-->
+       </aura:if>
+</aura:component>

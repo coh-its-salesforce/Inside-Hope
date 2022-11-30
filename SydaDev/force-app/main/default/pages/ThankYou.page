@@ -1,0 +1,31 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" docType="html-5.0" language="en-US" applyHTMLTag="false" cache="false" expires="0">
+    <style>
+        body {
+        overflow:hidden
+        }
+        
+        .headerText {
+        width: 90%;
+        outline: none;
+        background-repeat: no-repeat;
+        margin: 0px;
+        padding: 0px;
+        color: #5499dd;
+        font-weight: normal;
+        padding-top: -50px;
+        text-align: center;
+        }
+        
+        .content
+        {
+        padding: 15px;
+        width: 90%;
+        text-align: center;
+        }
+    </style>
+    <div class="header">
+        <h2 class="headerText">Thank you for taking the survey.</h2>
+    </div>
+    <div class="content">
+    </div>    
+</apex:page>

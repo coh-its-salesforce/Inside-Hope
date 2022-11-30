@@ -1,0 +1,30 @@
+<aura:component controller="HRPortalNewEmployeeDetailController"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+    <aura:attribute name="user" type="User" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
+    
+    <h1 style="font-size: 20px ;font-weight: bold;">New Employee</h1><br/>
+    
+    Welcome, <b>{!v.user.Name}</b> to City of Hope! 
+    <br/><br/>
+    <c:HRPortalCommonPageContent pageName="New_Employee"></c:HRPortalCommonPageContent>
+    <!--<p>We are excited to have you on board.Your role will be extremely helpful in fulfilling the mission and goals of your department at City of Hope. 
+    </p>
+    <br/>
+    <p>
+    you will attend our new hire orientation soon after you start. We encourage you to familiarize yourself with what to expect on your milestones by exploring the items below.
+    </p>
+    <ol style="margin-left: 20px;">
+    	<li><a href="#"> My First Day</a></li>
+        <li><a href="#"> My First Week</a></li>
+        <li><a href="#"> My First Month</a></li>
+        <li><a href="#"> My First 3 Months</a></li>
+        <li><a href="#"> My First 6 Months</a></li>
+        <li><a href="#"> My First year</a></li>
+    </ol>
+    -->
+    
+</aura:component>

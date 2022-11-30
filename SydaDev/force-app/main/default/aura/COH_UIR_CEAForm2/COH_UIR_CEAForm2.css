@@ -1,0 +1,29 @@
+.THIS .slds-form-element > .slds-form-element__label, 
+.THIS lightning-textarea > .slds-form-element__label,
+.THIS .slds-section__title {
+    font-weight: bold;
+}
+
+.THIS .slds-box_no-padding {
+    padding: 0;
+}
+
+.THIS input[type=number]::-webkit-inner-spin-button, 
+.THIS input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+.THIS .sticky {
+  top: 0;
+  left: 0;
+  right: 0;
+  display: block;
+  z-index: 1;
+  background: #999;
+  color: #fff;
+  padding: 10px 20px;
+}
+
+.THIS lightning-datepicker>.slds-form-element {
+    width: 100%;
+}

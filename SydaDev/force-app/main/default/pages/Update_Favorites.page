@@ -1,0 +1,17 @@
+<apex:page controller="UpdateFavoriteController" showHeader="false" sidebar="false" standardStylesheets="false" docType="html-5.0" language="en-US" applyHTMLTag="false">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />    
+    <head>        
+        <c:Head title="iHope - City Of Hope Intranet"></c:Head>
+    </head>   
+    <apex:form >
+        Program to update Persona based favorites.
+        <br/>
+        <apex:actionFunction action="{!loadDefaultLinks}" name="loadDefaultLinksJS" status="myStatus" rerender="out"/>
+        <apex:outputPanel id="out">	
+            <apex:actionStatus startText="requesting..." id="myStatus">
+                <apex:facet name="stop">{!UserIDs}</apex:facet>
+            </apex:actionStatus>
+        </apex:outputPanel>
+    </apex:form>
+    <script>loadDefaultLinksJS();</script>
+</apex:page>

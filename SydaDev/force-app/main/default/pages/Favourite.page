@@ -1,0 +1,90 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" 
+           applyHtmlTag="false" applyBodyTag="false" docType="html-5.0"
+           controller="FavouriteCompController">
+    
+    
+    <html lang="en">
+        <head>
+            
+            <c:Head title="My Favorites"></c:Head>
+            
+        </head>
+        <body>
+            <div class="Wrapper">
+            <apex:form >
+                <!-- Header Bar---> 
+                <c:COH_SIP_Header ></c:COH_SIP_Header> 
+                
+                <!--search bar-->
+                <c:COH_SIP_Search ></c:COH_SIP_Search>
+                <!-- page Body Content-->
+                <!-- Container -->
+                <div class="container" style="padding: 150px 0 0 0;height: 100%;">
+                    <div class="well">
+                        <h3>
+                            <i class="fa fa-heart"></i> My Favorites
+                            <apex:actionStatus id="st">
+                                <apex:facet name="start">
+                                    <i class="fa fa-circle-o-notch fa-spin pull-right"></i>
+                                </apex:facet>
+                            </apex:actionStatus>
+                        </h3>
+                    </div>
+                        
+                        <apex:outputPanel id="panel" layout="block" styleClass="container">
+                            <apex:outputPanel rendered="{!msgFlag}" styleClass="row">
+                                
+                                <div class="col-lg-6 col-md-6  alert alert-{!IF(msgType=='success', 'success', IF(msgType=='error', 'danger',''))} alert-dismissible" role="alert" style="margin-left: -15px;">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <strong>{!msgType}!!</strong>&nbsp;{!msg} Go back to <apex:outputLink value="apex/COH_SIRP_HOME_PAGE"> Home</apex:outputLink>
+                                </div>
+                            </apex:outputPanel>
+                            
+                            <DIV class="row">
+                                <apex:commandlink action="{!addNew}" style="text-decoration:none;" status="st" styleclass="btn btn-warning"  rerender="panel">
+                                    <i class="fa fa-plus-circle"></i> &nbsp;Add More Link
+                                </apex:commandlink>&nbsp;
+                                <apex:commandButton value="Save" status="st" action="{!doSave}" styleclass="btn btn-success" rendered="{!AND(saveBtnFlag, NOT(ISNULL(myFavList)), myFavList.size >0)}" rerender="panel"/><!---->
+                                
+                                <apex:commandButton value="Edit" status="st" action="{!doEdit}" styleclass="btn btn-primary" rendered="{!AND(NOT(saveBtnFlag),NOT(editFlag), AND(NOT(ISNULL(myFavList)), myFavList.size >0))}" rerender="panel"/>
+                                &nbsp;
+                                <apex:commandButton value="Cancel" status="st" action="{!doCancel}" styleclass="btn btn-default" rendered="{!editFlag}" rerender="panel"/>
+                            </DIV>
+                            
+                            <div class="row">
+                                <apex:actionRegion >
+                                    <apex:dataTable value="{!myFavList}" var="f" id="table" styleClass="table table-bordered" style="margin-top:10px;"> 
+                                        <apex:column headervalue="Action" style="width:10%">
+                                            <apex:commandLink value="Del" action="{!removeLink}" rerender="panel" status="st">
+                                                <apex:param assignTo="{!linkorder}" name="order" value="{!f.order}" />
+                                            </apex:commandLink>
+                                        </apex:column>
+                                        <apex:column headervalue="URL" style="width:60%">
+                                            <apex:outputText value="{!f.SelectedValue}" rendered="{!AND(NOT(editFlag), NOT(isNULL(f.fav.id)))}"/>
+                                            <apex:selectList style="width:60%" styleClass="form-control" size="1" multiselect="false" value="{!f.SelectedValue}" rendered="{!OR(editFlag, ISNULL(f.fav.id))}">
+                                                <apex:selectOptions value="{!AllFevouriteLinsList}"></apex:selectOptions>
+                                                <apex:actionSupport event="onchange" action="{!OnchangeLink}" reRender="table">
+                                                    <apex:param assignTo="{!linkorder}" name="order" value="{!f.order}" />
+                                                </apex:actionSupport>
+                                            </apex:selectList>
+                                        </apex:column>
+                                        <apex:column id="linkColumn" headerValue="Link">
+                                            <apex:outputLink value="{!f.linkURL}" target="blank">{!f.linkURL}</apex:outputLink>
+                                        </apex:column>
+                                        <apex:column headervalue="Show On Home" style="width:10%">
+                                            <apex:outputField value="{!f.fav.Show_On_Home__c}" rendered="{!AND(NOT(editFlag), NOT(isNULL(f.fav.id)))}"/>
+                                            <apex:inputField styleClass="form-control" value="{!f.fav.Show_On_Home__c}" rendered="{!OR(editFlag, ISNULL(f.fav.id))}"/>
+                                            
+                                        </apex:column>
+                                    </apex:dataTable>
+                                </apex:actionRegion>
+                            </div><!--Row End-->
+                        </apex:outputPanel>  
+                </div><!--Container end-->
+                <c:COH_SIP_Footer ></c:COH_SIP_Footer> 
+            </apex:form>
+                </div>
+        </body>            
+    </html> 
+    
+</apex:page>

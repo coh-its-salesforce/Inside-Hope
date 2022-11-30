@@ -1,0 +1,83 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,lightning:isUrlAddressable" controller="COH_Get_IT_ResourceRecords">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="ITRRecs" type="IT_Resource__c" default=""/>
+    <aura:attribute name="isEdit" type="Boolean" default="false" description="Used to handle show /hide edit form"/>
+	<aura:if isTrue="{!v.isEdit == false}">
+        <center>
+        	<div class="slds-m-top_medium">
+            	<lightning:button label="Edit Details" variant="brand" name="Edit Details" onclick="{!c.handleEdit}"/>
+            </div>
+        </center><br/> <br/>
+    </aura:if>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+    <thead>
+    			<tr class="slds-line-height_reset">
+      				<th class="" scope="col">
+        				<div class="slds-truncate" title="Field Name"> Field Name </div>
+      				</th>
+                    <th class="" scope="col">
+        				<div class="slds-truncate" title="Salesforce User Repository Value"> Salesforce User Repository Value </div>
+      				</th>
+                    <th class="" scope="col">
+        				<div class="slds-truncate" title="Resource Repository Value"> Resource Repository Value </div>
+      				</th>
+                    <th class="" scope="col">
+        				<div class="slds-truncate" title="Resource Manager View"> Resource Manager View </div>
+      				</th>
+                    <!-- <th class="" scope="col">
+        				<div class="slds-truncate" title="Override Checkbox"> Override Checkbox </div>
+      				</th> -->
+                    <th class="" scope="col">
+        				<div class="slds-truncate" title="Comments"> Comments </div>
+      				</th>
+    			</tr>
+  			</thead>
+    </table>
+    		<tbody>
+                <tr class="slds-hint-parent">
+                    <div class="slds-border_bottom">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="First Name">
+                            <div class="slds-border_right ">
+          					First Name
+                            </div>
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            
+                        	<ui:outputTextArea value="{!v.ITRRecs.First_Name__c}" />
+                        </div> 
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.First_Name_Update__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+                        <ui:outputTextArea value="{!v.ITRRecs.First_Name_Formula__c}" />
+        				<!-- <div class="slds-truncate" title="Resource Manager View">
+                            <aura:if  isTrue="{!or(v.ITRRecs.First_Name_Update__c == null, v.ITRRecs.First_Name_Override__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.First_Name__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.First_Name_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if>
+                        </div> -->
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.First_Name_Override__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.First_Name_Comments__c}" />
+                        </div>
+      				</td>
+                    </div>
+                </tr>
+    		</tbody>
+</aura:component>

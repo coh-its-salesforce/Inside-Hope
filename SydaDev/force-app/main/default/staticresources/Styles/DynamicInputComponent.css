@@ -1,0 +1,78 @@
+.srm_dynamicInputTableTdLbl{
+	color: #000000;
+	font-family: Tahoma,MS Sans Serif;
+	font-size: 11px;
+	padding-left: 10px;
+	padding-top: 2px;
+	margin: 0;
+	vertical-align: top;
+	white-space: normal;
+	width: 200px;
+}
+.srm_clsDynamicTable{
+	width:100%;
+}
+
+.srm_clsDynamicInputTextArea{
+	width: 350px ! important;
+}
+.srm_clsDynamicInputTextBox{
+	width: 200px; ! important;
+}
+.srm_clsInputTextBox{
+	border-color: #6A7378 #BAC3C8 #BAC3C8 #6A7378;
+	border-style: solid;
+	border-width: 1px;
+	color: #000000;
+	font-family: Tahoma,MS Sans Serif;
+	font-size: 11px;
+	height: 13px;
+	margin: 0;
+	padding: 2px 2px 2px 5px;
+	vertical-align: top;
+	width: 195px;
+	background-color: #FFFFFF;
+}
+
+.picklistInputCls {
+    font-family: Tahoma,MS Sans Serif;
+    font-size: 11px;
+	background-color: #FFFFFF;
+    border-color: #6A7378 #BAC3C8 #BAC3C8 #6A7378;
+    border-style: solid;
+    border-width: 1px;
+    color: #000000;
+    width: 205px;
+	height:19px;
+}
+@-moz-document url-prefix()
+{
+	.inputMainCls {
+		margin-top:-10px;
+	}
+}
+
+.clsPanelInputLabelTD {
+	width: 38%;
+	padding-top:5px;
+}
+.clsSSOutputPanelReadOnly {
+	width: 130px;
+	
+}
+.clsSSInputCheckBox {
+	width: auto;
+}
+.clsSSInputTextArea {
+	margin-left: 10px;
+}
+.customSStableCls select {
+	width: 137px;
+}
+.customSStableCls .dateOnlyInput input {
+	width: 130px;
+}
+	
+.multiSelectPicklistTable{
+	padding-left:10px;
+}

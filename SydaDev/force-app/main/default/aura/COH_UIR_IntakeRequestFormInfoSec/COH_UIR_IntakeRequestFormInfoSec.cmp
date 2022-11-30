@@ -1,0 +1,410 @@
+<aura:component controller="COH_UIR_IntakeRequestFormController">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:method name="validateFields" action="{!c.validateFields}"/>
+    <aura:attribute name="mIntakeRequest" type="COH_UniversalIntakeRequest__c"/>    
+    <aura:attribute name="mPicklists" type="Map" />
+    
+    <div class="slds-form-horizontal">
+        <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_small">
+            InfoSec Request
+        </h3>
+        
+        <!-- Access Data, access PHI -->
+        <div class="slds-grid slds-wrap">        
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_AccessData__c}" 
+                                      label="Does your request involve a system/ contract/ solution that will collect, store, or process data?"
+                                      name="COH_UIR_ISC_AccessData__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_AccessData__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_AccessData__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_AccessPHI__c}" 
+                                      label="Does this system/ solution involve the collection, storage, or processing of PHI (Protected Health Information)?"
+                                      name="COH_UIR_ISC_AccessPHI__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_AccessPHI__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_AccessPHI__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>            
+        </div>
+        
+        <!-- BAA Required, Why is BAA not required -->
+        <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_ISC_AccessPHI__c == 'Yes'}">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_BAARequired__c}" 
+                                          label="Is a Business Associate Agreement (BAA) required?"
+                                          name="COH_UIR_ISC_BAARequired__c"
+                                          aura:id="intakeRequestFormInfoSec"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_BAARequired__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_BAARequired__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_ISC_BAARequired__c == 'No'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_ISC_BAANotRequiredDetails__c}" 
+                                             label="Why is a BAA not required?"
+                                             name="COH_UIR_ISC_BAANotRequiredDetails__c"
+                                             aura:id="intakeRequestFormInfoSec"
+                                             required="true"/>            
+                        </div>         
+                    </div>
+                </aura:if>
+            </div>
+        </aura:if>
+        
+        <!-- Access PII, Access PCI DSS -->
+        <div class="slds-grid slds-wrap">        
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_AccessPII__c}" 
+                                      label="Does this system/ solution involve the collection, storage, or processing of PII (Personally Identifiable Information - such as names, dates of birth, SSN, etc.)?"
+                                      name="COH_UIR_ISC_AccessPII__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_AccessPII__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_AccessPII__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_AccessPCIDSS__c}" 
+                                      label="Does this system/ solution involve the collection, storage, or processing of PCI DSS (Credit card related information)?"
+                                      name="COH_UIR_ISC_AccessPCIDSS__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_AccessPCIDSS__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_AccessPCIDSS__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>            
+        </div>        
+        
+        <!-- Contain IP, Access Sensitive Data -->
+        <div class="slds-grid slds-wrap">        
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_ContainIP__c}" 
+                                      label="Does this system/ solution contain Intellectual property (IP)?"
+                                      name="COH_UIR_ISC_ContainIP__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_ContainIP__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_ContainIP__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_AccessOtherSesitiveInfo__c}" 
+                                      label="Does this system/ solution involve the collection, storage, or processing of other sensitive information (in other words if this information went public or got into the wrong hands, would it cause harm to COH, their employees, patients, etc.?)"
+                                      name="COH_UIR_ISC_AccessOtherSesitiveInfo__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_AccessOtherSesitiveInfo__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_AccessOtherSesitiveInfo__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>            
+        </div>
+        
+        <!-- Website with login, URL -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_WebsiteWithLogin__c}" 
+                                      label="Will there be a website with a login?"
+                                      name="COH_UIR_ISC_WebsiteWithLogin__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_WebsiteWithLogin__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_WebsiteWithLogin__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_ISC_WebsiteWithLogin__c == 'Yes'}">
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_ISC_WebsiteURL__c}" 
+                                         label="Please provide the website address (URL) for the site."
+                                         name="COH_UIR_ISC_WebsiteURL__c"
+                                         aura:id="intakeRequestFormInfoSec"
+                                         required="true"/>            
+                    </div>         
+                </div>
+            </aura:if>
+        </div>
+        
+        <!-- Business problems, where will data be stored -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_ISC_ProblemsAddressedBySolution__c}" 
+                                        label="What business problem(s) will be addressed by this solution?"
+                                        name="COH_UIR_ISC_ProblemsAddressedBySolution__c"
+                                        aura:id="intakeRequestFormInfoSec"
+                                        required="true"/>                
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_ISC_WhereWillDataBeStored__c}" 
+                                        label="Where will the data be stored?"
+                                        name="COH_UIR_ISC_WhereWillDataBeStored__c"
+                                        aura:id="intakeRequestFormInfoSec"
+                                        required="true"/>            
+                </div>         
+            </div>            
+        </div>
+        
+        <!-- Consultant PHI, Vendor supplied workstation -->
+        <div class="slds-grid slds-wrap">        
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_InvolveConsultantWithPHI__c}" 
+                                      label="Does this system/ solution involve a consultant with PHI interaction?"
+                                      name="COH_UIR_ISC_InvolveConsultantWithPHI__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_InvolveConsultantWithPHI__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_InvolveConsultantWithPHI__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_InvolveVendorWorkstation__c}" 
+                                      label="Does this system/ solution involve a vendor supplied workstation?"
+                                      name="COH_UIR_ISC_InvolveVendorWorkstation__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_InvolveVendorWorkstation__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_InvolveVendorWorkstation__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>            
+        </div>
+        
+        <!-- Vendor Supplied device, sensitive data on vendor device -->
+        <div class="slds-grid slds-wrap">        
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_DeviceConnectedToNetwork__c}" 
+                                      label="Does this system/ solution involve a vendor supplied device with network connectivity?"
+                                      name="COH_UIR_ISC_DeviceConnectedToNetwork__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_DeviceConnectedToNetwork__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_DeviceConnectedToNetwork__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_SesitiveDataOnVendorDevice__c}" 
+                                      label="Does this system/ solution involve software with PHI, PII, PCI, or other data classified as 'sensitive' to be installed on a Vendor device?"
+                                      name="COH_UIR_ISC_SesitiveDataOnVendorDevice__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_SesitiveDataOnVendorDevice__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_SesitiveDataOnVendorDevice__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>            
+        </div>
+        
+        <!-- sensititve data on COH device, Software installed on COH device -->
+        <div class="slds-grid slds-wrap">        
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_SensitiveDataOnCOHDevice__c}" 
+                                      label="Does this system/ solution involve software with PHI, PII, PCI, or other data classified as 'sensitive' to be installed on a COH device?"
+                                      name="COH_UIR_ISC_SensitiveDataOnCOHDevice__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_SensitiveDataOnCOHDevice__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_SensitiveDataOnCOHDevice__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_SoftwareInstalledOnCOHDevice__c}" 
+                                      label="Will software be installed on a COH device?"
+                                      name="COH_UIR_ISC_SoftwareInstalledOnCOHDevice__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_SoftwareInstalledOnCOHDevice__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_SoftwareInstalledOnCOHDevice__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>            
+        </div>
+        
+        <!-- Connectivity to COH, data stored on cloud or Saas -->
+        <div class="slds-grid slds-wrap">        
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_InvolveConnectivityToCOH__c}" 
+                                      label="Does this system/ solution involve connectivity to COH (through an interface, VPN, remote access, etc.)?"
+                                      name="COH_UIR_ISC_InvolveConnectivityToCOH__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_InvolveConnectivityToCOH__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_InvolveConnectivityToCOH__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_DataOnCloudOrUtilizeSaaS__c}" 
+                                      label="Will this data/ information be stored on the cloud or utilize Software as a Service (SaaS)?"
+                                      name="COH_UIR_ISC_DataOnCloudOrUtilizeSaaS__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_DataOnCloudOrUtilizeSaaS__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_DataOnCloudOrUtilizeSaaS__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>            
+        </div>
+        
+        <!-- Business processing outsourcing, involve IT outsourcing -->
+        <div class="slds-grid slds-wrap">        
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_InvolveProcessOutsourcing__c}" 
+                                      label="Does this system/ solution involve business process outsourcing?"
+                                      name="COH_UIR_ISC_InvolveProcessOutsourcing__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_InvolveProcessOutsourcing__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_InvolveProcessOutsourcing__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_InvolveITOutsourcing__c}" 
+                                      label="Does this system/ solution involve IT outsourcing?"
+                                      name="COH_UIR_ISC_InvolveITOutsourcing__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_InvolveITOutsourcing__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_InvolveITOutsourcing__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>            
+        </div>
+        
+        <!-- Data center outsourcing, involve physicial security -->
+        <div class="slds-grid slds-wrap">        
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_InvolveDataCenterOutsourcing__c}" 
+                                      label="Does this system/ solution involve data center outsourcing?"
+                                      name="COH_UIR_ISC_InvolveDataCenterOutsourcing__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_InvolveDataCenterOutsourcing__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_InvolveDataCenterOutsourcing__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_InvolvePhysicalSecurity__c}" 
+                                      label="Does this system/ solution involve physical security (badging, access to buildings, etc)?"
+                                      name="COH_UIR_ISC_InvolvePhysicalSecurity__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_InvolvePhysicalSecurity__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_InvolvePhysicalSecurity__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>            
+        </div>
+        
+        <!-- Involve Software Development, Access Controls -->
+        <div class="slds-grid slds-wrap">        
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_ISC_InvolveSoftwareDevelopment__c}" 
+                                      label="Does this system/ solution involve software development?"
+                                      name="COH_UIR_ISC_InvolveSoftwareDevelopment__c"
+                                      aura:id="intakeRequestFormInfoSec"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_ISC_InvolveSoftwareDevelopment__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_ISC_InvolveSoftwareDevelopment__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_ISC_AccessControl__c}" 
+                                        label="How is the access performed/ what are the access controls? "
+                                        name="COH_UIR_ISC_AccessControl__c"
+                                        aura:id="intakeRequestFormInfoSec"
+                                        required="true"/>             
+                </div>         
+            </div>            
+        </div>
+        
+    </div>
+</aura:component>

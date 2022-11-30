@@ -1,0 +1,18 @@
+<aura:component controller="COH_CampusPlanController">
+  <aura:attribute type="Campus_Plan_News__c" name="newsInstance"  required="true"/>
+   
+    <aura:registerEvent name="NewsEvent" type="c:CampusPlan_NewsEvent" />
+  	<a class="news-item" onclick="{!c.openNewsStory}">
+        <div class="news-item-image">
+        	<aura:if isTrue="{!v.newsInstance.PhotoURL__c != null}">
+            	<img src="{!v.newsInstance.PhotoURL__c}"/>
+                	<aura:set attribute="else">
+                    	<img src="{!$Resource.cohIntranet}"/>
+                	</aura:set>
+            </aura:if>
+        </div>
+    	<h3 class="news-title">
+            {!v.newsInstance.Title__c}
+        </h3>
+    </a>
+</aura:component>

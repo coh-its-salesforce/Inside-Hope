@@ -1,0 +1,56 @@
+<aura:component >
+    <aura:attribute name="MedicalOffice" type="boolean" default="false"/>
+    <aura:registerEvent name="OpenOrangeCounty" type="c:CampusPlan_OrangeCountyEvent" />
+   <aura:attribute name="OrangeCounty" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.OrangeCounty}">
+       <div class="banner-container">
+    	<div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+                    <div class="banner-image">
+      				<img src = "{!$Resource.WhyOrangeCounty}"/> 
+      				</div>
+      		</div>
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12">
+               <div class="banner-content">
+                   <h4 class="label-header"><label class="orange-bg">Orange County</label></h4>
+                   <h2> Why Orange County?</h2>
+                   <p class="banner-p">
+                       Many Orange County patients are driving up to two hours to receive advanced cancer care at our Duarte campus. Our patients are calling us to bring this care closer to home. 
+                   </p>
+                   
+               </div>
+      		</div>
+      	</div>            
+       </div>
+        <div class="profile-content"><!-- Updated by Frank 20200331 per Nathan Lammers email -->
+            <strong>Our Patients Are Calling Us</strong>
+            <p>
+            City of Hope is bringing hope to Orange County and meeting a press need for the sixth most populous county in the nation.
+            </p>
+            <p>
+            Orange County residents have not beaten the 1 in 3 national statistic for cancer incidence despite their reputation for healthy living. The cancer incidence rate in the county is projected to increase by 18 percent over the next decade as it ages faster than the national average. Nearly 20 percent of patients with a cancer diagnosis leave Orange County for treatment with more than 3,2000 patients traveling to Duarte—an up-to-two-hour commute.
+            </p>
+            <p>
+            City of Hope is responding to these needs by making it easier for the region to access our highly specialized treatments, nationally recognized compassionate care, and scientific breakthroughs.
+            </p>
+            <strong>Partnerships of the Future</strong>
+            <p>
+            We know we can’t do something this important alone. Orange County’s ecosystem of innovation hosts the medical device capital of the world and is poised to be a global life-sciences hub. This presents City of Hope with opportunities to develop future-focused partnerships that will change the way we deliver cancer care.
+            </p>
+            <p>
+            Our current partners include collaborators such as FivePoint, which designs and develops large mixed-use, master-planned communities. FivePoint invited us to build a campus at FivePoint Gateway in Irvine, helping us realize our Orange County vision on an expedited timeline.
+            </p>
+            <p>
+            We’re delivering on our promise to bring tomorrow’s discoveries to the people who need them today.
+            </p>
+		</div>
+  		<!-- Frank 20200331	Why doesn't this link work?
+          <div class="backbutton" onclick="{!c.goBackToOrangeCounty}" ><lightning:icon iconName="utility:back" size="x-small" variant="inverse" />&nbsp;&nbsp;&nbsp;&nbsp;Back  
+    		</div>
+       -->
+       </aura:if>
+   <!-- <aura:if isTrue="{!v.MedicalOffice}">
+            <c:COH_CampusPlan_MedicalOfficeProfile/>
+        </aura:if> -->
+    
+</aura:component>

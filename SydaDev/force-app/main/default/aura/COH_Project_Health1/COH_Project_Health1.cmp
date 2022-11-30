@@ -1,0 +1,822 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" controller="ITPM_LifeCycle_Tabs_Controller">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <!-- <aura:handler event="force:refreshView" action="{!c.init}" /> -->
+    <aura:attribute name="Error" type="boolean" default="FALSE"/>
+    <aura:attribute name="disabled" type="Boolean" default="false" />
+     <aura:attribute name="isAdminUser" type="Boolean" default="false" />
+     <aura:attribute name="isDisableGoLiveDateField" type="Boolean" default="false" />
+    <aura:attribute name="saved" type="Boolean" default="false" />
+    <aura:attribute name="viewScreen" type="boolean" default="true"/>
+    <aura:attribute name="editScreen" type="boolean" default="FALSE"/>
+    <aura:attribute name="IT_Portfolio_Management__cRecord" type="Object"/>
+    <aura:attribute name="link1" type="String"/>
+    <aura:attribute name="link2" type="String"/>
+    <aura:attribute name="link3" type="String"/>
+    <aura:attribute name="link4" type="String"/>
+    <aura:attribute name="link5" type="String"/>
+    <aura:attribute name="link6" type="String"/>
+    <aura:attribute name="link7" type="String"/>
+    <aura:attribute name="link8" type="String"/>
+    <aura:attribute name="ITPMObj" type="IT_Portfolio_Management__c" default=""/>
+    <!--<aura:attribute name="showSpinner" type="Boolean" default="true" />
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner />
+    </aura:if>-->
+    
+    <aura:if isTrue="{!!v.saved}">
+        
+        <div class="slds-card slds-card_boundary" style="box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.16);">
+            
+            <div class="slds-section slds-is-open slds-m-top_none">
+                
+                
+                <h3 class="slds-section__title">
+                    <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                        <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                        <span class="slds-truncate" title="Section Title"> Project Health </span>
+                    </button>
+                </h3>
+                <aura:if isTrue="{!v.viewScreen}">
+                    <lightning:recordViewForm
+                                              aura:id="ViewForm"
+                                              recordId="{!v.recordId}"
+                                              objectApiName="IT_Portfolio_Management__c"
+                                              >
+                        <force:recordData 
+                                          aura:id="recordLoader"
+                                          recordId="{!v.recordId}"
+                                          fields="Project_Schedule__c,ITS_Notes__c,Activity_Type__c,DT_Project_Type__c,Project_Status__c,Sharepoint_URL__c,Current_Status_Accomplishments__c,
+                                                  Project_Scope__c,
+                                                  Project_Health_Explanation1__c,
+                                                  Project_Health_Explanation_Latest__c,
+                                                  Project_Resources__c,
+                                                  Project_Financial__c,
+                                                  Remediation_Plan__c,
+                                                  Overall_Project_Health__c,
+                                                  Overall_Project_Health_Formula__c,
+                                                  Project_Health_Explanation__c,
+                                                  Phase1__c,
+                                                  Activity_Type__c,
+                                                  Project_Status1__c,
+                                                  Project_Status__c,
+                                                  Key_Issues__c,
+                                                  Action_Plan__c,
+                                                  Actual_Amount_Spent__c, 
+                                                  Key_Risks__c,
+                                                  Percentage_Completion__c,
+                                                  Go_Live_Date__c,
+                                                  Phase1__c,
+                                                  LastModifiedById,
+                                                  LastModifiedBy.Id,
+                                                  Last_Modified_Date_Tim__c,
+                                                  Current_Status_Accomplishments1__c,
+                                                  Status_History__c,
+                                                  Current_Status_Latest__c, 
+                                                  Analyst__r.Name,
+                                                  Methodology__c,
+                                                  Analyst__c,
+                                                  Vendor__c,
+                                                  MS_Teams_URL__c,
+                                                  CR_Name__c,
+                                                  Plan_for_Next_Reporting_Period__c,
+                                                  IT_Program_Manager__r.Name,
+                                                  IT_Program_Manager__c,
+                                                  Overall_Project_Health_Formula_Text__c,
+                                                  Actual_End_Date__c,
+                                                  Actual_Start_Date__c,
+                                                  Baselined_Start_Date__c,
+                                                  Baselined_End_Date__c,
+                                                  Requested_Project_Start_Date__c,
+                                                  Requested_Project_End_Date__c,
+                                                  Mitigation_Plan__c,
+                                                  CreatedBy.Name,
+                                                  CreatedBy.Id,
+                                                  LastModifiedBy.Id,
+                                                  LastModifiedBy.Name,
+                                                  CreatedById,
+                                                  LastModifiedById,
+                                                  Alternate_Project_Manager__c,
+                                                  Alternate_Project_Manager__r.Name,
+                                                  Completed_Date_Time__c,
+                                                  Closed_Date_Time__c,
+                                                  Cancelled_Date_Time__c"
+                                          targetFields="{!v.IT_Portfolio_Management__cRecord}"
+                                          targetError="{!v.recordLoadError}"					
+                                          />
+                        <center>
+                            <div class="slds-m-top_medium">
+                                <lightning:button disabled="{!v.IT_Portfolio_Management__cRecord.Project_Status__c == 'Closed'}" variant="brand" type="Edit" name="Edit Project Health" label="Edit Status Details" onclick="{!c.handleEdit}"/>
+                            </div>
+                           <!-- <div class="slds-m-top_medium">
+                                <lightning:button disabled="{!v.IT_Portfolio_Management__cRecord.Project_Status__c == 'Closed'}" variant="brand" name="Refresh" label="Refresh" onclick="{!c.handleRefresh}"/>
+                            </div> -->
+                        </center>                        
+                        <div class="slds-p-around_large">
+                            <div class="slds-grid">
+                                <!--Overall Project Health-->
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold"><span style="color:red">*</span>Overall Health:</legend>
+                                        <div class="slds-form-element__control"><div class="slds-p-left_small">
+                                            <span class="slds-radio">
+                                                <aura:if isTrue="{! v.IT_Portfolio_Management__cRecord.Overall_Project_Health_Formula_Text__c=='green'}">         
+                                                    <span class="green11"></span><span></span>&nbsp;&nbsp;
+                                                    <!--<span class="yellow2"></span>&nbsp;&nbsp;
+                                                    <span class="red2"></span>-->
+                                                </aura:if>    
+                                                <aura:if isTrue="{! v.IT_Portfolio_Management__cRecord.Overall_Project_Health_Formula_Text__c=='yellow'}"> 
+                                                    <!--<span class="green2"></span>&nbsp;&nbsp;-->
+                                                    <span class="yellow11"></span><span></span>&nbsp;&nbsp;
+                                                    <!--<span class="red2"></span>-->
+                                                </aura:if>
+                                                <aura:if isTrue="{! v.IT_Portfolio_Management__cRecord.Overall_Project_Health_Formula_Text__c=='red'}"> 
+                                                    <!--<span class="green2"></span>&nbsp;&nbsp;
+                                                <span class="yellow2"></span>&nbsp;&nbsp;-->
+                                                    <span class="red11"></span><span></span>
+                                                </aura:if>    
+                                            </span></div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <!-- Phase -->
+                                
+                                
+                            </div><br/><br/>
+                            <!--Phase-->
+                            
+                            <!-- Project Schedule-->
+                            <div class="slds-grid">
+                                
+                                <div class="slds-col--padded slds-large-size--3-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold"><span style="color:red">*</span>Scope:</legend>
+                                        <div class="slds-form-element__control"><div class="slds-p-left_small">
+                                            <span class="slds-radio">
+                                                <aura:if isTrue="{! v.IT_Portfolio_Management__cRecord.Project_Scope__c=='Green'}">    
+                                                    <span class="green1"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <!--<span class="yellow2"></span>&nbsp;&nbsp;
+                                                <span class="red2"></span>-->
+                                                </aura:if>    
+                                                <aura:if isTrue="{! v.IT_Portfolio_Management__cRecord.Project_Scope__c=='Yellow'}"> 
+                                                    <!--<span class="green2"></span>&nbsp;&nbsp;-->
+                                                    <span class="yellow1"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <!--<span class="red2"></span>-->
+                                                </aura:if>
+                                                <aura:if isTrue="{! v.IT_Portfolio_Management__cRecord.Project_Scope__c=='Red'}"> 
+                                                    <!--<span class="green2"></span>&nbsp;&nbsp;
+                                                <span class="yellow2"></span>&nbsp;&nbsp;-->
+                                                    <span class="red1"></span>
+                                                </aura:if>    
+                                            </span></div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="slds-col--padded slds-large-size--3-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold"><span style="color:red">*</span>Schedule:</legend>
+                                        <div class="slds-form-element__control"><div class="slds-p-left_small">
+                                            <span class="slds-radio">
+                                                <aura:if isTrue="{! v.IT_Portfolio_Management__cRecord.Project_Schedule__c=='Green'}"> 
+                                                    <span class="green1"></span>&nbsp;&nbsp;
+                                                    <!--<span class="yellow2"></span>&nbsp;&nbsp;
+                                                <span class="red2"></span>-->
+                                                </aura:if>    
+                                                <aura:if isTrue="{! v.IT_Portfolio_Management__cRecord.Project_Schedule__c=='Yellow'}"> 
+                                                    <!--<span class="green2"></span>&nbsp;&nbsp;-->
+                                                    <span class="yellow1"></span>&nbsp;&nbsp;
+                                                    <!--<span class="red2"></span>-->
+                                                </aura:if>
+                                                <aura:if isTrue="{! v.IT_Portfolio_Management__cRecord.Project_Schedule__c=='Red'}"> 
+                                                    <!--<span class="green2"></span>&nbsp;&nbsp;
+                                            <span class="yellow2"></span>&nbsp;&nbsp;-->
+                                                    <span class="red1"></span>
+                                                </aura:if>    
+                                            </span></div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                
+                                <!-- Project Scope-->
+                                
+                                <div class="slds-col--padded slds-large-size--3-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold"><span style="color:red">*</span>Financials:</legend>
+                                        <div class="slds-form-element__control"><div class="slds-p-left_small">
+                                            <span class="slds-radio">
+                                                <aura:if isTrue="{! v.IT_Portfolio_Management__cRecord.Project_Financial__c=='Green'}"> 
+                                                    <span class="green1"></span>&nbsp;&nbsp;
+                                                    <!--<span class="yellow2"></span>&nbsp;&nbsp;
+                                                <span class="red2"></span>-->
+                                                </aura:if>    
+                                                <aura:if isTrue="{! v.IT_Portfolio_Management__cRecord.Project_Financial__c=='Yellow'}"> 
+                                                    <!--<span class="green2"></span>&nbsp;&nbsp;-->
+                                                    <span class="yellow1"></span>&nbsp;&nbsp;
+                                                    <!--<span class="red2"></span>-->
+                                                </aura:if>
+                                                <aura:if isTrue="{! v.IT_Portfolio_Management__cRecord.Project_Financial__c=='Red'}"> 
+                                                    <!--<span class="green2"></span>&nbsp;&nbsp;
+                                                <span class="yellow2"></span>&nbsp;&nbsp;-->
+                                                    <span class="red1"></span>
+                                                </aura:if>    
+                                            </span></div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="slds-col--padded slds-large-size--3-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold"><span style="color:red">*</span>Resources:</legend>
+                                        <div class="slds-form-element__control"><div class="slds-p-left_small">
+                                            <span class="slds-radio">
+                                                <aura:if isTrue="{! v.IT_Portfolio_Management__cRecord.Project_Resources__c=='Green'}">  
+                                                    <span class="green1"></span>&nbsp;&nbsp;
+                                                    <!--<span class="yellow2"></span>&nbsp;&nbsp;
+                                            <span class="red2"></span>-->
+                                                </aura:if>    
+                                                <aura:if isTrue="{! v.IT_Portfolio_Management__cRecord.Project_Resources__c=='Yellow'}"> 
+                                                    <!--<span class="green2"></span>&nbsp;&nbsp;-->
+                                                    <span class="yellow1"></span>&nbsp;&nbsp;
+                                                    <!--<span class="red2"></span>-->   
+                                                </aura:if>
+                                                <aura:if isTrue="{! v.IT_Portfolio_Management__cRecord.Project_Resources__c=='Red'}"> 
+                                                    <!--<span class="green2"></span>&nbsp;&nbsp;
+                                            <span class="yellow2"></span>&nbsp;&nbsp;-->
+                                                    <span class="red1"></span>
+                                                </aura:if>    
+                                            </span></div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <br/><br/>
+                            <div class="slds-grid">
+                                
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Health Explanation:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.Project_Health_Explanation_Latest__c}"/>
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    
+                                </div>
+                            </div><br/><br/>
+                            <h3 class="slds-section__title">
+                                <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                                    <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                                    <span class="slds-truncate" title="Section Title"> Project Details </span>
+                                </button>
+                            </h3><br/>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Current Status/Accomplishments:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.Current_Status_Latest__c}"/>
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Percent Complete:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.Percentage_Completion__c}"/>%
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div><br/><br/>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Planned Activities (Next Period):</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.Plan_for_Next_Reporting_Period__c}"/>
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Go-Live Date:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputDate  value="{!v.IT_Portfolio_Management__cRecord.Go_Live_Date__c}" format="MM/dd/yyyy"/>
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div><br/><br/>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Methodology:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.Methodology__c}"/>
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div><br/><br/>
+                            
+                            
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    
+                                </div>
+                                
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Phase:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.Activity_Type__c}"/>
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                
+                            </div><br/><br/>
+                            
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Key Issues:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.Key_Issues__c}"/>
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Remediation Plan:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.Remediation_Plan__c}"/>
+                                                
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                
+                            </div><br/><br/>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Key Risks:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.Key_Risks__c}"/>
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Mitigation Plan:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.Mitigation_Plan__c}"/>
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                
+                            </div><br/><br/>
+                            
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Baseline Start Date:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputDate value="{!v.IT_Portfolio_Management__cRecord.Baselined_Start_Date__c}" format="MM/dd/yyyy"/>
+                                                
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div><br/><br/>
+                                
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Baseline End Date:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputDate value="{!v.IT_Portfolio_Management__cRecord.Baselined_End_Date__c}" format="MM/dd/yyyy"/>
+                                                
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                
+                            </div><br/><br/>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Actual Start Date:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputDate value="{!v.IT_Portfolio_Management__cRecord.Actual_Start_Date__c}" format="MM/dd/yyyy"/>
+                                                
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Actual End Date:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputDate value="{!v.IT_Portfolio_Management__cRecord.Actual_End_Date__c}" format="MM/dd/yyyy"/>
+                                                
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div><br/><br/>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">IT Program Manager:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <a href="{!v.link7}"  target="_blank">   <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.IT_Program_Manager__r.Name}" /></a>
+                                                
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Alternate IT Project Manager:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <a href="{!v.link1}"  target="_blank">   <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.Alternate_Project_Manager__r.Name}" /></a>
+                                                
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                    
+                                </div>
+                            </div><br/><br/>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Vendor (for Vendor Managed Projects Only):</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.Vendor__c}"/>
+                                                
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Analyst:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <a href="{!v.link4}"  target="_blank"><ui:outputText value="{!v.IT_Portfolio_Management__cRecord.Analyst__r.Name}"/></a>                               
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                
+                            </div><br/><br/>
+                            <br/>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">IT Notes:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.ITS_Notes__c}"/>
+                                                
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Sharepoint URL:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <aura:if isTrue="{!not(empty(v.link5))}">
+                                                	<a href="{!v.link5}"  target="_blank">    
+                                                    	<ui:outputText value="Launch SharePoint URL" />
+                                                	</a>
+                                                </aura:if>
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div><br/><br/>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Life Cycle Status:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.Project_Status__c}"/>
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">MS Teams URL:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <aura:if isTrue="{!not(empty(v.link6))}">
+                                                    <a href="{!v.link6}"  target="_blank">    
+                                                        <ui:outputText value="Launch MS Teams URL" />
+                                                    </a>
+                                                </aura:if>
+                                              <!-- <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.MS_Teams_URL__c}" /> -->
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div><br/><br/>
+                            <div class="slds-grid">
+                               	<div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class ="slds-text-title_bold">CR Ticket in Remedy:</legend>
+                                        <div class ="slds-form-element__control">
+                                            <span class ="valueFont">
+                                                <aura:if isTrue="{!not(empty(v.link8))}">
+                                                    <a href="{!v.link8}" target="_blank">    
+                                                        <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.CR_Name__c}"/>
+                                                    </a>
+                                                </aura:if>
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Actual Amount Spent:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                              <ui:outputCurrency value="{!v.IT_Portfolio_Management__cRecord.Actual_Amount_Spent__c}" />
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                             </div><br/><br/>
+
+                            <br/>
+                            <h3 class="slds-section__title">
+                                <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                                    <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                                    <span class="slds-truncate" title="Section Title"> System Information </span>
+                                </button>
+                            </h3><br/>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Created By:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <a href="{!v.link3}"  target="_blank">  <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.CreatedBy.Name}" /></a>
+                                                
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Last Modified By:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <a href="{!v.link2}"  target="_blank">   <ui:outputText value="{!v.IT_Portfolio_Management__cRecord.LastModifiedBy.Name}" /></a>&nbsp;&nbsp;<ui:outputDateTime value="{!v.IT_Portfolio_Management__cRecord.Last_Modified_Date_Tim__c}" format="MM/dd/yyyy HH:mm"/>
+                                                
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div><br/><br/>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <fieldset class="slds-form-element">
+                                        <legend class="slds-text-title_bold">Last Health and Status Update:</legend>
+                                        <div class="slds-form-element__control">
+                                            <span class="valueFont">
+                                                <ui:outputDate value="{!v.IT_Portfolio_Management__cRecord.Current_Status_Accomplishments__c}" format="MM/dd/yyyy"/>
+                                            </span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <aura:if isTrue="{!v.IT_Portfolio_Management__cRecord.Completed_Date_Time__c}">
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <fieldset class="slds-form-element">
+                                            <legend class="slds-text-title_bold">Completed Date/Time:</legend>
+                                            <div class="slds-form-element__control">
+                                                <span class="valueFont">
+                                                    <ui:outputDateTime value="{!v.IT_Portfolio_Management__cRecord.Completed_Date_Time__c}" format="MM/dd/yyyy HH:mm"/>
+                                                    
+                                                </span>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </aura:if>
+                            </div><br/><br/>
+
+                            <div class="slds-grid">
+                                <aura:if isTrue="{!v.IT_Portfolio_Management__cRecord.Closed_Date_Time__c}">
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <fieldset class="slds-form-element">
+                                            <legend class="slds-text-title_bold">Closed Date/Time:</legend>
+                                            <div class="slds-form-element__control">
+                                                <span class="valueFont">
+                                                    <ui:outputDateTime value="{!v.IT_Portfolio_Management__cRecord.Closed_Date_Time__c}" format="MM/dd/yyyy HH:mm"/>
+                                                </span>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{!v.IT_Portfolio_Management__cRecord.Cancelled_Date_Time__c}">
+                                    <div class="slds-col--padded slds-large-size--6-of-12">
+                                        <fieldset class="slds-form-element">
+                                            <legend class="slds-text-title_bold">Cancelled Date/Time:</legend>
+                                            <div class="slds-form-element__control">
+                                                <span class="valueFont">
+                                                    <ui:outputDateTime value="{!v.IT_Portfolio_Management__cRecord.Cancelled_Date_Time__c}" format="MM/dd/yyyy HH:mm"/>     
+                                                </span>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </aura:if>
+                                </div><br/><br/>
+                
+                            <!-- Buttons & -->
+                            <center>
+                                <div class="slds-m-top_medium">
+                                    <lightning:button disabled="{!v.IT_Portfolio_Management__cRecord.Project_Status__c == 'Closed'}" variant="brand" type="Edit" name="Edit Project Health" label="Edit Status Details" onclick="{!c.handleEdit}"/>
+                                </div>
+                            </center>
+                        </div>                    
+                        
+                        
+                    </lightning:recordViewForm>
+                </aura:if>
+                
+                <aura:if isTrue="{!v.editScreen}">
+                    <lightning:recordEditForm
+                                              aura:id="createevalForm"
+                                              onload="{!c.handleLoad}"
+                                              onsubmit="{!c.handleSubmit}"
+                                              onsuccess="{!c.handleSuccess}"
+                                              recordId="{!v.recordId}"
+                                              objectApiName="IT_Portfolio_Management__c">
+                        <center>
+                            <div class="slds-m-top_medium">
+                                <lightning:button disabled="{!v.disabled}" variant="brand" type="submit" name="Save Project Health" label="Save Status Details" />
+                                <lightning:button disabled="{!v.disabled}" variant="brand" type="cancel" name="Cancel Edit Project Health" label="Cancel" onclick="{!c.handleCancel}"/>
+                            </div>
+                        </center>       
+                        <!--<lightning:messages />-->
+                        <div class="slds-p-around_small">
+                            <!--<div class="slds-p-left_small">-->
+                            <!-- ****Edit form start**** -->
+                            <!--<div class="slds-p-around_small">-->
+                            <!--<div class="slds-p-left_medium">-->
+                            
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-small-size--6-of-12">
+                                    <!--<lightning:helptext content="Overall Project Health is Auto calculated." />-->
+                                     <span style="color:red">*</span><lightning:inputField fieldName="Overall_Project_Health_Formula_Text__c" aura:id="fieldId1">
+                                    </lightning:inputField>
+                                </div>
+                                
+                                
+                            </div>
+                            <!--</div>-->
+                            <!--</div>-->
+                            
+                            
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--3-of-12"><span style="color:red">*</span><lightning:inputField fieldName="Project_Scope__c" aura:id="fieldId2"/></div>
+                                <div class="slds-col--padded slds-large-size--3-of-12"><span style="color:red">*</span><lightning:inputField fieldName="Project_Schedule__c" aura:id="fieldId3"/></div>
+                                <div class="slds-col--padded slds-large-size--3-of-12"><span style="color:red">*</span><lightning:inputField fieldName="Project_Financial__c" aura:id="fieldId4"/></div>    
+                                <div class="slds-col--padded slds-large-size--3-of-12"> <span style="color:red">*</span><lightning:inputField fieldName="Project_Resources__c" aura:id="fieldId5"/></div>
+                                
+                                
+                            </div><br/>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="Project_Health_Explanation1__c" fieldLevelHelp="Test Help test"/></div>           
+                                <div class="slds-col--padded slds-large-size--6-of-12"></div>
+                            </div><br/>
+                            <h3 class="slds-section__title">
+                                <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                                    <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                                    <span class="slds-truncate" title="Section Title"> Project Details </span>
+                                </button>
+                            </h3><br/>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="Current_Status_Accomplishments1__c"/></div>
+                                <div class="slds-col--padded slds-large-size--6-of-12"><span style="color:red">*</span><lightning:inputField fieldName="Percentage_Completion__c" aura:id="fieldId6"/></div>
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12">
+                                    <center>
+                                        
+                                        <lightning:button disabled="{!v.disabled}" variant="brand" type="submit" name="Check In" label="Click here to Check-In with no updates" />
+                                        
+                                    </center>
+                                </div>
+                                <div class="slds-col--padded slds-large-size--6-of-12"> 
+                                     <span style="color:red">*</span>
+                                      <lightning:inputField disabled="{!v.isDisableGoLiveDateField}" fieldName="Go_Live_Date__c" aura:id="fieldId7"/>
+                                </div>
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12"> <lightning:inputField fieldName="Plan_for_Next_Reporting_Period__c"/></div>
+                                <div class="slds-col--padded slds-large-size--6-of-12"> <span style="color:red">*</span><lightning:inputField fieldName="Methodology__c" aura:id="fieldId8"/></div>
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12"></div>
+                                <div class="slds-col--padded slds-large-size--6-of-12"> <span style="color:red">*</span><lightning:inputField fieldName="Activity_Type__c" aura:id="fieldId9"/></div>
+                            </div>
+
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="Key_Issues__c"/></div>
+                                <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="Remediation_Plan__c"/></div>
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="Key_Risks__c"/></div>
+                                <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="Mitigation_Plan__c"/></div>
+                            </div>
+                            
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12"> <span style="color:red">*</span><lightning:inputField fieldName="Baselined_Start_Date__c" aura:id="fieldId10"/></div>
+                                <div class="slds-col--padded slds-large-size--6-of-12"> <span style="color:red">*</span><lightning:inputField fieldName="Baselined_End_Date__c" aura:id="fieldId11"/></div>
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12"><span style="color:red">*</span><lightning:inputField fieldName="Actual_Start_Date__c" aura:id="fieldId12"/></div>
+                                <div class="slds-col--padded slds-large-size--6-of-12"><br/><lightning:inputField fieldName="Actual_End_Date__c"/></div>
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="IT_Program_Manager__c"/></div>
+                                <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="Alternate_Project_Manager__c"/></div>
+                                
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="Vendor__c"/></div>
+                                <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="Analyst__c"/></div>
+                                
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="ITS_Notes__c"/></div>
+                                <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="Sharepoint_URL__c"/></div>
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="Project_Status__c"/></div>
+                                <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="MS_Teams_URL__c"/></div>
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="BMC_Change_Request__c"/></div>
+                            	<div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="Actual_Amount_Spent__c"/></div>
+                            </div>                                       
+                            <div class="slds-grid">
+                                <!-- Hiding Request_Type__c, this is a controlling field. Removal will remove  Methodology and Activity Type - Larry Kiang 08/30/2019-->
+                                <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="Request_Type__c" class="slds-hidden"/></div>
+                            </div>
+                            <!-- ****Edit form end**** -->
+                            <center>
+                                <div class="slds-m-top_medium">
+                                    <lightning:button disabled="{!v.disabled}" variant="brand" type="submit" name="Save Project Health" label="Save Status Details" onclick="{!c.init}"/>
+                                    <lightning:button disabled="{!v.disabled}" variant="brand" type="cancel" name="Cancel Edit Project Health" label="Cancel" onclick="{!c.handleCancel}"/>
+                                </div>
+                            </center>           
+                            <!--</div>--></div>
+                    </lightning:recordEditForm>
+                </aura:if>
+                
+                <aura:set attribute="else">
+                    <p>Saved!</p>
+                </aura:set>
+                
+                
+            </div></div>
+    </aura:if>
+    
+</aura:component>

@@ -1,0 +1,26 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+     <aura:attribute name="Duarte" type="boolean" default="true"/>
+    <aura:attribute name="DuarteRecord"  type="Campus_Plan_News__c" />
+    
+    <aura:if isTrue="{!v.Duarte}">
+       <div class="banner-container">
+    	<div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12" >
+                    <div class="banner-image">
+                    <img src = "{!v.DuarteRecord.PhotoURL__c}"/> 
+      				</div>
+      		</div>
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12">
+               <div class="banner-content">
+                   <h4 class="label-header"><label class="blue-bg" >{!v.DuarteRecord.Location__c}</label></h4>
+                   <h2> {!v.DuarteRecord.Title__c}</h2>
+                   <ui:outputRichText class="" value="{!v.DuarteRecord.News_Content_Next_to_Image__c}"/>
+               </div>
+      		</div>
+      	</div>
+       </div>
+        <div class="profile-content">
+            <ui:outputRichText class="" value="{!v.DuarteRecord.Detailed_Description__c}"/>
+		</div>
+       </aura:if>
+</aura:component>

@@ -1,0 +1,312 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,lightning:isUrlAddressable" controller="COH_Get_IT_IntakeRecords">
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!-- <aura:attribute name="TPO_Project_Portfolio__cRecord" type="Object"/> -->
+    <aura:attribute name="ITIntakeRecs" type="TPO_Project_Portfolio__c" default="{'sobjectType':'TPO_Project_Portfolio__c'}"/>
+    <aura:attribute name="link1" type="String"/>
+    <aura:attribute name="isEdit" type="Boolean" default="false" description="Used to handle show /hide edit form"/>
+    <aura:attribute name="activeSections" type="List" default="Requester Details" />
+    <aura:attribute name="activeSectionsMessage" type="String" default="" />
+    <lightning:accordion
+                         allowMultipleSectionsOpen="true"
+                         onsectiontoggle="{! c.handleSectionToggle }"
+                         activeSectionName="{! v.activeSections }"
+                         >
+	
+    <div class="slds-card slds-card_boundary" style="box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.16);">
+        <aura:if isTrue="{!v.isEdit == false}">
+            <lightning:recordViewForm
+                                      aura:id="ViewForm"
+                                      recordId="{!v.recordId}"
+                                      objectApiName="TPO_Project_Portfolio__c">
+            <div class="slds-section slds-is-open slds-m-top_none">
+                <lightning:messages />
+                <lightning:accordionSection name="Requester Details" label="Requester Details" >
+                <center>
+                	<div class="slds-m-top_medium">
+                        <lightning:button label="Edit" variant="brand" name="Edit Details" onclick="{!c.handleEdit}"/>
+                    </div>
+                </center><br/>
+                <div class="slds-p-left_medium">
+                     <div class="slds-grid">
+                     	<div class="slds-col--padded slds-large-size--6-of-12">
+                        	<fieldset class="slds-form-element">
+                            	<legend>Requester Name 
+                                	<lightning:helptext class='tooltip-btm' content="Enter the name of the person, business or IT, who is making the request. It may not be the person who submits the Project Intake"/>
+                                </legend>
+                                <div class="slds-form-element__control">
+                                	<span>
+                                    	<div class="slds-border_bottom">
+                                			<a href="{!v.link1}"  target="_blank"><ui:outputText value="{!v.ITIntakeRecs.Requester_Name__r.Name}"/></a>
+                                        </div>
+                                    </span>
+                                 </div>
+                             </fieldset>
+                          </div>
+                          <div class="slds-col--padded slds-large-size--6-of-12">
+                          	<fieldset class="slds-form-element">
+                            	<legend>Submitter Name
+                                	<lightning:helptext class='tooltip-btm' content="Auto-populates to the person who is completing the form."/>
+                                </legend>
+                                <div class="slds-form-element__control">
+                                	<span>
+                                		<div class="slds-border_bottom">
+                                			<ui:outputText value="{!v.ITIntakeRecs.Submitter_Name__c}"/>
+                                		</div>
+                                	</span>
+                                </div>
+                            </fieldset>
+                          </div>
+                     </div>
+                </div>
+                <div class="slds-p-left_medium">
+                     <div class="slds-grid">
+                     	<div class="slds-col--padded slds-large-size--6-of-12">
+                        	<fieldset class="slds-form-element">
+                            	<legend>Request Date
+                                	<lightning:helptext class='tooltip-btm' content="Enter the desired start date of the request"/>
+                                </legend>
+                                <div class="slds-form-element__control">
+                                	<span>
+                                    	<div class="slds-border_bottom">
+                                			<ui:outputText value="{!v.ITIntakeRecs.Requested_Project_Start_Date__c}"/>
+                                        </div>
+                                    </span>
+                                 </div>
+                             </fieldset>
+                          </div>
+                          <div class="slds-col--padded slds-large-size--6-of-12">
+                          	<fieldset class="slds-form-element">
+                            	<legend>Request Needed By
+                                	<lightning:helptext class='tooltip-btm' content="Enter the desired end date of the request"/>
+                                </legend>
+                                <div class="slds-form-element__control">
+                                	<span>
+                                		<div class="slds-border_bottom">
+                                			<ui:outputText value="{!v.ITIntakeRecs.Requested_Project_End_Date__c}"/>
+                                		</div>
+                                	</span>
+                                </div>
+                            </fieldset>
+                          </div>
+                     </div>
+                </div>
+                <div class="slds-p-left_medium">
+                     <div class="slds-grid">
+                     	<div class="slds-col--padded slds-large-size--6-of-12">
+                        	<fieldset class="slds-form-element">
+                            	<legend>Short Description of Request
+                                	<lightning:helptext class='tooltip-btm' content="Project Short Description"/>
+                                </legend>
+                                <div class="slds-form-element__control">
+                                	<span>
+                                    	<div class="slds-border_bottom">
+                                			<ui:outputText value="{!v.ITIntakeRecs.Project_Short_Description__c}"/>
+                                        </div>
+                                    </span>
+                                 </div>
+                             </fieldset>
+                          </div>
+                          <div class="slds-col--padded slds-large-size--6-of-12">
+                          	<fieldset class="slds-form-element">
+                            	<legend>Problem Statement
+                                	<lightning:helptext class='tooltip-btm' content="Describe the reason/s for doing this project. Identify the strategic goal or problem to be resolved and describe how the project will address the limitation or opportunity"/>
+                                </legend>
+                                <div class="slds-form-element__control">
+                                	<span>
+                                		<div class="slds-border_bottom">
+											<ui:outputText value="{!v.ITIntakeRecs.Project_Background__c}"/>
+                                		</div>
+                                	</span>
+                                </div>
+                            </fieldset>
+                          </div>
+                     </div>
+                </div>    
+                <div class="slds-p-left_medium">
+                     <div class="slds-grid">
+                     	<div class="slds-col--padded slds-large-size--6-of-12">
+                        	<fieldset class="slds-form-element">
+                            	<legend>Current Process or Workarounds
+                                	<!-- <lightning:helptext class='tooltip-btm' content="Project Short Description"/> -->
+                                </legend>
+                                <div class="slds-form-element__control">
+                                	<span>
+                                    	<div class="slds-border_bottom">
+                                			<ui:outputText value="{!v.ITIntakeRecs.Current_State__c}"/>
+                                        </div>
+                                    </span>
+                                 </div>
+                             </fieldset>
+                          </div>
+                          <div class="slds-col--padded slds-large-size--6-of-12">
+                          	<fieldset class="slds-form-element">
+                            	<legend>Business Justification
+                                	<lightning:helptext class='tooltip-btm' content="Describe and quantify the business benefits that will be achieved by the project"/>
+                                </legend>
+                                <div class="slds-form-element__control">
+                                	<span>
+                                		<div class="slds-border_bottom">
+                                			<ui:outputText value="{!v.ITIntakeRecs.Short_Term_Benefits__c}"/>
+                                		</div>
+                                	</span>
+                                </div>
+                            </fieldset>
+                          </div>
+                     </div>
+                </div>
+                <div class="slds-p-left_medium">
+                     <div class="slds-grid">
+                     	<div class="slds-col--padded slds-large-size--6-of-12">
+                        	<fieldset class="slds-form-element">
+                            	<legend>Business area(s) impacted
+                                	<!-- <lightning:helptext class='tooltip-btm' content="Project Short Description"/> -->
+                                </legend>
+                                <div class="slds-form-element__control">
+                                	<span>
+                                    	<div class="slds-border_bottom">
+                                			<ui:outputText value="{!v.ITIntakeRecs.Business_area_s_impacted__c}"/>
+                                        </div>
+                                    </span>
+                                 </div>
+                             </fieldset>
+                          </div>
+                          <div class="slds-col--padded slds-large-size--6-of-12">
+                          	<fieldset class="slds-form-element">
+                            	<legend>Users impacted
+                                	<!-- <lightning:helptext class='tooltip-btm' content="Describe and quantify the business benefits that will be achieved by the project"/> -->
+                                </legend>
+                                <div class="slds-form-element__control">
+                                	<span>
+                                		<div class="slds-border_bottom">
+                                			<ui:outputText value="{!v.ITIntakeRecs.Users_impacted__c}"/>
+                                		</div>
+                                	</span>
+                                </div>
+                            </fieldset>
+                          </div>
+                     </div>
+                </div>        
+                <div class="slds-p-left_medium">
+                     <div class="slds-grid">
+                     	<div class="slds-col--padded slds-large-size--6-of-12">
+                        	<fieldset class="slds-form-element">
+                            	<legend>Urgency
+                                	 <lightning:helptext class='tooltip-btm' content="Select the desired priority of the request: Critical (Must-Do), High (Should-Do), Medium (Workarounds exist), Low (Nice-to-Have)"/>
+                                </legend>
+                                <div class="slds-form-element__control">
+                                	<span>
+                                    	<div class="slds-border_bottom">
+                                			<ui:outputText value="{!v.ITIntakeRecs.Requester_Priority__c}"/>
+                                        </div>
+                                    </span>
+                                 </div>
+                             </fieldset>
+                          </div>
+                          <div class="slds-col--padded slds-large-size--6-of-12">
+                          	<fieldset class="slds-form-element">
+                            	<legend>Requester Notes
+                                	<lightning:helptext class='tooltip-btm' content="Please enter any additional information that will support your project request"/>
+                                </legend>
+                                <div class="slds-form-element__control">
+                                	<span>
+                                		<div class="slds-border_bottom">
+                                			<ui:outputText value="{!v.ITIntakeRecs.Notes__c}"/>
+                                		</div>
+                                	</span>
+                                </div>
+                            </fieldset>
+                          </div>
+                     </div>
+                </div>    
+                    
+                    
+                    
+
+                </lightning:accordionSection>
+            </div>
+            </lightning:recordViewForm>
+        </aura:if>
+        <aura:if isTrue="{!v.isEdit == true}">
+            
+            <lightning:recordEditForm
+                                      
+                                      onsuccess="{!c.handleSuccess}"
+                                      recordId="{!v.recordId}"
+                                      objectApiName="TPO_Project_Portfolio__c">
+                <!-- the messages component is for error messages -->
+                <lightning:messages />
+                <lightning:accordionSection name="Requester Details" label="Requester Details" >
+                <center>
+                    <div class="slds-m-top_medium">
+                        <lightning:button variant="brand" type="submit" name="Save" label="Save" />
+                        <lightning:button label="Cancel" name="Cancel" onclick="{!c.handleCancel}"/>
+                    </div>
+                </center><br/>
+                
+                <div class="slds-grid">
+                    <div class="slds-col--padded slds-large-size--6-of-12">
+                        <lightning:inputField fieldName="Requester_Name__c"/>
+                    </div>
+                    <div class="slds-col--padded slds-large-size--6-of-12">
+                        <lightning:inputField fieldName="Submitter_Name__c"/>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col--padded slds-large-size--6-of-12">
+                        <label class="slds-form-element__label">
+                            	Request Date
+                        </label>
+                        <lightning:inputField fieldName="Requested_Project_Start_Date__c" variant="label-hidden"/>
+                    </div>
+                    <div class="slds-col--padded slds-large-size--6-of-12">
+                        <label class="slds-form-element__label">
+                            	Request Needed By
+                        </label>
+                        <lightning:inputField fieldName="Requested_Project_End_Date__c" variant="label-hidden"/>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col--padded slds-large-size--6-of-12">
+                        <label class="slds-form-element__label">
+                            	Short Description of Request
+                        </label>
+                        <lightning:inputField fieldName="Project_Short_Description__c" variant="label-hidden"/>
+                    </div>
+                    <div class="slds-col--padded slds-large-size--6-of-12">
+                        <lightning:inputField fieldName="Project_Background__c"/>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col--padded slds-large-size--6-of-12">
+                        <label class="slds-form-element__label">
+                            	Current Process or Workarounds
+                        </label>
+                        <lightning:inputField fieldName="Current_State__c" variant="label-hidden"/>
+                    </div>
+                    <div class="slds-col--padded slds-large-size--6-of-12">
+                        <label class="slds-form-element__label">
+                            	Business Justification
+                        </label>
+                        <lightning:inputField fieldName="Short_Term_Benefits__c" variant="label-hidden"/>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="Business_area_s_impacted__c"/></div>
+                    <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="Users_impacted__c"/></div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col--padded slds-large-size--6-of-12">
+                        <label class="slds-form-element__label">
+                            	Urgency
+                        </label>
+                        <lightning:inputField fieldName="Requester_Priority__c" variant="label-hidden"/>
+                    </div>
+                    <div class="slds-col--padded slds-large-size--6-of-12"><lightning:inputField fieldName="Notes__c"/></div>
+                </div>
+
+                </lightning:accordionSection>
+            </lightning:recordEditForm>
+        </aura:if>
+    </div>
+    </lightning:accordion>
+</aura:component>

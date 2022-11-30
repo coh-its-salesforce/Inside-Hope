@@ -1,0 +1,82 @@
+<aura:component >
+   <aura:attribute name="openDuarteBuildings" type="boolean" default="false"/>
+   <aura:attribute name="RadiologyImagingCenter" type="boolean" default="true"/>
+    <aura:attribute name="aboutRIC" type="Boolean" default="false"/>
+    <aura:attribute name="aboutRICImpact" type="Boolean" default="false"/>
+   <aura:if isTrue="{!v.RadiologyImagingCenter}">
+    <div class="banner-container">
+    	<div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+      			<div class="banner-image">
+      				<img src = "{!$Resource.RadiologyImagingCenter}"/> 
+      			</div>
+      		</div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12" >
+                <div class="banner-content">
+                    <h4 class="label-header"><label class=" blue-bg">Duarte</label></h4>
+                    <h2> Radiology Imaging Center (RIC)</h2>
+                   <p class="banner-p">
+                       <strong>Purpose</strong><br/>
+                        The RIC will serve our outpatient population with much needed imaging equipement to conduct tests as part of a patient's ongoing treatment. Diagnostic imaging also plays a critical role in scientific by measuring and tracking the effectiveness of therapies being studied in clinical trials.
+                    </p>
+                   <p class="banner-p">
+                       <strong>Capacity</strong><br/> 
+                       This 10,000-square-foot facility will house state-of-the-art imaging equipment.
+                   </p>
+                   <p class="banner-p">
+                       <strong>Move in</strong><br/> 
+                       Mid 2020
+                   </p>
+                   <p class="banner-p">
+                       <strong>Location</strong><br/> 
+                       Off Village Road near modular buildings 101, 102 and 103.
+                   </p>
+                </div>
+      	    </div>
+        </div>
+       </div>
+        
+        
+		<div class="latest-news">
+                        <h1>LATEST NEWS</h1> 		
+                        <div class="images-gallery"><c:CampusPlan_NewsAndAnnouncementComp pagesource="Radiology Imaging Center"/></div>
+                           <!-- <ul class="slds-grid slds-wrap">
+                                <li class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">                         
+                                        <a class="news-item" onclick="{!c.getContent}" id="AboutRadiology">
+                                            <div class="news-item-image">                            
+                                                <img src ="{!$Resource.RadiologyImagingCenter}"/>
+                                            </div>
+                                            <h3 class="news-title">
+                                                About the RIC
+                                            </h3>
+                                        </a> 
+                                </li>
+                                <li class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                        <a class="news-item" onclick="{!c.getContent1}" id="AboutRICImpact">
+                                            <div class="news-item-image">
+                                                <img src ="{!$Resource.TheRICImpact}"/>
+                                            </div>
+                                            <h3 class="news-title">
+                                                RIC Overview
+                                            </h3>
+                                        </a>        
+                                </li>
+                               
+                            </ul>
+                        </div> -->
+                       </div>
+        <div class="backbutton" onclick="{!c.goBackToDuarteBuildingPage}">
+            <lightning:icon iconName="utility:back" size="x-small" variant="inverse" />
+            &nbsp;&nbsp;Back  
+    </div>
+       </aura:if>
+     <aura:if isTrue="{!v.openDuarteBuildings}">
+         <c:COH_CampusPlan_DuarteBuilding/>
+     </aura:if>
+    <!--<aura:if isTrue="{!v.aboutRIC}">
+            <c:COH_CampusPlan_RIC/>
+        </aura:if>
+    <aura:if isTrue="{!v.aboutRICImpact}">
+            <c:COH_CampusPlan_RICImpact/>
+        </aura:if>-->
+</aura:component>

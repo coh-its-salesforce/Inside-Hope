@@ -1,0 +1,24 @@
+<aura:component controller="COH_HRPanelComponentController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global">
+	<aura:attribute name="PanelName" description="Unique panel name to fetch panel links from database. " 
+                    type="string" required="true" default="Top_Left_Panel"/>
+    <aura:attribute name="linkList" type="List" default="[]"/>
+    <aura:attribute name="panelHeading" type="String" default=""/>
+    <aura:attribute name="backgroundColor" type="string" default="#23527C"/>
+    <aura:attribute name="fontColor" type="string" default="#FFFFFF"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+	 <div class="well" style="{!'padding-top:10px;border-radius: 10px;padding-bottom:10px;background-color:'+ v.backgroundColor }">
+       <ul class="list-unstyled components" style="margin:10px;">
+           <Aura:if isTrue="{!v.panelHeading != ''}">
+           		<li style="text-align: center;font-size: 18px;margin-left: 20px;margin-top: 10px;">
+                    <span class="card-link" style="{! 'color:'+v.fontColor}">{!v.panelHeading}</span>
+                </li>
+           </Aura:if>
+           <aura:iteration items="{!v.linkList}" var="link">
+            	<li style="text-align: left;font-size: 14px;margin-left: 20px;margin-top: 10px;">
+                    <a href="{!link.Link_URL__c}" target="_blank" class="card-link" style="{!'color:'+v.fontColor}">{!link.Link_Label__c}</a>
+                </li>
+            </aura:iteration>
+        </ul>
+    </div>
+</aura:component>

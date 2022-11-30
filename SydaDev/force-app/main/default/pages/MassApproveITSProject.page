@@ -1,0 +1,25 @@
+<apex:page standardController="ITS_Project_Request__c" recordSetVar="projects" extensions="ITSProjectApprovalController">
+  <apex:form >
+      <apex:pageMessages ></apex:pageMessages>
+      <apex:pageblock rendered="{!AND(NOT(ISNULL(selectedProject)), selectedProject.size > 0)}">
+          <apex:pageBlockButtons >
+              <apex:commandButton value="Save" action="{!DoSave}"/>
+              <apex:commandButton value="Cancel" action="{!Cancel}"/>
+          </apex:pageBlockButtons>
+          
+          <apex:pageblockSection columns="1">
+              <apex:pageblockTable value="{!selectedProject}" var="accts">
+                  <apex:column headerValue="Project Name">
+                      <apex:outputLink value="/{!accts.id}">{!accts.Name}</apex:outputLink>
+                  </apex:column>
+                  
+                  <apex:column headerValue="Comment">
+                      <apex:inputfield value="{!accts.Commented__c}" required="true"/>
+                  </apex:column>
+              </apex:pageblockTable>
+          
+          </apex:pageblockSection>
+      </apex:pageblock>
+  
+  </apex:form>
+</apex:page>

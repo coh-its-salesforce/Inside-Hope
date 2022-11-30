@@ -1,0 +1,41 @@
+<apex:page Controller="COH_SIP_ErrorController" sidebar="false" showHeader="false" standardStylesheets="false" cache="false">
+<head>        
+    <c:Head title="Intranet - Error"></c:Head>
+</head>
+<body>
+    <div class="Wrapper">
+        <apex:form >
+            <div>
+                <c:COH_SIP_Header ></c:COH_SIP_Header>                   
+                <div>
+                    <c:COH_SIP_Search ></c:COH_SIP_Search> 
+                    <div style="float: left; padding-top: 60px" class="col-md-offset-1 col-md-10">
+                        <h3 >An error has occured: </h3>
+                        <br/>
+                        <p>
+                            <b><apex:outputText value="{!mErrorMessage}"></apex:outputText></b>
+                        </p>
+                        <p>
+                            <apex:outputText rendered="{!mException != NULL}" value=" ({!mException})"></apex:outputText> 
+                        </p>
+                        <p>
+                            <apex:outputText value="{!mContact}"></apex:outputText>
+                        </p>
+                        <apex:commandLink action="{!redirectToHomepage}" value="Click here to return to the iHope Homepage"/>
+                    </div>
+                </div>
+            </div>
+            <c:COH_SIP_Footer ></c:COH_SIP_Footer> 
+        </apex:form>
+    </div>
+</body>
+    
+<script type="text/javascript">
+    var j$ = jQuery.noConflict();
+    j$(document).ready(function(){
+        if ((j$(".AnnouBox") == null || j$(".AnnouBox").css("display") == null || j$(".AnnouBox").css('display') == 'none') && (j$(".PhyRBox") == null || j$(".PhyRBox").css("display") == null || j$(".PhyRBox").css('display') == 'none')){
+            j$(".DeparmentBLeft").css("width", "100%");    
+        }
+    });
+</script>   
+</apex:page>

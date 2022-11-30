@@ -1,0 +1,30 @@
+<apex:component >
+    <!-- jQuery Files -->
+ 
+    <script type="text/javascript" src="{!URLFOR($Resource.COH,'js/bootstrap.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.COH,'js/jquery.easing.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JqueryMention,'underscore-min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JqueryMention,'lib/jquery.events.input.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JqueryMention,'lib/jquery.elastic.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JqueryMention,'jquery.mentionsInput.js')}"></script>
+    
+    
+    <script type="text/javascript">
+        var $ = jQuery.noConflict();
+        $('textarea.mention').mentionsInput({
+            onDataRequest:function (mode, query, callback) {
+                $.getJSON("{!$Page.MentionJSON}", {
+                    "core.apexpages.devmode.url" :'1',
+                    "q" :query
+                }, function(responseData) {
+                    //responseData = _.filter(responseData, function(item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
+                    callback.call(this, responseData);
+                });
+            }
+        });    
+
+        
+    </script>
+   
+   
+</apex:component>

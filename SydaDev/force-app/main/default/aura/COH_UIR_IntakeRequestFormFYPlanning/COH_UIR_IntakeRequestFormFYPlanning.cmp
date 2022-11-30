@@ -1,0 +1,484 @@
+<aura:component controller="COH_UIR_IntakeRequestFormController">
+    <c:COH_UTIL_ValidateStandardComponent aura:id="validateStandardComponent"/>
+    <c:COH_UTIL_CheckboxGroupHelper aura:id="checkboxGroupHelper"/>    
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:method name="validateFields" action="{!c.validateFields}"/>
+    <aura:attribute name="mIntakeRequest" type="COH_UniversalIntakeRequest__c"/>
+    <aura:attribute name="mPicklists" type="Map" />
+    <aura:attribute name="mCheckboxGroupValues" type="Map" default="{}"/>
+    <aura:attribute name="mSelectedCheckboxGroupValues" type="Map" default="{}"/>
+    <aura:attribute name="mHelpText" type="Map" default="{}"/>
+    
+    <div class="slds-form-horizontal">
+        <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_small">
+            Fiscal Year 19 Planning - If Not Applicable, please enter N/A
+        </h3>
+        
+        <!-- Problem Statement -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                <div class="slds-form-element__control">
+                    <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_FY_ProblemStatement__c}"
+                                        label="What is the problem statement?" 
+                                        name="COH_UIR_FY_ProblemStatement__c"
+                                        aura:id="intakeRequestForm"
+                                        required="true"
+                                        title="Address relationship to mission, urgency, and financial impact"/>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Stratgeic Init -->
+        <div class="slds-size_1-of-1">
+            <div class="slds-box slds-m-vertical_small slds-box_no-padding ">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                        <div class="slds-form-element__control">
+                            <lightning:select value="{!v.mIntakeRequest.COH_UIR_FY_IsLinkedToStrategicInitiative__c}"
+                                              label="Is this request linked to a Stategic Initiative?" 
+                                              name="COH_UIR_FY_IsLinkedToStrategicInitiative__c"
+                                              aura:id="intakeRequestForm"
+                                              required="true">
+                                <option value="">--Select--</option>
+                                <aura:iteration items="{!v.mPicklists.COH_UIR_FY_IsLinkedToStrategicInitiative__c}" var="currentPicklistOption">
+                                    <option value="{#currentPicklistOption.value}" selected="{#currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FY_IsLinkedToStrategicInitiative__c}">{#currentPicklistOption.label}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>         
+                    </div>
+                </div>
+                
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FY_IsLinkedToStrategicInitiative__c == 'Yes'}">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                            <div class="slds-form-element__control">
+                                <lightning:checkboxGroup name="COH_UIR_FY_StrategicInitiative__c"
+                                                         label="Which one?"
+                                                         options="{!v.mPicklists.COH_UIR_FY_StrategicInitiative__c}"
+                                                         value="{!v.mCheckboxGroupValues.COH_UIR_FY_StrategicInitiative__c}"
+                                                         aura:id="intakeRequestForm"
+                                                         required="true"
+                                                         onchange="{!c.onCheckboxGroupChange}"                                             
+                                                         />  
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FY_StrategicInitiative__c.Other}">
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                <div class="slds-form-element__control">
+                                    <lightning:input name="COH_UIR_FY_StrategicInitiativeOther__c" 
+                                                     label="If 'Other', please specify" 
+                                                     value="{!v.mIntakeRequest.COH_UIR_FY_StrategicInitiativeOther__c}"
+                                                     aura:id="intakeRequestForm"
+                                                     required="true"/>
+                                </div>                  
+                            </div>
+                        </aura:if>
+                    </div>
+                </aura:if>
+            </div>
+        </div>
+        
+        <!-- Asset Class information -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_FY_AssetClass__c}"
+                                      label="What is the asset class?" 
+                                      name="COH_UIR_FY_AssetClass__c"
+                                      aura:id="intakeRequestForm"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_FY_AssetClass__c}" var="currentPicklistOption">
+                            <option value="{#currentPicklistOption.value}" selected="{#currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FY_AssetClass__c}">{#currentPicklistOption.label}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>         
+            </div>
+        </div>        
+        
+        <!-- Age or Breakage Info -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                <div class="slds-form-element__control">
+                    <lightning:input name="COH_UIR_FY_AgeOrBreakage__c" 
+                                     label="Age of asset to be replaced or breakage information (Years)" 
+                                     value="{!v.mIntakeRequest.COH_UIR_FY_AgeOrBreakage__c}"
+                                     aura:id="intakeRequestForm"
+                                     required="true"/>
+                </div>
+            </div>
+        </div>
+        
+        <!-- How is issue currerntly being addressed -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input name="COH_UIR_FY_HowIssueCurrentlyAddressed__c" 
+                                     label="How is this issue or gap currently being addressed?" 
+                                     value="{!v.mIntakeRequest.COH_UIR_FY_HowIssueCurrentlyAddressed__c}"
+                                     aura:id="intakeRequestForm"
+                                     required="true"/>
+                </div>                  
+            </div>                
+        </div>
+        
+        <!-- Investment Category -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_FY_InvestmentCategory__c}"
+                                      label="Please select one of the following Investment categories (Maintenace, Incremental Improvement, Strategic, Option Creation)" 
+                                      name="COH_UIR_FY_InvestmentCategory__c"
+                                      aura:id="intakeRequestForm"
+                                      required="true"
+                                      title="{!v.mHelpText.COH_UIR_FY_InvestmentCategory__c}">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_FY_InvestmentCategory__c}" var="currentPicklistOption">
+                            <option value="{#currentPicklistOption.value}" selected="{#currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FY_InvestmentCategory__c}">{#currentPicklistOption.label}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>         
+            </div>
+        </div>
+        
+        <!-- Investment Category Details -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                <div class="slds-form-element__control">
+                    <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_FY_InvestmentCategoryDetails__c}"
+                                        label="Please provide details for the selected investment category" 
+                                        name="COH_UIR_FY_InvestmentCategoryDetails__c"
+                                        aura:id="intakeRequestForm"
+                                        required="true" />
+                </div>         
+            </div>
+        </div>          
+        
+        
+        <!-- Will this impact other departments -->
+        <div class="slds-size_1-of-1">
+            <div class="slds-box slds-m-vertical_small slds-box_no-padding ">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                        <div class="slds-form-element__control">
+                            <lightning:select value="{!v.mIntakeRequest.COH_UIR_FY_ImpactOtherDepartments__c}"
+                                              label="Will other departments, workflows, or procedures be impacted? [including off-campus locations]" 
+                                              name="COH_UIR_FY_ImpactOtherDepartments__c"
+                                              aura:id="intakeRequestForm"
+                                              required="true">
+                                <option value="">--Select--</option>
+                                <aura:iteration items="{!v.mPicklists.COH_UIR_FY_ImpactOtherDepartments__c}" var="currentPicklistOption">
+                                    <option value="{#currentPicklistOption.value}" selected="{#currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FY_ImpactOtherDepartments__c}">{#currentPicklistOption.label}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>         
+                    </div>
+                </div>
+                
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FY_ImpactOtherDepartments__c == 'Yes'}">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                            <div class="slds-form-element__control">
+                                <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_FY_ImpactedDepartments__c}"
+                                                    label="Please identify key dependencies" 
+                                                    name="COH_UIR_FY_ImpactedDepartments__c"
+                                                    aura:id="intakeRequestForm"
+                                                    required="true" />
+                            </div>         
+                        </div>
+                    </div>        
+                </aura:if>
+            </div>
+        </div>       
+        
+        <!-- Expected Revenue -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input name="COH_UIR_FY_ExpectedRevenue__c" 
+                                     label="Expected Revenue / ROI / NPV? If available" 
+                                     value="{!v.mIntakeRequest.COH_UIR_FY_ExpectedRevenue__c}"
+                                     aura:id="intakeRequestForm" />
+                </div>
+            </div>
+        </div>
+        
+        <!-- Start Date -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-3 slds-medium-size_1-of-6 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_FY_StartMonth__c}"
+                                      label="Estimated Start Month" 
+                                      name="COH_UIR_FY_StartMonth__c"
+                                      aura:id="intakeRequestForm"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_FY_StartMonth__c}" var="currentPicklistOption">
+                            <option value="{#currentPicklistOption.value}" selected="{#currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FY_StartMonth__c}">{#currentPicklistOption.label}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+            </div>
+            <div class="slds-size_2-of-3 slds-medium-size_2-of-6 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_FY_StartYear__c}"
+                                      label="Estimated Start Year" 
+                                      name="COH_UIR_FY_StartYear__c"
+                                      aura:id="intakeRequestForm"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_FY_StartYear__c}" var="currentPicklistOption">
+                            <option value="{#currentPicklistOption.value}" selected="{#currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FY_StartYear__c}">{#currentPicklistOption.label}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+            </div>            
+        </div>
+        
+        <!-- End Date -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-3 slds-medium-size_1-of-6 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_FY_EndMonth__c}"
+                                      label="Estimated End Month" 
+                                      name="COH_UIR_FY_EndMonth__c"
+                                      aura:id="intakeRequestForm"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_FY_EndMonth__c}" var="currentPicklistOption">
+                            <option value="{#currentPicklistOption.value}" selected="{#currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FY_EndMonth__c}">{#currentPicklistOption.label}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+            </div>
+            <div class="slds-size_2-of-3 slds-medium-size_2-of-6 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_FY_EndYear__c}"
+                                      label="Estimated End Year" 
+                                      name="COH_UIR_FY_EndYear__c"
+                                      aura:id="intakeRequestForm"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_FY_EndYear__c}" var="currentPicklistOption">
+                            <option value="{#currentPicklistOption.value}" selected="{#currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FY_EndYear__c}">{#currentPicklistOption.label}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+            </div>            
+        </div>
+        
+        <!-- Masure of Success -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input name="COH_UIR_FY_MeasureOfSuccess__c" 
+                                     label="How will you measure the success of this investment? If available"
+                                     value="{!v.mIntakeRequest.COH_UIR_FY_MeasureOfSuccess__c}"
+                                     aura:id="intakeRequestForm"
+                                     title="For example: Patient Satisfaction, Capacity, Colleague Engagement, Business Continuity, Value Realization metrics"/>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Entity Number -->
+        <div class="slds-size_1-of-1">
+            <div class="slds-box slds-m-vertical_small slds-box_no-padding ">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                        <div class="slds-form-element__control">
+                            <lightning:select value="{!v.mIntakeRequest.COH_UIR_FY_Entity__c}"
+                                              label="Please select the entity" 
+                                              name="COH_UIR_FY_Entity__c"
+                                              aura:id="intakeRequestForm"
+                                              required="true">
+                                <option value="">--Select--</option>
+                                <aura:iteration items="{!v.mPicklists.COH_UIR_FY_Entity__c}" var="currentPicklistOption">
+                                    <option value="{#currentPicklistOption.value}" selected="{#currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FY_Entity__c}">{#currentPicklistOption.label}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>         
+                    </div>
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FY_Entity__c == 'Other'}">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input name="COH_UIR_FY_EntityOther__c" 
+                                                 label="If other, please provide the entity number" 
+                                                 value="{!v.mIntakeRequest.COH_UIR_FY_EntityOther__c}"
+                                                 aura:id="intakeRequestForm"
+                                                 required="true"/>
+                            </div>
+                        </div>        
+                    </div>                	
+                </aura:if>
+            </div>
+        </div>
+        
+        <!-- Project Lead -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                        <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                                mSelectedRecord="{!v.mIntakeRequest.COH_UIR_FY_PMOrLead__c}" 
+                                                mLabel="Who is the PM or lead that will manage / lead / own this Project?"
+                                                mPrimaryFieldAPIName="Name"
+                                                mSecondaryFieldAPIName="Title"
+                                                mAdditionalSelectFields="IsActive"
+                                                mAdditionalSearchConditions="AND IsActive = true"
+                                                mRequired="true"
+                                                aura:id="childComponent"/>
+                </div>
+            </div>        
+        </div>        
+   
+        <div class="slds-size_1-of-1">
+            <div class="slds-box slds-m-vertical_small slds-box_no-padding ">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                        <div class="slds-form-element__control">
+                            <lightning:select value="{!v.mIntakeRequest.COH_UIR_FY_AnyOPEXCost__c}"
+                                              label="Is there any Op-Ex associated with this request (one-time and/or ongoing)" 
+                                              name="COH_UIR_FY_AnyOPEXCost__c"
+                                              aura:id="intakeRequestForm"
+                                              required="true">
+                                <option value="">--Select--</option>
+                                <aura:iteration items="{!v.mPicklists.COH_UIR_FY_AnyOPEXCost__c}" var="currentPicklistOption">
+                                    <option value="{#currentPicklistOption.value}" selected="{#currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FY_AnyOPEXCost__c}">{#currentPicklistOption.label}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control slds-p-vertical_x-small">
+                            <!-- Capital -->
+                            <lightning:input name="COH_UIR_FY_YearOneCapitalAmount__c" 
+                                             label="Estimated Year One Capital Amount" 
+                                             value="{!v.mIntakeRequest.COH_UIR_FY_YearOneCapitalAmount__c}"
+                                             aura:id="intakeRequestForm"
+                                             type="number"
+                                             min="0"
+                                             required="true"/>
+                        </div>
+                        <div class="slds-form-element__control slds-p-vertical_x-small">
+                            <lightning:input name="COH_UIR_FY_YearTwoCapitalAmount__c" 
+                                             label="Estimated Year Two Capital Amount" 
+                                             value="{!v.mIntakeRequest.COH_UIR_FY_YearTwoCapitalAmount__c}"
+                                             aura:id="intakeRequestForm"
+                                             type="number"
+                                             min="0"/>
+                        </div>
+                        <div class="slds-form-element__control slds-p-vertical_x-small">
+                            <lightning:input name="COH_UIR_FY_YearThreeCapitalAmount__c" 
+                                             label="Estimated Year Three Capital Amount" 
+                                             value="{!v.mIntakeRequest.COH_UIR_FY_YearThreeCapitalAmount__c}"
+                                             aura:id="intakeRequestForm"
+                                             type="number"
+                                             min="0"/>
+                        </div>
+                        <div class="slds-form-element__control slds-p-vertical_x-small">
+                            <lightning:input name="COH_UIR_FY_YearFourCapitalAmount__c" 
+                                             label="Estimated Year Four Capital Amount" 
+                                             value="{!v.mIntakeRequest.COH_UIR_FY_YearFourCapitalAmount__c}"
+                                             aura:id="intakeRequestForm"
+                                             type="number"
+                                             min="0"/>
+                        </div>
+                        <div class="slds-form-element__control slds-p-vertical_x-small">
+                            <lightning:input name="COH_UIR_FY_YearFiveCapitalAmount__c" 
+                                             label="Estimated Year Five Capital Amount" 
+                                             value="{!v.mIntakeRequest.COH_UIR_FY_YearFiveCapitalAmount__c}"
+                                             aura:id="intakeRequestForm"
+                                             type="number"
+                                             min="0"/>
+                        </div>
+                    </div>
+                    
+                    <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FY_AnyOPEXCost__c == 'Yes'}">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control slds-p-vertical_x-small">
+                                <lightning:input name="COH_UIR_FY_YearOneOpExAmount__c" 
+                                                 label="Estimated Year One Op-Ex Amount" 
+                                                 value="{!v.mIntakeRequest.COH_UIR_FY_YearOneOpExAmount__c}"
+                                                 aura:id="intakeRequestForm"
+                                                 type="number"
+                                                 min="0"
+                                                 required="true"/>
+                            </div>
+                            <div class="slds-form-element__control slds-p-vertical_x-small">
+                                <lightning:input name="COH_UIR_FY_YearTwoOpExAmount__c" 
+                                                 label="Estimated Year Two Op-Ex Amount" 
+                                                 value="{!v.mIntakeRequest.COH_UIR_FY_YearTwoOpExAmount__c}"
+                                                 aura:id="intakeRequestForm"
+                                                 type="number"
+                                                 min="0"/>
+                            </div>
+                            <div class="slds-form-element__control slds-p-vertical_x-small">
+                                <lightning:input name="COH_UIR_FY_YearThreeOpExAmount__c" 
+                                                 label="Estimated Year Three Op-Ex Amount" 
+                                                 value="{!v.mIntakeRequest.COH_UIR_FY_YearThreeOpExAmount__c}"
+                                                 aura:id="intakeRequestForm"
+                                                 type="number"
+                                                 min="0"/>
+                            </div>
+                            <div class="slds-form-element__control slds-p-vertical_x-small">
+                                <lightning:input name="COH_UIR_FY_YearFourOpExAmount__c" 
+                                                 label="Estimated Year Four Op-Ex Amount" 
+                                                 value="{!v.mIntakeRequest.COH_UIR_FY_YearFourOpExAmount__c}"
+                                                 aura:id="intakeRequestForm"
+                                                 type="number"
+                                                 min="0"/>
+                            </div>
+                            <div class="slds-form-element__control slds-p-vertical_x-small">
+                                <lightning:input name="COH_UIR_FY_YearFiveOpExAmount__c" 
+                                                 label="Estimated Year Five Op-Ex Amount" 
+                                                 value="{!v.mIntakeRequest.COH_UIR_FY_YearFiveOpExAmount__c}"
+                                                 aura:id="intakeRequestForm"
+                                                 type="number"
+                                                 min="0"/>
+                            </div>
+                        </div>
+                    </aura:if>
+                </div>
+            </div>
+        </div>
+        <!-- Impact Connect Hope -->
+        <div class="slds-size_1-of-1">
+            <div class="slds-box slds-m-vertical_small slds-box_no-padding ">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                        <div class="slds-form-element__control">
+                            <lightning:select value="{!v.mIntakeRequest.COH_UIR_FY_ImpactConnectHope__c}"
+                                              label="Does this impact ConnectHope?" 
+                                              name="COH_UIR_FY_ImpactConnectHope__c"
+                                              aura:id="intakeRequestForm"
+                                              required="true">
+                                <option value="">--Select--</option>
+                                <aura:iteration items="{!v.mPicklists.COH_UIR_FY_ImpactConnectHope__c}" var="currentPicklistOption">
+                                    <option value="{#currentPicklistOption.value}" selected="{#currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FY_ImpactConnectHope__c}">{#currentPicklistOption.label}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>         
+                    </div>
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FY_ImpactConnectHope__c == 'Yes'}">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:textarea name="COH_UIR_FY_ImpactConnectHopeDetail__c" 
+                                                    label="Please explain how ConnectHope is impacted" 
+                                                    value="{!v.mIntakeRequest.COH_UIR_FY_ImpactConnectHopeDetail__c}"
+                                                    aura:id="intakeRequestForm"
+                                                    required="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </aura:if>
+            </div>
+        </div>
+    </div>
+</aura:component>

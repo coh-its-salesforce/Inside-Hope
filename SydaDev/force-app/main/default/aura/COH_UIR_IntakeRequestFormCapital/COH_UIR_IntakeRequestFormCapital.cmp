@@ -1,0 +1,265 @@
+<aura:component controller="COH_UIR_IntakeRequestFormController">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:method name="validateFields" action="{!c.validateFields}"/>
+    <aura:attribute name="mIntakeRequest" type="COH_UniversalIntakeRequest__c"/>
+    <aura:attribute name="mPicklists" type="Map" />
+    <aura:attribute name="mShowChartStrings" type="Boolean[]" default="[false, false]"/>
+    <aura:attribute name="mTotalRequestedBudget" type="Integer" default="0"/>
+    <aura:attribute name="mTotalProjectedBudget" type="Integer" default="0"/>
+    
+    <div class="slds-form-horizontal">
+        <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_small">
+            Capital Request
+        </h3>
+        
+        <!-- Project Overview, Project Goals and Objective  -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_CPT_ProjectOverview__c}"
+                                     label="Project Overview"
+                                     name="COH_UIR_CPT_ProjectOverview__c"
+                                     aura:id="intakeRequestFormCapital"
+                                     required="true"/>
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_CPT_ProjectGoalsAndObjectives__c}"
+                                     label="Project Goals and Objective"
+                                     name="COH_UIR_CPT_ProjectGoalsAndObjectives__c"
+                                     aura:id="intakeRequestFormCapital"
+                                     required="true"/>                
+                </div>         
+            </div>            
+        </div>  
+        
+        <!-- Current State, Opportunity  -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_CPT_CurrentState__c}"
+                                     label="Current State"
+                                     name="COH_UIR_CPT_CurrentState__c"
+                                     aura:id="intakeRequestFormCapital"
+                                     required="true"
+                                     title="Consider who might be impacted by this project
+                                            If equipment, state age or breakage information
+                                            What operational solutions have been attempted?
+                                            Can another project be canceled or substituted for this project if this is not a Pre-Allocated project?"/>
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_CPT_Opportunity__c}"
+                                     label="Opportunity"
+                                     name="COH_UIR_CPT_Opportunity__c"
+                                     aura:id="intakeRequestFormCapital"
+                                     required="true"/>                
+                </div>         
+            </div>            
+        </div>
+        
+        <!-- Benefits to Implementation  -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_CPT_BenefitsToImplementation__c}"
+                                     label="Benefits to Implementation"
+                                     name="COH_UIR_CPT_BenefitsToImplementation__c"
+                                     aura:id="intakeRequestFormCapital"
+                                     required="true"
+                                     title="The benefits to implementation are:
+                                            Include Revenue, NPV, and ROI if possible. 
+                                            Why this project/piece of equipment over other options?
+                                            Is this project directly linked to a specific strategic initiative, such as CAR-T? If so which one(s)?"/>             
+                </div>         
+            </div>
+        </div>
+        
+        <!-- Requested CAPEX and OPEX -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_CPT_RequestedCAPEXBudget__c}"
+                                     label="Requested CAPEX Budget"
+                                     name="COH_UIR_CPT_RequestedCAPEXBudget__c"
+                                     aura:id="intakeRequestFormCapital"
+                                     formatter="currency"
+                                     step="0"
+                                     type="number"
+                                     required="true"
+                                     onchange="{!c.updateTotalBudget}"/>             
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_CPT_RequestedOPEXBudget__c}"
+                                     label="Requested OPEX Budget"
+                                     name="COH_UIR_CPT_RequestedOPEXBudget__c"
+                                     aura:id="intakeRequestFormCapital"
+                                     required="true"
+                                     formatter="currency"
+                                     step="0"                                     
+                                     type="number"
+                                     onchange="{!c.updateTotalBudget}"/>             
+                </div>         
+            </div>            
+        </div>
+        
+        <!-- Total Requested Budget, Additional External Funding  -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input value="{!v.mTotalRequestedBudget}"
+                                     label="Total Requested Budget"
+                                     name="mTotalRequestedBudget"
+                                     aura:id="intakeRequestFormCapital"
+                                     required="true"
+                                     formatter="currency"
+                                     step="0"                                     
+                                     type="number"
+                                     disabled="true"/>
+                </div>
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_CPT_AdditionalExternalFunding__c}"
+                                     label="Additional External Funding"
+                                     name="COH_UIR_CPT_AdditionalExternalFunding__c"
+                                     aura:id="intakeRequestFormCapital"
+                                     required="true"
+                                     formatter="currency"
+                                     step="0"                                     
+                                     type="number"
+                                     onchange="{!c.updateTotalBudget}"/>
+                </div>
+            </div>            
+        </div>
+        
+        <!-- Total Projected Budget, Projected Annual Maintenance -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control" >
+                    <lightning:input value="{!v.mTotalProjectedBudget}"
+                                     label="Total Projected Budget"
+                                     name="mTotalProjectedBudget"
+                                     aura:id="intakeRequestFormCapital"
+                                     required="true"
+                                     formatter="currency"
+                                     step="0"                                     
+                                     type="number"
+                                     disabled="true"/>
+                </div>
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_CPT_ProjectedAnnualMaintenance__c}"
+                                     label="Projected Annual Maintenance"
+                                     name="COH_UIR_CPT_ProjectedAnnualMaintenance__c"
+                                     aura:id="intakeRequestFormCapital"
+                                     formatter="currency"
+                                     step="0"                                     
+                                     type="number"                                     
+                                     required="true"/>
+                </div>
+            </div>            
+        </div>        
+        
+        <!-- Customer Service, Estimated Savings -->
+        <div class="slds-grid slds-wrap">    
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                <div class="slds-form-element__control">
+                    <lightning:select name="COH_UIR_CPT_CustomerService__c" 
+                                      label="Customer Service" 
+                                      value="{!v.mIntakeRequest.COH_UIR_CPT_CustomerService__c}"
+                                      aura:id="intakeRequestFormCapital"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_CPT_CustomerService__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_CPT_CustomerService__c}">{!currentPicklistOption.label}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                <div class="slds-form-element__control">
+                    <lightning:select name="COH_UIR_CPT_EstimatedSavings__c" 
+                                      label="Estimated Savings" 
+                                      value="{!v.mIntakeRequest.COH_UIR_CPT_EstimatedSavings__c}"
+                                      aura:id="intakeRequestFormCapital"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_CPT_EstimatedSavings__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_CPT_EstimatedSavings__c}">{!currentPicklistOption.label}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+            </div>            
+        </div>
+        
+        <!-- Anticipated Investment, Resource Efficiency -->
+        <div class="slds-grid slds-wrap">    
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                <div class="slds-form-element__control">
+                    <lightning:select name="COH_UIR_CPT_AnticipatedInvestment__c" 
+                                      label="Anticipated Investment" 
+                                      value="{!v.mIntakeRequest.COH_UIR_CPT_AnticipatedInvestment__c}"
+                                      aura:id="intakeRequestFormCapital"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_CPT_AnticipatedInvestment__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_CPT_AnticipatedInvestment__c}">{!currentPicklistOption.label}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                <div class="slds-form-element__control">
+                    <lightning:select name="COH_UIR_CPT_ResourceEfficiency__c" 
+                                      label="Resource Efficiency" 
+                                      value="{!v.mIntakeRequest.COH_UIR_CPT_ResourceEfficiency__c}"
+                                      aura:id="intakeRequestFormCapital"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_CPT_ResourceEfficiency__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_CPT_ResourceEfficiency__c}">{!currentPicklistOption.label}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+            </div>            
+        </div>
+        
+        <!-- Compliance/Risk Mitigation, Ease to Implement -->
+        <div class="slds-grid slds-wrap">    
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                <div class="slds-form-element__control">
+                    <lightning:select name="COH_UIR_CPT_ComplianceRiskMitigation__c" 
+                                      label="Compliance/Risk Mitigation" 
+                                      value="{!v.mIntakeRequest.COH_UIR_CPT_ComplianceRiskMitigation__c}"
+                                      aura:id="intakeRequestFormCapital"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_CPT_ComplianceRiskMitigation__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_CPT_ComplianceRiskMitigation__c}">{!currentPicklistOption.label}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                <div class="slds-form-element__control">
+                    <lightning:select name="COH_UIR_CPT_EaseToImplement__c" 
+                                      label="Ease to Implement" 
+                                      value="{!v.mIntakeRequest.COH_UIR_CPT_EaseToImplement__c}"
+                                      aura:id="intakeRequestFormCapital"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_CPT_EaseToImplement__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_CPT_EaseToImplement__c}">{!currentPicklistOption.label}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+            </div>            
+        </div>        
+    </div>
+</aura:component>

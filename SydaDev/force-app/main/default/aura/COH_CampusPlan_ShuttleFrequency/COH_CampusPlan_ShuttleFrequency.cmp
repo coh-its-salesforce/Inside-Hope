@@ -1,0 +1,80 @@
+<aura:component >
+   <aura:registerEvent name="openResourcestoHelp" type="c:CampusPlan_ResourcestoHelpEvent" />
+   <aura:attribute name="openBodyArea2" type="boolean" default="false"/>
+   <aura:attribute name="ShuttleFrequency" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.ShuttleFrequency}">
+       <div>
+        <div class="banner-container">
+    	<div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_7-of-12">
+                <div class="banner-image">
+                    <img src = "{!$Resource.ShuttleFrequency}"/> 
+                </div>
+      		</div>
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_5-of-12">
+               <div class="banner-content">
+                   <h2>Increased Shuttle Frequency</h2>
+               </div>
+      		</div>
+      	</div>            
+       </div>
+           </div>
+        <div class="profile-content">
+        	<p>
+                We have increased the frequency of the Duarte campus shuttle schedule. Our dedicated Duarte campus shuttle vendor will pick up riders at the designated stops (see map below)
+            </p>
+            <p>We also have shuttles that take staff between Duarte and Rivergrade. [Add link or insert schedule] </p>
+
+			<p>And, beginning [insert date], shuttles will run every 10 minutes between the Irwindale Speedway and the Duarte campus. </p>
+		</div>
+       <div>
+        <div class="tmcontainer">
+            <div class="slds-grid slds-wrap">
+  				<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_7-of-12">
+            	<div class="shuttle-table-area">
+                <table class="shuttle-schedule-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Frequency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>6 a.m. – 7 a.m.</td>
+                            <td>10 - 12 Minutes</td>
+                        </tr>
+                        <tr>
+                            <td>7 a.m. – 11 a.m.</td>
+                            <td>6 - 8 Minutes</td>
+                        </tr>
+                        <tr>
+                            <td>11 a.m. – 2 p.m.</td>
+                            <td>10 - 12 Minutes</td>
+                        </tr>
+                        <tr>
+                            <td>2 p.m. – 7 p.m.</td>
+                            <td>6 - 8 Minutes</td>
+                        </tr>
+                        <tr>
+                            <td>7 p.m. – 8:45 p.m.</td>
+                            <td>10 - 12 Minutes</td>
+                        </tr>
+                    </tbody>
+                </table>            
+            </div>
+                </div>
+  				<div class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_5-of-12">
+                <div class="map-image">
+                	<img src = "{!$Resource.ShuttlePath}"/>
+                </div>
+                </div>
+        </div>
+           </div>
+       </div>
+        
+          <!--<div class="backbutton" onclick="{!c.goBackToResourceToHelp}" ><lightning:icon iconName="utility:back" size="x-small" variant="inverse" />&nbsp;&nbsp;&nbsp;&nbsp;Back  
+    </div>-->
+</aura:if>
+   
+</aura:component>

@@ -1,0 +1,303 @@
+/* Style for Generic Page */
+
+.bmcSave {
+	background-image: url(SDEFbuttons/b_save.gif) !important;
+}
+
+.bmcSaveOn {
+	background-image: url(SDEFbuttons/b_save_on.gif) !important;
+}
+
+.bmcSaveDisable {
+	background-image: url(SDEFbuttons/b_save_disable.gif) !important;
+}
+
+    	
+.toolSpCls .x-toolbar-left {
+    padding-left: 9px;
+    background-color: #dee0e0;
+    border: 1px #dee0e0 solid;    
+} 
+
+.toolSpCls{
+    height: 35px;
+}
+ 
+.clsTable {
+	border: 0;
+	cellpadding: 0;
+	cellspacing: 0;
+	width: 100%;
+	background:#FFFFFF;
+}
+
+.clsInputLabelTD {
+	vertical-align: top;
+	font-family: Tahoma, MS Sans Serif;
+	color: #000000;
+	padding-right: 10px;
+	margin: 0px;
+	width: 175px;
+	font-size: 11px;
+	white-space: nowrap;
+	padding-top: 3px;
+	padding-left: 10px;
+}
+
+.clsInputTextBox {
+	vertical-align: top;
+	color: #000000;
+	width: 180px;
+	height: 13px;
+	font-family: Tahoma, MS Sans Serif;
+	font-size: 11px;
+	border: 1px solid;
+	border-top-color: #6a7378;
+	border-left-color: #6a7378;
+	border-right-color: #bac3c8;
+	border-bottom-color: #bac3c8;
+	padding: 2px;
+	margin: 0px;
+	padding-left: 5px;
+	float: left;
+}
+
+.clsInputCheckBox {
+	vertical-align: top;
+	padding-left: 10px;
+	padding: right : 5px;
+	font-family: Tahoma, MS Sans Serif;
+	font-size: 11px;
+	color: #000000;
+}
+
+.clsRequiredBlack {
+	color: black;
+}
+ .clsInputLabelTD1 {
+	vertical-align: top;
+	font-family: Tahoma, MS Sans Serif;
+	color: #000000;
+	padding-right: 10px;
+	margin: 0px;
+	width: 178px;
+	font-size: 11px;
+	white-space: nowrap;
+	padding-top: 3px;
+	padding-left: 13px;
+}
+.clsInputLabelTD2 {
+	vertical-align: top;
+	font-family: Tahoma, MS Sans Serif;
+	color: #000000;
+	padding-right: 10px;
+	margin: 0px;
+	width: 2%;
+	font-size: 11px;
+	white-space: nowrap;
+	padding-top: 3px;
+	padding-left: 0px;
+}
+.clsComboStyle1{
+	width:100px;
+	height:20px;
+	 font-size:11px; 
+	 font-family:Tahoma,MS Sans Serif;
+}
+.clsComboStyle2{
+	width:70px;
+	height:20px;
+	 font-size:11px; 
+	 font-family:Tahoma,MS Sans Serif;
+}
+.clsComboStyle{
+width:204px;
+height:20px;
+ font-size:11px; 
+ font-family:Tahoma,MS Sans Serif;
+}
+.clsInputTextBox1 {
+	border-color: #6A7378 #BAC3C8 #BAC3C8 #6A7378;
+    border-style: solid;
+    border-width: 1px;
+    color: #000000;
+    float: left;
+    font-family: Tahoma,MS Sans Serif;
+    font-size: 11px;
+    height: 13px;
+    margin: 0;
+    padding: 2px 2px 2px 5px;
+    vertical-align: top;
+	text-align: right;
+    width: 90px;
+}
+.clsInputTextBoxTD {
+	padding-bottom: 5px;
+}
+
+.InputVirtualReadOnly {
+	BORDER-BOTTOM: gray 1px solid; 
+	BORDER-LEFT: gray 1px solid; 
+	BACKGROUND-COLOR: lightgray; 
+	 
+	COLOR: #000000; 
+	BORDER-TOP: gray 1px solid; 
+	BORDER-RIGHT: gray 1px solid
+}
+
+/* Style for Edit Relationship Page: Relationship Tables*/
+.relationship_info_wrapper{
+	height: 230px;	
+	font-family: Tahoma,MS Sans Serif;
+	font-size: 11px;
+	border: 1px solid #ADB9C0;
+	margin-right: 10px;
+}
+
+.relationship_details{
+	padding-top: 15px;
+	padding-right: 15px;
+}
+
+.relationship_title{
+	color: #00366d;
+	font-weight: bold;
+	padding: 8px 12px;
+	background: #f0f0f0;
+	border-bottom: 1px solid #ADB9C0;
+}
+
+.single-line-textarea {
+	overflow:hidden;
+}
+
+#editRelationshipForm tr .clsInputTextBoxTD{
+	width:205px;
+}
+
+#editRelationshipForm tr .clsExpansionImg{
+	padding-bottom: 5px;
+}
+
+/*Style to align toolbar buttons in middle*/
+#relationship .x-toolbar .x-toolbar-ct{
+	padding-top: 3px;
+}
+
+td#ToolBarTD #toolBarId{
+	padding-top: 2px;
+} 
+
+/* End of style for Generic Page */
+
+.lookupIconOn {
+	background-image: url(SDEFbuttons/b_pick.gif);
+	vertical-align: top;
+	padding-left: 5px;
+	width: 19px;
+	height: 19px;
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+}
+
+/*Added for custom tab*/
+.customMultiselect{
+        height: 53px !important;
+        width: 204px !important;
+        font-family: tahoma ! important;
+        font-size: 11px ! important;
+    } 
+/*End of custom tab*/
+
+/*Styling for Performance Metrics icon on lookup popup window*/
+.x-tool-lookuppm{
+        background:transparent url(SDEFbuttons/b_performance_metrics_on_click.png) no-repeat scroll 0 0;
+        margin: 0px;
+		padding: 0px;
+        height: 20px;
+		width: 20px;
+}
+
+.x-tool-lookuppm-over{
+        background:transparent url(SDEFbuttons/b_performance_metrics_rollover.png) no-repeat scroll 0 0;
+        margin: 0px;
+		padding: 0px;
+        height: 20px;
+		width: 20px;
+}
+.canvasPanelCls .x-layout-split-south .x-layout-mini {
+            background-image: url("SDEFimages/panel-handle.gif");
+            top: 2px;
+        }
+      .onDemandSITableCls{
+        font-family:tahoma,verdana,arial;font-size:11px;width:100%;padding-left:8px;
+        }
+        div#detailsDivSI{
+            
+        }
+        td#noSIAvailTD{
+          display:none;
+          margin-top:12%;
+          text-align:center;
+        }
+        td#linkSIAvailTD{
+            display:none;
+        }
+        input#configureSIId{
+            vertical-align:-30%;
+        }
+        .canvasPanelCls .x-layout-collapsed{
+        height:18px;
+        background:#FFFFFF;
+ }
+ .canvasPanelCls .x-layout-cmini-south {
+        height:8px !important;
+
+ }
+        /* Styles for qtip */
+         .x-tip .x-tip-tc, .x-tip .x-tip-tl, .x-tip .x-tip-tr, .x-tip .x-tip-bc, .x-tip .x-tip-bl, .x-tip .x-tip-br, .x-tip .x-tip-ml, .x-tip .x-tip-mr {
+           background:#ffffe7;
+           
+        }
+        .x-tip{
+           border:1px solid #000000;
+        }
+    .x-layout-split{   
+    height: 7px;
+    }
+  .x-layout-cmini-south .x-layout-mini {
+     background-image: url("SDEFimages/panel-handle.gif");
+     top:2px;
+}
+.acAction{
+	background-image: url(SDEFbuttons/b_Asset_Core_Actions.png) !important;
+}
+
+.dialogClose, .dialogCloseOn, div.x-window .x-tool-close, div.x-window .x-tool-close-over {
+    width: 15px;
+	height: 15px;
+}
+.dialogCloseOn, div.x-window div.x-tool-close-over {
+    height: 15px;
+    width: 15px;
+}
+.x-tool-restore {
+	background: url(SDEFbuttons/b_restore.png) no-repeat scroll 0 0 transparent;
+	margin-bottom: 0;
+	margin-top: 0;
+	*height:20px;
+	*width:20px;
+	padding-bottom: 6px;
+	padding-right: 5px;
+}
+
+.x-tool-maximize {
+	background: url(SDEFbuttons/b_maximize.png) no-repeat scroll 0 0 transparent;
+	margin-bottom: 0;
+	margin-top: 0;
+	*height:20px;
+	*width:20px;
+	padding-bottom: 6px;
+	padding-right: 5px;
+}    

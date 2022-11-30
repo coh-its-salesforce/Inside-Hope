@@ -1,0 +1,6 @@
+<aura:component controller="COHEpicLightningController" implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickActionWithOutHeader" access="global" >
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h2>Are you sure you want to update the Epic record?</h2><br/>
+   
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<lightning:button label="Cancel" onclick="{!c.cancelRecord}"  iconPosition="center"/>
+    <lightning:button label="Update EPIC Record" onclick="{!c.updateEpicRecord}"  variant="brand" iconPosition="center"/>
+</aura:component>

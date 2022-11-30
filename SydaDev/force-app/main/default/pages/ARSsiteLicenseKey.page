@@ -1,0 +1,20 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" 
+           applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">    
+    
+    <html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <title>ARS Site License: Key</title>
+        </head>
+        <body>
+            <form id="autoSubmit" action="https://www.cihq-ars.org/site_license_auth.asp" method="post">
+                <input name="guid" id="guid" type="hidden" />
+            </form>
+    </body>
+        <script type="text/javascript">
+            document.getElementById('guid').value = 'B5970223-24DA-4CF8-BEBE-26C52A2933BB';
+            document.getElementById('autoSubmit').submit();
+        </script>
+    </html>
+    
+</apex:page>

@@ -1,0 +1,2170 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,lightning:isUrlAddressable" controller="COH_Get_IT_ResourceRecords">
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="ITRRecs" type="IT_Resource__c" default=""/>
+    <aura:attribute name="isEdit" type="Boolean" default="false" description="Used to handle show /hide edit form"/>
+	
+    <aura:if isTrue="{!v.isEdit == false}">
+        <center>
+        	<div class="slds-m-top_medium">
+            	<lightning:button label="Edit Details" variant="brand" name="Edit Details" onclick="{!c.handleEdit}"/>
+            </div>
+        </center><br/> <br/>
+        
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+  			<thead>
+    			<tr class="slds-line-height_reset">
+      				<th class="" scope="col">
+        				<div class="slds-truncate" title="Field Name"> Field Name </div>
+      				</th>
+                    <th class="" scope="col">
+        				<div class="slds-truncate" title="Salesforce User Repository Value"> Salesforce User Repository Value </div>
+      				</th>
+                    <th class="" scope="col">
+        				<div class="slds-truncate" title="Resource Repository Value"> Resource Repository Value </div>
+      				</th>
+                    <th class="" scope="col">
+        				<div class="slds-truncate" title="Resource Manager View"> Resource Manager View </div>
+      				</th>
+                    <!-- <th class="" scope="col">
+        				<div class="slds-truncate" title="Override Checkbox"> Override Checkbox </div>
+      				</th> -->
+                    <th class="" scope="col">
+        				<div class="slds-truncate" title="Comments"> Comments </div>
+      				</th>
+    			</tr>
+  			</thead>
+            <tbody>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="First Name">
+          					First Name
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.First_Name__c}" />
+                        </div> 
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.First_Name_Update__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+                        <ui:outputTextArea value="{!v.ITRRecs.First_Name_Formula__c}" />
+        				<!-- <div class="slds-truncate" title="Resource Manager View">
+                            <aura:if  isTrue="{!or(v.ITRRecs.First_Name_Update__c == null, v.ITRRecs.First_Name_Override__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.First_Name__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.First_Name_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if>
+                        </div> -->
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.First_Name_Override__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.First_Name_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Last Name">
+          					Last Name
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Last_Name__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Last_Name_Update__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.Last_Name_RM_View__c}" />
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Last_Name_Update__c == null, v.ITRRecs.Last_Name_Override__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.Last_Name__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.Last_Name_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Last_Name_Override__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Last_Name_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+                    <th data-label="Field Name" scope="row">
+                      <div class="slds-truncate" title="Middle Initial">
+                            Middle Initial
+                      </div>
+                    </th>
+                  <td data-label="Salesforce User Repository Value">
+                      <div class="slds-truncate" title="Salesforce User Repository Value">
+                          <ui:outputTextArea value="{!v.ITRRecs.Middle_Initial__c}" />
+                      </div>
+                  </td>
+                  <td data-label="Resource Repository Value">
+                      <div class="slds-truncate" title="Resource Repository Value">
+                          <ui:outputTextArea value="{!v.ITRRecs.Middle_Initial_Update__c}" />
+                      </div>
+                  </td>
+                  <td data-label="Resource Manager View">
+                      <div class="slds-truncate" title="Resource Manager View">
+                          <ui:outputTextArea value="{!v.ITRRecs.Middle_Initial_RM_View__c}" />
+                          <!-- <aura:if  isTrue="{!or(v.ITRRecs.Middle_Initial_Update__c == null, v.ITRRecs.Middle_Initial_Override__c == true)}" >
+                              <ui:outputTextArea value="{!v.ITRRecs.Middle_Initial__c}" />
+                              <aura:set attribute="else">
+                                   <span class="valueFont fld-right-p">
+                                      <ui:outputTextArea value="{!v.ITRRecs.Middle_Initial_Update__c}" />
+                                  </span>
+                               </aura:set>
+                          </aura:if> -->
+                      </div>
+                   </td>
+                  <!-- <td data-label="Override Checkbox">
+                      <div class="slds-truncate" title="Override Checkbox">
+                          <ui:outputCheckbox value="{!v.ITRRecs.Middle_Initial_Override__c}" />
+                      </div>
+                    </td> -->
+                  <td data-label="Comments">
+                      <div class="slds-truncate" title="Comments">
+                          <ui:outputTextArea value="{!v.ITRRecs.Middle_Initial_Comments__c	}" />
+                      </div>
+                  </td>
+              </tr>
+              <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Suffix">
+          					Suffix
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Suffix__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Suffix_Update__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.Suffix_RM_View__c}" />
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Suffix_Update__c == null, v.ITRRecs.Suffix_Override__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.Suffix__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.Suffix_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Suffix_Override__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Suffix_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Email">
+          					Email
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Email__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Email_Update__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.Email_RM_View__c}" />
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Email_Update__c == null, v.ITRRecs.Override_Email__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.Email__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.Email_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Override_Email__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Email_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Job Title">
+          					Job Title
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Job_Title__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Job_Title_Update__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.Job_Title_RM_View__c}" />
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Job_Title_Update__c == null, v.ITRRecs.Job_Title_Override__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.Job_Title__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.Job_Title_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Job_Title_Override__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Job_Title_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Roles">
+          					Roles
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record
+                        	<!-- <ui:outputTextArea value="{!v.ITRRecs.Job_Title__c}" /> -->
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Roles__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.Roles__c}" />
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Job_Title_Update__c == null, v.ITRRecs.Job_Title_Override__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.Job_Title__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.Job_Title_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Role_Override__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Role_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+				<tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Epic Certifications">
+          					Epic Certifications
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record                        
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Epic_Certifications__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.Epic_Certifications__c}" />
+                            
+                        </div>
+      				</td>
+                  
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Epic_Employee_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Skillset">
+          					Skillset
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record
+                        	<!-- <ui:outputTextArea value="{!v.ITRRecs.Job_Title__c}" /> -->
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Skillset__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.Skillset__c}" />
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Job_Title_Update__c == null, v.ITRRecs.Job_Title_Override__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.Job_Title__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.Job_Title_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Skillset_Override__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Skillset_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="VP">
+          					VP
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.VP__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.VP_Updates__r.Name}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.VP_RM_View__c}" />
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.VP_Update__c == null, v.ITRRecs.VP_Override__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.VP__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.VP_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.VP_Override__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.VP_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Director">
+          					Director
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Director__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Director_Updates__r.Name}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.Director_RM_View__c}" />
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Director_Update__c == null, v.ITRRecs.Override_Director__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.Director__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.Director_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Override_Director__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Director_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Direct Supervisor">
+          					Direct Supervisor
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Resource_Manager__c}" />                            
+                        	<!-- <ui:outputTextArea value="{!v.ITRRecs.Director__c}" /> -->
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Direct_Supervisor_Updates__r.Name}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.Direct_Supervisor_RM_View__c}" />
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Director_Update__c == null, v.ITRRecs.Override_Director__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.Director__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.Director_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                   <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Override_Direct_Supervisor__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Direct_Supervisor_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Resource Manager">
+          					Resource Manager
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Resource_Manager__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <ui:outputTextArea value="{!v.ITRRecs.Resource_Manager_Updates__r.Name}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                           <ui:outputTextArea value="{!v.ITRRecs.Resource_Manager_RM_view__c}" />
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Resource_Manager_Override__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Resource_Manager_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+				<!-- Beginning Comment 05/10/2021 LK
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="IT Timesheet Required">
+          					IT Timesheet Required
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.ITS_Timesheet__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.IT_Timesheet_Required__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.IT_Timesheet_RM_View__c}" />
+                        </div>
+      				</td> End Comment 05/10/2021-->
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.IT_Timesheet_Required_Override__c}" />
+                        </div>
+      				</td> -->
+					  <!-- Begin Comment 05/10/2021 LK 
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.IT_Timesheet_Required_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Enhancement Permission Set">
+          					Enhancement Permission Set
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value"> End Comment 05/10/21 LK -->
+                        	<!-- <ui:outputTextArea value="{!v.ITRRecs.Resource_Manager__c}" /> -->
+							<!-- Begin Comment 05/10/21 LK
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Enhancement_Permission_Set__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            	
+                        </div>
+      				</td> -->
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Enhancement_Permission_Set_Override__c}" />
+                        </div>
+      				</td> -->
+					  <!--Begin Comment 05/10/21 LK
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Enhancement_Permission_Set_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="PM Permission Set">
+          					PM Permission Set
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+						-->
+                        	<!-- <ui:outputTextArea value="{!v.ITRRecs.Resource_Manager__c}" /> -->
+                        <!-- Begin Comment 05/10/21 LK 
+						</div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.PM_Permission_Set__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            
+                        </div>
+      				</td>
+				-->
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.PM_Permission_Set_Override__c}" />
+                        </div>
+      				</td> -->
+					  <!--Begin Comment 05/10/21 LK 
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.PM_Permission_Set_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Ranking Permission Set">
+          					Ranking Permission Set
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+						-->
+                        	<!-- <ui:outputTextArea value="{!v.ITRRecs.Resource_Manager__c}" /> -->
+                        <!-- Begin Comment 05/10/21 LK
+						</div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Ranking_Permission_Set__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            
+                        </div>
+      				</td> -->
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Ranking_Permission_Set_Override__c}" />
+                        </div>
+      				</td> -->
+					  <!-- Begin Comment 05/10/21 LK 
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Ranking_Permission_Set_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+				-->
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Resource Type">
+          					Resource Type
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Staff_Type1__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Staff_Type__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.Resource_Type_RM_view__c}" />
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Resource_Type_Update__c == null, v.ITRRecs.Resource_Type_Override__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.Staff_Type1__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.Resource_Type_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Resource_Type_Override__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Resource_Type_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Vendor Name">
+          					Vendor Name
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record
+                            <!--<ui:outputTextArea value="{!v.ITRRecs.Vendor_Name__c}" /> -->
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+                        <div class="slds-truncate" title="Resource Repository Value">
+                            <ui:outputTextArea value="{!v.ITRRecs.Vendor_Name__c}" />
+                        </div>
+                    </td>
+                    <td data-label="Resource Manager View">
+                        <div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.Vendor_Name__c}" />
+                        </div>
+                    </td>
+                    <!--
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Vendor_Name_Update__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.Vendor_Name_RM_View__c}" />
+                        </div>
+      				</td>
+					-->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Vendor_Name_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <!-- <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Planned Start Date">
+          					Planned Start Date
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record -->
+                        	<!-- <ui:outputDate value="{!v.ITRRecs.Staff_Type1__c}" format="MM/dd/yyyy"/> -->
+                       <!-- </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputDate value="{!v.ITRRecs.Planned_Start_Date_Update__c}" format="MM/dd/yyyy"/>
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputDate value="{!v.ITRRecs.Planned_Start_Date_Update__c}" format="MM/dd/yyyy"/> -->
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Resource_Type_Update__c == null, v.ITRRecs.Resource_Type_Override__c == true)}" >
+                            	<ui:outputDate value="{!v.ITRRecs.Staff_Type1__c}" format="MM/dd/yyyy"/>
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputDate value="{!v.ITRRecs.Resource_Type_Update__c}" format="MM/dd/yyyy"/>
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                      <!--  </div>
+      				</td> -->
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Planned_Start_Date_Override__c}" />
+                        </div>
+      				</td> -->
+                  <!--  <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Planned_Start_Date_Comments__c}" />
+                        </div>
+      				</td>
+                </tr> -->
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Resource Start Date">
+          					Resource Start Date
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                        	<ui:outputDate value="{!v.ITRRecs.Resource_Start_Date__c}" format="MM/dd/yyyy"/>
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputDate value="{!v.ITRRecs.Resource_Start_Date_Update__c}" format="MM/dd/yyyy"/>
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputDate value="{!v.ITRRecs.Resource_Start_Date_RM_View__c}" format="MM/dd/yyyy"/>
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Resource_Start_Date_Update__c == null, v.ITRRecs.Resource_Start_Date_Override__c == true)}" >
+                            	<ui:outputDate value="{!v.ITRRecs.Resource_Start_Date__c}" format="MM/dd/yyyy"/>
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputDate value="{!v.ITRRecs.Resource_Start_Date_Update__c}" format="MM/dd/yyyy"/>
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Resource_Start_Date_Override__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Resource_Start_Date_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <!-- <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Expected End Date">
+          					Expected End Date
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record -->
+                        	<!-- <ui:outputDate value="{!v.ITRRecs.Resource_Start_Date__c}" format="MM/dd/yyyy"/> -->
+                       <!-- </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputDate value="{!v.ITRRecs.Expected_End_Date_Update__c}" format="MM/dd/yyyy"/>
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputDate value="{!v.ITRRecs.Expected_End_Date_Update__c}" format="MM/dd/yyyy"/> -->
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Resource_Start_Date_Update__c == null, v.ITRRecs.Resource_Start_Date_Override__c == true)}" >
+                            	<ui:outputDate value="{!v.ITRRecs.Resource_Start_Date__c}" format="MM/dd/yyyy"/>
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputDate value="{!v.ITRRecs.Resource_Start_Date_Update__c}" format="MM/dd/yyyy"/>
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                       <!-- </div>
+      				</td> -->
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Override_Expected_End_Date__c}" />
+                        </div>
+      				</td> -->
+                   <!-- <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Expected_End_Date_Comments__c}" />
+                        </div>
+      				</td>
+                </tr> -->
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Resource End Date">
+          					Resource End Date
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                        	<ui:outputDate value="{!v.ITRRecs.Resource_End_Date__c}" format="MM/dd/yyyy"/>
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputDate value="{!v.ITRRecs.Actual_Resource_End_Date_Update__c}" format="MM/dd/yyyy"/>
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputDate value="{!v.ITRRecs.Resource_End_Date_RM_View__c}" format="MM/dd/yyyy"/>
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Actual_Resource_End_Date_Update__c == null, v.ITRRecs.Override_Actual_Resource_End_Date__c == true)}" >
+                            	<ui:outputDate value="{!v.ITRRecs.Resource_End_Date__c}" format="MM/dd/yyyy"/>
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputDate value="{!v.ITRRecs.Actual_Resource_End_Date_Update__c}" format="MM/dd/yyyy"/>
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Override_Actual_Resource_End_Date__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Actual_Resource_End_Date_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Primary ISC">
+          					Primary ISC
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record
+                        	<!-- <ui:outputTextArea value="{!v.ITRRecs.Resource_End_Date__c}" /> -->
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Primary_ISC__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.Primary_ISC__c}" />
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Actual_Resource_End_Date_Update__c == null, v.ITRRecs.Override_Actual_Resource_End_Date__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.Resource_End_Date__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.Actual_Resource_End_Date_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Override_Primary_ISC__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Primary_ISC_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Functional Area">
+          					Functional Area
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record
+                        	<!-- <ui:outputTextArea value="{!v.ITRRecs.Resource_End_Date__c}" /> -->
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Functional_Area__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.Functional_Area__c}" />
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Actual_Resource_End_Date_Update__c == null, v.ITRRecs.Override_Actual_Resource_End_Date__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.Resource_End_Date__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.Actual_Resource_End_Date_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Override_Functional_Area__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Functional_Area_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Sub-Functional Area">
+          					Sub-Functional Area
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record
+                        	<!-- <ui:outputTextArea value="{!v.ITRRecs.Resource_End_Date__c}" /> -->
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Sub_Functional_Area__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.Sub_Functional_Area__c}" />
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Actual_Resource_End_Date_Update__c == null, v.ITRRecs.Override_Actual_Resource_End_Date__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.Resource_End_Date__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.Actual_Resource_End_Date_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Override_Sub_Functional_Area__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Sub_Functional_Area_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Epic Employee?">
+          					Epic Employee?
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record
+                        	<!-- <ui:outputTextArea value="{!v.ITRRecs.Resource_End_Date__c}" /> -->
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.EPIC_Employee__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.EPIC_Employee__c}" />
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Actual_Resource_End_Date_Update__c == null, v.ITRRecs.Override_Actual_Resource_End_Date__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.Resource_End_Date__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.Actual_Resource_End_Date_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Override_Epic_Employee__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Epic_Employee_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Offshore Resource?">
+          					Offshore Resource?
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record
+                        	<!-- <ui:outputTextArea value="{!v.ITRRecs.Resource_End_Date__c}" /> -->
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Offshore_Resource__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.Offshore_Resource__c}" />
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Actual_Resource_End_Date_Update__c == null, v.ITRRecs.Override_Actual_Resource_End_Date__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.Resource_End_Date__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.Actual_Resource_End_Date_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Override_Offshore_Resource__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Offshore_Resource_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Business Unit">
+          					Business Unit
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            <ui:outputTextArea value="{!v.ITRRecs.Business_Unit_User__c}"/>
+                        	<!-- <ui:outputTextArea value="{!v.ITRRecs.Resource_End_Date__c}" /> -->
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Business_Unit__c}" />
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.Business_Unit_RM__c}" />
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Actual_Resource_End_Date_Update__c == null, v.ITRRecs.Override_Actual_Resource_End_Date__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.Resource_End_Date__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.Actual_Resource_End_Date_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                        	<ui:outputCheckbox value="{!v.ITRRecs.Override_Business_Unit__c}" />
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.Business_Unit_Comments__c}" />
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+                    <th data-label="Field Name" scope="row">
+                        <div class="slds-truncate" title="Department">
+                            Department
+                        </div>
+                    </th>
+                    <td data-label="Salesforce User Repository Value">
+                        <div class="slds-truncate" title="Salesforce User Repository Value">
+                            <ui:outputTextArea value="{!v.ITRRecs.Department_User__c}"/>
+                            <!-- <ui:outputTextArea value="{!v.ITRRecs.Resource_End_Date__c}" /> -->
+                        </div>
+                    </td>
+                    <td data-label="Resource Repository Value">
+                        <div class="slds-truncate" title="Resource Repository Value">
+                            <ui:outputTextArea value="{!v.ITRRecs.Department__c}" />
+                        </div>
+                    </td>
+                    <td data-label="Resource Manager View">
+                        <div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputTextArea value="{!v.ITRRecs.Department_RM__c}" />
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Actual_Resource_End_Date_Update__c == null, v.ITRRecs.Override_Actual_Resource_End_Date__c == true)}" >
+                             <ui:outputTextArea value="{!v.ITRRecs.Resource_End_Date__c}" />
+                                <aura:set attribute="else">
+                                  <span class="valueFont fld-right-p">
+                                     <ui:outputTextArea value="{!v.ITRRecs.Actual_Resource_End_Date_Update__c}" />
+                                 </span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+                    </td>
+                    <!-- <td data-label="Override Checkbox">
+            <div class="slds-truncate" title="Override Checkbox">
+                         <ui:outputCheckbox value="{!v.ITRRecs.Override_Department__c}" />
+                        </div>
+          </td> -->
+                    <td data-label="Comments">
+                        <div class="slds-truncate" title="Comments">
+                            <ui:outputTextArea value="{!v.ITRRecs.Department_Comments__c}" />
+                        </div>
+                    </td>
+                </tr>
+                                <tr class="slds-hint-parent">
+      		  	    <th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="IT PMO Training Completed Date">
+          					IT PMO Training Completed Date
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record 
+                        	<!-- <ui:outputTextArea value="{!v.ITRRecs.Resource_End_Date__c}" /> -->
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <ui:outputDate value="{!v.ITRRecs.IT_PMO_Training_Complete__c}" format="MM/dd/yyyy"/> 
+                        </div>
+      				</td>
+                    <td data-label="Resource Manager View">
+        				<div class="slds-truncate" title="Resource Manager View">
+                            <ui:outputDate value="{!v.ITRRecs.IT_PMO_Training_Complete__c}" format="MM/dd/yyyy"/>  
+                            <!-- <aura:if  isTrue="{!or(v.ITRRecs.Actual_Resource_End_Date_Update__c == null, v.ITRRecs.Override_Actual_Resource_End_Date__c == true)}" >
+                            	<ui:outputTextArea value="{!v.ITRRecs.Resource_End_Date__c}" />
+                                <aura:set attribute="else">
+                                 	<span class="valueFont fld-right-p">
+                                    	<ui:outputTextArea value="{!v.ITRRecs.Actual_Resource_End_Date_Update__c}" />
+                                	</span>
+                                </aura:set>
+                            </aura:if> -->
+                        </div>
+      				</td>
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                        	<ui:outputTextArea value="{!v.ITRRecs.IT_PMO_Training_Completed_Date_Comment__c}" />
+                        </div>
+      				</td>
+                </tr>
+
+
+            </tbody>
+        </table><br/> <br/>
+        <center>
+        	<div class="slds-m-top_medium">
+            	<lightning:button label="Edit Details" variant="brand" name="Edit Details" onclick="{!c.handleEdit}"/>
+            </div>
+        </center><br/> <br/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.isEdit == true}">
+    	<lightning:recordEditForm
+        		onsuccess="{!c.handleSuccess}"
+            	recordId="{!v.recordId}"
+           		objectApiName="IT_Resource__c">
+        <center>
+        	<div class="slds-m-top_medium">
+            	<lightning:button variant="brand" type="submit" name="Save Details" label="Save Details" />
+                <lightning:button label="Cancel" name="Cancel" onclick="{!c.handleCancel}"/>
+            </div>
+        </center><br/>
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered">
+  			<thead>
+    			<tr class="slds-line-height_reset">
+      				<th class="" scope="col">
+        				<div class="slds-truncate" title="Field Name"> Field Name </div>
+      				</th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Resource Repository Value"> Salesforce User Repository Value </div>
+      				</th>
+                    <th class="" scope="col">
+        				<div class="slds-truncate" title="Resource Repository Value"> Resource Repository Value </div>
+      				</th>
+                    <!-- <th class="" scope="col">
+        				<div class="slds-truncate" title="Override Checkbox"> Override Checkbox </div>
+      				</th> -->
+                    <th class="" scope="col">
+        				<div class="slds-truncate" title="Comments"> Comments </div>
+      				</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="First Name">
+          					First Name
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            <lightning:outputField fieldName="First_Name__c"/>
+                        </div>
+      				</td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="First_Name_Update__c"/>
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="First_Name_Override__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="First_Name_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Last Name">
+          					Last Name
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            <lightning:inputField fieldName="Last_Name__c"/>
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Last_Name_Update__c"/>
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Last_Name_Override__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Last_Name_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+                    <th data-label="Field Name" scope="row">
+                      <div class="slds-truncate" title="Middle Initial">
+                            Middle Initial
+                      </div>
+                    </th>
+                    <td data-label="Salesforce User Repository Value">
+                        <div class="slds-truncate" title="Salesforce User Repository Value">
+                            <lightning:inputField fieldName="Middle_Initial__c"/>
+                        </div>
+                      </td>
+                  <td data-label="Resource Repository Value">
+                      <div class="slds-truncate" title="Resource Repository Value">
+                          <lightning:inputField fieldName="Middle_Initial_Update__c"/>
+                      </div>
+                    </td>
+                  <!-- <td data-label="Override Checkbox">
+                      <div class="slds-truncate" title="Override Checkbox">
+                          <lightning:inputField fieldName="Middle_Initial_Override__c"/>
+                      </div>
+                    </td> -->
+                  <td data-label="Comments">
+                      <div class="slds-truncate" title="Comments">
+                          <lightning:inputField fieldName="Middle_Initial_Comments__c"/>
+                      </div>
+                  </td>
+              </tr>
+              <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Suffix">
+          					Suffix
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            <lightning:inputField fieldName="Suffix__c"/>
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Suffix_Update__c"/>
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Suffix_Override__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Suffix_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Email">
+          					Email
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            <lightning:inputField fieldName="Email__c"/>
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Email_Update__c"/>
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Override_Email__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Email_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Job Title">
+          					Job Title
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            <lightning:inputField fieldName="Job_Title__c"/>
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Job_Title_Update__c"/>
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Job_Title_Override__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Job_Title_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Role">
+          					Roles
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record
+                           <!-- <lightning:inputField fieldName="Job_Title__c"/> -->
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Roles__c"/>
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Role_Override__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Role_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+				<tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Epic Certifications">
+          					Epic Certifications
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record
+                           <!-- <lightning:inputField fieldName="Job_Title__c"/> -->
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Epic_Certifications__c"/>
+                        </div>
+      				</td>
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Epic_Employee_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Skillset">
+          					Skillset
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record
+                           <!-- <lightning:inputField fieldName="Job_Title__c"/> -->
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Skillset__c"/>
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Skillset_Override__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Skillset_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="VP">
+          					VP
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                           <lightning:inputField fieldName="VP__c"/>
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="" title="Resource Repository Value">
+                            <lightning:inputField fieldName="VP_Updates__c"/>
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="VP_Override__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="VP_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Director">
+          					Director
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                           <lightning:inputField fieldName="Director__c"/>
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Director_Updates__c"/>
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Override_Director__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Director_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Direct Supervisor">
+          					Direct Supervisor
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            <label for="DirectSupervisor">Direct Supervisor</label>
+                            <lightning:inputField variant="label-hidden" aura:id="DirectSupervisor" fieldName="Resource_Manager__c"/>
+                           <!-- <lightning:inputField fieldName="Director__c"/> -->
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Direct_Supervisor_Updates__c"/>
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Override_Direct_Supervisor__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Direct_Supervisor_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Resource Manager">
+          					Resource Manager
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                           <lightning:inputField fieldName="Resource_Manager__c"/>
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="" title="Resource Repository Value">
+                           <lightning:inputField fieldName="Resource_Manager_Updates__c"/> 
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Resource_Manager_Override__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Resource_Manager_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+				<!-- Comment 05/10/21 LK 
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="IT Timesheet Required">
+          					IT Timesheet Required
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                           <lightning:inputField fieldName="ITS_Timesheet__c"/>
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="IT_Timesheet_Required__c"/>
+                        </div>
+      				</td>
+					  -->
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="IT_Timesheet_Required_Override__c"/>
+                        </div>
+      				</td> -->
+					  <!-- Comment 05/10/21 LK 
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="IT_Timesheet_Required_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Enhancement Permission Set">
+          					Enhancement Permission Set
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                           -->
+							<!-- <lightning:inputField fieldName="Resource_Manager__c"/> -->
+						   <!-- Comment 05/10/21 LK 
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Enhancement_Permission_Set__c"/>
+                        </div>
+      				</td> -->
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Enhancement_Permission_Set_Override__c"/>
+                        </div>
+      				</td> -->
+					  <!-- Comment 05/10/21 LK 
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Enhancement_Permission_Set_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="PM Permission Set">
+          					PM Permission Set
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+							-->
+                           <!-- <lightning:inputField fieldName="Resource_Manager__c"/> -->
+                        <!-- Comment 05/10/21 LK 
+						</div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="PM_Permission_Set__c"/>
+                        </div>
+      				</td> -->
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="PM_Permission_Set_Override__c"/>
+                        </div>
+      				</td> -->
+					  <!-- Comment 05/10/21 LK 
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="PM_Permission_Set_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Ranking Permission Set">
+          					Ranking Permission Set
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+							-->
+                           <!-- <lightning:inputField fieldName="Resource_Manager__c"/> -->
+						   <!-- Comment 05/10/21 LK 
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Ranking_Permission_Set__c"/>
+                        </div>
+      				</td> 
+				-->
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Ranking_Permission_Set_Override__c"/>
+                        </div>
+      				</td> -->
+					  <!-- Comment 05/10/21 LK 
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Ranking_Permission_Set_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+				-->
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Resource Type">
+          					Resource Type
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                           <lightning:inputField fieldName="Staff_Type1__c"/>
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Staff_Type__c" />
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Resource_Type_Override__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Resource_Type_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Vendor Name">
+          					Vendor Name
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                           Not in User Record
+                           <!-- <lightning:inputField fieldName="Vendor_Name__c"/> -->
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+                        <div class="" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Vendor_Name__c" />
+                        </div>
+                    </td>
+                    <td data-label="Comments">
+                        <div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Vendor_Name_Comments__c"/>
+                        </div>
+                    </td>
+                    <!--
+                    <td data-label="Resource Repository Value">
+        				<div class="" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Vendor_Name_Update__c" />
+                        </div>
+      				</td>
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Vendor_Name_Comments__c"/>
+                        </div>
+      				</td> -->
+                </tr>
+                <!-- <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Planned Start Date">
+          					Planned Start Date
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record -->
+                           <!-- <lightning:inputField fieldName="Staff_Type1__c"/> -->
+                       <!-- </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Planned_Start_Date_Update__c"/>
+                        </div>
+      				</td> -->
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Planned_Start_Date_Override__c"/>
+                        </div>
+      				</td> -->
+                   <!-- <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Planned_Start_Date_Comments__c"/>
+                        </div>
+      				</td>
+                </tr> -->
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Resource Start Date">
+          					Resource Start Date
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            <lightning:inputField fieldName="Resource_Start_Date__c"/>
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Resource_Start_Date_Update__c"/>
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Resource_Start_Date_Override__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Resource_Start_Date_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <!-- <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Expected End Date">
+          					Expected End Date
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record -->
+                           <!-- <lightning:inputField fieldName="Resource_Start_Date__c"/> -->
+                        <!-- </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Expected_End_Date_Update__c"/>
+                        </div>
+      				</td> -->
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Override_Expected_End_Date__c"/>
+                        </div>
+      				</td> -->
+                    <!-- <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Expected_End_Date_Comments__c"/>
+                        </div>
+      				</td>
+                </tr> -->
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Resource End Date">
+          					Resource End Date
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                           <lightning:inputField fieldName="Resource_End_Date__c"/>
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Actual_Resource_End_Date_Update__c"/>
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Override_Actual_Resource_End_Date__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Actual_Resource_End_Date_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Primary ISC">
+          					Primary ISC
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record
+                           <!-- <lightning:inputField fieldName="Resource_End_Date__c"/> -->
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Primary_ISC__c"/>
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Override_Primary_ISC__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Primary_ISC_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Functional Area">
+          					Functional Area
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record
+                           <!-- <lightning:inputField fieldName="Resource_End_Date__c"/> -->
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Functional_Area__c"/>
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Override_Functional_Area__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Functional_Area_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Sub-Functional Area">
+          					Sub-Functional Area
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record
+                           <!-- <lightning:inputField fieldName="Resource_End_Date__c"/> -->
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Sub_Functional_Area__c"/>
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Override_Sub_Functional_Area__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Sub_Functional_Area_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Epic Employee?">
+          					Epic Employee?
+        				</div>
+      				</th>
+                    <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record
+                        </div>
+                    </td>
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="EPIC_Employee__c"/>
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Override_Epic_Employee__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Epic_Employee_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Offshore Resource?">
+          					Offshore Resource?
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Record
+                           <!-- <lightning:inputField fieldName="Resource_End_Date__c"/> -->
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Offshore_Resource__c"/>
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Override_Offshore_Resource__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Offshore_Resource_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Business Unit">
+          					Business Unit
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            <lightning:outputField fieldName="Business_Unit_User__c"/>
+                           <!-- <lightning:inputField fieldName="Resource_End_Date__c"/> -->
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Business_Unit__c"/>
+                        </div>
+      				</td>
+                    <!-- <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Override_Business_Unit__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Business_Unit_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="Department">
+          					Department
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            <lightning:outputField fieldName ="Department_User__c"/>
+                           <!-- <lightning:inputField fieldName="Resource_End_Date__c"/> -->
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="Department__c"/>
+                        </div>
+      				</td>
+                    <!-- 
+                        <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Override_Department__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="Department_Comments__c"/>
+                        </div>
+      				</td>
+                </tr>
+                                <tr class="slds-hint-parent">
+      				<th data-label="Field Name" scope="row">
+        				<div class="slds-truncate" title="IT PMO Training Complete">
+          					IT PMO Training Complete
+        				</div>
+      				</th>
+                      <td data-label="Salesforce User Repository Value">
+        				<div class="slds-truncate" title="Salesforce User Repository Value">
+                            Not in User Field
+                           <!-- <lightning:inputField fieldName="Resource_End_Date__c"/> -->
+                        </div>
+      				</td>  
+                    <td data-label="Resource Repository Value">
+        				<div class="slds-truncate" title="Resource Repository Value">
+                            <lightning:inputField fieldName="IT_PMO_Training_Complete__c"/>
+                        </div>
+      				</td>
+                    <!-- 
+                        <td data-label="Override Checkbox">
+        				<div class="slds-truncate" title="Override Checkbox">
+                            <lightning:inputField fieldName="Override_Department__c"/>
+                        </div>
+      				</td> -->
+                    <td data-label="Comments">
+        				<div class="slds-truncate" title="Comments">
+                            <lightning:inputField fieldName="IT_PMO_Training_Completed_Date_Comment__c"/>
+                        </div>
+      				</td>
+                </tr>
+
+
+            </tbody>
+            </table>
+            <center>
+        	<div class="slds-m-top_medium">
+            	<lightning:button variant="brand" type="submit" name="Save Details" label="Save Details" />
+                <lightning:button label="Cancel" name="Cancel" onclick="{!c.handleCancel}"/>
+            </div>
+        </center><br/>
+        </lightning:recordEditForm>
+    </aura:if>
+</aura:component>

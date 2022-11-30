@@ -1,0 +1,11 @@
+.THIS .customcss {
+    background-color: #5BC2E7 !important;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.THIS .slds-icon {
+    fill : white !important;
+
+}
