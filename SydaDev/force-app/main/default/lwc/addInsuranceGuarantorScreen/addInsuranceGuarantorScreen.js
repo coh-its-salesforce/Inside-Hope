@@ -86,7 +86,6 @@ mrnDisabled = false;
 showErrorMessage = '';
 
 
-
     // getting the object info
     @wire(getObjectInfo, { objectApiName: EPIC_ACCOUNT_DATA_OBJECT })
     epicAccountDataMetadata;
@@ -143,7 +142,7 @@ showErrorMessage = '';
         this.originalReferringProvider1 = event.detail;
         console.log("the selected record id is" + event.detail);
     }
-    
+  
     handlePayerSelection(event) {
         this.insurancePlan1 = event.detail;
         console.log("the selected record id is" + event.detail);
@@ -151,18 +150,41 @@ showErrorMessage = '';
 //ConnectedCallback
 
  connectedCallback(){
+
+ // this.handleOnLoad(); // commented because it is throwing list out of bound error when account does not have epic record
+   /*   getEpicRecordDetails({ ObjRecId: this.recordId })
    
-   this.handleOnLoad();
-      // getEpicRecordDetails({ ObjRecId: this.recordId })
+        .then(result => {
+            if(!this.isEmptyObject(result)){
+        this.epicAccountRecord = result;
+       if(this.epicAccountRecord!==''){
+           this.epicRecordId=this.epicAccountRecord.Id;
+            this.getFirstInsurance();
+            if(this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c!==''){
+                    this.primaryInsuranceAdded=true;
+            }
+            if(result.hasOwnProperty('Patient_Relationship_to_Subscriber_2__c'))
+           {
+                     this.disableNextButton=false;
+                     this.secondaryInsuranceAdded=true;
+            }else{
+                     this.isDisabledInsuranceButton=false;
+            }
+            if(result.hasOwnProperty('Patient_Relationship_to_Subscriber_3__c')){
+                     this.tertiaryInsuranceAdded=true;
+            }
             
-       //  .then(result => {
-       //  this.epicAccountRecord = result;
-        //      console.log('result : ' + JSON.stringify(this.epicAccountRecord));
+            
+        }
+         }
+          console.log('resultgetdata : ' + JSON.stringify(this.epicAccountRecord));
 
-       //    })
-       //    .catch((error) => alert("error: " + JSON.stringify(error)));
+        })
+        .catch((error) => console.error(error));*/
    }  
-
+ isEmptyObject(obj){
+    return JSON.stringify(obj) === '{}';
+}
 
     // Data setup
     handleChange(event) {
@@ -378,6 +400,8 @@ showErrorMessage = '';
         })
         .catch((error) => {
             console.log('error',error)
+            if(error.body && error.body.message)
+                this.throwErrorToast(error.body.message);
         });
     }
     
@@ -599,7 +623,7 @@ handleGuarantorUpdate(event){
                  this.authorizationNumber1=this.epicAccountRecord.Authorization_number_1__c ;
             }
              this.effectiveFrom1=this.epicAccountRecord.Insurance_Member_eff_from_1__c ;
-              this.originalReferringProvider1=this.epicAccountRecord.Original_Referring_Doctor__c;
+              this.template.querySelector('.lookup-class').onSetOriginalDocData(this.epicAccountRecord.Original_Referring_Doctor__c);
               
             }
       }
@@ -749,7 +773,7 @@ handleGuarantorUpdate(event){
                 this.subscriberstate1 = this.accountRecord.COH_PA_State__c;
                 this.subscriberzip1 = this.accountRecord.Patient_Postal_Code__c;
                 this.subscribercountry1 = this.accountRecord.COH_PA_Country__c;
-              //  console.log('result : ' + JSON.stringify(this.accountRecord));
+                console.log('result : ' + JSON.stringify(this.accountRecord));
                  
             })
             .catch((error) => alert("error: " + JSON.stringify(error)));

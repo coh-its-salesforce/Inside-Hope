@@ -66,23 +66,26 @@ If(record == AccountObject){
 
 
  try{
-   String accQuery='Select id from Epic_Account_Data__c where ' +selectedObj+'=:'+ObjRecId;
+   String accQuery='Select id from Epic_Account_Data__c where ' +selectedObj+'=\'' + ObjRecId + '\'';
     System.debug('accQuery query --------'+accQuery);
     List<Epic_Account_Data__c> epicRec =Database.query(accQuery);
 
-      String soqlQuery = COHUtil.buildSelectAllSOQLStatement('Epic_Account_Data__c') + ' where Id = :'+ epicRec[0].Id;
+      String soqlQuery = COHUtil.buildSelectAllSOQLStatement('Epic_Account_Data__c') + ' where Id =\''+ epicRec[0].Id+ '\'';
       System.debug('epic query --------'+soqlQuery);
-        List<Epic_Account_Data__c> epicList = Database.query(soqlQuery);
-        if (COHUtil.isValidList(epicList)) {
-             epicRecord = epicList.get(0);
-           
-    }
-     return epicRecord;
+      Epic_Account_Data__c[] epicList = Database.query(soqlQuery);
+
+        //List<Epic_Account_Data__c> epicList = Database.query(soqlQuery);
+        if (epicList.size() > 0){
+        epicRecord = epicList[0]; 
+        }
+
+    
     }
  catch(Exception ex){
    throw new AuraHandledException(ex.getMessage());
- }
  
+ }
+  return epicRecord;
   }
 
 }

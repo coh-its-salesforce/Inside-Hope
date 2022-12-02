@@ -1,5 +1,7 @@
 import lookUp from '@salesforce/apex/Lookup.search';
 import getDataFromAccount from '@salesforce/apex/Lookup.getDataFromAccount';
+import getDataFromContact from '@salesforce/apex/Lookup.getDataFromContact';
+
 import { api, LightningElement, track, wire } from 'lwc';
 
 
@@ -15,6 +17,7 @@ export default class customLookUp extends LightningElement {
     @track blurTimeout;
     @api getDataFromId;
     accountRecord='';
+    contactRecord='';
     searchTerm;
      @api handleValueChange() {
          console.log('isValueSelected'+this.isValueSelected);
@@ -34,6 +37,31 @@ export default class customLookUp extends LightningElement {
         this.isValueSelected = true;
         this.selectedName = selectedName;
                 console.log('result : ' + JSON.stringify(this.data));
+
+            })
+            .catch((error) => alert("error: " + JSON.stringify(error)));
+
+        if(this.blurTimeout) {
+            clearTimeout(this.blurTimeout);
+        }
+        this.boxClass = 'slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-has-focus';
+
+ }
+  @api onSetOriginalDocData(getDocFromId) {
+
+      console.log('testingcontact=----'+getDocFromId);
+            getDataFromContact({ getDocFromId: getDocFromId })
+            //.then(() => alert("record created"))
+            .then(result => {
+            this.contactRecord = result;
+        let selectedId =  this.contactRecord.Id;
+        let selectedName = this.contactRecord.Name;
+        //console.log('contactRecord : ' + JSON.stringify(this.contactRecord));
+        const valueSelectedEvent = new CustomEvent('lookupselected', {detail:  selectedId });
+        this.dispatchEvent(valueSelectedEvent);
+        this.isValueSelected = true;
+        this.selectedName = selectedName;
+                console.log('result : ' + JSON.stringify(this.selectedName));
 
             })
             .catch((error) => alert("error: " + JSON.stringify(error)));

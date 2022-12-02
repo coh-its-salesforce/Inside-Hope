@@ -32,5 +32,17 @@ public static Account getDataFromAccount(String getDataFromId){
  
   }
 
+ @AuraEnabled(cacheable=true)
+public static Contact getDataFromContact(String getDocFromId){
+ try{
+     Contact conList=[SELECT Id, Name FROM Contact Where id=:getDocFromId];
+    return conList;
+      //return JSON.serialize(accList);
 
+    }
+ catch(Exception ex){
+   throw new AuraHandledException(ex.getMessage());
+ }
+ 
+  }
 }
