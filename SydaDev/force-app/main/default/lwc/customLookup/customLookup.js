@@ -30,13 +30,15 @@ export default class customLookUp extends LightningElement {
             //.then(() => alert("record created"))
             .then(result => {
             this.accountRecord = result;
-        let selectedId =  this.accountRecord.Id;
-        let selectedName = this.accountRecord.Name;
-        const valueSelectedEvent = new CustomEvent('lookupselected', {detail:  selectedId });
-        this.dispatchEvent(valueSelectedEvent);
-        this.isValueSelected = true;
-        this.selectedName = selectedName;
-                console.log('result : ' + JSON.stringify(this.data));
+            if(result!=null){
+                let selectedId =  this.accountRecord.Id;
+                let selectedName = this.accountRecord.Name;
+                const valueSelectedEvent = new CustomEvent('lookupselected', {detail:  selectedId });
+                this.dispatchEvent(valueSelectedEvent);
+                this.isValueSelected = true;
+                this.selectedName = selectedName;
+                    console.log('result : ' + JSON.stringify(this.data));
+            }
 
             })
             .catch((error) => alert("error: " + JSON.stringify(error)));

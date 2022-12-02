@@ -80,8 +80,7 @@ public with sharing class epicAccountDataController {
                     epicRecord = epicList[0]; 
                 }
             }
-            
-            
+               
         }
         catch(Exception ex){
             System.debug(ex.getLineNumber()+ex.getStackTraceString());

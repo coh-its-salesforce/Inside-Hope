@@ -117,7 +117,7 @@
 			<lightning-layout>
 				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
   					<p> Insurance Plan </p> 
-					  <c-custom-lookup obj-name="Account" filter="Payer" search-placeholder="Search Accounts" icon-name="standard:account"  onremovedvalue={handleRemove} onlookupselected={handlePayerSelection}> </c-custom-lookup>
+					  <c-custom-lookup obj-name="PurchaserPlan" filter="" search-placeholder="Search PurchaserPlan" icon-name="standard:account"  onremovedvalue={handleRemove} onlookupselected={handlePayerSelection}> </c-custom-lookup>
 					
 
 
@@ -341,6 +341,12 @@
 
 		<!-- Insurances View lightning-tab -->
 		<lightning-tab label="Insurances" value="InsuranceList" onactive={handleActive}>
+			<lightning-datatable
+                key-field="id"
+                data={insuranceData}
+				 hide-checkbox-column
+                columns={columns}>
+			</lightning-datatable>
 			<p style="color:red">{showErrorMessage}</p>
 			<lightning-button variant="brand" label="Create Epic MRN" title="Create Epic MRN" onclick={handleEpicMrn} disabled={mrnDisabled} class="slds-m-left_x-small"></lightning-button>
 

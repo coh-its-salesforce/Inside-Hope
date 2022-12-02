@@ -1,3 +1,5 @@
+//Created by Syeda Jafri for NewPatientIntegration.
+// on Date- 02-Nov-2022
 import { LightningElement, track, wire, api } from 'lwc';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
@@ -31,7 +33,7 @@ export default class AddInsuranceGuarantorScreen extends LightningElement {
     accountRecord = '';
     guarantorTypePicklist='';
     activeTab = 'Insurance';
-    insuranceNumber = 'Primary';
+    insuranceNumber = 'Primary ';
     isDisabledInsuranceButton = true;
     disableUpdateButton=true;
     epicRecordId='';
@@ -84,6 +86,11 @@ export default class AddInsuranceGuarantorScreen extends LightningElement {
 middleNameGuarantor='';
 mrnDisabled = false;
 showErrorMessage = '';
+ columns = [
+    { label: 'Relationship', fieldName: 'RelationShip' },
+    { label: 'Name', fieldName: 'Name' },
+];
+insuranceData = [];
 
 
     // getting the object info
@@ -151,29 +158,51 @@ showErrorMessage = '';
 
  connectedCallback(){
 
- // this.handleOnLoad();  // commented because it is throwing list out of bound error when account does not have epic record
+ // this.handleOnLoad(); // commented because it is throwing list out of bound error when account does not have epic record
     getEpicRecordDetails({ ObjRecId: this.recordId })
         .then(result => {
             console.log('result',result)
             //if(!this.isEmptyObject(result)){
-                
                 this.epicAccountRecord = result;
                 if(this.epicAccountRecord){
                     this.epicRecordId=this.epicAccountRecord.Id;
-                
+                        var insuranceList = [];
                     this.getFirstInsurance();
                     if(this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c!==''){
-                            this.primaryInsuranceAdded=true;
+                        this.primaryInsuranceAdded=true;
+                        let primary = new Object();
+                        primary['RelationShip'] = this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c;
+                        primary['Name'] = this.epicAccountRecord.Insurance_Subscriber_First_Name_1__c +' '
+                                              this.epicAccountRecord.Insurance_Subscriber_Middle_Name_1__c +  ' '
+                                              this.epicAccountRecord.Insurance_Subscriber_Last_Name_1__c ;
+
+                                insuranceList.push(primary);
                     }
                     if(result.hasOwnProperty('Patient_Relationship_to_Subscriber_2__c')){
-                            this.disableNextButton=false;
-                            this.secondaryInsuranceAdded=true;
+                        this.disableNextButton=false;
+                        this.secondaryInsuranceAdded=true;
+                        let secondary = new Object();
+                        secondary['RelationShip'] = this.epicAccountRecord.Patient_Relationship_to_Subscriber_2__c;
+                        secondary['Name'] = this.epicAccountRecord.Insurance_Subscriber_First_Name_2__c +' '
+                                              this.epicAccountRecord.Insurance_Subscriber_Middle_Name_2__c + ' ' 
+                                              this.epicAccountRecord.Insurance_Subscriber_Last_Name_2__c ;
+                                              insuranceList.push(secondary);
                     }else{
                             this.isDisabledInsuranceButton=false;
                     }
                     if(result.hasOwnProperty('Patient_Relationship_to_Subscriber_3__c')){
-                            this.tertiaryInsuranceAdded=true;
+                        this.tertiaryInsuranceAdded=true;
+                        let tertiary = new Object();
+                        tertiary['RelationShip'] = this.epicAccountRecord.Patient_Relationship_to_Subscriber_3__c;
+                        tertiary['Name'] = this.epicAccountRecord.Insurance_Subscriber_First_Name_3__c +' '
+                                              this.epicAccountRecord.Insurance_Subscriber_Middle_Name_3__c +  ' '
+                                              this.epicAccountRecord.Insurance_Subscriber_Last_Name_3__c ;
+                                              insuranceList.push(tertiary);
                     }
+
+                    console.log('insuranceList',insuranceList)
+
+                    this.insuranceData = insuranceList;
                         
                 }
                // }
@@ -508,7 +537,7 @@ handleGuarantorUpdate(event){
             this.epicAccountRecord.Insurance_State_1__c = this.subscriberstate1;
             this.epicAccountRecord.Insurance_PostalCode_1__c = this.subscriberzip1;
             this.epicAccountRecord.Insurance_Country_1__c = this.subscribercountry1;
-            this.epicAccountRecord.Insurance_Payer_1__c = this.insurancePlan1;
+            this.epicAccountRecord.Insurance_Purchaser_Plan_1__c = this.insurancePlan1;
             this.epicAccountRecord.Subscriber_ID_1__c = this.subscriberId1;
             this.epicAccountRecord.Insurance_Subscriber_Member_Id_1__c = this.memberId1;
             if (this.Group_Number_1_c__c !== '') {
@@ -544,7 +573,7 @@ handleGuarantorUpdate(event){
         this.epicAccountRecord.Insurance_State_2__c = this.subscriberstate1;
         this.epicAccountRecord.Insurance_PostalCode_2__c = this.subscriberzip1;
         this.epicAccountRecord.Insurance_Country_2__c = this.subscribercountry1;
-        this.epicAccountRecord.Insurance_Payer_2__c = this.insurancePlan1;
+        this.epicAccountRecord.Insurance_Purchaser_Plan_2__c = this.insurancePlan1;
         this.epicAccountRecord.Subscriber_ID_2__c = this.subscriberId1;
         this.epicAccountRecord.Insurance_Subscriber_Member_Id_2__c = this.memberId1;
         if (this.groupNumber1 !== '') {
@@ -581,7 +610,7 @@ handleGuarantorUpdate(event){
         this.epicAccountRecord.Insurance_State_3__c = this.subscriberstate1;
         this.epicAccountRecord.Insurance_PostalCode_3__c = this.subscriberzip1;
         this.epicAccountRecord.Insurance_Country_3__c = this.subscribercountry1;
-        this.epicAccountRecord.Insurance_Payer_3__c = this.insurancePlan1;
+        this.epicAccountRecord.Insurance_Purchaser_Plan_3__c = this.insurancePlan1;
         this.epicAccountRecord.Subscriber_ID_3__c = this.subscriberId1;
         this.epicAccountRecord.Insurance_Subscriber_Member_Id_3__c = this.memberId1;
         if (this.groupNumber1 !== '') {
@@ -604,7 +633,7 @@ handleGuarantorUpdate(event){
             if(this.epicRecordId !==''){
          this.insuranceNumber = 'Primary';
         
-        this.template.querySelector('c-custom-lookup').onSetData(this.epicAccountRecord.Insurance_Payer_1__c);
+        this.template.querySelector('c-custom-lookup').onSetData(this.epicAccountRecord.Insurance_Purchaser_Plan_1__c);
             this.patientRelationshiptoSub1=this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c ;
             this.firstName1=this.epicAccountRecord.Insurance_Subscriber_First_Name_1__c;
              this.lastName1=this.epicAccountRecord.Insurance_Subscriber_Last_Name_1__c;
@@ -619,7 +648,7 @@ handleGuarantorUpdate(event){
               this.subscriberstate1=this.epicAccountRecord.Insurance_State_1__c;
              this.subscriberzip1=this.epicAccountRecord.Insurance_PostalCode_1__c ;
               this.subscribercountry1=this.epicAccountRecord.Insurance_Country_1__c;
-             //this.insurancePlan1=this.epicAccountRecord.Insurance_Payer_1__c ;
+             //this.insurancePlan1=this.epicAccountRecord.Insurance_Purchaser_Plan_1__c ;
              this.subscriberId1=this.epicAccountRecord.Subscriber_ID_1__c ;
              this.memberId1=this.epicAccountRecord.Insurance_Subscriber_Member_Id_1__c ;
             if ( this.epicAccountRecord.Group_Number_1_c__c !== '') {
@@ -637,7 +666,7 @@ handleGuarantorUpdate(event){
       getSecondInsurance() {
           this.insuranceNumber = 'Secondary';
          // this.displayingInsuranceNumber='Secondary';
-       this.template.querySelector('c-custom-lookup').onSetData(this.epicAccountRecord.Insurance_Payer_2__c);
+       this.template.querySelector('c-custom-lookup').onSetData(this.epicAccountRecord.Insurance_Purchaser_Plan_2__c);
             this.patientRelationshiptoSub1=this.epicAccountRecord.Patient_Relationship_to_Subscriber_2__c ;
             this.firstName1=this.epicAccountRecord.Insurance_Subscriber_First_Name_2__c;
              this.lastName1=this.epicAccountRecord.Insurance_Subscriber_Last_Name_2__c;
@@ -652,7 +681,7 @@ handleGuarantorUpdate(event){
               this.subscriberstate1=this.epicAccountRecord.Insurance_State_2__c;
              this.subscriberzip1=this.epicAccountRecord.Insurance_PostalCode_2__c ;
               this.subscribercountry1=this.epicAccountRecord.Insurance_Country_2__c;
-             this.insurancePlan1=this.epicAccountRecord.Insurance_Payer_2__c ;
+             this.insurancePlan1=this.epicAccountRecord.Insurance_Purchaser_Plan_2__c ;
              this.subscriberId1=this.epicAccountRecord.Subscriber_ID_2__c ;
              this.memberId1=this.epicAccountRecord.Insurance_Subscriber_Member_Id_2__c ;
             if ( this.epicAccountRecord.Group_Number_2_c__c !== '') {
@@ -665,7 +694,7 @@ handleGuarantorUpdate(event){
               this.originalReferringProvider1=this.epicAccountRecord.Original_Referring_Doctor__c;
         }
         getThirdInsurance() {
-    this.template.querySelector('c-custom-lookup').onSetData(this.epicAccountRecord.Insurance_Payer_3__c);
+    this.template.querySelector('c-custom-lookup').onSetData(this.epicAccountRecord.Insurance_Purchaser_Plan_3__c);
              this.insuranceNumber = 'Tertiary';
             //this.displayingInsuranceNumber='Tertiary';
             this.patientRelationshiptoSub1=this.epicAccountRecord.Patient_Relationship_to_Subscriber_3__c ;
@@ -682,7 +711,7 @@ handleGuarantorUpdate(event){
               this.subscriberstate1=this.epicAccountRecord.Insurance_State_3__c;
              this.subscriberzip1=this.epicAccountRecord.Insurance_PostalCode_3__c ;
               this.subscribercountry1=this.epicAccountRecord.Insurance_Country_3__c;
-             this.insurancePlan1=this.epicAccountRecord.Insurance_Payer_3__c ;
+             this.insurancePlan1=this.epicAccountRecord.Insurance_Purchaser_Plan_3__c ;
              this.subscriberId1=this.epicAccountRecord.Subscriber_ID_3__c ;
              this.memberId1=this.epicAccountRecord.Insurance_Subscriber_Member_Id_3__c ;
             if ( this.epicAccountRecord.Group_Number_3_c__c !== '') {
