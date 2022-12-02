@@ -151,40 +151,42 @@ showErrorMessage = '';
 
  connectedCallback(){
 
- // this.handleOnLoad(); // commented because it is throwing list out of bound error when account does not have epic record
-   /*   getEpicRecordDetails({ ObjRecId: this.recordId })
-   
+ // this.handleOnLoad();  // commented because it is throwing list out of bound error when account does not have epic record
+    getEpicRecordDetails({ ObjRecId: this.recordId })
         .then(result => {
-            if(!this.isEmptyObject(result)){
-        this.epicAccountRecord = result;
-       if(this.epicAccountRecord!==''){
-           this.epicRecordId=this.epicAccountRecord.Id;
-            this.getFirstInsurance();
-            if(this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c!==''){
-                    this.primaryInsuranceAdded=true;
-            }
-            if(result.hasOwnProperty('Patient_Relationship_to_Subscriber_2__c'))
-           {
-                     this.disableNextButton=false;
-                     this.secondaryInsuranceAdded=true;
-            }else{
-                     this.isDisabledInsuranceButton=false;
-            }
-            if(result.hasOwnProperty('Patient_Relationship_to_Subscriber_3__c')){
-                     this.tertiaryInsuranceAdded=true;
-            }
-            
-            
-        }
-         }
-          console.log('resultgetdata : ' + JSON.stringify(this.epicAccountRecord));
+            console.log('result',result)
+            //if(!this.isEmptyObject(result)){
+                
+                this.epicAccountRecord = result;
+                if(this.epicAccountRecord){
+                    this.epicRecordId=this.epicAccountRecord.Id;
+                
+                    this.getFirstInsurance();
+                    if(this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c!==''){
+                            this.primaryInsuranceAdded=true;
+                    }
+                    if(result.hasOwnProperty('Patient_Relationship_to_Subscriber_2__c')){
+                            this.disableNextButton=false;
+                            this.secondaryInsuranceAdded=true;
+                    }else{
+                            this.isDisabledInsuranceButton=false;
+                    }
+                    if(result.hasOwnProperty('Patient_Relationship_to_Subscriber_3__c')){
+                            this.tertiaryInsuranceAdded=true;
+                    }
+                        
+                }
+               // }
+                console.log('resultgetdata : ' , JSON.stringify(this.epicAccountRecord));
 
         })
-        .catch((error) => console.error(error));*/
-   }  
- isEmptyObject(obj){
+        .catch((error) =>{
+             alert("error1: " + JSON.stringify(error))
+        });
+    }  
+    isEmptyObject(obj){
     return JSON.stringify(obj) === '{}';
-}
+    }
 
     // Data setup
     handleChange(event) {
@@ -482,12 +484,16 @@ handleGuarantorUpdate(event){
 
     setFirstInsurance() {
 
-         if(this.isInputValid()){    
+        if(this.isInputValid()){    
         
- let accountRecordId = this.recordId;
-        console.log('Inside save');
+        let accountRecordId = this.recordId;
+        console.log('Inside save',this.epicAccountRecord);
         if (this.insuranceNumber === 'Primary') {
-             this.epicAccountRecord.Account__c = accountRecordId;
+
+            if(this.epicAccountRecord == null)
+            this.epicAccountRecord = new Object();
+
+            this.epicAccountRecord.Account__c = accountRecordId;
             this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c = this.patientRelationshiptoSub1;
             this.epicAccountRecord.Insurance_Subscriber_First_Name_1__c = this.firstName1;
             this.epicAccountRecord.Insurance_Subscriber_Last_Name_1__c = this.lastName1;
