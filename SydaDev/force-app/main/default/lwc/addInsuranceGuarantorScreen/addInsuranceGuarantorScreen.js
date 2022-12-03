@@ -33,7 +33,7 @@ export default class AddInsuranceGuarantorScreen extends LightningElement {
     accountRecord = '';
     guarantorTypePicklist='';
     activeTab = 'Insurance';
-    insuranceNumber = 'Primary ';
+    insuranceNumber = 'Primary';
     isDisabledInsuranceButton = true;
     disableUpdateButton=true;
     epicRecordId='';
@@ -87,8 +87,12 @@ middleNameGuarantor='';
 mrnDisabled = false;
 showErrorMessage = '';
  columns = [
-    { label: 'Relationship', fieldName: 'RelationShip' },
+    { label: 'Sequence', fieldName: 'Sequence' },
     { label: 'Name', fieldName: 'Name' },
+    { label: 'Relationship', fieldName: 'RelationShip' } ,
+    { label: 'Subscriber', fieldName: 'Subscriber' } ,
+    { label: 'Group', fieldName: 'Group' } 
+     
 ];
 insuranceData = [];
 
@@ -171,10 +175,13 @@ insuranceData = [];
                     if(this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c!==''){
                         this.primaryInsuranceAdded=true;
                         let primary = new Object();
+                        primary['Sequence'] = 'Primary';
                         primary['RelationShip'] = this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c;
                         primary['Name'] = this.epicAccountRecord.Insurance_Subscriber_First_Name_1__c +' '
                                               this.epicAccountRecord.Insurance_Subscriber_Middle_Name_1__c +  ' '
                                               this.epicAccountRecord.Insurance_Subscriber_Last_Name_1__c ;
+                        primary['Group'] = this.epicAccountRecord.Group_Number_1_c__c;
+                        primary['Subscriber'] = this.epicAccountRecord.Subscriber_ID_1__c;
 
                                 insuranceList.push(primary);
                     }
@@ -182,22 +189,28 @@ insuranceData = [];
                         this.disableNextButton=false;
                         this.secondaryInsuranceAdded=true;
                         let secondary = new Object();
+                        secondary['Sequence'] = 'Secondary';
                         secondary['RelationShip'] = this.epicAccountRecord.Patient_Relationship_to_Subscriber_2__c;
                         secondary['Name'] = this.epicAccountRecord.Insurance_Subscriber_First_Name_2__c +' '
                                               this.epicAccountRecord.Insurance_Subscriber_Middle_Name_2__c + ' ' 
                                               this.epicAccountRecord.Insurance_Subscriber_Last_Name_2__c ;
                                               insuranceList.push(secondary);
+                        secondary['Group'] = this.epicAccountRecord.Group_Number_2_c__c;
+                        secondary['Subscriber'] = this.epicAccountRecord.Subscriber_ID_2__c;
                     }else{
                             this.isDisabledInsuranceButton=false;
                     }
                     if(result.hasOwnProperty('Patient_Relationship_to_Subscriber_3__c')){
                         this.tertiaryInsuranceAdded=true;
                         let tertiary = new Object();
+                        tertiary['Sequence'] = 'Tertiary';
                         tertiary['RelationShip'] = this.epicAccountRecord.Patient_Relationship_to_Subscriber_3__c;
                         tertiary['Name'] = this.epicAccountRecord.Insurance_Subscriber_First_Name_3__c +' '
                                               this.epicAccountRecord.Insurance_Subscriber_Middle_Name_3__c +  ' '
                                               this.epicAccountRecord.Insurance_Subscriber_Last_Name_3__c ;
                                               insuranceList.push(tertiary);
+                        tertiary['Group'] = this.epicAccountRecord.Group_Number_3_c__c;
+                        tertiary['Subscriber'] = this.epicAccountRecord.Subscriber_ID_3__c;
                     }
 
                     console.log('insuranceList',insuranceList)
@@ -304,45 +317,49 @@ insuranceData = [];
     // Save flow
     handleSavePatient1Button(event) {
 
-
-         if(this.isInputValid()){  
+            console.log('this.insuranceNumber',this.insuranceNumber == 'Primary' );
+            console.log('this.insuranceNumber Primary' );
+            let isvalid = this.isInputValid();
+            console.log('isvalid',isvalid)
+        if(isvalid){  
         //alert('firstname ' + JSON.stringify(this.epicAccountRecord.Insurance_Subscriber_First_Name_1__c));
         //alert('lastName ' + JSON.stringify(this.epicAccountRecord.Insurance_Subscriber_Last_Name_1__c));
         //alert('Patient_Relationship_to_Subscriber_1__c ' + JSON.stringify(this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c));
          
-        if (this.insuranceNumber === 'Tertiary') {
-         
-            this.setThirdInsurance();
-            this.tertiaryInsuranceAdded=true;
-              this.disablePrevButton=false;
-                 this.disableNextButton=true;
-
-        }
-        if (this.insuranceNumber === 'Secondary') {
+            if (this.insuranceNumber == 'Tertiary') {
             
-            this.setSecondInsurance();
-            this.secondaryInsuranceAdded=true;
+                this.setThirdInsurance(true);
+                this.tertiaryInsuranceAdded=true;
                 this.disablePrevButton=false;
+                    this.disableNextButton=true;
 
-                if(this.tertiaryInsuranceAdded===true){
-                this.disableNextButton=false;
-            }else{
-                this.disableNextButton=true;   
             }
-        }
-        if (this.insuranceNumber === 'Primary') {
-            this.setFirstInsurance();
-            this.primaryInsuranceAdded=true;
-            this.disablePrevButton=true;
-            if(this.tertiaryInsuranceAdded===true || this.secondaryInsuranceAdded===true){
-                this.disableNextButton=false;
-            }else{
-                this.disableNextButton=true;   
+            if (this.insuranceNumber == 'Secondary') {
+                
+                this.setSecondInsurance(true);
+                this.secondaryInsuranceAdded=true;
+                    this.disablePrevButton=false;
+
+                    if(this.tertiaryInsuranceAdded===true){
+                    this.disableNextButton=false;
+                }else{
+                    this.disableNextButton=true;   
+                }
             }
-          
-        }
-        if(this.epicRecordId===''){
+            if (this.insuranceNumber == 'Primary') {
+                console.log('this.insuranceNumber inside')
+                this.setFirstInsurance(true);
+                this.primaryInsuranceAdded=true;
+                this.disablePrevButton=true;
+                if(this.tertiaryInsuranceAdded===true || this.secondaryInsuranceAdded===true){
+                    this.disableNextButton=false;
+                }else{
+                    this.disableNextButton=true;   
+                }
             
+            }
+        /*if(this.epicRecordId===''){
+            console.log('epicAccountRecord',this.epicAccountRecord);
             createEpicRecord({ epicRecord: this.epicAccountRecord,accId: this.recordId })
             //.then(() => alert("record created"))
             .then(result => {
@@ -356,6 +373,51 @@ insuranceData = [];
 
             })
             .catch((error) => {
+                console.log('ERROR',JSON.stringify(error))
+                //alert("error: " + JSON.stringify(error))
+            });
+        }
+        else if(this.epicRecordId!==''){
+            updateEpicRecord({ epicRecord: this.epicAccountRecord,epicRecordId: this.epicRecordId })
+            //.then(() => alert("record created"))
+            .then(result => {
+                this.data = result;
+               // this.resetPatientForm();
+                this.disableUpdateButton=false;
+            
+               // this.epicRecordId=this.data;
+                this.throwSuccessToast('Epic record updated Successfully');
+                console.log('result : ' + JSON.stringify(this.data));
+
+            })
+            .catch((error) => {
+                //alert("error: " + JSON.stringify(error))
+                });
+        }*/
+    
+        }else{
+            this.throwErrorToast('Error! Please fill all the required fields');
+        }
+
+        }
+
+    createUpdateEpic(){
+         if(this.epicRecordId===''){
+            console.log('epicAccountRecord',this.epicAccountRecord);
+            createEpicRecord({ epicRecord: this.epicAccountRecord,accId: this.recordId })
+            //.then(() => alert("record created"))
+            .then(result => {
+                this.data = result;
+               // this.resetPatientForm();
+                this.disableUpdateButton=false;
+                this.isDisabledInsuranceButton=false;
+                this.epicRecordId=this.data;
+                this.throwSuccessToast('Epic record created Successfully');
+                console.log('result : ' + JSON.stringify(this.data));
+
+            })
+            .catch((error) => {
+                console.log('ERROR',JSON.stringify(error))
                 //alert("error: " + JSON.stringify(error))
             });
         }
@@ -376,14 +438,8 @@ insuranceData = [];
                 //alert("error: " + JSON.stringify(error))
                 });
         }
-       
-
-
-    }else{
-         this.throwErrorToast('Error! Please fill all the required fields');
     }
 
-    }
 
     handleOnLoad(){
         verifyCreateEpicMRNButton({ caseID: this.recordId })
@@ -497,18 +553,18 @@ handleGuarantorUpdate(event){
         console.log('Inside add insurance');
 
         if (this.insuranceNumber === 'Primary') {
-            this.setFirstInsurance();
-             this.primaryInsuranceAdded=true;
-                this.disablePrevButton=false;
-                this.disableNextButton=true;
+            this.setFirstInsurance(false);
+            this.primaryInsuranceAdded=true;
+            this.disablePrevButton=false;
+            this.disableNextButton=true;
             this.insuranceNumber = 'Secondary';
             this.resetPatientForm();
         }
         else if (this.insuranceNumber === 'Secondary') {
-            this.setSecondInsurance();
+            this.setSecondInsurance(false);
             this.insuranceNumber = 'Tertiary';
-               this.disablePrevButton=false;
-              this.disableNextButton=true;
+            this.disablePrevButton=false;
+            this.disableNextButton=true;
             this.secondaryInsuranceAdded=true;
             this.isDisabledInsuranceButton = true;
             this.resetPatientForm();
@@ -519,7 +575,7 @@ handleGuarantorUpdate(event){
 
     }
 
-    setFirstInsurance() {
+    setFirstInsurance(submit) {
 
         if(this.isInputValid()){    
         
@@ -556,6 +612,9 @@ handleGuarantorUpdate(event){
             }
             this.epicAccountRecord.Insurance_Member_eff_from_1__c = this.effectiveFrom1;
             this.epicAccountRecord.Original_Referring_Doctor__c = this.originalReferringProvider1;
+            if(submit){
+                this.createUpdateEpic();
+            }
         }
         }else{
             this.throwErrorToast('Error! Please fill all the required fields');
@@ -563,35 +622,38 @@ handleGuarantorUpdate(event){
 
     }
 
-    setSecondInsurance() {
+    setSecondInsurance(submit) {
        
 
-         if(this.isInputValid()){  
-        this.epicAccountRecord.Patient_Relationship_to_Subscriber_2__c = this.patientRelationshiptoSub1;
-        this.epicAccountRecord.Insurance_Subscriber_First_Name_2__c = this.firstName1;
-        this.epicAccountRecord.Insurance_Subscriber_Last_Name_2__c = this.lastName1;
-        if (this.middleName1 !== '') {
-            this.epicAccountRecord.Insurance_Subscriber_Middle_Name_2__c = this.middleName1;
-        }
-        this.epicAccountRecord.Insurance_Gender_2__c = this.gender1;
-        this.epicAccountRecord.Insurance_Birth_Date_2__c = this.birthdate1;
-        this.epicAccountRecord.Insurance_SSN_2__c = this.socialsecuritynumber1;
-        this.epicAccountRecord.Insurance_Street_2__c = this.subscriberStreetAddress1;
-        this.epicAccountRecord.Insurance_City_2__c = this.subscribercity1;
-        this.epicAccountRecord.Insurance_State_2__c = this.subscriberstate1;
-        this.epicAccountRecord.Insurance_PostalCode_2__c = this.subscriberzip1;
-        this.epicAccountRecord.Insurance_Country_2__c = this.subscribercountry1;
-        this.epicAccountRecord.Insurance_Purchaser_Plan_2__c = this.insurancePlan1;
-        this.epicAccountRecord.Subscriber_ID_2__c = this.subscriberId1;
-        this.epicAccountRecord.Insurance_Subscriber_Member_Id_2__c = this.memberId1;
-        if (this.groupNumber1 !== '') {
-            this.epicAccountRecord.Group_Number_2_c__c = this.groupNumber1;
-        }
-        if (this.authorizationNumber1 !== '') {
-            this.epicAccountRecord.Authorization_number_2__c = this.authorizationNumber1;
-        }
-        this.epicAccountRecord.Insurance_Member_eff_from_2__c = this.effectiveFrom1;
-        //this.epicAccountRecord.Original_Referring_Doctor__c = this.originalReferringProvider1;
+        if(this.isInputValid()){  
+            this.epicAccountRecord.Patient_Relationship_to_Subscriber_2__c = this.patientRelationshiptoSub1;
+            this.epicAccountRecord.Insurance_Subscriber_First_Name_2__c = this.firstName1;
+            this.epicAccountRecord.Insurance_Subscriber_Last_Name_2__c = this.lastName1;
+            if (this.middleName1 !== '') {
+                this.epicAccountRecord.Insurance_Subscriber_Middle_Name_2__c = this.middleName1;
+            }
+            this.epicAccountRecord.Insurance_Gender_2__c = this.gender1;
+            this.epicAccountRecord.Insurance_Birth_Date_2__c = this.birthdate1;
+            this.epicAccountRecord.Insurance_SSN_2__c = this.socialsecuritynumber1;
+            this.epicAccountRecord.Insurance_Street_2__c = this.subscriberStreetAddress1;
+            this.epicAccountRecord.Insurance_City_2__c = this.subscribercity1;
+            this.epicAccountRecord.Insurance_State_2__c = this.subscriberstate1;
+            this.epicAccountRecord.Insurance_PostalCode_2__c = this.subscriberzip1;
+            this.epicAccountRecord.Insurance_Country_2__c = this.subscribercountry1;
+            this.epicAccountRecord.Insurance_Purchaser_Plan_2__c = this.insurancePlan1;
+            this.epicAccountRecord.Subscriber_ID_2__c = this.subscriberId1;
+            this.epicAccountRecord.Insurance_Subscriber_Member_Id_2__c = this.memberId1;
+            if (this.groupNumber1 !== '') {
+                this.epicAccountRecord.Group_Number_2_c__c = this.groupNumber1;
+            }
+            if (this.authorizationNumber1 !== '') {
+                this.epicAccountRecord.Authorization_number_2__c = this.authorizationNumber1;
+            }
+            this.epicAccountRecord.Insurance_Member_eff_from_2__c = this.effectiveFrom1;
+            //this.epicAccountRecord.Original_Referring_Doctor__c = this.originalReferringProvider1;
+            if(submit){
+                this.createUpdateEpic();
+            }
          }else{
               this.throwErrorToast('Error! Please fill all the required fields');
          }
@@ -599,36 +661,39 @@ handleGuarantorUpdate(event){
 
     }
 
-    setThirdInsurance() {
+    setThirdInsurance(submit) {
        if(this.isInputValid()){ 
 
-        console.log('Inside save3');
+            console.log('Inside save3');
 
-        this.epicAccountRecord.Patient_Relationship_to_Subscriber_3__c = this.patientRelationshiptoSub1;
-        this.epicAccountRecord.Insurance_Subscriber_First_Name_3__c = this.firstName1;
-        this.epicAccountRecord.Insurance_Subscriber_Last_Name_3__c = this.lastName1;
-        if (this.middleName1 !== '') {
-            this.epicAccountRecord.Insurance_Subscriber_Middle_Name_3__c = this.middleName1;
-        }
-        this.epicAccountRecord.Insurance_Gender_3__c = this.gender1;
-        this.epicAccountRecord.Insurance_Birth_Date_3__c = this.birthdate1;
-        this.epicAccountRecord.Insurance_SSN_3__c = this.socialsecuritynumber1;
-        this.epicAccountRecord.Insurance_Street_3__c = this.subscriberStreetAddress1;
-        this.epicAccountRecord.Insurance_City_3__c = this.subscribercity1;
-        this.epicAccountRecord.Insurance_State_3__c = this.subscriberstate1;
-        this.epicAccountRecord.Insurance_PostalCode_3__c = this.subscriberzip1;
-        this.epicAccountRecord.Insurance_Country_3__c = this.subscribercountry1;
-        this.epicAccountRecord.Insurance_Purchaser_Plan_3__c = this.insurancePlan1;
-        this.epicAccountRecord.Subscriber_ID_3__c = this.subscriberId1;
-        this.epicAccountRecord.Insurance_Subscriber_Member_Id_3__c = this.memberId1;
-        if (this.groupNumber1 !== '') {
-            this.epicAccountRecord.Group_Number_3_c__c = this.groupNumber1;
-        }
-        if (this.authorizationNumber1 !== '') {
-            this.epicAccountRecord.Authorization_number_3__c = this.authorizationNumber1;
-        }
-        this.epicAccountRecord.Insurance_Member_eff_from_3__c = this.effectiveFrom1;
-        //this.epicAccountRecord.Original_Referring_Doctor__c = this.originalReferringProvider1;
+            this.epicAccountRecord.Patient_Relationship_to_Subscriber_3__c = this.patientRelationshiptoSub1;
+            this.epicAccountRecord.Insurance_Subscriber_First_Name_3__c = this.firstName1;
+            this.epicAccountRecord.Insurance_Subscriber_Last_Name_3__c = this.lastName1;
+            if (this.middleName1 !== '') {
+                this.epicAccountRecord.Insurance_Subscriber_Middle_Name_3__c = this.middleName1;
+            }
+            this.epicAccountRecord.Insurance_Gender_3__c = this.gender1;
+            this.epicAccountRecord.Insurance_Birth_Date_3__c = this.birthdate1;
+            this.epicAccountRecord.Insurance_SSN_3__c = this.socialsecuritynumber1;
+            this.epicAccountRecord.Insurance_Street_3__c = this.subscriberStreetAddress1;
+            this.epicAccountRecord.Insurance_City_3__c = this.subscribercity1;
+            this.epicAccountRecord.Insurance_State_3__c = this.subscriberstate1;
+            this.epicAccountRecord.Insurance_PostalCode_3__c = this.subscriberzip1;
+            this.epicAccountRecord.Insurance_Country_3__c = this.subscribercountry1;
+            this.epicAccountRecord.Insurance_Purchaser_Plan_3__c = this.insurancePlan1;
+            this.epicAccountRecord.Subscriber_ID_3__c = this.subscriberId1;
+            this.epicAccountRecord.Insurance_Subscriber_Member_Id_3__c = this.memberId1;
+            if (this.groupNumber1 !== '') {
+                this.epicAccountRecord.Group_Number_3_c__c = this.groupNumber1;
+            }
+            if (this.authorizationNumber1 !== '') {
+                this.epicAccountRecord.Authorization_number_3__c = this.authorizationNumber1;
+            }
+            this.epicAccountRecord.Insurance_Member_eff_from_3__c = this.effectiveFrom1;
+            //this.epicAccountRecord.Original_Referring_Doctor__c = this.originalReferringProvider1;
+            if(submit){
+                this.createUpdateEpic();
+            }
        }else{
             this.throwErrorToast('Error! Please fill all the required fields');
        }
@@ -638,37 +703,37 @@ handleGuarantorUpdate(event){
 
     getFirstInsurance() {
     
-            if(this.epicRecordId !==''){
-         this.insuranceNumber = 'Primary';
-        
-        this.template.querySelector('c-custom-lookup').onSetData(this.epicAccountRecord.Insurance_Purchaser_Plan_1__c);
+        if(this.epicRecordId !==''){
+            this.insuranceNumber = 'Primary';
+            
+            this.template.querySelector('c-custom-lookup').onSetData(this.epicAccountRecord.Insurance_Purchaser_Plan_1__c);
             this.patientRelationshiptoSub1=this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c ;
             this.firstName1=this.epicAccountRecord.Insurance_Subscriber_First_Name_1__c;
-             this.lastName1=this.epicAccountRecord.Insurance_Subscriber_Last_Name_1__c;
+            this.lastName1=this.epicAccountRecord.Insurance_Subscriber_Last_Name_1__c;
             if(this.epicAccountRecord.Insurance_Subscriber_Middle_Name_1__c !== '') {
-                 this.middleName1=this.epicAccountRecord.Insurance_Subscriber_Middle_Name_1__c;
+                this.middleName1=this.epicAccountRecord.Insurance_Subscriber_Middle_Name_1__c;
             }
-             this.gender1=this.epicAccountRecord.Insurance_Gender_1__c ;
-             this.birthdate1=this.epicAccountRecord.Insurance_Birth_Date_1__c ;
-              this.socialsecuritynumber1=this.epicAccountRecord.Insurance_SSN_1__c;
-             this.subscriberStreetAddress1=this.epicAccountRecord.Insurance_Street_1__c ;
-             this.subscribercity1=this.epicAccountRecord.Insurance_City_1__c ;
-              this.subscriberstate1=this.epicAccountRecord.Insurance_State_1__c;
-             this.subscriberzip1=this.epicAccountRecord.Insurance_PostalCode_1__c ;
-              this.subscribercountry1=this.epicAccountRecord.Insurance_Country_1__c;
-             //this.insurancePlan1=this.epicAccountRecord.Insurance_Purchaser_Plan_1__c ;
-             this.subscriberId1=this.epicAccountRecord.Subscriber_ID_1__c ;
-             this.memberId1=this.epicAccountRecord.Insurance_Subscriber_Member_Id_1__c ;
+            this.gender1=this.epicAccountRecord.Insurance_Gender_1__c ;
+            this.birthdate1=this.epicAccountRecord.Insurance_Birth_Date_1__c ;
+            this.socialsecuritynumber1=this.epicAccountRecord.Insurance_SSN_1__c;
+            this.subscriberStreetAddress1=this.epicAccountRecord.Insurance_Street_1__c ;
+            this.subscribercity1=this.epicAccountRecord.Insurance_City_1__c ;
+            this.subscriberstate1=this.epicAccountRecord.Insurance_State_1__c;
+            this.subscriberzip1=this.epicAccountRecord.Insurance_PostalCode_1__c ;
+            this.subscribercountry1=this.epicAccountRecord.Insurance_Country_1__c;
+            //this.insurancePlan1=this.epicAccountRecord.Insurance_Purchaser_Plan_1__c ;
+            this.subscriberId1=this.epicAccountRecord.Subscriber_ID_1__c ;
+            this.memberId1=this.epicAccountRecord.Insurance_Subscriber_Member_Id_1__c ;
             if ( this.epicAccountRecord.Group_Number_1_c__c !== '') {
-                 this.groupNumber1=this.epicAccountRecord.Group_Number_1_c__c ;
+                this.groupNumber1=this.epicAccountRecord.Group_Number_1_c__c ;
             }
             if (this.epicAccountRecord.Authorization_number_1__c  !== '') {
-                 this.authorizationNumber1=this.epicAccountRecord.Authorization_number_1__c ;
+                this.authorizationNumber1=this.epicAccountRecord.Authorization_number_1__c ;
             }
-             this.effectiveFrom1=this.epicAccountRecord.Insurance_Member_eff_from_1__c ;
-              this.template.querySelector('.lookup-class').onSetOriginalDocData(this.epicAccountRecord.Original_Referring_Doctor__c);
-              
-            }
+            this.effectiveFrom1=this.epicAccountRecord.Insurance_Member_eff_from_1__c ;
+            this.template.querySelector('.lookup-class').onSetOriginalDocData(this.epicAccountRecord.Original_Referring_Doctor__c);
+            
+        }
       }
 
       getSecondInsurance() {
@@ -886,7 +951,7 @@ handleGuarantorUpdate(event){
         } else {
             this.template.querySelector('.lookup-class').hideInputValid();
         }
-
+        console.log('isValid',isValid)
         return isValid;
     }
 

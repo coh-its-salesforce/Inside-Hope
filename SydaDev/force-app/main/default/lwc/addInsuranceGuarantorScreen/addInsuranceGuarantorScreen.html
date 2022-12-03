@@ -348,8 +348,13 @@
                 columns={columns}>
 			</lightning-datatable>
 			<p style="color:red">{showErrorMessage}</p>
-			<lightning-button variant="brand" label="Create Epic MRN" title="Create Epic MRN" onclick={handleEpicMrn} disabled={mrnDisabled} class="slds-m-left_x-small"></lightning-button>
+			<lightning-layout>
 
+				<lightning-layout-item flexibility="auto" padding="horizontal-small" class="slds-text-align_right">
+					
+			<p style="padding-top:10px"><lightning-button variant="brand" label="Create Epic MRN" title="Create Epic MRN" onclick={handleEpicMrn} disabled={mrnDisabled} class="slds-m-left_x-small"></lightning-button>
+			</p>
+				</lightning-layout-item></lightning-layout>
 		</lightning-tab>
 	</lightning-tabset>
 </template>

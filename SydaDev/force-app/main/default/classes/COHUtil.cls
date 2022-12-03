@@ -88,12 +88,16 @@ public class COHUtil {
         Map<String, Schema.SObjectField> fieldMap = schemaMap.get(objectApiName).getDescribe().fields.getMap();
  
         String commaSepratedFields = '';
+        System.debug('fieldMap.keyset()'+fieldMap.containskey('Insurance_Purchaser_Plan_1__c'));
         for(String fieldName : fieldMap.keyset()){
             if (commaSepratedFields == null || commaSepratedFields == ''){
                 commaSepratedFields = fieldName;
             } else {
                 commaSepratedFields = commaSepratedFields + ', ' + fieldName;
             }
+        }
+        if(objectApiName ==  'Epic_Account_Data__c'){
+            commaSepratedFields = commaSepratedFields+',Insurance_Purchaser_Plan_1__c,Insurance_Purchaser_Plan_2__c,Insurance_Purchaser_Plan_3__c ';
         }
         String soqlQuery = 'select ' + commaSepratedFields + ' from ' + objectApiName + ' ';
         return soqlQuery;

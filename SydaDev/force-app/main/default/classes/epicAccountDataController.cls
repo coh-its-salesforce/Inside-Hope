@@ -12,6 +12,7 @@ public with sharing class epicAccountDataController {
             return String.valueOf(epicRecord.Id);
         }
         catch(Exception ex){
+            System.debug(ex.getMessage()+ex.getStackTraceString()+ex.getLineNumber());
             throw new AuraHandledException(ex.getMessage());
         }
         
