@@ -210,7 +210,7 @@ insuranceData = [];
 
         })
         .catch((error) =>{
-             alert("error1: " + JSON.stringify(error))
+             //alert("error1: " + JSON.stringify(error))
         });
     }  
     isEmptyObject(obj){
@@ -355,7 +355,9 @@ insuranceData = [];
                 console.log('result : ' + JSON.stringify(this.data));
 
             })
-            .catch((error) => alert("error: " + JSON.stringify(error)));
+            .catch((error) => {
+                //alert("error: " + JSON.stringify(error))
+            });
         }
         else if(this.epicRecordId!==''){
             updateEpicRecord({ epicRecord: this.epicAccountRecord,epicRecordId: this.epicRecordId })
@@ -370,7 +372,9 @@ insuranceData = [];
                 console.log('result : ' + JSON.stringify(this.data));
 
             })
-            .catch((error) => alert("error: " + JSON.stringify(error)));
+            .catch((error) => {
+                //alert("error: " + JSON.stringify(error))
+                });
         }
        
 
@@ -473,7 +477,11 @@ handleGuarantorUpdate(event){
                 console.log('result : ' + JSON.stringify(this.data));
 
             })
-            .catch((error) => alert("error: " + JSON.stringify(error)));
+            .catch((error) => {
+
+                //alert("error: " + JSON.stringify(error))
+            
+            });
                  }
          }else{
             this.throwErrorToast('Error! Please fill all the required fields');
@@ -811,7 +819,9 @@ handleGuarantorUpdate(event){
                 console.log('result : ' + JSON.stringify(this.accountRecord));
                  
             })
-            .catch((error) => alert("error: " + JSON.stringify(error)));
+            .catch((error) => {
+                //alert("error: " + JSON.stringify(error))
+                });
         
     }
        handleCopyPatienteButtoGuarantor() {
