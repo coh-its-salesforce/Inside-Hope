@@ -1,0 +1,1953 @@
+<template>
+  <div if:true={isLoading} class="slds-is-relative">
+    <lightning-spinner alternative-text="Loading...."></lightning-spinner>
+  </div>
+  <template if:true={AccountMRN}>
+    <lightning-card>
+      <h3 slot="title">
+        <div class="slds-m-around_small">
+          <lightning-icon
+            icon-name="standard:unified_health_score"
+            size="medium"
+          ></lightning-icon>
+          &nbsp; | Insurance 1
+        </div>
+      </h3>
+      <lightning-record-view-form
+        record-id={epicAccountDataId}
+        object-api-name="Epic_Account_Data__c"
+      >
+        <div class="slds-box slds-theme_default">
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Patient_Relationship_to_Subscriber_1__c"
+                >Patient Relationship to Subscriber</label
+              >
+              <lightning-output-field
+                field-name="Patient_Relationship_to_Subscriber_1__c"
+                variant="label-hidden"
+                id="Patient_Relationship_to_Subscriber_1__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2"></div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Subscriber_First_Name_1__c"
+                >First Name</label
+              >
+              <lightning-output-field
+                field-name="Insurance_Subscriber_First_Name_1__c"
+                variant="label-hidden"
+                id="View_Insurance_Subscriber_First_Name_1__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Subscriber_Last_Name_1__c">Last Name</label>
+              <lightning-output-field
+                field-name="Insurance_Subscriber_Last_Name_1__c"
+                variant="label-hidden"
+                id="View_Insurance_Subscriber_Last_Name_1__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Subscriber_Middle_Name_1__c"
+                >Middle Name</label
+              >
+              <lightning-output-field
+                field-name="Insurance_Subscriber_Middle_Name_1__c"
+                variant="label-hidden"
+                id="View_Insurance_Subscriber_Middle_Name_1__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Birth_Date_1__c">Birthdate</label>
+              <lightning-output-field
+                field-name="Insurance_Birth_Date_1__c"
+                variant="label-hidden"
+                id="Insurance_Birth_Date_1__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Gender_3__c">Gender</label>
+              <lightning-output-field
+                field-name="Insurance_Gender_1__c"
+                variant="label-hidden"
+                id="Insurance_Gender_1__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_SSN_3__c">Social Security Number</label>
+              <lightning-output-field
+                field-name="Insurance_SSN_1__c"
+                variant="label-hidden"
+                id="Insurance_SSN_1__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_City_1__c">City</label>
+              <lightning-output-field
+                field-name="Insurance_City_1__c"
+                variant="label-hidden"
+                id="Insurance_City_1__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Street_1__c">Street</label>
+              <lightning-output-field
+                field-name="Insurance_Street_1__c"
+                variant="label-hidden"
+                id="Insurance_Street_1__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_State_1__c">State</label>
+              <lightning-output-field
+                field-name="Insurance_State_1__c"
+                variant="label-hidden"
+                id="Insurance_State_1__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_PostalCode_1__c">Postal Code</label>
+              <lightning-output-field
+                field-name="Insurance_PostalCode_1__c"
+                variant="label-hidden"
+                id="Insurance_PostalCode_1__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Country_1__c">Country</label>
+              <lightning-output-field
+                field-name="Insurance_Country_1__c"
+                variant="label-hidden"
+                id="Insurance_Country_1__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2"></div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Subscriber_ID_1__c">Subscriber ID</label>
+              <lightning-output-field
+                field-name="Subscriber_ID_1__c"
+                variant="label-hidden"
+                id="Subscriber_ID_1__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Subscriber_Member_Id_1__c">Member ID</label>
+              <lightning-output-field
+                field-name="Insurance_Subscriber_Member_Id_1__c"
+                variant="label-hidden"
+                id="Insurance_Subscriber_Member_Id_1__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Group_Number_1_c__c">Group Number</label>
+              <lightning-output-field
+                field-name="Group_Number_1_c__c"
+                variant="label-hidden"
+                id="Group_Number_1_c__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Authorization_number_1__c"
+                >Authorization Number</label
+              >
+              <lightning-output-field
+                field-name="Authorization_number_1__c"
+                variant="label-hidden"
+                id="Authorization_number_1__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Patient_Relationship_to_Subscriber_1__c"
+                >Purchaser Plan</label
+              >
+              <lightning-output-field
+                field-name="Insurance_Purchaser_Plan_1__c"
+                variant="label-hidden"
+                id="Insurance_Purchaser_Plan_1__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Member_eff_from_3__c">Effective From</label>
+              <lightning-output-field
+                field-name="Insurance_Member_eff_from_1__c"
+                variant="label-hidden"
+                id="Insurance_Member_eff_from_1__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <template if:true={showPayerAddress1}>
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Payor_Name_1__c">Payer Name</label>
+                <lightning-output-field
+                  field-name="Insurance_Payor_Name_1__c"
+                  variant="label-hidden"
+                  id="Insurance_Payor_Name_1__c"
+                >
+                </lightning-output-field>
+              </div>
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Plan_Name_1__c">Plan Name</label>
+                <lightning-output-field
+                  field-name="Insurance_Plan_Name_1__c"
+                  variant="label-hidden"
+                  id="Insurance_Plan_Name_1__c"
+                >
+                </lightning-output-field>
+              </div>
+            </div>
+            <br />
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Payer_Street_1__c">Payer Street</label>
+                <lightning-output-field
+                  field-name="Insurance_Payer_Street_1__c"
+                  variant="label-hidden"
+                  id="Insurance_Payer_Street_1__c"
+                >
+                </lightning-output-field>
+              </div>
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Payer_City_1__c">Payer City</label>
+                <lightning-output-field
+                  field-name="Insurance_Payer_City_1__c"
+                  variant="label-hidden"
+                  id="Insurance_Payer_City_1__c"
+                >
+                </lightning-output-field>
+              </div>
+            </div>
+            <br />
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Payer_State_1__c">Payer State</label>
+                <lightning-output-field
+                  field-name="Insurance_Payer_State_1__c"
+                  variant="label-hidden"
+                  id="Insurance_Payer_State_1__c"
+                >
+                </lightning-output-field>
+              </div>
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Payer_PostalCode_1__c"
+                  >Payer ZipCode</label
+                >
+                <lightning-output-field
+                  field-name="Insurance_Payer_PostalCode_1__c"
+                  variant="label-hidden"
+                  id="Insurance_Payer_PostalCode_1__c"
+                >
+                </lightning-output-field>
+              </div>
+            </div>
+            <br />
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Payer_Country_1__c">Payer Country</label>
+                <lightning-output-field
+                  field-name="Insurance_Payer_Country_1__c"
+                  variant="label-hidden"
+                  id="Insurance_Payer_Country_1__c"
+                >
+                </lightning-output-field>
+              </div>
+              <div class="slds-size_1-of-2"></div>
+            </div>
+            <br />
+          </template>
+        </div>
+      </lightning-record-view-form>
+    </lightning-card>
+    <lightning-card>
+      <h3 slot="title">
+        <div class="slds-m-around_small">
+          <lightning-icon
+            icon-name="standard:unified_health_score"
+            size="medium"
+          ></lightning-icon>
+          &nbsp; | Insurance 2
+        </div>
+      </h3>
+      <lightning-record-view-form
+        record-id={epicAccountDataId}
+        object-api-name="Epic_Account_Data__c"
+      >
+        <div class="slds-box slds-theme_default">
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Patient_Relationship_to_Subscriber_2__c"
+                >Patient Relationship to Subscriber</label
+              >
+              <lightning-output-field
+                field-name="Patient_Relationship_to_Subscriber_2__c"
+                variant="label-hidden"
+                id="Patient_Relationship_to_Subscriber_2__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2"></div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Subscriber_First_Name_2__c"
+                >First Name</label
+              >
+              <lightning-output-field
+                field-name="Insurance_Subscriber_First_Name_2__c"
+                variant="label-hidden"
+                id="View_Insurance_Subscriber_First_Name_2__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Subscriber_Last_Name_2__c">Last Name</label>
+              <lightning-output-field
+                field-name="Insurance_Subscriber_Last_Name_2__c"
+                variant="label-hidden"
+                id="View_Insurance_Subscriber_Last_Name_2__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Subscriber_Middle_Name_2__c"
+                >Middle Name</label
+              >
+              <lightning-output-field
+                field-name="Insurance_Subscriber_Middle_Name_2__c"
+                variant="label-hidden"
+                id="View_Insurance_Subscriber_Middle_Name_2__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Birth_Date_2__c">Birthdate</label>
+              <lightning-output-field
+                field-name="Insurance_Birth_Date_2__c"
+                variant="label-hidden"
+                id="Insurance_Birth_Date_2__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Gender_2__c">Gender</label>
+              <lightning-output-field
+                field-name="Insurance_Gender_2__c"
+                variant="label-hidden"
+                id="Insurance_Gender_2__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_SSN_2__c">Social Security Number</label>
+              <lightning-output-field
+                field-name="Insurance_SSN_2__c"
+                variant="label-hidden"
+                id="Insurance_SSN_2__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_City_2__c">City</label>
+              <lightning-output-field
+                field-name="Insurance_City_2__c"
+                variant="label-hidden"
+                id="Insurance_City_2__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Street_2__c">Street</label>
+              <lightning-output-field
+                field-name="Insurance_Street_2__c"
+                variant="label-hidden"
+                id="Insurance_Street_2__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_State_2__c">State</label>
+              <lightning-output-field
+                field-name="Insurance_State_2__c"
+                variant="label-hidden"
+                id="Insurance_State_2__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_PostalCode_2__c">Postal Code</label>
+              <lightning-output-field
+                field-name="Insurance_PostalCode_2__c"
+                variant="label-hidden"
+                id="Insurance_PostalCode_2__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Country_2__c">Country</label>
+              <lightning-output-field
+                field-name="Insurance_Country_2__c"
+                variant="label-hidden"
+                id="Insurance_Country_2__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2"></div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Subscriber_ID_2__c">Subscriber ID</label>
+              <lightning-output-field
+                field-name="Subscriber_ID_2__c"
+                variant="label-hidden"
+                id="Subscriber_ID_2__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Subscriber_Member_Id_2__c">Member ID</label>
+              <lightning-output-field
+                field-name="Insurance_Subscriber_Member_Id_2__c"
+                variant="label-hidden"
+                id="Insurance_Subscriber_Member_Id_2__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Group_Number_2_c__c">Group Number</label>
+              <lightning-output-field
+                field-name="Group_Number_2_c__c"
+                variant="label-hidden"
+                id="Group_Number_2_c__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Authorization_number_2__c"
+                >Authorization Number</label
+              >
+              <lightning-output-field
+                field-name="Authorization_number_2__c"
+                variant="label-hidden"
+                id="Authorization_number_2__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Patient_Relationship_to_Subscriber_2__c"
+                >Purchaser Plan</label
+              >
+              <lightning-output-field
+                field-name="Insurance_Purchaser_Plan_2__c"
+                variant="label-hidden"
+                id="Insurance_Purchaser_Plan_2__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Member_eff_from_2__c">Effective From</label>
+              <lightning-output-field
+                field-name="Insurance_Member_eff_from_2__c"
+                variant="label-hidden"
+                id="Insurance_Member_eff_from_2__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <template if:true={showPayerAddress2}>
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Payor_Name_2__c">Payer Name</label>
+                <lightning-output-field
+                  field-name="Insurance_Payor_Name_2__c"
+                  variant="label-hidden"
+                  id="Insurance_Payor_Name_2__c"
+                >
+                </lightning-output-field>
+              </div>
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Plan_Name_2__c">Plan Name</label>
+                <lightning-output-field
+                  field-name="Insurance_Plan_Name_2__c"
+                  variant="label-hidden"
+                  id="Insurance_Plan_Name_2__c"
+                >
+                </lightning-output-field>
+              </div>
+            </div>
+            <br />
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Payer_Street_2__c">Payer Street</label>
+                <lightning-output-field
+                  field-name="Insurance_Payer_Street_2__c"
+                  variant="label-hidden"
+                  id="Insurance_Payer_Street_2__c"
+                >
+                </lightning-output-field>
+              </div>
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Payer_City_2__c">Payer City</label>
+                <lightning-output-field
+                  field-name="Insurance_Payer_City_2__c"
+                  variant="label-hidden"
+                  id="Insurance_Payer_City_2__c"
+                >
+                </lightning-output-field>
+              </div>
+            </div>
+            <br />
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Payer_State_2__c">Payer State</label>
+                <lightning-output-field
+                  field-name="Insurance_Payer_State_2__c"
+                  variant="label-hidden"
+                  id="Insurance_Payer_State_2__c"
+                >
+                </lightning-output-field>
+              </div>
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Payer_PostalCode_2__c"
+                  >Payer ZipCode</label
+                >
+                <lightning-output-field
+                  field-name="Insurance_Payer_PostalCode_2__c"
+                  variant="label-hidden"
+                  id="Insurance_Payer_PostalCode_2__c"
+                >
+                </lightning-output-field>
+              </div>
+            </div>
+            <br />
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Payer_Country_2__c">Payer Country</label>
+                <lightning-output-field
+                  field-name="Insurance_Payer_Country_2__c"
+                  variant="label-hidden"
+                  id="Insurance_Payer_Country_2__c"
+                >
+                </lightning-output-field>
+              </div>
+              <div class="slds-size_1-of-2"></div>
+            </div>
+            <br />
+          </template>
+        </div>
+      </lightning-record-view-form>
+    </lightning-card>
+    <lightning-card>
+      <h3 slot="title">
+        <div class="slds-m-around_small">
+          <lightning-icon
+            icon-name="standard:unified_health_score"
+            size="medium"
+          ></lightning-icon>
+          &nbsp; | Insurance 3
+        </div>
+      </h3>
+      <lightning-record-view-form
+        record-id={epicAccountDataId}
+        object-api-name="Epic_Account_Data__c"
+      >
+        <div class="slds-box slds-theme_default">
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Patient_Relationship_to_Subscriber_3__c"
+                >Patient Relationship to Subscriber</label
+              >
+              <lightning-output-field
+                field-name="Patient_Relationship_to_Subscriber_3__c"
+                variant="label-hidden"
+                id="Patient_Relationship_to_Subscriber_3__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2"></div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Subscriber_First_Name_3__c"
+                >First Name</label
+              >
+              <lightning-output-field
+                field-name="Insurance_Subscriber_First_Name_3__c"
+                variant="label-hidden"
+                id="View_Insurance_Subscriber_First_Name_3__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Subscriber_Last_Name_3__c">Last Name</label>
+              <lightning-output-field
+                field-name="Insurance_Subscriber_Last_Name_3__c"
+                variant="label-hidden"
+                id="View_Insurance_Subscriber_Last_Name_3__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Subscriber_Middle_Name_3__c"
+                >Middle Name</label
+              >
+              <lightning-output-field
+                field-name="Insurance_Subscriber_Middle_Name_3__c"
+                variant="label-hidden"
+                id="View_Insurance_Subscriber_Middle_Name_3__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Birth_Date_3__c">Birthdate</label>
+              <lightning-output-field
+                field-name="Insurance_Birth_Date_3__c"
+                variant="label-hidden"
+                id="Insurance_Birth_Date_3__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Gender_3__c">Gender</label>
+              <lightning-output-field
+                field-name="Insurance_Gender_3__c"
+                variant="label-hidden"
+                id="Insurance_Gender_3__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_SSN_3__c">Social Security Number</label>
+              <lightning-output-field
+                field-name="Insurance_SSN_3__c"
+                variant="label-hidden"
+                id="Insurance_SSN_3__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_City_3__c">City</label>
+              <lightning-output-field
+                field-name="Insurance_City_3__c"
+                variant="label-hidden"
+                id="Insurance_City_3__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Street_3__c">Street</label>
+              <lightning-output-field
+                field-name="Insurance_Street_3__c"
+                variant="label-hidden"
+                id="Insurance_Street_3__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_State_3__c">State</label>
+              <lightning-output-field
+                field-name="Insurance_State_3__c"
+                variant="label-hidden"
+                id="Insurance_State_3__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_PostalCode_3__c">Postal Code</label>
+              <lightning-output-field
+                field-name="Insurance_PostalCode_3__c"
+                variant="label-hidden"
+                id="Insurance_PostalCode_3__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Country_3__c">Country</label>
+              <lightning-output-field
+                field-name="Insurance_Country_3__c"
+                variant="label-hidden"
+                id="Insurance_Country_3__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2"></div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Subscriber_ID_3__c">Subscriber ID</label>
+              <lightning-output-field
+                field-name="Subscriber_ID_3__c"
+                variant="label-hidden"
+                id="Subscriber_ID_3__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Subscriber_Member_Id_3__c">Member ID</label>
+              <lightning-output-field
+                field-name="Insurance_Subscriber_Member_Id_3__c"
+                variant="label-hidden"
+                id="Insurance_Subscriber_Member_Id_3__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Group_Number_3_c__c">Group Number</label>
+              <lightning-output-field
+                field-name="Group_Number_3_c__c"
+                variant="label-hidden"
+                id="Group_Number_3_c__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Authorization_number_3__c"
+                >Authorization Number</label
+              >
+              <lightning-output-field
+                field-name="Authorization_number_3__c"
+                variant="label-hidden"
+                id="Authorization_number_3__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Patient_Relationship_to_Subscriber_1__c"
+                >Purchaser Plan</label
+              >
+              <lightning-output-field
+                field-name="Insurance_Purchaser_Plan_3__c"
+                variant="label-hidden"
+                id="Insurance_Purchaser_Plan_3__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Insurance_Member_eff_from_3__c">Effective From</label>
+              <lightning-output-field
+                field-name="Insurance_Member_eff_from_3__c"
+                variant="label-hidden"
+                id="Insurance_Member_eff_from_3__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <template if:true={showPayerAddress3}>
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Payor_Name_3__c">Payer Name</label>
+                <lightning-output-field
+                  field-name="Insurance_Payor_Name_3__c"
+                  variant="label-hidden"
+                  id="Insurance_Payor_Name_3__c"
+                >
+                </lightning-output-field>
+              </div>
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Plan_Name_3__c">Plan Name</label>
+                <lightning-output-field
+                  field-name="Insurance_Plan_Name_3__c"
+                  variant="label-hidden"
+                  id="Insurance_Plan_Name_3__c"
+                >
+                </lightning-output-field>
+              </div>
+            </div>
+            <br />
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Payer_Street_3__c">Payer Street</label>
+                <lightning-output-field
+                  field-name="Insurance_Payer_Street_3__c"
+                  variant="label-hidden"
+                  id="Insurance_Payer_Street_3__c"
+                >
+                </lightning-output-field>
+              </div>
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Payer_City_3__c">Payer City</label>
+                <lightning-output-field
+                  field-name="Insurance_Payer_City_3__c"
+                  variant="label-hidden"
+                  id="Insurance_Payer_City_3__c"
+                >
+                </lightning-output-field>
+              </div>
+            </div>
+            <br />
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Payer_State_3__c">Payer State</label>
+                <lightning-output-field
+                  field-name="Insurance_Payer_State_3__c"
+                  variant="label-hidden"
+                  id="Insurance_Payer_State_3__c"
+                >
+                </lightning-output-field>
+              </div>
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Payer_PostalCode_3__c"
+                  >Payer ZipCode</label
+                >
+                <lightning-output-field
+                  field-name="Insurance_Payer_PostalCode_3__c"
+                  variant="label-hidden"
+                  id="Insurance_Payer_PostalCode_3__c"
+                >
+                </lightning-output-field>
+              </div>
+            </div>
+            <br />
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-size_1-of-2">
+                <label for="Insurance_Payer_Country_3__c">Payer Country</label>
+                <lightning-output-field
+                  field-name="Insurance_Payer_Country_3__c"
+                  variant="label-hidden"
+                  id="Insurance_Payer_Country_3__c"
+                >
+                </lightning-output-field>
+              </div>
+              <div class="slds-size_1-of-2"></div>
+            </div>
+            <br />
+          </template>
+        </div>
+      </lightning-record-view-form>
+    </lightning-card>
+  </template>
+  <template if:false={AccountMRN}>
+    <lightning-card>
+      <c-confirmation-dialog
+        title="Confirmation Title"
+        message="Selecting 'Overwrite' will overwrite Insurance Subscriber's information with the patient's?"
+        confirm-label="Overwrite"
+        cancel-label="Cancel"
+        visible={isDialogVisible}
+        original-message={originalMessage}
+        name="confirmModal"
+        onclick={handleClick}
+      >
+      </c-confirmation-dialog>
+      <h3 slot="title">
+        <div class="slds-m-around_small">
+          <lightning-icon
+            icon-name="standard:unified_health_score"
+            size="medium"
+          ></lightning-icon>
+          &nbsp; | Insurance 1
+        </div>
+      </h3>
+      <lightning-record-edit-form
+        record-id={epicAccountDataId}
+        object-api-name="Epic_Account_Data__c"
+        onsuccess={handleSuccessInsurance1}
+        onerror={handleError}
+        onsubmit={handleSubmit}
+      >
+        <div class="slds-box slds-theme_default">
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editPatient_Relationship_to_Subscriber_1__c"
+                >Patient Relationship to Subscriber</label
+              >
+              <lightning-input-field
+                field-name="Patient_Relationship_to_Subscriber_1__c"
+                variant="label-hidden"
+                id="editPatient_Relationship_to_Subscriber_1__c"
+                onchange={handleonchangeInsurance1}
+              ></lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2"></div>
+            <!--  <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="editInsurance_Payer_1__c">Payer</label>
+                            <lightning-input-field field-name="Insurance_Payer_1__c" variant="label-hidden" id="editInsurance_Payer_1__c"> </lightning-input-field>
+                        </div> -->
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="Insurance_Subscriber_First_Name_1__c"
+                >First Name</label
+              >
+              <lightning-input-field
+                field-name="Insurance_Subscriber_First_Name_1__c"
+                variant="label-hidden"
+                id="Insurance_Subscriber_First_Name_1__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="Insurance_Subscriber_Last_Name_1__c">Last Name</label>
+              <lightning-input-field
+                field-name="Insurance_Subscriber_Last_Name_1__c"
+                variant="label-hidden"
+                id="Insurance_Subscriber_Last_Name_1__c"
+              >
+              </lightning-input-field>
+            </div>
+            <!--  <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="editInsurance_Payer_1__c">Payer</label>
+                            <lightning-input-field field-name="Insurance_Payer_1__c" variant="label-hidden" id="editInsurance_Payer_1__c"> </lightning-input-field>
+                        </div> -->
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="Insurance_Subscriber_Middle_Name_1__c"
+                >Middle Name</label
+              >
+              <lightning-input-field
+                field-name="Insurance_Subscriber_Middle_Name_1__c"
+                variant="label-hidden"
+                id="Insurance_Subscriber_Middle_Name_1__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Gender_1__c">Gender</label>
+              <lightning-input-field
+                field-name="Insurance_Gender_1__c"
+                variant="label-hidden"
+                id="editInsurance_Gender_1__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Birth_Date_1__c">Birthdate</label>
+              <lightning-input-field
+                field-name="Insurance_Birth_Date_1__c"
+                variant="label-hidden"
+                id="editInsurance_Birth_Date_1__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_SSN_1__c">Social Security Number</label>
+              <lightning-input-field
+                field-name="Insurance_SSN_1__c"
+                variant="label-hidden"
+                id="editInsurance_SSN_1__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Street_1__c">Street</label>
+              <lightning-input-field
+                field-name="Insurance_Street_1__c"
+                variant="label-hidden"
+                id="editInsurance_Street_1__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_City_1__c">City</label>
+              <lightning-input-field
+                field-name="Insurance_City_1__c"
+                variant="label-hidden"
+                id="editInsurance_City_1__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_State_1__c">State</label>
+              <lightning-input-field
+                field-name="Insurance_State_1__c"
+                variant="label-hidden"
+                id="editInsurance_State_1__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_PostalCode_1__c">Postal Code</label>
+              <lightning-input-field
+                field-name="Insurance_PostalCode_1__c"
+                variant="label-hidden"
+                id="editInsurance_PostalCode_1__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Country_1__c">Country</label>
+              <lightning-input-field
+                field-name="Insurance_Country_1__c"
+                variant="label-hidden"
+                id="editInsurance_Country_1__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2"></div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editSubscriber_ID_1__c">Subscriber ID</label>
+              <lightning-input-field
+                field-name="Subscriber_ID_1__c"
+                variant="label-hidden"
+                id="editSubscriber_ID_1__c"
+                onchange={handleonchangeSubscriber1}
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Subscriber_Member_Id_1__c	"
+                >Member ID</label
+              >
+              <lightning-input-field
+                field-name="Insurance_Subscriber_Member_Id_1__c"
+                variant="label-hidden"
+                id="editInsurance_Subscriber_Member_Id_1__c"
+                disabled={disableMemberId1}
+                value={memberId1}
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editGroup_Number_1_c__c">Group Number</label>
+              <lightning-input-field
+                field-name="Group_Number_1_c__c"
+                variant="label-hidden"
+                id="editGroup_Number_1_c__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editAuthorization_number_1__c"
+                >Authorization Number</label
+              >
+              <lightning-input-field
+                field-name="Authorization_number_1__c"
+                variant="label-hidden"
+                id="editAuthorization_number_1__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Purchaser_Plan_1__c"
+                >Purchaser Plan {purchaserPlan1Name}</label
+              >
+              <lightning-input-field
+                field-name="Insurance_Purchaser_Plan_1__c"
+                variant="label-hidden"
+                id="editInsurance_Purchaser_Plan_1__c"
+                onchange={determineAddress1Visibility}
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Member_eff_from_1__c"
+                >Effective From</label
+              >
+              <lightning-input-field
+                field-name="Insurance_Member_eff_from_1__c"
+                variant="label-hidden"
+                id="editInsurance_Member_eff_from_1__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <template if:true={showPayerAddress1}>
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Payor_Name_1__c">Payer Name</label>
+                <lightning-input-field
+                  field-name="Insurance_Payor_Name_1__c"
+                  variant="label-hidden"
+                  id="editInsurance_Payor_Name_1__c"
+                >
+                </lightning-input-field>
+              </div>
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Plan_Name_1__c">Plan Name</label>
+                <lightning-input-field
+                  field-name="Insurance_Plan_Name_1__c"
+                  variant="label-hidden"
+                  id="editInsurance_Plan_Name_1__c"
+                >
+                </lightning-input-field>
+              </div>
+            </div>
+            <br />
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Payer_Street_1__c"
+                  >Payer Street</label
+                >
+                <lightning-input-field
+                  field-name="Insurance_Payer_Street_1__c"
+                  variant="label-hidden"
+                  id="editInsurance_Payer_Street_1__c"
+                >
+                </lightning-input-field>
+              </div>
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Payer_City_1__c">Payer City</label>
+                <lightning-input-field
+                  field-name="Insurance_Payer_City_1__c"
+                  variant="label-hidden"
+                  id="editInsurance_Payer_City_1__c"
+                >
+                </lightning-input-field>
+              </div>
+            </div>
+            <br />
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Payer_State_1__c">Payer State</label>
+                <lightning-input-field
+                  field-name="Insurance_Payer_State_1__c"
+                  variant="label-hidden"
+                  id="editInsurance_Payer_State_1__c"
+                >
+                </lightning-input-field>
+              </div>
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Payer_PostalCode_1__c"
+                  >Payer ZipCode</label
+                >
+                <lightning-input-field
+                  field-name="Insurance_Payer_PostalCode_1__c"
+                  variant="label-hidden"
+                  id="editInsurance_Payer_PostalCode_1__c"
+                >
+                </lightning-input-field>
+              </div>
+            </div>
+            <br />
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Payer_Country_1__c"
+                  >Payer Country</label
+                >
+                <lightning-input-field
+                  field-name="Insurance_Payer_Country_1__c"
+                  variant="label-hidden"
+                  id="editInsurance_Payer_Country_1__c"
+                >
+                </lightning-input-field>
+              </div>
+              <div class="slds-col--padded slds-size_1-of-2"></div>
+            </div>
+            <br />
+          </template>
+          <lightning-button
+            variant="brand"
+            type="submit"
+            label="Update"
+          ></lightning-button>
+        </div>
+      </lightning-record-edit-form>
+    </lightning-card>
+    <lightning-card>
+      <h3 slot="title">
+        <div class="slds-m-around_small">
+          <lightning-icon
+            icon-name="standard:unified_health_score"
+            size="medium"
+          ></lightning-icon>
+          &nbsp; | Insurance 2
+        </div>
+      </h3>
+      <lightning-record-edit-form
+        record-id={epicAccountDataId}
+        object-api-name="Epic_Account_Data__c"
+        onsuccess={handleSuccessInsurance2}
+        onerror={handleError}
+        onsubmit={handleSubmit}
+      >
+        <div class="slds-box slds-theme_default">
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editPatient_Relationship_to_Subscriber_2__c"
+                >Patient Relationship to Subscriber</label
+              >
+              <lightning-input-field
+              required="true" 
+                field-name="Patient_Relationship_to_Subscriber_2__c"
+                variant="label-hidden"
+                id="editPatient_Relationship_to_Subscriber_2__c"
+                onchange={handleonchangeInsurance2}
+              ></lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2"></div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="Insurance_Subscriber_First_Name_2__c"
+                >First Name</label
+              >
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_Subscriber_First_Name_2__c"
+                variant="label-hidden"
+                id="Insurance_Subscriber_First_Name_2__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="Insurance_Subscriber_Last_Name_2__c">Last Name</label>
+              <lightning-input-field
+              required="true"   
+              field-name="Insurance_Subscriber_Last_Name_2__c"
+                variant="label-hidden"
+                id="Insurance_Subscriber_Last_Name_2__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="Insurance_Subscriber_Middle_Name_2__c"
+                >Middle Name</label
+              >
+              <lightning-input-field
+                field-name="Insurance_Subscriber_Middle_Name_2__c"
+                variant="label-hidden"
+                id="Insurance_Subscriber_Middle_Name_2__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Gender_2__c">Gender</label>
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_Gender_2__c"
+                variant="label-hidden"
+                id="editInsurance_Gender_2__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Birth_Date_2__c">Birthdate</label>
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_Birth_Date_2__c"
+                variant="label-hidden"
+                id="editInsurance_Birth_Date_2__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_SSN_2__c">Social Security Number</label>
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_SSN_2__c"
+                variant="label-hidden"
+                id="editInsurance_SSN_2__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Street_2__c">Street</label>
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_Street_2__c"
+                variant="label-hidden"
+                id="editInsurance_Street_2__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_City_2__c">City</label>
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_City_2__c"
+                variant="label-hidden"
+                id="editInsurance_City_2__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_State_2__c">State</label>
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_State_2__c"
+                variant="label-hidden"
+                id="editInsurance_State_2__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_PostalCode_2__c">Postal Code</label>
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_PostalCode_2__c"
+                variant="label-hidden"
+                id="editInsurance_PostalCode_2__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Country_2__c">Country</label>
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_Country_2__c"
+                variant="label-hidden"
+                id="editInsurance_Country_2__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2"></div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editSubscriber_ID_2__c">Subscriber ID</label>
+              <lightning-input-field
+              required="true" 
+                field-name="Subscriber_ID_2__c"
+                variant="label-hidden"
+                id="editSubscriber_ID_2__c"
+                onchange={handleonchangeSubscriber2}
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Subscriber_Member_Id_2__c	"
+                >Member ID</label
+              >
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_Subscriber_Member_Id_2__c"
+                variant="label-hidden"
+                id="editInsurance_Subscriber_Member_Id_2__c"
+                disabled={disableMemberId2}
+                value={memberId2}
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editGroup_Number_2_c__c">Group Number</label>
+              <lightning-input-field
+                field-name="Group_Number_2_c__c"
+                variant="label-hidden"
+                id="editGroup_Number_2_c__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editAuthorization_number_2__c"
+                >Authorization Number</label
+              >
+              <lightning-input-field
+                field-name="Authorization_number_2__c"
+                variant="label-hidden"
+                id="editAuthorization_number_2__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Purchaser_Plan_2__c"
+                >Purchaser Plan {purchaserPlan2Name}</label
+              >
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_Purchaser_Plan_2__c"
+                variant="label-hidden"
+                id="editInsurance_Purchaser_Plan_2__c"
+                onchange={determineAddress2Visibility}
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Member_eff_from_2__c"
+                >Effective From</label
+              >
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_Member_eff_from_2__c"
+                variant="label-hidden"
+                id="editInsurance_Member_eff_from_2__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <template if:true={showPayerAddress2}>
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Payor_Name_2__c">Payer Name</label>
+                <lightning-input-field
+                  required={showPayerAddress2}
+                  field-name="Insurance_Payor_Name_2__c"
+                  variant="label-hidden"
+                  id="editInsurance_Payor_Name_2__c"
+                >
+                </lightning-input-field>
+              </div>
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Plan_Name_2__c">Plan Name</label>
+                <lightning-input-field
+                required={showPayerAddress2}
+                  field-name="Insurance_Plan_Name_2__c"
+                  variant="label-hidden"
+                  id="editInsurance_Plan_Name_2__c"
+                >
+                </lightning-input-field>
+              </div>
+            </div>
+            <br />
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Payer_Street_2__c"
+                  >Payer Street</label
+                >
+                <lightning-input-field
+                required={showPayerAddress2}
+                  field-name="Insurance_Payer_Street_2__c"
+                  variant="label-hidden"
+                  id="editInsurance_Payer_Street_2__c"
+                >
+                </lightning-input-field>
+              </div>
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Payer_City_2__c">Payer City</label>
+                <lightning-input-field
+                required={showPayerAddress2}
+                  field-name="Insurance_Payer_City_2__c"
+                  variant="label-hidden"
+                  id="editInsurance_Payer_City_2__c"
+                >
+                </lightning-input-field>
+              </div>
+            </div>
+            <br />
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Payer_State_2__c">Payer State</label>
+                <lightning-input-field
+                required={showPayerAddress2}
+                  field-name="Insurance_Payer_State_2__c"
+                  variant="label-hidden"
+                  id="editInsurance_Payer_State_2__c"
+                >
+                </lightning-input-field>
+              </div>
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Payer_PostalCode_2__c"
+                  >Payer ZipCode</label
+                >
+                <lightning-input-field
+                required={showPayerAddress2}
+                  field-name="Insurance_Payer_PostalCode_2__c"
+                  variant="label-hidden"
+                  id="editInsurance_Payer_PostalCode_2__c"
+                >
+                </lightning-input-field>
+              </div>
+            </div>
+            <br />
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Payer_Country_2__c"
+                  >Payer Country</label
+                >
+                <lightning-input-field
+                required={showPayerAddress2}
+                  field-name="Insurance_Payer_Country_2__c"
+                  variant="label-hidden"
+                  id="editInsurance_Payer_Country_2__c"
+                >
+                </lightning-input-field>
+              </div>
+              <div class="slds-col--padded slds-size_1-of-2"></div>
+            </div>
+            <br />
+          </template>
+          <lightning-button
+            variant="brand"
+            type="submit"
+            label="Update"
+          ></lightning-button>
+        </div>
+      </lightning-record-edit-form>
+    </lightning-card>
+    <lightning-card>
+      <h3 slot="title">
+        <div class="slds-m-around_small">
+          <lightning-icon
+            icon-name="standard:unified_health_score"
+            size="medium"
+          ></lightning-icon>
+          &nbsp; | Insurance 3
+        </div>
+      </h3>
+      <lightning-record-edit-form
+        record-id={epicAccountDataId}
+        object-api-name="Epic_Account_Data__c"
+        onsuccess={handleSuccessInsurance3}
+        onerror={handleError}
+        onsubmit={handleSubmit}
+      >
+        <div class="slds-box slds-theme_default">
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editPatient_Relationship_to_Subscriber_3__c"
+                >Patient Relationship to Subscriber</label
+              >
+              <lightning-input-field
+                required="true"
+                field-name="Patient_Relationship_to_Subscriber_3__c"
+                variant="label-hidden"
+                id="editPatient_Relationship_to_Subscriber_3__c"
+                onchange={handleonchangeInsurance3}
+              ></lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2"></div>
+            <!--  <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="editInsurance_Payer_1__c">Payer</label>
+                            <lightning-input-field field-name="Insurance_Payer_1__c" variant="label-hidden" id="editInsurance_Payer_1__c"> </lightning-input-field>
+                        </div> -->
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="Insurance_Subscriber_First_Name_3__c"
+                >First Name</label
+              >
+              <lightning-input-field
+                required="true" 
+                field-name="Insurance_Subscriber_First_Name_3__c"
+                variant="label-hidden"
+                id="Insurance_Subscriber_First_Name_3__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="Insurance_Subscriber_Last_Name_3__c">Last Name</label>
+              <lightning-input-field
+                required="true" 
+                field-name="Insurance_Subscriber_Last_Name_3__c"
+                variant="label-hidden"
+                id="Insurance_Subscriber_Last_Name_3__c"
+              >
+              </lightning-input-field>
+            </div>
+            <!--  <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="editInsurance_Payer_1__c">Payer</label>
+                            <lightning-input-field field-name="Insurance_Payer_1__c" variant="label-hidden" id="editInsurance_Payer_1__c"> </lightning-input-field>
+                        </div> -->
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="Insurance_Subscriber_Middle_Name_3__c"
+                >Middle Name</label
+              >
+              <lightning-input-field
+                required="true"   
+                field-name="Insurance_Subscriber_Middle_Name_3__c"
+                variant="label-hidden"
+                id="Insurance_Subscriber_Middle_Name_3__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Gender_3__c">Gender</label>
+              <lightning-input-field
+                required="true" 
+                field-name="Insurance_Gender_3__c"
+                variant="label-hidden"
+                id="editInsurance_Gender_3__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Birth_Date_3__c">Birthdate</label>
+              <lightning-input-field
+                required="true" 
+                field-name="Insurance_Birth_Date_3__c"
+                variant="label-hidden"
+                id="editInsurance_Birth_Date_3__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_SSN_3__c">Social Security Number</label>
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_SSN_3__c"
+                variant="label-hidden"
+                id="editInsurance_SSN_3__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Street_3__c">Street</label>
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_Street_3__c"
+                variant="label-hidden"
+                id="editInsurance_Street_3__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_City_3__c">City</label>
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_City_3__c"
+                variant="label-hidden"
+                id="editInsurance_City_3__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_State_3__c">State</label>
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_State_3__c"
+                variant="label-hidden"
+                id="editInsurance_State_3__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_PostalCode_3__c">Postal Code</label>
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_PostalCode_3__c"
+                variant="label-hidden"
+                id="editInsurance_PostalCode_3__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Country_3__c">Country</label>
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_Country_3__c"
+                variant="label-hidden"
+                id="editInsurance_Country_3__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2"></div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editSubscriber_ID_3__c">Subscriber ID</label>
+              <lightning-input-field
+                required="true" 
+                field-name="Subscriber_ID_3__c"
+                variant="label-hidden"
+                id="editSubscriber_ID_3__c"
+                onchange={handleonchangeSubscriber3}
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Subscriber_Member_Id_3__c	"
+                >Member ID</label
+              >
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_Subscriber_Member_Id_3__c"
+                variant="label-hidden"
+                id="editInsurance_Subscriber_Member_Id_3__c"
+                disabled={disableMemberId3}
+                value={memberId3}
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editGroup_Number_3_c__c">Group Number</label>
+              <lightning-input-field
+                field-name="Group_Number_3_c__c"
+                variant="label-hidden"
+                id="editGroup_Number_3_c__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editAuthorization_number_3__c"
+                >Authorization Number</label
+              >
+              <lightning-input-field
+                field-name="Authorization_number_3__c"
+                variant="label-hidden"
+                id="editAuthorization_number_3__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Purchaser_Plan_3__c"
+                >Purchaser Plan {purchaserPlan3Name}</label
+              >
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_Purchaser_Plan_3__c"
+                variant="label-hidden"
+                id="editInsurance_Purchaser_Plan_3__c"
+                onchange={determineAddress3Visibility}
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="editInsurance_Member_eff_from_3__c"
+                >Effective From</label
+              >
+              <lightning-input-field
+              required="true" 
+                field-name="Insurance_Member_eff_from_3__c"
+                variant="label-hidden"
+                id="editInsurance_Member_eff_from_3__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <template if:true={showPayerAddress3}>
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Payor_Name_3__c">Payer Name</label>
+                <lightning-input-field
+                required={showPayerAddress3}
+                  field-name="Insurance_Payor_Name_3__c"
+                  variant="label-hidden"
+                  id="editInsurance_Payor_Name_3__c"
+                >
+                </lightning-input-field>
+              </div>
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Plan_Name_3__c">Plan Name</label>
+                <lightning-input-field
+                required={showPayerAddress3}
+                  field-name="Insurance_Plan_Name_3__c"
+                  variant="label-hidden"
+                  id="editInsurance_Plan_Name_3__c"
+                >
+                </lightning-input-field>
+              </div>
+            </div>
+            <br />
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Payer_Street_3__c"
+                  >Payer Street</label
+                >
+                <lightning-input-field
+                required={showPayerAddress3}
+                  field-name="Insurance_Payer_Street_3__c"
+                  variant="label-hidden"
+                  id="editInsurance_Payer_Street_3__c"
+                >
+                </lightning-input-field>
+              </div>
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Payer_City_3__c">Payer City</label>
+                <lightning-input-field
+                required={showPayerAddress3}
+                  field-name="Insurance_Payer_City_3__c"
+                  variant="label-hidden"
+                  id="editInsurance_Payer_City_3__c"
+                >
+                </lightning-input-field>
+              </div>
+            </div>
+            <br />
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Payer_State_3__c">Payer State</label>
+                <lightning-input-field
+                required={showPayerAddress3}
+                  field-name="Insurance_Payer_State_3__c"
+                  variant="label-hidden"
+                  id="editInsurance_Payer_State_3__c"
+                >
+                </lightning-input-field>
+              </div>
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Payer_PostalCode_3__c"
+                  >Payer ZipCode</label
+                >
+                <lightning-input-field
+                required={showPayerAddress3}
+                  field-name="Insurance_Payer_PostalCode_3__c"
+                  variant="label-hidden"
+                  id="editInsurance_Payer_PostalCode_3__c"
+                >
+                </lightning-input-field>
+              </div>
+            </div>
+            <br />
+            <div class="sizing slds-grid slds-wrap">
+              <div class="slds-col--padded slds-size_1-of-2">
+                <label for="editInsurance_Payer_Country_3__c"
+                  >Payer Country</label
+                >
+                <lightning-input-field
+                required={showPayerAddress3}
+                  field-name="Insurance_Payer_Country_3__c"
+                  variant="label-hidden"
+                  id="editInsurance_Payer_Country_3__c"
+                >
+                </lightning-input-field>
+              </div>
+              <div class="slds-col--padded slds-size_1-of-2"></div>
+            </div>
+            <br />
+          </template>
+          <lightning-button
+            variant="brand"
+            type="submit"
+            label="Update"
+          ></lightning-button>
+        </div>
+      </lightning-record-edit-form>
+    </lightning-card>
+  </template>
+</template>

@@ -1,0 +1,914 @@
+<template>
+    <div class="acc-container">
+        <lightning-record-view-form record-id={recordId} object-api-name="Visa__c" onsuccess={handleSuccess} onsubmit ={handleSubmit}>
+            <lightning-messages>
+            </lightning-messages>
+            <div class ="header-container">
+                <h3 class="slds-section-title--divider" style="font-weight: bold;">Visa Information</h3>
+            </div>
+            <div class="slds-m-around_medium">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Status__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="OwnerId"></lightning-output-field>
+                    </div>
+                </div>    
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2"></div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Assigned_ISSO_Member__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Active__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Active_Employee__c"></lightning-output-field>
+                    </div>
+                </div>          
+
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Flag_Status__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Contact__c"></lightning-output-field>
+                    </div>
+                </div>    
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Flag_Color_Status__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2"></div>
+                </div>       
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Completed_and_Sent_to_ISSO_Team__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Received_Date__c"></lightning-output-field>
+                    </div>
+                </div>     
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Days_before_after_Proposed_Start_Date__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Termination_Date__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="If_hired_will_t__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Able_to_provide_Doc_of_U_S_Work_Auth__c"></lightning-output-field>
+                    </div>
+                </div>
+            </div>
+            <div class ="header-topbottom">
+                <h3 class="slds-section-title--divider" style="font-weight: bold;">Requester/Supervisor/Department Head Information</h3>
+            </div>
+            <div class="slds-m-around_medium">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="PPLSoft_Department_Requesting__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Requestor__c"></lightning-output-field>
+                    </div>
+                </div>    
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Business_Manager_or_Contact_Person__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Supervisor__c"></lightning-output-field>
+                    </div>
+                </div> 
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Approver_Department_Head__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="VP_ET_Member__c"></lightning-output-field>
+                    </div>
+                </div>       
+            </div>
+            <div class ="header-topbottom">
+                <h3 class="slds-section-title--divider" style="font-weight: bold;">Requester/Supervisor/Department Head Information</h3>
+            </div>
+            <div class="slds-m-around_medium">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Case_Type__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="GLBU__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Type_of_Visa__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="FUND__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Proposed_Visa_Start_Date__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Department_Id1__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Proposed_Visa_End_Date__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Project__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Visa_Processed_Type__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Activity__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="ISS_Fees__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="PCBU__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Estimated_Attorney_and_other_Fees__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="ACCOUNT__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Research_Position__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                </div>
+            </div>
+            <div class ="header-topbottom">
+                <h3 class="slds-section-title--divider" style="font-weight: bold;">Billing</h3>
+            </div>
+            <div class="slds-m-around_medium">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Total_ISSO_Fee__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Total_GSP_Fee__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Visa_Fee_Department__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="GSP_Fee_Department__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Visa_Fee_Applicant__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="GSP_Fee_Applicant__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Billing_Notes__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Total_Fees__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Ready_to_Bill__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Billed__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Billed_Date__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                </div>
+            </div>
+            <div class ="header-topbottom">
+                <h3 class="slds-section-title--divider" style="font-weight: bold;">Section 3 - Proposed Position</h3>
+            </div>
+            <div class="slds-m-around_medium">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Title_of_Position__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="COH_Entity_Paying_Salary__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Annual_Salary__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Other_Title_of_Position__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Period_of_COH_Sponsorship_Funding__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Brief_Description_of_Job_at_COH__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Name_of_Agency_1__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Payroll_Status__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Total_amount_1__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Requisition__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Period_of_Sponsorship__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Source_of_Funding1__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Name_of_Agency_2__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Total_amount_2__c"></lightning-output-field>
+                    </div>
+                </div>                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Period_of_Sponsorship2__c"></lightning-output-field>
+                    </div>
+                </div>
+            </div>
+            <div class ="header-topbottom">
+                <h3 class="slds-section-title--divider" style="font-weight: bold;">Work Location</h3>
+            </div>
+            <div class="slds-m-around_medium">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Work_Loction__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Will_applicant_be_working_remotely__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Other_Work_Location__c"></lightning-output-field>
+                    </div>
+                </div>
+            </div>
+            <div class ="header-topbottom">
+                <h3 class="slds-section-title--divider" style="font-weight: bold;">Section 4 - Applicant Information</h3>
+            </div>
+            <div class="slds-m-around_medium">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Proposed_Individual_First_Name__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Proposed_Individual_Last_Name__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Applicant_Phone_Number__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Applicant_Email_Id__c"></lightning-output-field>
+                    </div>
+                </div> 
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Gender__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Employee_Id__c"></lightning-output-field>
+                    </div>
+                </div> 
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Birth_Date__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="COH_Email__c"></lightning-output-field>
+                    </div>
+                </div> 
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="immi_City_of_Birth__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="COH_Email__c"></lightning-output-field>
+                    </div>
+                </div> 
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="immi_Nationality__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="immi_Country_of_Birth__c"></lightning-output-field>
+                    </div>
+                </div> 
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Country_of_last_legal_residence__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Citizenship1__c"></lightning-output-field>
+                    </div>
+                </div> 
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Current_Visa_Status__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                </div> 
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Current_Visa_Expiration_Date__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="If_Other_Current_Status__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Applicant_ever_participated_in_J_1_Prgm__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="If_yes_indicate_last_program_Start_Date__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="If_yes_indicate_Last_program_End_Date__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Ever_Participated_in_a_H_1B_Program__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="If_Yes_indicate_Last_Program__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="If_Yes_H1BIndicate_Last_Program_End_Date__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Highest_Level_of_Degree_Obtained__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Major__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Number_of_Dependencies__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Immigration_Comments__c"></lightning-output-field>
+                    </div>
+                </div>  
+            </div>
+            <div class ="header-topbottom">
+                <h3 class="slds-section-title--divider" style="font-weight: bold;">Section 5 - Document Expiration Dates</h3>
+            </div>
+            <div class="slds-m-around_medium">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Passport__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Passport_Valid_To__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Passport_Valid_from_Valid_to__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="I_94__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Admissions_Number__c"></lightning-output-field>
+                    </div>
+                </div>           
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Entry_Date__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                </div>    
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Visa__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Visa_Valid_from_Valid_to__c"></lightning-output-field>
+                    </div>
+                </div>    
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Visa_Valid_To__c"></lightning-output-field>
+                    </div>
+                </div>    
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Visa_Interview__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Consular_Post__c"></lightning-output-field>
+                    </div>
+                </div>    
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="SEVIS_Number__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                </div>    
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="DS_2019__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="DS_2019_Valid_from_Valid_to__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="DS_2019_Valid_To__c"></lightning-output-field>
+                    </div>
+                </div>    
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Maximum_Validity_Date_of_J_1__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="J_1_Waiver__c"></lightning-output-field>
+                    </div>
+                </div>    
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="I_20__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="I_20_Valid_from_Valid_to__c"></lightning-output-field>
+                    </div>
+                </div>    
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="I_20_Valid_To__c"></lightning-output-field>
+                    </div>
+                </div>    
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Initial_F_1_OPT__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Initial_F_1_Valid_from_Valid_to__c"></lightning-output-field>
+                    </div>
+                </div>             
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Initial_F_1_OPT_Valid_To__c"></lightning-output-field>
+                    </div>
+                </div>    
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="F_1_STEM_OPT__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="F1_STEM_OPT_Valid_from_Valid_to__c"></lightning-output-field>
+                    </div>
+                </div>   
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="F_1_STEM_OPT_Valid_To__c"></lightning-output-field>
+                    </div>
+                </div>   
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="F_1_STEM_OPT_Annual_Evaluation_Date__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="F_1_STEM_OPT_Final_Evaluation_Date__c"></lightning-output-field>
+                    </div>
+                </div>   
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="OPT_EAD__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="OPT_EAD_Valid_from_Valid_to__c"></lightning-output-field>
+                    </div>
+                </div>   
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="OPT_EAD_Valid_To__c"></lightning-output-field>
+                    </div>
+                </div>   
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Green_Card__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Green_Card_Valid_To__c"></lightning-output-field>
+                    </div>
+                </div>   
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="EAD__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="EAD_Valid_from_Valid_to__c"></lightning-output-field>
+                    </div>
+                </div>   
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="EAD_Valid_To__c"></lightning-output-field>
+                    </div>
+                </div>   
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="H_1B__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="E_3__c"></lightning-output-field>
+                    </div>
+                </div>   
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="I_797__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="I_797_Valid_from_Valid_to__c"></lightning-output-field>
+                    </div>
+                </div>   
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="I_797_Valid_To__c"></lightning-output-field>
+                    </div>
+                </div>   
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Maximum_Validity_Period_of_H_L__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Maximum_Valid_from_Valid_to__c"></lightning-output-field>
+                    </div>
+                </div>   
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Period_of_H_L_Valid_To__c"></lightning-output-field>
+                    </div>
+                </div> 
+            </div>
+            <div class ="header-topbottom">
+                <h3 class="slds-section-title--divider" style="font-weight: bold;">PAF</h3>
+            </div>
+            <div class="slds-m-around_medium">  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="LCA_Notification__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="CBA_notification_date__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="CBA_Year__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Metropolitan_Statistical__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="LCA_Posting_Worksite_1_Duarte__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="LCA_Posting_Worksite_2__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="LCA_Posting_Worksite_3__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="LCA_Posting_Worksite_4__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Benefits_Plan__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Benefits_Year__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Prevailing_Wage_Source__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="If_other_enter_wage_source__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Actual_Wage_Memo__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                </div> 
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="ETA_Case_Number__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="LCA_Filing_Date__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="LCA_Certification_Date__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="LCA_Valid_From__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="LCA_Valid_To__c"></lightning-output-field>
+                    </div>
+                </div>   
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="LCA_Copy_Yes_No__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="LCA_provided_to_Employee_date__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Retention_PeriodForm__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="LCA_Revocation_Date__c"></lightning-output-field>
+                    </div>
+                </div>  
+            </div>
+            <div class ="header-topbottom">
+                <h3 class="slds-section-title--divider" style="font-weight: bold;">Case Management</h3>
+            </div>
+            <div class="slds-m-around_medium">  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="File_Copy_Yes_No__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Approval_Notice_Yes_No__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Notified_HR__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="H1_B_Ack__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Date_Approval_Provided_to_EE__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Invoice_Received_Date__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Accounts_Payable_Approved_Date__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Follow_Up__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Follow_Up_By__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Follow_Up_Reasons__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                    </div>
+                </div>  
+            </div>
+            <div class ="header-topbottom">
+                <h3 class="slds-section-title--divider" style="font-weight: bold;">Notes</h3>
+            </div>
+            <div class="slds-m-around_medium">  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_2-of-2">
+                        <lightning-output-field field-name="Add_ISSO_Notes__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_2-of-2">
+                        <lightning-output-field field-name="ISSS_Notes__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_2-of-2">
+                        <lightning-output-field field-name="Add_Community_Notes__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_2-of-2">
+                        <lightning-output-field field-name="Department_Notes__c"></lightning-output-field>
+                    </div>
+                </div>  
+            </div>
+            <div class ="header-topbottom">
+                <h3 class="slds-section-title--divider" style="font-weight: bold;">System Information</h3>
+            </div>
+            <div class="slds-m-around_medium"> 
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Employee__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Employee_s_Manager__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Community_User_Name__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Employee_s_Information__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="RecordTypeId"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="No_Peoplesoft_Record__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="CreatedById"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="LastModifiedById"></lightning-output-field>
+                    </div>
+                </div>  
+            </div>
+            <div class ="header-topbottom">
+                <h3 class="slds-section-title--divider" style="font-weight: bold;">Emergency Contacts</h3>
+            </div>
+            <div class="slds-m-around_medium"> 
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="U_S_Emergency_Contact_Name__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Home_Country_Emergency_Contact_Name__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="U_S_Emergency_Contact_Email__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Home_Country_Emergency_Contact_Email__c"></lightning-output-field>
+                    </div>
+                </div>  
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="U_S_Emergency_Contact_Phone_Number__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Home_Country_Emergency_Contact_Phone__c"></lightning-output-field>
+                    </div>
+                </div>  
+            </div>
+            <div class ="header-topbottom">
+                <h3 class="slds-section-title--divider" style="font-weight: bold;">Fee Details</h3>
+            </div>
+            <div class="slds-m-around_medium"> 
+                        <lightning-output-field field-name="Visa_Fee_Details__c"></lightning-output-field>
+            </div>
+        </lightning-record-view-form>
+    </div>
+</template>

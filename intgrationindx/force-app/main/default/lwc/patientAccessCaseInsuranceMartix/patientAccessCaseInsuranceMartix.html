@@ -1,0 +1,232 @@
+<template>
+    <template if:false={isEditEnable}>
+        <lightning-record-view-form record-id={recordId} object-api-name="Case">
+            <h1 class="insurance-title"><u>Insurance Screening</u></h1>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-output-field field-name="Service_Category__c"></lightning-output-field>
+                    <lightning-output-field field-name="Health_Plan__c"></lightning-output-field>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-output-field field-name="Plan_Type__c"></lightning-output-field>
+                    <lightning-output-field field-name="Medical_Group_IPA__c"></lightning-output-field>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-output-field field-name="Line_of_Business_Decision_Tree__c"></lightning-output-field>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-1">
+                    <lightning-output-field field-name="Auth__c"></lightning-output-field>
+                </div>
+            </div>
+            <h1 class="insurance-title"><u>Reason for Visit Screening</u></h1>
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-output-field field-name="Department__c"></lightning-output-field>
+                    <lightning-output-field field-name="Location__c"></lightning-output-field>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-output-field field-name="Service_Line__c"></lightning-output-field>
+                    <lightning-output-field field-name="Physician_Decision_Tree__c"></lightning-output-field>
+                </div>
+                <div class="slds-col slds-size_1-of-3">
+                    <lightning-output-field field-name="Specialty__c"></lightning-output-field>
+                    <!--START: CHANGES BY SANJAY 05/23/2022 -->
+                     <lightning-output-field field-name="Diagnosis_Not_Listed__c"></lightning-output-field>
+                     <!--END: CHANGES BY SANJAY 05/23/2022 -->
+                </div>
+            </div>
+            <div class="slds-grid ">
+                <div class="slds-col slds-size_1-of-3 slds-border_bottom">
+                    <lightning-output-field field-name="Physician__c"></lightning-output-field>
+                </div>
+                
+            </div>
+            <div class="slds-clearfix slds-p-top_medium">
+                <lightning-button variant="brand" label="Edit" class="slds-float_right" onclick={handleInsuranceDecTree}></lightning-button>
+            </div>
+        </lightning-record-view-form>
+    </template>
+    <template if:true={isEditEnable}>
+        <h1 class="insurance-title">Patient Access | Case | Physician/Insurance Matrix</h1>
+        <template if:true={isRequired}>
+            <h2>* Please be sure all required picklist values are entered prior to selecting next.</h2>
+        </template>
+        <c-patient-access-case-insurance-decision 
+            str-record-id={recordId}
+            str-record-type-id={dataSet.fields.RecordTypeId.value}
+            servicecategoriesvalue={dataSet.fields.Service_Category__c.value}
+            plantypevalue={dataSet.fields.Plan_Type__c.value}
+            lineofbusinessvalue={dataSet.fields.Line_of_Business_Decision_Tree__c.value}
+            healthplanvalue={dataSet.fields.Health_Plan__c.value}
+            medicalgroupipavalue={dataSet.fields.Medical_Group_IPA__c.value}
+            doespatienthaveauthvalueyesorno={dataSet.fields.Does_patient_have_auth_at_time_of_schedu__c.value}
+            doespatienthaveauthvalue={dataSet.fields.Auth__c.value}
+            onrefreshmatrix={handleRefreshMatrix}
+        >
+        </c-patient-access-case-insurance-decision>
+        <template if:false={isToggleOn}>
+            <div class="slds-card__footer slds-grid slds-grid_align-spread slds-var-p-horizontal_small">
+                <lightning-button variant="neutral" label="Cancel" class="slds-float_right" style="padding-left: 650px" onclick={handleCancel}></lightning-button>
+                <lightning-button variant="brand" label="Process Insurance" class="slds-float_right" onclick={handleToggleInsurenceOn}></lightning-button>
+            </div>
+        </template>
+        <template if:true={isToggleOn}>
+            <lightning-layout>
+                <div class="slds-grid">
+                    <div style="width: 100px;">
+                        <table class="slds-table slds-table_cell-buffer ins-tree-broder slds-scrollable" aria-labelledby="element-with-table-label other-element-with-table-label">
+                            <tbody>
+                                <tr class="slds-line-height_reset ins-tree-broder" scope="col">
+                                    <td>
+                                        <div class="slds-truncate" title="Primary Delivery of Care Center:"><span style="font-size: 14pt;">Primary Delivery of Care Center:</span></div>
+                                    </td>
+                                    <td>
+                                        <div><span style="font-size: 14pt; color: rgb(0, 176, 80); font-weight: bold;">{guidelinesTable.formPrimaryDeliveryofCareCenter}&nbsp;</span></div>
+                                    </td>
+                                </tr>
+                                <tr class="slds-line-height_reset ins-tree-broder" scope="col">
+                                    <td class="ins-tree-broder">
+                                    
+                                    </td>
+                                    <td class="ins-tree-broder">
+                                        <span style="font-size: 14pt; font-weight: bold;">National Medical Center</span></p>
+                                    </td>
+                                    <td class="ins-tree-broder">
+                                        <span style="font-size: 14pt; font-weight: bold;">Clinical Network</span></p>
+                                    </td>
+                                </tr>
+                                <tr class="slds-line-height_reset ins-tree-broder" scope="col">
+                                    <td class="ins-tree-broder">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;">Contract Status</span></p>
+                                    </td>
+                                    <td class="ins-tree-broder">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;">{guidelinesTable.recIMHospital.HOSPITAL_Contract_Status__c}</span></p>
+                                    </td>
+                                    <td class="ins-tree-broder">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;">{guidelinesTable.recIMProf.PROFESSIONAL_Contract_Status__c}</span></p>
+                                    </td>
+                                </tr>
+                                <tr class="slds-line-height_reset ins-tree-broder" scope="col">
+                                    <td class="ins-tree-broder">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;">Auth Needed</span></p>
+                                    </td>
+                                    <td class="ins-tree-broder ins-tree-style1">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;">{guidelinesTable.recIMHospital.Auth_Required__c}</span></p>
+                                    </td>
+                                    <td class="ins-tree-broder ins-tree-style1">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;">{guidelinesTable.recIMProf.Auth_Required__c}</span></p>
+                                    </td>
+                                </tr>
+                                <tr class="slds-line-height_reset ins-tree-broder" scope="col">
+                                    <td class="ins-tree-broder">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;">LOA Needed</span></p>
+                                    </td>
+                                    <td class="ins-tree-broder ins-tree-style1">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;">{guidelinesTable.formLOANeededHosp}</span></p>
+                                    </td>
+                                    <td class="ins-tree-broder ins-tree-style1">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;">{guidelinesTable.formLOANeededProf}</span></p>
+                                    </td>
+                                </tr>
+                                <tr class="slds-line-height_reset ins-tree-broder" scope="col">
+                                    <td class="ins-tree-broder">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;">Avg Days to Auth</span></p>
+                                    </td>
+                                    <td class="ins-tree-broder ins-tree-style1">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;">{guidelinesTable.recIMHospital.Auth_Time_List__c}</span></p>
+                                    </td>
+                                    <td class="ins-tree-broder ins-tree-style1">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;">{guidelinesTable.recIMProf.Auth_Time_List__c}</span></p>
+                                    </td>
+                                </tr>
+                                <tr class="slds-line-height_reset ins-tree-broder" scope="col">
+                                    <td class="ins-tree-broder">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;">Comments</span></p>
+                                    </td>
+                                    <td class="ins-tree-broder ins-tree-style1">
+                                        <p class="ins-tree-table2 slds-cell-wrap"><span style="font-size: 14pt;">{guidelinesTable.recIMHospital.Comments__c}</span></p>
+                                    </td>
+                                    <td class="ins-tree-broder ins-tree-style1">
+                                        <p class="ins-tree-table2 slds-cell-wrap"><span style="font-size: 14pt;">{guidelinesTable.recIMProf.Comments__c}</span></p>
+                                    </td>
+                                </tr>
+                                <tr class="slds-line-height_reset ins-tree-broder" scope="col">
+                                    <td height="34" class="oa4 ins-tree-table1" width="299">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;">Scheduling Guidelines</span></p>
+                                    </td>
+                                    <td class="ins-tree-broder ins-tree-style1">
+                                        <p class="ins-tree-table2 slds-cell-wrap"><span style="font-size: 14pt;">{guidelinesTable.recIMHospital.HOSP_Scheduling_Decision_Tree__c}</span></p>
+                                        <!--<template if:true={isSchedule}>
+                                             <p class="ins-tree-table2"><span style="font-size: 14pt;">Schedule 10 Days Out</span></p>
+                                        </template>
+                                        <template if:false={isSchedule}>
+                                            <p class="ins-tree-table2"><span style="font-size: 14pt;">{guidelinesTable.formSchedulingGuidelinesHosp}</span></p>
+                                        </template> -->
+                                    </td>
+                                    <td class="ins-tree-broder ins-tree-style1">
+                                        <p class="ins-tree-table2 slds-cell-wrap"><span style="font-size: 14pt;">{guidelinesTable.recIMProf.PROF_Scheduling_Decision_Tree__c}</span></p>
+                                        <!--<template if:true={isSchedule}>
+                                            <p class="ins-tree-table2"><span style="font-size: 14pt;">Schedule 10 Days Out</span></p>
+                                       </template>
+                                       <template if:false={isSchedule}>
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;">{guidelinesTable.formSchedulingGuildelinesProf}</span></p>
+                                       </template>-->
+                                    </td>
+                                </tr>
+                                <tr class="slds-line-height_reset ins-tree-broder" scope="col">
+                                    <td height="36" class="oa4" width="299" style="padding: 3.6pt 7.2pt; color: windowtext; font-size: 18pt; font-family: Arial; vertical-align: top; border: 1pt solid black; height: 26.9pt; width: 224pt;">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;">Scheduling Scripting:</span></p>
+                                    </td>
+                                    <td colspan="2" class="oa4" width="597" style="padding: 3.6pt 7.2pt; color: windowtext; font-size: 18pt; font-family: Arial; vertical-align: top; width: 448pt;">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;"><a href={label.SchedulingScripting}>Sharepoint Document</a></span></p>
+                                    </td>
+                                </tr>
+                                <tr class="slds-line-height_reset ins-tree-broder" scope="col">
+                                    <td class="ins-tree-broder">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;">Matrix Link</span></p>
+                                    </td>
+                                    <td class="ins-tree-broder ins-tree-style1">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;"><a data-name={guidelinesTable.recIMHospital.Id} onclick={handelUrlClick}>{guidelinesTable.formHospLinkText}</a></span></p>
+                                    </td>
+                                    <td class="ins-tree-broder ins-tree-style1">
+                                        <p class="ins-tree-table2"><span style="font-size: 14pt;"><a data-name={guidelinesTable.recIMProf.Id} onclick={handelUrlClick} >{guidelinesTable.formClinicalNetworkText}</a></span></p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </lightning-layout>
+            <div class="slds-grid">  
+                <div class="slds-card__footer slds-grid slds-grid_align-spread slds-var-p-horizontal_small">
+                    <lightning-button variant="neutral" label="Hide Insurance Table" class="slds-float_right" style="padding-left: 500px" onclick={handleToggleInsurenceOff}></lightning-button>
+                    <lightning-button variant="brand" label="Update Insurance Data" class="slds-float_right" style="margin-left: 23px;" onclick={handleToggleInsurenceOn}></lightning-button>
+                </div>
+            </div>            
+        </template>
+        <!--CHANGES BY SANJAY 05/23/2022 -->
+        <c-patient-access-physician-decision-list 
+            str-record-id={recordId}
+            str-object-name="Case"
+            specialtyvalue={dataSet.fields.Specialty__c.value}
+            str-record-type-id={dataSet.fields.RecordTypeId.value}
+            departmentvalue={dataSet.fields.Department__c.value}
+            locationvalue={dataSet.fields.Location__c.value}
+            servicelinevalue={dataSet.fields.Service_Line__c.value}
+            physicianvalue={dataSet.fields.Physician_Decision_Tree__c.value}
+            physician-id={dataSet.fields.Physician__c.value}
+            diagnosis-not-listed={dataSet.fields.Diagnosis_Not_Listed__c.value}
+            inspdcc={inspdccValue}
+        >            
+        </c-patient-access-physician-decision-list>
+        
+        <!-- <template if:false={isToggleOn}>-->
+            <div class="slds-card__footer slds-grid slds-grid_align-spread slds-var-p-horizontal_small">
+                <lightning-button variant="neutral" label="Cancel" class="slds-float_right" style="padding-left: 600px" onclick={handleCancel}></lightning-button>
+                <lightning-button variant="brand" onclick={handlePhysicianData} label="Update Physician Data" class="slds-m-left_x-small"></lightning-button>
+            </div>
+        <!--</template>-->
+    </template>
+</template>

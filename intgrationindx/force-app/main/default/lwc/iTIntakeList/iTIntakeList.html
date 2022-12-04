@@ -1,0 +1,24 @@
+<template>
+    <div class=s>
+        <div class="slds-card">
+            <div class="slds-grid slds-wrap">
+                <br/>
+                <div class="slds-col slds-size_1-of-3">
+                    <c-i-t-intake-search onsearch={handleEvent}></c-i-t-intake-search>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div>
+            <template if:true={intakeRecords} >
+                <div class="slds-grid slds-wrap">
+                    <template for:each={intakeRecords} for:item="item">
+                            <div class="slds-col slds-size_1-of-3 " key={item.Id}>
+                                <c-i-t-intake-tile intake-records={item}></c-i-t-intake-tile>
+                            </div> 
+                    </template>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

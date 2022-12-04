@@ -1,0 +1,38 @@
+<template>
+	<!-- Parent Component is PatientAccessCaseInsuranceMartix -->
+	<template if:true={isLoading}>
+		<lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner>
+	</template>
+	<div class=s>
+		<div class="slds-card">
+			<div class="slds-grid slds-wrap">
+				<br/>
+				<div class="slds-col slds-size_1-of-1">
+					<c-patient-access-physician-decision-search locationvalue={locationvalue}
+						departmentvalue={departmentvalue} servicelinevalue={servicelinevalue}
+						specialtyvalue={specialtyvalue} physicianvalue={physicianvalue} physicianid={physicianId}
+						str-record-id={strRecordId} inspdcc={inspdcc} onsearch={handleEvent}
+                        diagnosis-not-listed={diagnosisNotListed}> <!--CHANGES BY SANJAY 05/23/2022 -->
+					</c-patient-access-physician-decision-search>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<div>
+			<template if:true={recPhysicianMatrix}>
+				<div class="slds-m-around_large">
+					<div class="slds-grid slds-wrap">
+						<template for:each={recPhysicianMatrix} for:item="item">
+							<div class="slds-col slds-size_1-of-2 " key={item.record.Id}>
+
+								<c-patient-access-physician-decision-tile distance-map-data={item.Distance}
+									rec-physician-matrix={item.record} onupdate={handleEvent}>
+								</c-patient-access-physician-decision-tile>
+							</div>
+						</template>
+					</div>
+				</div>
+			</template>
+		</div>
+	</div>
+</template>

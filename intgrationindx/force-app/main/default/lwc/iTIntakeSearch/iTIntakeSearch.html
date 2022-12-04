@@ -1,0 +1,9 @@
+<template>
+    <div class="slds-m-around_small">
+        <lightning-input value={searchValue} label = "IT Intake Search:" name="searchBar"
+            placeholder="Type here to search IT Intake records" 
+            onchange={handleChange}>
+        </lightning-input>
+        <lightning-input type="checkbox" label="My Records" name= "checkboxVal" checked=true value={checkboxValue} onchange={handleChange}></lightning-input>
+    </div>
+</template>

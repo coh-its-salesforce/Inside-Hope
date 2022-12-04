@@ -1,0 +1,597 @@
+<template>
+      <!--Larry : For Fun-->
+      <div>
+        <mediaelementwrapper id="video-4-1">
+            <video id="video-4-1_html5" loop="1" preload="metadata" src="https://hermosabeachtri.com/wp-content/uploads/2018/11/Hermosa-Beach-Tri.mp4?+=1"></video>
+        </mediaelementwrapper>
+    </div>
+  <div if:true={isLoading}>
+    class="slds-is-relative">
+    <lightning-spinner alternative-text="Loading...."></lightning-spinner>
+  </div>
+  <template if:true={AccountMRN}>
+    <lightning-card>
+      <h3 slot="title">
+        <div class="slds-m-around_small">
+          <lightning-icon
+            icon-name="standard:job_family"
+            size="medium"
+          ></lightning-icon>
+          &nbsp; | Guarantor
+        </div>
+      </h3>
+      <lightning-record-view-form
+        record-id={epicAccountDataId}
+        object-api-name="Epic_Account_Data__c"
+      >
+        <div class="slds-box slds-theme_default">
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Guarantor1_Patient_Relationship_to__c"
+                >Patient Relationship to Guarantor</label
+              >
+              <lightning-output-field
+                field-name="Guarantor1_Patient_Relationship_to__c"
+                variant="label-hidden"
+                id="Guarantor1_Patient_Relationship_to__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Guarantor1_Street__c">Street</label>
+              <lightning-output-field
+                field-name="Guarantor1_Street__c"
+                variant="label-hidden"
+                id="Guarantor1_Street__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Guarantor1_Type__c">Guarantor Type</label>
+              <lightning-output-field
+                field-name="Guarantor1_Type__c"
+                variant="label-hidden"
+                id="Guarantor1_Type__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Guarantor1_City__c">City</label>
+              <lightning-output-field
+                field-name="Guarantor1_City__c"
+                variant="label-hidden"
+                id="Guarantor1_City__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Guarantor1_FirstName__c">First Name</label>
+              <lightning-output-field
+                field-name="Guarantor1_FirstName__c"
+                variant="label-hidden"
+                id="Guarantor1_FirstName__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Guarantor1_State__c">State</label>
+              <lightning-output-field
+                field-name="Guarantor1_State__c"
+                variant="label-hidden"
+                id="Guarantor1_State__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Guarantor1_MiddleName__c">Middle Name</label>
+              <lightning-output-field
+                field-name="Guarantor1_MiddleName__c"
+                variant="label-hidden"
+                id="Guarantor1_MiddleName__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Guarantor1_PostalCode__c">Postal Code</label>
+              <lightning-output-field
+                field-name="Guarantor1_PostalCode__c"
+                variant="label-hidden"
+                id="Guarantor1_PostalCode__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Guarantor1_LastName__c">Last Name</label>
+              <lightning-output-field
+                field-name="Guarantor1_LastName__c"
+                variant="label-hidden"
+                id="Guarantor1_LastName__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Guarantor1_Country__c">Country</label>
+              <lightning-output-field
+                field-name="Guarantor1_Country__c"
+                variant="label-hidden"
+                id="Guarantor1_Country__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Guarantor1_Birth_Date__c">Date of Birth</label>
+              <lightning-output-field
+                field-name="Guarantor1_Birth_Date__c"
+                variant="label-hidden"
+                id="Guarantor1_Birth_Date__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Guarantor1_Home_Phone__c">Home Phone</label>
+              <lightning-output-field
+                field-name="Guarantor1_Home_Phone__c"
+                variant="label-hidden"
+                id="Guarantor1_Home_Phone__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Guarantor1_SSN__c">Social Security Number</label>
+              <lightning-output-field
+                field-name="Guarantor1_SSN__c"
+                variant="label-hidden"
+                id="Guarantor1_SSN__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Guarantor1_Mobile_Phone__c">Mobile Phone</label>
+              <lightning-output-field
+                field-name="Guarantor1_Mobile_Phone__c"
+                variant="label-hidden"
+                id="Guarantor1_Mobile_Phone__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-size_1-of-2">
+              <label for="Guarantor1_Gender__c">Gender</label>
+              <lightning-output-field
+                field-name="Guarantor1_Gender__c"
+                variant="label-hidden"
+                id="Guarantor1_Gender__c"
+              >
+              </lightning-output-field>
+            </div>
+            <div class="slds-size_1-of-2">
+              <label for="Guarantor1_Work_Phone__c">Work Phone</label>
+              <lightning-output-field
+                field-name="Guarantor1_Work_Phone__c"
+                variant="label-hidden"
+                id="Guarantor1_Work_Phone__c"
+              >
+              </lightning-output-field>
+            </div>
+          </div>
+          <br />
+        </div>
+      </lightning-record-view-form>
+    </lightning-card>
+    <!--        <lightning-card>
+            <h3 slot = "title">
+                <div class="slds-m-around_small">
+                    <lightning-icon icon-name="standard:job_family" size="medium"></lightning-icon>
+                    &nbsp; | Guarantor 2
+                </div>
+            </h3>
+            <lightning-record-view-form record-id={epicAccountDataId} object-api-name="Epic_Account_Data__c">
+                <div class="slds-box slds-theme_default">
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-size_1-of-2">
+                            <label for="Guarantor2_Patient_Relationship_to__c">Patient Relationship to Guarantor</label>
+                            <lightning-output-field field-name="Guarantor2_Patient_Relationship_to__c" variant="label-hidden" id="Guarantor2_Patient_Relationship_to__c"> </lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2">
+                            <label for="Guarantor2_Street__c">Street</label>
+                            <lightning-output-field field-name="Guarantor2_Street__c" variant="label-hidden" id="Guarantor2_Street__c"> </lightning-output-field>
+                        </div>
+                    </div><br/>
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-size_1-of-2">
+                            <label for="Guarantor2_Type">Guarantor Type</label>
+                            <lightning-output-field field-name="Guarantor2_Type__c" variant="label-hidden" id="Guarantor2_Type__c"> </lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2">
+                            <label for="Guarantor2_City__c">City</label>
+                            <lightning-output-field field-name="Guarantor2_City__c" variant="label-hidden" id="Guarantor2_City__c"> </lightning-output-field>
+                        </div>
+                    </div><br/>
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-size_1-of-2">
+                            <label for="Guarantor2_FirstName__c">First Name</label>
+                            <lightning-output-field field-name="Guarantor2_FirstName__c" variant="label-hidden" id="Guarantor2_FirstName__c"> </lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2">
+                            <label for="Guarantor2_State__c">State</label>
+                            <lightning-output-field field-name="Guarantor2_State__c" variant="label-hidden" id="Guarantor2_State__c"> </lightning-output-field>
+                        </div> 
+                    </div><br/>
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-size_1-of-2">
+                            <label for="Guarantor2_MiddleName__c">Middle Name</label>
+                            <lightning-output-field field-name="Guarantor2_MiddleName__c" variant="label-hidden" id="Guarantor2_MiddleName__c"> </lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2">
+                            <label for="Guarantor2_PostalCode__c">Postal Code</label>
+                            <lightning-output-field field-name="Guarantor2_PostalCode__c" variant="label-hidden" id="Guarantor2_PostalCode__c"> </lightning-output-field>
+                        </div>
+                    </div><br/>    
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-size_1-of-2">
+                            <label for="Guarantor2_LastName__c">Last Name</label>
+                            <lightning-output-field field-name="Guarantor2_LastName__c" variant="label-hidden" id="Guarantor2_LastName__c"> </lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2">
+                            <label for="Guarantor2_Country__c">Country</label>
+                            <lightning-output-field field-name="Guarantor2_Country__c" variant="label-hidden" id="Guarantor2_Country__c"> </lightning-output-field>
+                        </div>
+                    </div><br/>
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-size_1-of-2">
+                            <label for="Guarantor2_Birth_Date__c">Date of Birth</label>
+                            <lightning-output-field field-name="Guarantor2_Birth_Date__c" variant="label-hidden" id="Guarantor2_Birth_Date__c"> </lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2">
+                            <label for="Guarantor2_Home_Phone__c">Home Phone</label>
+                            <lightning-output-field field-name="Guarantor2_Home_Phone__c" variant="label-hidden" id="Guarantor2_Home_Phone__c"> </lightning-output-field>
+                        </div>
+                    </div><br/>
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-size_1-of-2">
+                            <label for="Guarantor2_SSN__c">Social Security Number</label>
+                            <lightning-output-field field-name="Guarantor2_SSN__c" variant="label-hidden" id="Guarantor2_SSN__c"> </lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2">
+                            <label for="Guarantor2_Mobile_Phone__c">Mobile Phone</label>
+                            <lightning-output-field field-name="Guarantor2_Mobile_Phone__c" variant="label-hidden" id="Guarantor2_Mobile_Phone__c"> </lightning-output-field>
+                        </div>       
+                    </div><br/>
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-size_1-of-2">
+                            <label for="Guarantor2_Gender__c">Gender</label>
+                            <lightning-output-field field-name="Guarantor2_Gender__c" variant="label-hidden" id="Guarantor2_Gender__c"> </lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2">
+                            <label for="Guarantor2_Work_Phone__c">Work Phone</label>
+                            <lightning-output-field field-name="Guarantor2_Work_Phone__c" variant="label-hidden" id="Guarantor2_Work_Phone__c"> </lightning-output-field>
+                        </div>           
+                    </div><br/>    
+                </div>                 
+            </lightning-record-view-form>   
+        </lightning-card> -->
+  </template>
+  <template if:false={AccountMRN}>
+    <lightning-card>
+      <c-confirmation-dialog
+        title="Confirmation Title"
+        message="Do you want to proceed?"
+        confirm-label="Yes"
+        cancel-label="No"
+        visible={isDialogVisible}
+        original-message={originalMessage}
+        name="confirmModal"
+        onclick={handleClick}
+      >
+      </c-confirmation-dialog>
+      <h3 slot="title">
+        <div class="slds-m-around_small">
+          <lightning-icon
+            icon-name="standard:job_family"
+            size="medium"
+          ></lightning-icon>
+          &nbsp; | Guarantor
+        </div>
+      </h3>
+      <lightning-record-edit-form
+        record-id={epicAccountDataId}
+        object-api-name="Epic_Account_Data__c"
+        onsuccess={handleSuccessGuarantor1}
+        onsubmit={handleSubmit}
+      >
+        <div class="slds-box slds-theme_default">
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="EditGuarantor1_Patient_Relationship_to__c"
+                >Patient Relationship to Guarantor</label
+              >
+              <lightning-input-field
+                field-name="Guarantor1_Patient_Relationship_to__c"
+                variant="label-hidden"
+                id="EditGuarantor1_Patient_Relationship_to__c"
+                onchange={handleonchangeGuarantor1}
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="EditGuarantor1_Street__c">Street</label>
+              <lightning-input-field
+                field-name="Guarantor1_Street__c"
+                variant="label-hidden"
+                id="EditGuarantor1_Street__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="EditGuarantor1_Type">Guarantor Type</label>
+              <lightning-input-field
+                field-name="Guarantor1_Type__c"
+                variant="label-hidden"
+                id="EditGuarantor1_Type__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="EditGuarantor1_City__c">City</label>
+              <lightning-input-field
+                field-name="Guarantor1_City__c"
+                variant="label-hidden"
+                id="EditGuarantor1_City__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="EditGuarantor1_FirstName__c">First Name</label>
+              <lightning-input-field
+                field-name="Guarantor1_FirstName__c"
+                variant="label-hidden"
+                id="EditGuarantor1_FirstName__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="EditGuarantor1_State__c">State</label>
+              <lightning-input-field
+                field-name="Guarantor1_State__c"
+                variant="label-hidden"
+                id="EditGuarantor1_State__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="EditGuarantor1_MiddleName__c">Middle Name</label>
+              <lightning-input-field
+                field-name="Guarantor1_MiddleName__c"
+                variant="label-hidden"
+                id="EditGuarantor1_MiddleName__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="EditGuarantor1_PostalCode__c">Postal Code</label>
+              <lightning-input-field
+                field-name="Guarantor1_PostalCode__c"
+                variant="label-hidden"
+                id="EditGuarantor1_PostalCode__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="EditGuarantor1_LastName__c">Last Name</label>
+              <lightning-input-field
+                field-name="Guarantor1_LastName__c"
+                variant="label-hidden"
+                id="EditGuarantor1_LastName__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="EditGuarantor1_Country__c">Country</label>
+              <lightning-input-field
+                field-name="Guarantor1_Country__c"
+                variant="label-hidden"
+                id="EditGuarantor1_Country__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="EditGuarantor1_Birth_Date__c">Birth Date</label>
+              <lightning-input-field
+                field-name="Guarantor1_Birth_Date__c"
+                variant="label-hidden"
+                id="EditGuarantor1_Birth_Date__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="EditGuarantor1_Home_Phone__c">Home Phone</label>
+              <lightning-input-field
+                field-name="Guarantor1_Home_Phone__c"
+                variant="label-hidden"
+                id="EditGuarantor1_Home_Phone__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="EditGuarantor1_SSN__c">Social Security Number</label>
+              <lightning-input-field
+                field-name="Guarantor1_SSN__c"
+                variant="label-hidden"
+                id="EditGuarantor1_SSN__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="EditGuarantor1_Mobile_Phone__c">Mobile Phone</label>
+              <lightning-input-field
+                field-name="Guarantor1_Mobile_Phone__c"
+                variant="label-hidden"
+                id="EditGuarantor1_Mobile_Phone__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <div class="sizing slds-grid slds-wrap">
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="EditGuarantor1_Gender__c">Gender</label>
+              <lightning-input-field
+                field-name="Guarantor1_Gender__c"
+                variant="label-hidden"
+                id="EditGuarantor1_Gender__c"
+              >
+              </lightning-input-field>
+            </div>
+            <div class="slds-col--padded slds-size_1-of-2">
+              <label for="EditGuarantor1_Work_Phone__c">Work Phone</label>
+              <lightning-input-field
+                field-name="Guarantor1_Work_Phone__c"
+                variant="label-hidden"
+                id="EditGuarantor1_Work_Phone__c"
+              >
+              </lightning-input-field>
+            </div>
+          </div>
+          <br />
+          <lightning-button
+            variant="brand"
+            type="submit"
+            label="Update"
+          ></lightning-button>
+        </div>
+      </lightning-record-edit-form>
+    </lightning-card>
+    <!--        <lightning-card>
+            <h3 slot = "title">
+                <div class="slds-m-around_small">
+                    <lightning-icon icon-name="standard:job_family" size="medium"></lightning-icon>
+                    &nbsp; | Guarantor 2
+                </div>
+            </h3>
+            <lightning-record-edit-form record-id={epicAccountDataId} object-api-name="Epic_Account_Data__c" onsuccess={handleSuccessGuarantor2} onsubmit={handleSubmit}>
+                <div class="slds-box slds-theme_default">
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="EditGuarantor2_Patient_Relationship_to__c">Patient Relationship to Guarantor</label>
+                            <lightning-input-field field-name="Guarantor2_Patient_Relationship_to__c" variant="label-hidden" id="EditGuarantor2_Patient_Relationship_to__c" onchange={handleonchangeGuarantor2}> </lightning-input-field>
+                        </div>
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="EditGuarantor2_Street__c">Street</label>
+                            <lightning-input-field field-name="Guarantor2_Street__c" variant="label-hidden" id="EditGuarantor2_Street__c"> </lightning-input-field>
+                        </div>
+                    </div><br/>
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="EditGuarantor2_Type__c">Guarantor Type</label>
+                            <lightning-input-field field-name="Guarantor2_Type__c" variant="label-hidden" id="EditGuarantor2_Type__c"> </lightning-input-field>
+                        </div>
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="EditGuarantor2_City__c">City</label>
+                            <lightning-input-field field-name="Guarantor2_City__c" variant="label-hidden" id="EditGuarantor2_City__c"> </lightning-input-field>
+                        </div>
+                    </div><br/>
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="EditGuarantor2_FirstName__c">First Name</label>
+                            <lightning-input-field field-name="Guarantor2_FirstName__c" variant="label-hidden" id="EditGuarantor2_FirstName__c"> </lightning-input-field>
+                        </div>
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="EditGuarantor2_State__c">State</label>
+                            <lightning-input-field field-name="Guarantor2_State__c" variant="label-hidden" id="EditGuarantor2_State__c"> </lightning-input-field>
+                        </div> 
+                    </div><br/>
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="EditGuarantor2_MiddleName__c">Middle Name</label>
+                            <lightning-input-field field-name="Guarantor2_MiddleName__c" variant="label-hidden" id="EditGuarantor2_MiddleName__c"> </lightning-input-field>
+                        </div>
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="EditGuarantor2_PostalCode__c">Postal Code</label>
+                            <lightning-input-field field-name="Guarantor2_PostalCode__c" variant="label-hidden" id="EditGuarantor2_PostalCode__c"> </lightning-input-field>
+                        </div>
+                    </div><br/>    
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="EditGuarantor2_LastName__c">Last Name</label>
+                            <lightning-input-field field-name="Guarantor2_LastName__c" variant="label-hidden" id="EditGuarantor2_LastName__c"> </lightning-input-field>
+                        </div>
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="EditGuarantor2_Country__c">Country</label>
+                            <lightning-input-field field-name="Guarantor2_Country__c" variant="label-hidden" id="EditGuarantor2_Country__c"> </lightning-input-field>
+                        </div>
+                    </div><br/>
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="EditGuarantor2_Birth_Date__c">Birth Date</label>
+                            <lightning-input-field field-name="Guarantor2_Birth_Date__c" variant="label-hidden" id="EditGuarantor2_Birth_Date__c"> </lightning-input-field>
+                        </div>
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="EditGuarantor2_Home_Phone__c">Home Phone</label>
+                            <lightning-input-field field-name="Guarantor2_Home_Phone__c" variant="label-hidden" id="EditGuarantor2_Home_Phone__c"> </lightning-input-field>
+                        </div>
+                    </div><br/>
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="EditGuarantor2_SSN__c">Social Security Number</label>
+                            <lightning-input-field field-name="Guarantor2_SSN__c" variant="label-hidden" id="EditGuarantor2_SSN__c"> </lightning-input-field>
+                        </div>
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="EditGuarantor2_Mobile_Phone__c">Mobile Phone</label>
+                            <lightning-input-field field-name="Guarantor2_Mobile_Phone__c" variant="label-hidden" id="EditGuarantor2_Mobile_Phone__c"> </lightning-input-field>
+                        </div>           
+                    </div><br/>
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="EditGuarantor2_Gender__c">Gender</label>
+                            <lightning-input-field field-name="Guarantor2_Gender__c" variant="label-hidden" id="EditGuarantor2_Gender__c"> </lightning-input-field>
+                        </div>
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="EditGuarantor2_Work_Phone__c">Work Phone</label>
+                            <lightning-input-field field-name="Guarantor2_Work_Phone__c" variant="label-hidden" id="EditGuarantor2_Work_Phone__c"> </lightning-input-field>
+                        </div>           
+                    </div><br/>
+                    <lightning-button variant="brand" type="submit" label="Update"></lightning-button>   
+                </div>                 
+            </lightning-record-edit-form> 
+        </lightning-card> 
+    -->
+  </template>
+</template>
