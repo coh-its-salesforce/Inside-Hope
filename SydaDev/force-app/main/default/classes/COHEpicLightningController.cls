@@ -1469,6 +1469,18 @@ public static boolean verifyAccountCreateEpicMRNButton(Id accountId){
 }
 /*END: Changes by Sanjay 02/15/2022*/ 
     
+    @AuraEnabled
+    public Static String validateFormsFromAccount(Id accountRecord,String saveAll){
+        List<Case> caseRecordList =  new List<Case>();
+        caseRecordList = [Select id from Case where accountId =:accountRecord order by createdDate desc];
+        if(!caseRecordList.isEmpty()){
+            return ValidateForms(caseRecordList[0].Id,saveAll);
+        }else{
+            return null;
+        }
+        
+    }
+    
      @AuraEnabled
     public static String ValidateForms(Id caseRecord,String saveAll){
        Map<String,Object> validations = new Map<String,Object>();

@@ -29,6 +29,7 @@ public with sharing class epicAccountDataController {
             return result;
         }
         catch(Exception ex){
+            system.debug(ex.getMessage()+ex.getStackTraceString()+Ex.getLineNumber());
             throw new AuraHandledException(ex.getMessage());
         }
         
@@ -61,7 +62,9 @@ public with sharing class epicAccountDataController {
         If(record == AccountObject){
             selectedObj='Account__c';
         }else{
-            selectedObj='AccountId';
+            //String Accountid = 
+            selectedObj='Account__c';
+            ObjRecId = [Select id,AccountId from Case where id =:ObjRecId LIMIT 1].AccountId;
         }
         
         

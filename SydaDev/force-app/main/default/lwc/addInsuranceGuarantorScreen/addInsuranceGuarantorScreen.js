@@ -11,6 +11,7 @@ import updateEpicRecord from '@salesforce/apex/epicAccountDataController.updateE
 import getEpicRecordDetails from '@salesforce/apex/epicAccountDataController.getEpicRecordDetails';
 import verifyCreateEpicMRNButton from '@salesforce/apex/COHEpicLightningController.verifyAccountCreateEpicMRNButton';
 import createNewEpicRecord from '@salesforce/apex/COHEpicLightningController.createNewEpicRecordViaAccount';
+import validateFormsFromAccount from '@salesforce/apex/COHEpicLightningController.validateFormsFromAccount';
 
 
 
@@ -533,13 +534,17 @@ insuranceData = [];
     }
 
     handleEpicMrn(event){
-        /*validateForms({ caseRecord: this.recordId,
+        validateFormsFromAccount({ caseRecord: this.recordId,
         saveAll : 'saveAll' })
         .then((result) => {
             console.log('result',result)
             // this.mrnDisabled = result
+            if(result == null){
+                this.showErrorMessage = 'Not allowed to create MRN';
+                return;
+            }
             var mapData = JSON.parse(result);
-            console.log('mapData',mapData)
+            console.log('mapData',mapData);
             if(mapData.isError == true){
                 this.throwErrorToast('Forms have errors, please review Patient Checklist');
                 this.showErrorMessage = 'Review and confirm New Patient Checklist to create MRN';
@@ -557,9 +562,9 @@ insuranceData = [];
         })
         .catch((error) => {
             
-        });*/
+        });
 
-        this.createEpicRecord();
+       // this.createEpicRecord();
     }
 
 
