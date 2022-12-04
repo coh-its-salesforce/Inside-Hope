@@ -573,6 +573,7 @@ insuranceData = [];
         createNewEpicRecord({ accountId: this.recordId })
         .then((result) => {
             this.throwSuccessToast('Record saved to Epic');
+            location.reload();
         })
         .catch((error) => {
             console.log('error',error)
