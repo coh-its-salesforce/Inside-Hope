@@ -13,7 +13,7 @@
 					<lightning-button variant="brand-outline" label="Add Insurance" title="Add Insurance"
 						onclick={handleAddInsuranceButton} disabled={isDisabledInsuranceButton} class="slds-m-left_x-small"></lightning-button>
 					
-
+ 
 
 				</lightning-layout-item>
 			</lightning-layout>
@@ -206,7 +206,7 @@
 				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
 						<template if:true={guarantorRelationshipPicklist.data}>
 						<lightning-combobox name="patientRelationshipToGuarantor" placeholder="-None-" label="Patient Relationship to Guarantor"
-							value={patientRelationshipToGuarantor} class="spec-req" required
+							value={patientRelationshipToGuarantor} class="spec-req-guarnator" required
 							onchange={handleChange}
 							options={guarantorRelationshipPicklist.data.values} >
 						</lightning-combobox>
@@ -227,7 +227,7 @@
 					
 					<template if:true={guarantorTypePicklist.data}>
 						<lightning-combobox name="guarantorType" placeholder="-None-" label="Guarantor Type"
-							value={guarantorType} class="spec-req" required
+							value={guarantorType} class="spec-req-guarnator" required
 							onchange={handleChange}
 							options={guarantorTypePicklist.data.values} >
 						</lightning-combobox>
@@ -243,7 +243,7 @@
 			<lightning-layout>
 
 				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
-					<lightning-input name="firstNameGuarantor" label="First Name" value={firstNameGuarantor} onchange={handleChange} class="spec-req" required></lightning-input>
+					<lightning-input name="firstNameGuarantor" label="First Name" value={firstNameGuarantor} onchange={handleChange} class="spec-req-guarnator" required></lightning-input>
 				</lightning-layout-item>
 				<lightning-layout-item flexibility="auto" padding="horizontal-small">
 					  <template if:true={statePicklist.data}>
@@ -269,7 +269,7 @@
 			<lightning-layout>
 
 				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
-					<lightning-input name="lastNameGuarantor" label="Last Name" class="spec-req" value={lastNameGuarantor} onchange={handleChange} required>
+					<lightning-input name="lastNameGuarantor" label="Last Name" class="spec-req-guarnator" value={lastNameGuarantor} onchange={handleChange} required>
 					</lightning-input>
 				</lightning-layout-item>
 				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
@@ -352,7 +352,10 @@
 
 				<lightning-layout-item flexibility="auto" padding="horizontal-small" class="slds-text-align_right">
 					
-			<p style="padding-top:10px"><lightning-button variant="brand" label="Create Epic MRN" title="Create Epic MRN" onclick={handleEpicMrn} disabled={mrnDisabled} class="slds-m-left_x-small"></lightning-button>
+			<p style="padding-top:10px">
+				<lightning-button variant="brand" label="Previous" title="Previous" onclick={previousGuarantor}  class="slds-m-left_x-small"></lightning-button>
+			
+				<lightning-button variant="brand" label="Create Epic MRN" title="Create Epic MRN" onclick={handleEpicMrn} disabled={mrnDisabled} class="slds-m-left_x-small"></lightning-button>
 			</p>
 				</lightning-layout-item></lightning-layout>
 		</lightning-tab>

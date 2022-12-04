@@ -162,8 +162,7 @@ insuranceData = [];
 
  connectedCallback(){
 
- // this.handleOnLoad(); // commented because it is throwing list out of bound error when account does not have epic record
-    getEpicRecordDetails({ ObjRecId: this.recordId })
+        getEpicRecordDetails({ ObjRecId: this.recordId })
         .then(result => {
             console.log('result',result)
             //if(!this.isEmptyObject(result)){
@@ -171,20 +170,19 @@ insuranceData = [];
                 if(this.epicAccountRecord){
                     this.epicRecordId=this.epicAccountRecord.Id;
                         var insuranceList = [];
-                    this.getFirstInsurance();
-                    if(this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c!==''){
-                        this.primaryInsuranceAdded=true;
-                        let primary = new Object();
-                        primary['Sequence'] = 'Primary';
-                        primary['RelationShip'] = this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c;
-                        primary['Name'] = this.epicAccountRecord.Insurance_Subscriber_First_Name_1__c +' '
-                                              this.epicAccountRecord.Insurance_Subscriber_Middle_Name_1__c +  ' '
-                                              this.epicAccountRecord.Insurance_Subscriber_Last_Name_1__c ;
-                        primary['Group'] = this.epicAccountRecord.Group_Number_1_c__c;
-                        primary['Subscriber'] = this.epicAccountRecord.Subscriber_ID_1__c;
-
-                                insuranceList.push(primary);
-                    }
+                        this.getFirstInsurance();
+                        if(this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c!==''){
+                            this.primaryInsuranceAdded=true;
+                            let primary = new Object();
+                            primary['Sequence'] = 'Primary';
+                            primary['RelationShip'] = this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c;
+                            primary['Name'] = this.epicAccountRecord.Insurance_Subscriber_First_Name_1__c +' '
+                                            this.epicAccountRecord.Insurance_Subscriber_Middle_Name_1__c +  ' '
+                                            this.epicAccountRecord.Insurance_Subscriber_Last_Name_1__c ;
+                            primary['Group'] = this.epicAccountRecord.Group_Number_1_c__c;
+                            primary['Subscriber'] = this.epicAccountRecord.Subscriber_ID_1__c;
+                            insuranceList.push(primary);
+                        }
                     if(result.hasOwnProperty('Patient_Relationship_to_Subscriber_2__c')){
                         this.disableNextButton=false;
                         this.secondaryInsuranceAdded=true;
@@ -216,6 +214,28 @@ insuranceData = [];
                     console.log('insuranceList',insuranceList)
 
                     this.insuranceData = insuranceList;
+
+                    this.disableUpdateButton = false;
+                    this.patientRelationshipToGuarantor = result.Guarantor1_Patient_Relationship_to__c;
+                    this.streetGuarantor = result.Guarantor1_Street__c;
+                    this.guarantorType = result.Guarantor1_Type__c;
+                    this.firstNameGuarantor = result.Guarantor1_FirstName__c;
+                    this.cityGuarantor = result.Guarantor1_City__c;
+                    this.stateGuarantor = result.Guarantor1_State__c;
+                    this.zipCodeGuarantor = result.Guarantor1_PostalCode__c;
+
+                    this.zipCodeGuarantor = result.Guarantor1_PostalCode__c;
+                    this.lastNameGuarantor = result.Guarantor1_LastName__c;
+                    this.countryGuarantor = result.Guarantor1_Country__c;
+                    this.SSNGuarantor = result.Guarantor1_SSN__c;
+                    this.homePhoneGuarantor = result.Guarantor1_Home_Phone__c;
+                    this.workPhoneGuarantor = result.Guarantor1_Work_Phone__c;
+
+                    this.mobilePhoneGuarantor = result.Guarantor1_Mobile_Phone__c;
+                    this.birthDateGuarantor = result.Guarantor1_Birth_Date__c;
+                    this.genderGuarantor = result.Guarantor1_Gender__c;
+                    this.middleNameGuarantor = result.Guarantor1_MiddleName__c;
+
                         
                 }
                // }
@@ -227,7 +247,66 @@ insuranceData = [];
         });
     }  
     isEmptyObject(obj){
-    return JSON.stringify(obj) === '{}';
+        return JSON.stringify(obj) === '{}';
+    }
+
+    fetchInsuranceTab(){
+        getEpicRecordDetails({ ObjRecId: this.recordId })
+        .then(result => {
+            console.log('result',result)
+            //if(!this.isEmptyObject(result)){
+                if(result){
+                    this.epicRecordId=result.Id;
+                    var insuranceList = [];
+                    if(result.Patient_Relationship_to_Subscriber_1__c!==''){
+                        
+                        let primary = new Object();
+                        primary['Sequence'] = 'Primary';
+                        primary['RelationShip'] = result.Patient_Relationship_to_Subscriber_1__c;
+                        primary['Name'] = result.Insurance_Subscriber_First_Name_1__c +' '
+                                        result.Insurance_Subscriber_Middle_Name_1__c +  ' '
+                                        result.Insurance_Subscriber_Last_Name_1__c ;
+                        primary['Group'] = result.Group_Number_1_c__c;
+                        primary['Subscriber'] = result.Subscriber_ID_1__c;
+                        insuranceList.push(primary);
+                    }
+                    if(result.hasOwnProperty('Patient_Relationship_to_Subscriber_2__c')){
+     
+                        let secondary = new Object();
+                        secondary['Sequence'] = 'Secondary';
+                        secondary['RelationShip'] = result.Patient_Relationship_to_Subscriber_2__c;
+                        secondary['Name'] = result.Insurance_Subscriber_First_Name_2__c +' '
+                                              result.Insurance_Subscriber_Middle_Name_2__c + ' ' 
+                                              result.Insurance_Subscriber_Last_Name_2__c ;
+                                              insuranceList.push(secondary);
+                        secondary['Group'] = result.Group_Number_2_c__c;
+                        secondary['Subscriber'] = result.Subscriber_ID_2__c;
+                    }
+                    if(result.hasOwnProperty('Patient_Relationship_to_Subscriber_3__c')){
+                       
+                        let tertiary = new Object();
+                        tertiary['Sequence'] = 'Tertiary';
+                        tertiary['RelationShip'] = result.Patient_Relationship_to_Subscriber_3__c;
+                        tertiary['Name'] = result.Insurance_Subscriber_First_Name_3__c +' '
+                                              result.Insurance_Subscriber_Middle_Name_3__c +  ' '
+                                              result.Insurance_Subscriber_Last_Name_3__c ;
+                                              insuranceList.push(tertiary);
+                        tertiary['Group'] = result.Group_Number_3_c__c;
+                        tertiary['Subscriber'] = result.Subscriber_ID_3__c;
+                    }
+
+                    console.log('insuranceList',insuranceList)
+
+                    this.insuranceData = insuranceList;
+                        
+                }
+               // }
+                console.log('resultgetdata : ' , JSON.stringify(result));
+
+        })
+        .catch((error) =>{
+             //alert("error1: " + JSON.stringify(error))
+        });
     }
 
     // Data setup
@@ -331,7 +410,7 @@ insuranceData = [];
                 this.setThirdInsurance(true);
                 this.tertiaryInsuranceAdded=true;
                 this.disablePrevButton=false;
-                    this.disableNextButton=true;
+                this.disableNextButton=true;
 
             }
             if (this.insuranceNumber == 'Secondary') {
@@ -431,7 +510,8 @@ insuranceData = [];
             
                // this.epicRecordId=this.data;
                 this.throwSuccessToast('Epic record updated Successfully');
-                console.log('result : ' + JSON.stringify(this.data));
+                console.log('result update: ' + JSON.stringify(this.data));
+                console.log('this.disableUpdateButton',this.disableUpdateButton)
 
             })
             .catch((error) => {
@@ -496,49 +576,56 @@ insuranceData = [];
         });
     }
     
-
+isInputValidGuarantor(){
+    let isValid = true;
+        let inputFields = this.template.querySelectorAll('.spec-req-guarnator');
+        inputFields.forEach(inputField => {
+            if(!inputField.checkValidity()) {
+                inputField.reportValidity();
+                isValid = false;
+            }
+        });
+        return isValid;
+}
 
 handleGuarantorUpdate(event){
 
  
-         if(this.isInputValid()){  
+        if(this.isInputValidGuarantor()){  
         
-            if (this.disableUpdateButton ===false) {
-           this.epicAccountRecord.Guarantor1_Patient_Relationship_to__c = this.patientRelationshipToGuarantor;
-            this.epicAccountRecord.Guarantor1_Street__c = this.streetGuarantor;
-            this.epicAccountRecord.Guarantor1_Type__c = this.guarantorType;
-            if (this.firstNameGuarantor !== '') {
-                this.epicAccountRecord.Guarantor1_FirstName__c = this.firstNameGuarantor;
-            }
-            this.epicAccountRecord.Guarantor1_City__c = this.cityGuarantor;
-            this.epicAccountRecord.Guarantor1_State__c = this.stateGuarantor;
-            this.epicAccountRecord.Guarantor1_PostalCode__c = this.zipCodeGuarantor;
-            this.epicAccountRecord.Guarantor1_LastName__c = this.lastNameGuarantor;
-            this.epicAccountRecord.Guarantor1_Country__c = this.countryGuarantor;
-            this.epicAccountRecord.Guarantor1_SSN__c = this.SSNGuarantor;
-            this.epicAccountRecord.Guarantor1_Home_Phone__c = this.homePhoneGuarantor;
-            this.epicAccountRecord.Guarantor1_Work_Phone__c = this.workPhoneGuarantor;
-            this.epicAccountRecord.Guarantor1_Mobile_Phone__c = this.mobilePhoneGuarantor;
-            this.epicAccountRecord.Guarantor1_Birth_Date__c = this.birthDateGuarantor;
-           this.epicAccountRecord.Guarantor1_Gender__c = this.genderGuarantor;
-         this.epicAccountRecord.Guarantor1_MiddleName__c = this.middleNameGuarantor;
-        
-        updateEpicRecord({ epicRecord: this.epicAccountRecord,epicRecordId: this.epicRecordId })
-            //.then(() => alert("record created"))
-            .then(result => {
-                this.data = result;
-                //this.resetPatientForm();
-                //this.disableUpdateButton=false;
-                this.throwSuccessToast('Epic record updated Successfully');
-                console.log('result : ' + JSON.stringify(this.data));
-
-            })
-            .catch((error) => {
-
-                //alert("error: " + JSON.stringify(error))
+            if(this.disableUpdateButton ===false) {
+                this.epicAccountRecord.Guarantor1_Patient_Relationship_to__c = this.patientRelationshipToGuarantor;
+                this.epicAccountRecord.Guarantor1_Street__c = this.streetGuarantor;
+                this.epicAccountRecord.Guarantor1_Type__c = this.guarantorType;
+                if (this.firstNameGuarantor !== '') {
+                    this.epicAccountRecord.Guarantor1_FirstName__c = this.firstNameGuarantor;
+                }
+                this.epicAccountRecord.Guarantor1_City__c = this.cityGuarantor;
+                this.epicAccountRecord.Guarantor1_State__c = this.stateGuarantor;
+                this.epicAccountRecord.Guarantor1_PostalCode__c = this.zipCodeGuarantor;
+                this.epicAccountRecord.Guarantor1_LastName__c = this.lastNameGuarantor;
+                this.epicAccountRecord.Guarantor1_Country__c = this.countryGuarantor;
+                this.epicAccountRecord.Guarantor1_SSN__c = this.SSNGuarantor;
+                this.epicAccountRecord.Guarantor1_Home_Phone__c = this.homePhoneGuarantor;
+                this.epicAccountRecord.Guarantor1_Work_Phone__c = this.workPhoneGuarantor;
+                this.epicAccountRecord.Guarantor1_Mobile_Phone__c = this.mobilePhoneGuarantor;
+                this.epicAccountRecord.Guarantor1_Birth_Date__c = this.birthDateGuarantor;
+                this.epicAccountRecord.Guarantor1_Gender__c = this.genderGuarantor;
+                this.epicAccountRecord.Guarantor1_MiddleName__c = this.middleNameGuarantor;
             
-            });
-                 }
+                updateEpicRecord({ epicRecord: this.epicAccountRecord,epicRecordId: this.epicRecordId })
+                .then(result => {
+                    this.data = result;
+                    this.throwSuccessToast('Epic record updated Successfully');
+                    console.log('result : ' + JSON.stringify(this.data));
+
+                })
+                .catch((error) => {
+
+                    //alert("error: " + JSON.stringify(error))
+                
+                });
+            }
          }else{
             this.throwErrorToast('Error! Please fill all the required fields');
         } 
@@ -825,7 +912,9 @@ handleGuarantorUpdate(event){
     }
 
  
-
+previousGuarantor(){
+    this.activeTab = 'Guarantor';
+}
 
 
     handleGuarantorPreviousButton(event){
@@ -861,6 +950,7 @@ handleGuarantorUpdate(event){
     }
     handleGuarantorNextButton(event) {
         this.activeTab = 'InsuranceList';
+        this.fetchInsuranceTab();
 
     }
     handleCopyPatienteButton() {
@@ -918,6 +1008,10 @@ handleGuarantorUpdate(event){
 
     handleActive(event) {
         this.activeTab = event.target.value;
+        console.log('this.activeTab',this.activeTab )
+        if(this.activeTab == 'InsuranceList'){
+            this.fetchInsuranceTab();
+        }
     }
 
     validateInput() {
