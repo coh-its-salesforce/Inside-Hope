@@ -1,0 +1,45 @@
+<!--
+  -- This is the Visualforce page for the IMS Resource Request object.
+  --
+  -- Raymond Tam
+  -- City of Hope
+  -- Copyright (c) 2015
+  -- 
+  -- No portion of this code may be copied, transferred, or transmitted
+  -- in any form (written, electronic, or otherwise) without the prior
+  -- written consent from the City of Hope.
+  --
+ -->
+<apex:page StandardController="IMS_Resource_Request__c" extensions="IMSResourceRequestController" id="resourceRequestForm" sidebar="false" showHeader="true" title="Resource RequestForm">
+    <apex:stylesheet value="{!$Resource.IMS_Stylesheet}"/> 
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"/>
+    <script type="text/javascript">
+        var j$=jQuery.noConflict();
+    
+    	function closeWindow() {
+            var newWindow = window.top;
+            newWindow.close();
+        }
+    </script>                    
+
+    <apex:form >
+        <apex:pageBlock title="{!windowName}" id="editResourceRequest">
+            <apex:pageBlockButtons >
+                <apex:commandButton id="saveRecord" title="Save record" value="Save" action="{!saveRecord}" onclick="closeWindow()" reRender="editResourceRequest"/>
+                <apex:commandButton id="saveAndNewRecord" title="Save current record and start a new Record" value="Save & New" action="{!saveAndNewRecord}"  reRender="editResourceRequest"/>
+                <apex:commandButton id="cancelRecord" title="Cancel" value="Cancel" onclick="closeWindow()"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="Details" columns="2" collapsible="true">
+                <apex:inputField id="category" value="{!resourceRequestObj.Category__c}"/>
+                <apex:inputField id="quantity" value="{!resourceRequestObj.Quantity__c}"/>
+                <apex:inputField id="duration" value="{!resourceRequestObj.Duration__c}"/>
+                <apex:inputField id="description" value="{!resourceRequestObj.Description__c}"/>
+                <apex:inputField id="notes" value="{!resourceRequestObj.Command_Staff_Notes__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Command Center Staff Use Only" columns="2" collapsible="true">
+                <apex:inputField id="status" value="{!resourceRequestObj.Status__c}"/>
+                <apex:inputField id="clarification" value="{!resourceRequestObj.Clarification_Request__c}"/>
+            </apex:pageBlockSection>
+            
+        </apex:pageBlock>
+    </apex:form></apex:page>

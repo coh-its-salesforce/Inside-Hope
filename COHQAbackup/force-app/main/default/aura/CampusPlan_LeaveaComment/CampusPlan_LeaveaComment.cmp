@@ -1,0 +1,22 @@
+<aura:component controller="COH_CampusPlanController">
+    <!--<aura:handler name="init" value="{!this}" action="{!c.approvedComments}"/>-->
+    <aura:handler name="init" value="this" action="{!c.UserEmail}"/>
+    <aura:attribute name="userInfo" type="user"/>
+    <aura:attribute name="Subject" type="string"/>
+    <aura:attribute name="Email" type="string"/>
+    <aura:attribute name="comment" type="string"/>
+    <aura:attribute name="ApprovedComments" type="Campus_Plan_Comment__c[]"/>
+    <aura:attribute name = "article" type = "Campus_Plan_Article__c" />
+    <div>
+        <div class="submit-comment-area">
+            <h3>Submit a Question</h3>
+            <p>
+                You will receive a response within two business days. Also, please check back often for updates to FAQs and new information added to this site.
+            </p>
+            <lightning:input type="text" value="{!v.Subject}" placeholder="Subject" class="cinput"/><br/>
+            <lightning:input type="email" value="{!v.userInfo.Email}" placeholder="Email" class="cinput"/><br/>
+            <lightning:inputRichText value="{!v.comment}" placeholder="Comment" class="cinput"/><br/>
+            <ui:button aura:id="button" buttonTitle="Submit" class="slds-button slds-button_brand" label="Submit" press="{!c.leaveAComment}"/>
+       </div>
+    </div>
+</aura:component>

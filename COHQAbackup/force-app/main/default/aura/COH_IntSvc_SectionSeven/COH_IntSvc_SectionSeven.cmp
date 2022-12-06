@@ -1,0 +1,131 @@
+<aura:component controller="COH_IntSvc_ComponentController" implements="flexipage:availableForAllPageTypes,force:hasRecordId">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <c:COH_UTIL_CheckboxGroupHelper aura:id="COH_Util_CheckboxGroupHelper"/>
+    <aura:attribute name="mLoading" type="boolean" default="true"/>
+    <aura:attribute name="mVisaRecord" type="Visa__c"/>
+    <aura:attribute name="mPicklists" type="Map"/>
+    <aura:attribute name="mFieldsUsed" type="String" default="Acknowledge_Cultural_Responsibility__c, Attest_Visitor_meets_Proficiency__c, Cultural_Learning_Opportunities__c, Cultural_Learning_Opportunities_Other__c, Certified_English_Proficiency__c, Recognized_English_Language_Test__c, Date_of_English_Proficiency_Interview__c, English_Proficiency_Interviewer_Name__c, English_Proficiency_Interview_Duration__c, English_Proficiency_Interview_Conducted__c"/>
+    <aura:attribute name="mCheckboxGroupValues" type="Map" default="{	'Cultural_Learning_Opportunities__c':''}"/>
+    <aura:attribute name="mShowErrorMessage" type="Boolean" default="false"/>
+    
+    <aura:if isTrue="{!v.mLoading}">
+        <div class="slds-form-horizontal slds-theme_default slds-p-vertical_large ">
+            <div>
+                <lightning:spinner variant="brand" size="large"/>
+            </div>
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!v.mLoading == false}">
+        <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_small">
+            For J-1 Only - Cultural Exchange Requirement
+        </h3>
+        <div class="slds-form-horizontal slds-theme_default slds-p-vertical_small ">
+            <div class="slds-form-elment slds-p-vertical_xx-small">
+                <lightning:checkboxGroup name="Cultural_Learning_Opportunities__c"
+                                         label="Please provide a list of cultural learning opportunities that the Exchange Visitors will be encouraged to participate at City of Hope (check all that applies):"
+                                         options="{!v.mPicklists.Cultural_Learning_Opportunities__c}"
+                                         value="{!v.mCheckboxGroupValues.Cultural_Learning_Opportunities__c}"
+                                         aura:id="sectionSevenFormCheckboxGroup"/>
+            </div>
+            <div class="slds-form-elment slds-p-vertical_xx-small">
+                <lightning:textArea value="{!v.mVisaRecord.Cultural_Learning_Opportunities_Other__c}"
+                                    label="Other"
+                                    name="Cultural_Learning_Opportunities_Other__c"
+                                    aura:id="sectionSevenFormInput"/>
+            </div>
+            <div class="slds-form-elment slds-p-vertical_xx-small">
+                <lightning:input type="checkbox" 
+                                 label="I acknowledge my responsibility to make cultural learning opportunities available to the Exchange Visitor during his or her stay at City of Hope." 
+                                 name="Acknowledge_Cultural_Responsibility__c" 
+                                 checked="{!v.mVisaRecord.Acknowledge_Cultural_Responsibility__c}"
+                                 aura:id="sectionSevenFormInput"
+                                 required="true"
+                                 onchange="{!c.onRequiredFieldUpdate}"/>
+            </div>
+        </div>
+        
+        <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_small">
+            For J-1 Only - English Proficiency Requirement
+        </h3>
+        <div class="slds-form-horizontal slds-theme_default slds-p-vertical_small">
+            <div class="slds-form-elment slds-p-vertical_xx-small">
+                <lightning:select name="Certified_English_Proficiency__c" 
+                                  label="Please identify how the sponsoring department has certified English proficiency (select one):"
+                                  value="{!v.mVisaRecord.Certified_English_Proficiency__c}"
+                                  aura:id="sectionSevenFormInput">
+                    <option value="">--Select--</option>
+                    <aura:iteration items="{!v.mPicklists.Certified_English_Proficiency__c}" var="currentPicklistOption">
+                        <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mVisaRecord.Certified_English_Proficiency__c}">{!currentPicklistOption.label}</option>
+                    </aura:iteration>
+                </lightning:select>
+            </div>
+            
+            <aura:if isTrue="{!v.mVisaRecord.Certified_English_Proficiency__c == 'A recognized English language test (specify one)'}">
+                <div class="slds-form-elment slds-p-vertical_xx-small">
+                    <lightning:select name="Recognized_English_Language_Test__c" 
+                                      label="Please specify the recognized English language test used:"
+                                      value="{!v.mVisaRecord.Recognized_English_Language_Test__c}"
+                                      aura:id="sectionSevenFormInput">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.Recognized_English_Language_Test__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mVisaRecord.Recognized_English_Language_Test__c}">{!currentPicklistOption.label}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+            </aura:if>            
+            
+            <aura:if isTrue="{!v.mVisaRecord.Certified_English_Proficiency__c == 'Sponsoring department conducted a documented interview and determined that the English proficiency of the Exchange Visitor is adequate to achieve the objectives of the visit and to engage in daily conversations with COH and local community members.'}">
+                <div class="slds-form-elment slds-p-vertical_xx-small">
+                    <lightning:input name="Date_of_English_Proficiency_Interview__c"
+                                     value="{!v.mVisaRecord.Date_of_English_Proficiency_Interview__c}"
+                                     label="Date of interview (mm/dd/yyyy)"
+                                     aura:id="sectionSevenFormInput"
+                                     type="date"/>
+                </div>
+                <div class="slds-form-elment slds-p-vertical_xx-small">
+                    <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                            mSelectedRecord="{!v.mVisaRecord.English_Proficiency_Interviewer_Name__c}" 
+                                            mLabel="Interviewer’s name"
+                                            mPrimaryFieldAPIName="Name"
+                                            mSecondaryFieldAPIName="Title"
+                                            mAdditionalSelectFields="IsActive"
+                                            mAdditionalSearchConditions="AND IsActive = true"/>
+                </div>
+                <div class="slds-form-elment slds-p-vertical_xx-small">
+                    <lightning:input name="English_Proficiency_Interview_Duration__c"
+                                     value="{!v.mVisaRecord.English_Proficiency_Interview_Duration__c}"
+                                     label="Duration of Interview (In Minutes)"
+                                     aura:id="sectionSevenFormInput"/>
+                </div>
+                <div class="slds-form-elment slds-p-vertical_xx-small">
+                    <lightning:select name="English_Proficiency_Interview_Conducted__c" 
+                                      label="How the Interview was conducted"
+                                      value="{!v.mVisaRecord.English_Proficiency_Interview_Conducted__c}"
+                                      aura:id="sectionSevenFormInput">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.English_Proficiency_Interview_Conducted__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mVisaRecord.English_Proficiency_Interview_Conducted__c}">{!currentPicklistOption.label}</option>
+                        </aura:iteration>
+                    </lightning:select>     
+                </div>
+            </aura:if>
+            <div class="slds-form-elment slds-p-vertical_xx-small">
+                <lightning:input type="checkbox" 
+                                 label="I attest that the following Exchange Visitor meets the English language proficiency requirement." 
+                                 name="Attest_Visitor_meets_Proficiency__c" 
+                                 checked="{!v.mVisaRecord.Attest_Visitor_meets_Proficiency__c}"
+                                 aura:id="sectionSevenFormInput"
+                                 required="true"
+                                 onchange="{!c.onRequiredFieldUpdate}"/>   
+            </div>            
+        </div>
+        <div class="slds-text-align_center">
+            <lightning:button label="Save Section 7" onclick="{!c.onSubmitBtnClick}" class="slds-button slds-button_brand" aura:id="submitBtn"/>
+            <aura:if isTrue="{!v.mShowErrorMessage}">
+            	<p class="slds-text-body_regular slds-p-vertical_xx-small slds-text-color_error">Please complete the required fields</p>
+            </aura:if>            
+            <p class="slds-text-heading_small slds-p-top_small">Please click "Save" to submit</p>             
+        </div>
+        
+    </aura:if>
+</aura:component>

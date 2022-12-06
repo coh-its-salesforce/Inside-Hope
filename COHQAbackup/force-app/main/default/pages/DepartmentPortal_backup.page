@@ -1,0 +1,421 @@
+<apex:page Controller="SIRP_DepartmentPortal" sidebar="false" showHeader="false" standardStylesheets="false" cache="false" action="{!RedirectToErrorPage}">
+   
+    <head>        
+        <c:Head title="Department – {!IF(AND(NOT(ISNULL(lstDepartment)),lstDepartment.size > 0), lstDepartment[0].Name, '')}"></c:Head>
+        <style>
+            .AccorSec .pbSubheader {
+            border-bottom:1px solid #4f4f4f !important;
+            border-top-width: 2px;
+            color: #066dc0 !important;
+            font-size: 18px !important;
+            font-weight: normal !important;
+            margin: 0 !important;
+            padding: 15px 10px !important;
+            background:url('{!$Resource.traningbg}') repeat-x !important;
+            }
+            .AccorSec .showListButton {
+            background:url('{!$Resource.offarrow}') no-repeat !important; width:17px !important; height:19px !important;
+            }
+            .AccorSec .hideListButton{background:url('{!$Resource.onarrow}') no-repeat !important; width:20px !important; height:17px !important;}
+            .DepTit{margin:0px; padding:0 0 0 75px; background:url('{!$Resource.adminbg}') no-repeat; width:376px; height:51px; left:-9px; position:absolute; top:-26px; color: #fff; 
+        </style>
+    </head>
+<body>
+<div class="Wrapper">
+  <apex:form >
+      <apex:pageMessages />
+      <c:COH_SIP_Header ></c:COH_SIP_Header>     
+      <c:COH_SIP_Search ></c:COH_SIP_Search> 
+      <div class="favoriteFloatContainer">          
+          <c:COH_SIP_Favorite_Float ></c:COH_SIP_Favorite_Float>  
+      </div>
+      
+      <div class="MiddleCon">
+          <div class="DeparmentB">
+            <div class="DeparmentBLeft">
+             <div class = "breadcrumb">
+                 <a href="/apex/COH_SIRP_HOME_PAGE">Home</a>
+            <apex:OutputText value=" / " rendered="{!isParentDepExists }"/>
+            <apex:outputLink target="_top" value="DepartmentPortal?id={!ParentDepartmentid}">
+               {!ParentDepartment}
+            </apex:outputLink>
+            <apex:OutputText value=" / {!departmentNameSecondary} " rendered="{!isParentDepExists }"/>
+            <apex:OutputText value=" / {!departmentName} " rendered="{!!isParentDepExists }"/>
+</div>
+           
+              <div class="DepxyxBox">
+                <table width="100%">
+                    <tr>
+                        <td width="60%">
+                            <h1> {!IF(AND(NOT(ISNULL(lstDepartment)),lstDepartment.size > 0), lstDepartment[0].Name, '')}</h1>
+                        </td>
+                        <td width="40%" align="right">
+                         
+                            <apex:commandLink style="padding-bottom:20px; align: right;" value="Edit Mode" action="{!editDepartmentSection}" rendered="{!showEditLink}"/>
+                        </td>
+                    </tr>
+                </table>
+                <p><h4>{!IF(AND(NOT(ISNULL(lstDepartment)),lstDepartment.size > 0), lstDepartment[0].Title__c, '')}</h4></p>
+                <p><apex:image value="/servlet/servlet.FileDownload?file={!IF(AND(NOT(ISNULL(lstDepartment)),lstDepartment.size > 0), lstDepartment[0].Image_Attachment_Id__c, '')}" width="129px" height="129px" rendered="{!IF(ISNULL(lstDepartment[0].Image_Attachment_Id__c), false, true)}" />
+                <!--{!IF(AND(NOT(ISNULL(lstDepartment)),lstDepartment.size > 0), lstDepartment[0].Description__c, '')}-->
+                
+                </p>
+                <div class="spacing"><apex:outputField value="{!lstDepartment[0].Description__c}" rendered="{!IF(AND(NOT(ISNULL(lstDepartment)),lstDepartment.size > 0), true, false)}"/></div>
+                <!--</div>
+                <div class="DepxyxBox">-->
+                    <p><apex:outputField value="{!lstDepartment[0].Department_Additional_Description__c}" rendered="{!IF(AND(NOT(ISNULL(lstDepartment)),lstDepartment.size > 0), true, false)}"/></p>
+                </div>
+              <div class="AccorSec"> 
+      
+      <apex:outputPanel id="outerPBNonEdit">
+        <apex:outputPanel styleClass="Gainsboro" layout="block" rendered="{!editMode}" id="PBNonEdit">
+          <apex:pageBlock id="blkDepartment" mode="inlineEdit"> 
+            <apex:facet name="header">
+              <apex:outputpanel >
+                <apex:outputText style="font-weight:bold;font-size:13px;float:left;" value=""/>
+                <apex:commandLink style="Float:right; padding-bottom:20px;" value="Edit Mode" action="{!editDepartmentComponentSection}" rendered="{!showSecEditLink}" /><br clear="all" />
+              </apex:outputpanel>
+            </apex:facet>
+                <apex:repeat value="{!lstDepartmentComponentWrapper}" var="dcw">
+                    <apex:pageBlockSection collapsible="true" title="{!dcw.depComp.Name}" id="secId" columns="1" >
+                        <br/><apex:outputLabel escape="false" Value="{!dcw.depComp.Department_Content__c}"  /><br/>
+                    </apex:pageBlockSection>
+                    <script> 
+                          //twistSection(document.getElementById('{!$Component.secId}').getElementsByTagName('img')[0])                       
+                          twistSection(document.getElementById("{!$Component.secId}").childNodes[0].childNodes[0]);
+                    </script>
+                </apex:repeat>
+            <!--
+            <apex:pageBlockSection collapsible="true" title="Training" id="traning">
+              <apex:outputField value="{!lstDept.Training__c}" >
+              <apex:inlineEditSupport disabled="true"/>
+             </apex:outputField>
+            </apex:pageBlockSection>
+            <script> 
+                                  twistSection(document.getElementById('{!$Component.blkDepartment.traning}').getElementsByTagName('img')[0])
+                            </script>
+            <apex:pageBlockSection collapsible="true" title="Organization" id="Organization">
+              <apex:outputField value="{!lstDept.Organization__c}" >
+              <apex:inlineEditSupport disabled="true"/>
+             </apex:outputField>
+            </apex:pageBlockSection>
+            <script> 
+                                  twistSection(document.getElementById('{!$Component.blkDepartment.Organization}').getElementsByTagName('img')[0])
+                            </script>
+            <apex:pageBlockSection collapsible="true" title="Policies and Procedure" id="policies">
+              <apex:outputField value="{!lstDept.Policies_and_procedures__c}" >
+              <apex:inlineEditSupport disabled="true"/>
+             </apex:outputField>
+            </apex:pageBlockSection>
+            <script> 
+                                  twistSection(document.getElementById('{!$Component.blkDepartment.policies}').getElementsByTagName('img')[0])
+                            </script>
+            <apex:pageBlockSection collapsible="true" title="Committes & Division" id="Committes">
+              <apex:outputField value="{!lstDept.Committees_and_divisions__c }" >
+              <apex:inlineEditSupport disabled="true"/>
+             </apex:outputField>
+            </apex:pageBlockSection>
+            <script> 
+                                  twistSection(document.getElementById('{!$Component.blkDepartment.Committes}').getElementsByTagName('img')[0])
+                            </script>
+            <apex:pageBlockSection collapsible="true" title="Grants and Funding" id="grants">
+              <apex:outputField value="{!lstDept.Grants_and_funding__c}" >
+              <apex:inlineEditSupport disabled="true"/>
+             </apex:outputField>
+            </apex:pageBlockSection>
+            <script> 
+                                  twistSection(document.getElementById('{!$Component.blkDepartment.grants}').getElementsByTagName('img')[0])
+                            </script>
+            <apex:pageBlockSection collapsible="true" title="Resources" id="resource">
+              <apex:outputField value="{!lstDept.Resources__c}" >
+              <apex:inlineEditSupport disabled="true"/>
+             </apex:outputField>
+            </apex:pageBlockSection>
+            <script> 
+                                  twistSection(document.getElementById('{!$Component.blkDepartment.resource}').getElementsByTagName('img')[0])
+                            </script>
+                            --> 
+          </apex:pageBlock>
+        </apex:outputPanel>
+      </apex:outputPanel>
+      <apex:outputPanel id="outerPBEdit" >
+        <apex:outputPanel styleClass="Gainsboro" layout="block" rendered="{!NOT(editMode)}" id="PBEdit">
+          <apex:pageBlock id="editblkDepartment" mode="inlineEdit"> <br />
+            <apex:facet name="header">
+              <apex:outputpanel >
+                <apex:outputText style="font-weight:bold;font-size:13px;float:left;" value=""/>
+                <apex:commandLink style="Float:right;" value="Save Changes" action="{!SaveSection}" reRender="outerPBNonEdit,outerPBEdit"/>
+              </apex:outputpanel>
+            </apex:facet>
+            <apex:pageBlockSection collapsible="true" title="Training" id="editTraning">
+              <apex:inputTextArea richText="true"/>
+              <!--richText="true"--> 
+            </apex:pageBlockSection>
+            <apex:pageBlockSection collapsible="true" title="Organization" id="editOrganization">
+              <apex:inputTextArea />
+            </apex:pageBlockSection>
+            <script> 
+                                      twistSection(document.getElementById('{!$Component.blkDepartment.editOrganization}').getElementsByTagName('img')[0])
+                                </script>
+            <apex:pageBlockSection collapsible="true" title="Policies and Procedure" id="editpolicies">
+              <apex:inputTextArea />
+            </apex:pageBlockSection>
+            <script> 
+                                      twistSection(document.getElementById('{!$Component.blkDepartment.editpolicies}').getElementsByTagName('img')[0])
+                                </script>
+            <apex:pageBlockSection collapsible="true" title="Committes & Division" id="editCommittes">
+              <apex:inputTextArea />
+            </apex:pageBlockSection>
+            <script> 
+                                      twistSection(document.getElementById('{!$Component.blkDepartment.editCommittes}').getElementsByTagName('img')[0])
+                                </script>
+            <apex:pageBlockSection collapsible="true" title="Grants and Funding" id="editgrants">
+              <apex:inputTextArea />
+            </apex:pageBlockSection>
+            <script> 
+                                      twistSection(document.getElementById('{!$Component.blkDepartment.editgrants}').getElementsByTagName('img')[0])
+                                </script>
+            <apex:pageBlockSection collapsible="true" title="Resources" id="editresource">
+              <apex:inputTextArea />
+            </apex:pageBlockSection>
+            <script> 
+                                      twistSection(document.getElementById('{!$Component.blkDepartment.editresource}').getElementsByTagName('img')[0])
+                                </script> 
+          </apex:pageBlock>
+        </apex:outputPanel>
+      </apex:outputPanel>
+    </div>
+    <span>The page is managed by <a href="mailto:{!OwnerEmail}" target="_top"><span class="department-owner">{!OwnerName}</span></a></span>
+            </div>
+            
+            <div class="DeparmentBRight">
+                <apex:outputPanel id="newsAndAnnouncements" rendered="{!lstNewsAnnouncement.size!=0}">
+                <div class="AnnouBox">
+                    <div class="BoxTitM"> <h1>News &amp; Announcements</h1> 
+                        <!-- <apex:commandLink value=">Edit" action="{!editDepartmentSection}" /> -->
+                        <apex:outputPanel rendered="{!showEditLink}">
+                            <a href="{!URLFOR($Action.COH_SI_NewsandAnnouncement__c.List, $ObjectType.COH_SI_NewsandAnnouncement__c)}">Edit</a>
+                        </apex:outputPanel>
+                    </div> 
+                        
+                     <apex:pageBlock > 
+                     
+                        <apex:repeat value="{!lstNewsAnnouncement}" var="News" id="theRepeat">
+                           <div class="AnnTxtB">
+                               <h1><apex:outputText value="{!News.Title__c}" /></h1>
+                               <div class="ISecTwo">
+                                <div class="ISecTwoL">
+                                    <!-- <apex:image url="{!News.PhotoURL__c}"/> -->
+                                    <!--<apex:image value="/servlet/servlet.FileDownload?file={!IF(News.Image_Attachment_Id__c!=null,News.Image_Attachment_Id__c,'01537000000TaCM')}" width="66px" height="49px" rendered="{!IF(News.Image_Attachment_Id__c!=null, true, false)}" />-->
+                                    <apex:image value="/servlet/servlet.FileDownload?file={!IF(News.Image_Attachment_Id__c!=null,News.Image_Attachment_Id__c, $Label.Default_Image)}" width="60px" height="60px"/>
+                                </div>                                                   
+                                <div class="ISecTwoR">
+                                 <p><apex:outputText value="{!News.Description__c}" /></p>
+                                    <apex:outputLink target="_blank" value="{!IF(News.Image_URL__c!=null, News.Image_URL__c, '/apex/NewsAnnouncementDetailPage?id=' + News.id)}">> read more</apex:outputLink>
+                                    </div> 
+                               </div>
+                           </div>
+                        </apex:repeat>
+                         
+                     </apex:pageBlock>              
+                    
+                </div>     
+                </apex:outputpanel>
+                
+                <!--<div class="PhyRBox">
+                    <div class="PhyRBoxM"><h1>Our Physicians & Researchers</h1> <a href="#.">>View More</a></div> 
+                    <div class="PhyConT">
+                        <ul>
+                            <li>
+                                <apex:image value="{!$Resource.phypic1}"/><br/>
+                                <span>– Name Here</span>
+                            </li>
+                            <li>
+                                <apex:image value="{!$Resource.phypic2}"/><br/>
+                                <span>– Name Here</span>
+                            </li>
+                            <li>
+                                <apex:image value="{!$Resource.phypic3}"/><br/>
+                                <span>– Name Here</span>
+                            </li>
+                            <li>
+                                <apex:image value="{!$Resource.phypic4}"/><br/>
+                                <span>– Name Here</span>
+                            </li>
+                        </ul>
+                        
+                        <ul>
+                            <li>
+                                <apex:image value="{!$Resource.phypic5}"/><br/>
+                                <span>– Name Here</span>
+                            </li>
+                            <li>
+                                <apex:image value="{!$Resource.phypic6}"/><br/>
+                                <span>– Name Here</span>
+                            </li>
+                            <li>
+                                <apex:image value="{!$Resource.phypic7}"/><br/>
+                                <span>– Name Here</span>
+                            </li>
+                            <li>
+                                <apex:image value="{!$Resource.phypic8}"/><br/>
+                                <span>– Name Here</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>    
+                -->
+                   
+                    
+                <apex:outputPanel styleClass="PhyRBox" rendered="{!selcalenderName != null}">
+                <div>
+                    
+                    <div>&nbsp;&nbsp;&nbsp;<font size="5px" color="#4f4f4f">Calendar</font> &nbsp;&nbsp; 
+                        <apex:selectList size="1" value="{!calenderName}" onchange="refreshcal()" rendered="{!IF(selcalenderName != null , true , false)}">
+                            <apex:selectOptions value="{!calenderNameList}"/>
+                        </apex:selectList>
+                        <hr/>
+                    </div>
+                    
+                  
+                    <apex:outputPanel id="panelid2" rendered="{!IF(selcalenderName != null , true , false)}">
+                        <apex:actionFunction action="{!refreshCalender}"  name="refreshcal"/>
+                        <div style="overflow-y: auto;width: 365px;overflow-x: hidden;">
+                                      
+                                <script type="text/javascript" src="https://www.trumba.com/scripts/spuds.js"> </script>
+                            <script type="text/javascript">
+                                $Trumba.addSpud({
+                                    webName: "{!selcalenderName}",
+                                    spudType : "upcoming" ,
+                                    teaserBase : "https://www.trumba.com/calendars/{!selcalenderName}" });
+                            </script>
+                        </div>
+                    </apex:outputPanel>
+                </div>
+                </apex:outputPanel>
+                
+                <apex:outputPanel styleClass="PhyRBox" style="max-height:400px;overflow-x:hidden;overflow-y:auto;" rendered="{!lstOflstSaff.size!=0}">
+                    <div class="PhyRBoxM"><h1>Our Staff</h1></div> 
+                    <!--
+                    <div class="PhyConT">
+                        <ul>
+                            <li>
+                                <apex:image value="{!$Resource.staffpic1}"/><br/>
+                                <span>– Name Here</span>
+                            </li>
+                            <li>
+                                <apex:image value="{!$Resource.staffpic2}"/><br/>
+                                <span>– Name Here</span>
+                            </li>
+                            <li>
+                                <apex:image value="{!$Resource.staffpic3}"/><br/>
+                                <span>– Name Here</span>
+                            </li>
+                            <li>
+                                <apex:image value="{!$Resource.staffpic4}"/><br/>
+                                <span>– Name Here</span>
+                            </li>
+                        </ul>
+                        
+                        <ul>
+                            <li>
+                                <apex:image value="{!$Resource.staffpic5}"/><br/>
+                                <span>– Name Here</span>
+                            </li>
+                            <li>
+                                <apex:image value="{!$Resource.staffpic6}"/><br/>
+                                <span>– Name Here</span>
+                            </li>
+                            <li>
+                                <apex:image value="{!$Resource.staffpic7}"/><br/>
+                                <span>– Name Here</span>
+                            </li>
+                            <li>
+                                <apex:image value="{!$Resource.staffpic8}"/><br/>
+                                <span>– Name Here</span>
+                            </li>
+                        </ul>
+                    </div>
+                -->
+                    <div class="PhyConT">
+                        <table>
+                        <apex:repeat value="{!lstOflstSaff}" var="lstStaff">
+                            <tr>
+                                <apex:repeat value="{!lstStaff}" var="staff">
+                                <td style="padding:2px">
+                                <a href="/apex/UserProfile?uid={!staff.Id}" target="_blank">
+                                    <!--<a href="/_ui/core/userprofile/UserProfilePage?u={!staff.Id}&srKp=005&srPos=0&tab=sfdc.ProfilePlatformFeed" target="_blank">-->
+                                        <apex:image value="{!staff.SmallPhotoUrl}" />
+                                    </a><br/>
+                                    <!--added displayName__c to the name list Larry Kiang 2019-06-10 -->
+                                    <label>{!staff.displayName__c}</label>
+                                </td>
+                                </apex:repeat>
+                            </tr>
+                        </apex:repeat>
+                     </table>
+                    </div>
+                </apex:outputPanel>
+                
+                
+       
+            </div>  
+            
+        </div>
+        
+      
+        <apex:outputPanel layout="Block" styleClass="SpotlightB" rendered="{!(departmentSpotlights.size >0)}">
+            <div class="SpotLTit"><apex:image value="{!$Resource.depspoicon}" style="padding:1px 0 0 13px; float:left;" />  Department Spotlight</div><br clear="all" />
+            
+            <!--
+            <div class="Depboxs" style="margin-left:10px;">
+                <div class="DepTit">Cynthia Jones</div>
+                <div class="DuisB">
+                    <div class="DuisBL"><apex:image value="{!$Resource.soprtpic1}"/></div>
+                    <div class="DuisBR">“Duis imper rdiet reque ipsum volutpat cursus. Cur abit ur pulvinar id quam eget vestibulum lorem ipsum dolor.”</div>
+                </div>
+                <p>Lorem ipsum dolor sit amet, consectetur sit adipiscing elit. Duis imper rdiet neque et lorem ipsum dui idquam eget volutpat curs duis imper rdiet neque et.</p>
+                <div class="GetButD"><a href="#.">> get the details</a></div>
+            </div>
+            
+            <div class="Depboxs">
+                <div class="DepTit">Norma Wilson</div>
+                <div class="DuisB">
+                    <div class="DuisBL"><apex:image value="{!$Resource.soprtpic2}"/></div>
+                    <div class="DuisBR">“Duis imper rdiet reque ipsum volutpat cursus. Cur abit ur pulvinar id quam eget vestibulum lorem ipsum dolor.”</div>
+                </div>
+                <p>Lorem ipsum dolor sit amet, consectetur sit adipiscing elit. Duis imper rdiet neque et lorem ipsum dui idquam eget volutpat curs duis imper rdiet neque et.</p>
+                <div class="GetButD"><a href="#.">> get the details</a></div>
+            </div>
+            -->
+            
+            <apex:repeat value="{!departmentSpotlights}" var="dsl">
+                <div class="Depboxs" style="margin-left:20px;">
+                    <div class="DepTit">{!dsl.Title__c}</div>
+                    <div class="DuisB">
+                        <div class="DuisBL"><apex:image value="{!dsl.ImageURL__c}" width="129px" height="129px"/></div>
+                        <div class="DuisBR">“{!dsl.Description__c}”</div>
+                    </div>
+                    <p>{!dsl.Description__c}</p>
+                    <div class="GetButD"><a href="#.">> get the details</a></div>
+                </div>
+            </apex:repeat>
+        </apex:outputPanel>
+             </div>
+   
+<c:COH_SIP_Footer ></c:COH_SIP_Footer> 
+     
+   
+    
+  </apex:form>
+</div>
+</body>
+<script type="text/javascript">
+var j$ = jQuery.noConflict();
+j$(document).ready(function(){
+    if ((j$(".AnnouBox") == null || j$(".AnnouBox").css("display") == null || j$(".AnnouBox").css('display') == 'none') && (j$(".PhyRBox") == null || j$(".PhyRBox").css("display") == null || j$(".PhyRBox").css('display') == 'none')){
+        j$(".DeparmentBLeft").css("width", "100%");    
+    }
+});
+</script>   
+</apex:page>

@@ -1,0 +1,1375 @@
+<aura:component controller="COH_UIR_IntakeRequestFormController">
+    <c:COH_UTIL_ValidateStandardComponent aura:id="validateStandardComponent"/>
+    <c:COH_UTIL_CheckboxGroupHelper aura:id="checkboxGroupHelper"/>    
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:method name="validateFields" action="{!c.validateFields}"/>
+    <aura:attribute name="mIntakeRequest" type="COH_UniversalIntakeRequest__c"/>
+    <aura:attribute name="mPicklists" type="Map" />
+    <aura:attribute name="mCheckboxGroupValues" type="Map" default="{}"/>
+    <aura:attribute name="mSelectedCheckboxGroupValues" type="Map" default="{}"/>
+    
+    <div class="slds-form-horizontal">
+        <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_small">
+            Facilities Request
+        </h3>
+        
+        <!-- Request Type -->
+        <div class="slds-grid slds-wrap">        
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_FSC_FacilityRequestType__c}" 
+                                      label="Select Type of Request"
+                                      name="COH_UIR_FSC_FacilityRequestType__c"
+                                      aura:id="intakeRequestForm"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_FSC_FacilityRequestType__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FSC_FacilityRequestType__c}">{!currentPicklistOption.label}</option>
+                        </aura:iteration>
+                    </lightning:select>
+                </div>
+            </div>       
+        </div>
+        
+        <!-- If Move/New Hires -->
+        <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_FacilityRequestType__c == 'Move/New Hires'}">
+            <div class="slds-size_1-of-1">
+                <div class="slds-box slds-m-vertical_small slds-box_no-padding">            
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:checkboxGroup name="COH_UIR_FSC_MoveOrNewHires__c"
+                                                         label="Select Type of Sub-Request"
+                                                         options="{!v.mPicklists.COH_UIR_FSC_MoveOrNewHires__c}"
+                                                         value="{!v.mCheckboxGroupValues.COH_UIR_FSC_MoveOrNewHires__c}"
+                                                         aura:id="intakeRequestForm"
+                                                         required="true"
+                                                         onchange="{!c.onCheckboxGroupChange}"/>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- If Move Existing Employees -->
+                    <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_MoveOrNewHires__c.MoveofExistingCOHEmployees}">
+                        <div class="slds-box slds-m-around_small slds-box_x-small">
+                            <div class="slds-p-horizontal_medium"><div class="slds-border_bottom"><b>Move of Existing COH Employee Details</b></div></div>
+                            <!-- Number of people to be moved, Desired move date -->
+                            <div class="slds-grid slds-wrap">        
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_FSC_ME_NumberOfPeopleToBeMoved__c}" 
+                                                          label="Enter the number of COH employees you wish to move"
+                                                          name="COH_UIR_FSC_ME_NumberOfPeopleToBeMoved__c"
+                                                          aura:id="intakeRequestForm"
+                                                          required="true">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_UIR_FSC_ME_NumberOfPeopleToBeMoved__c}" var="currentPicklistOption">
+                                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FSC_ME_NumberOfPeopleToBeMoved__c}">{!currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>        
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_DesiredMoveDate__c}"
+                                                         label="Select your preferred move date"
+                                                         name="COH_UIR_FSC_ME_DesiredMoveDate__c"
+                                                         aura:id="intakeRequestForm"
+                                                         required="true"
+                                                         type="date"/>
+                                    </div>
+                                </div>            
+                            </div>        
+                            
+                            <!-- Desired/ Current Locations -->
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_ME_NumberOfPeopleToBeMoved__c >= 1}">
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_BuildingNumber1}"
+                                                             label="1. Enter Desired Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_BuildingNumber1"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_FloorNumber1}"
+                                                             label="1. Enter Desired Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_FloorNumber1"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>                                 
+                                </div>
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_ExitBuildingNumber1}"
+                                                             label="1. Enter Current Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_ExitBuildingNumber1"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_ExitFloorNumber1}"
+                                                             label="1. Enter Current Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_ExitFloorNumber1"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>                                        
+                                        </div>
+                                    </div>                                 
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_ME_NumberOfPeopleToBeMoved__c >= 2}">
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_BuildingNumber2}"
+                                                             label="2. Enter Desired Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_BuildingNumber2"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_FloorNumber2}"
+                                                             label="2. Enter Desired Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_FloorNumber2"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>                                 
+                                </div>
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_ExitBuildingNumber2}"
+                                                             label="2. Enter Current Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_ExitBuildingNumber2"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_ExitFloorNumber2}"
+                                                             label="2. Enter Current Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_ExitFloorNumber2"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>                                 
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_ME_NumberOfPeopleToBeMoved__c >= 3}">
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_BuildingNumber3}"
+                                                             label="3. Enter Desired Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_BuildingNumber3"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_FloorNumber3}"
+                                                             label="3. Enter Desired Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_FloorNumber3"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>                                 
+                                </div>
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_ExitBuildingNumber3}"
+                                                             label="3. Enter Current Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_ExitBuildingNumber3"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_ExitFloorNumber3}"
+                                                             label="3. Enter Current Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_ExitFloorNumber3"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>                                 
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_ME_NumberOfPeopleToBeMoved__c >= 4}">
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_BuildingNumber4}"
+                                                             label="4. Enter Desired Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_BuildingNumber4"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_FloorNumber4}"
+                                                             label="4. Enter Desired Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_FloorNumber4"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>                                 
+                                </div>
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_ExitBuildingNumber4}"
+                                                             label="4. Enter Current Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_ExitBuildingNumber4"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_ExitFloorNumber4}"
+                                                             label="4. Enter Current Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_ExitFloorNumber4"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>                                 
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_ME_NumberOfPeopleToBeMoved__c >= 5}">
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_BuildingNumber5}"
+                                                             label="5. Enter Desired Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_BuildingNumber5"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_FloorNumber5}"
+                                                             label="5. Enter Desired Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_FloorNumber5"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>                                 
+                                </div>
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_ExitBuildingNumber5}"
+                                                             label="5. Enter Current Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_ExitBuildingNumber5"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ME_ExitFloorNumber5}"
+                                                             label="5. Enter Current Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ME_ExitFloorNumber5"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>                                 
+                                </div>                                                
+                            </aura:if>
+                            
+                            
+                            <!-- Desired Location Assigned, Space Available -->
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_FSC_ME_DesiredLocInDepartment__c}" 
+                                                          label="Is the desired location already assigned to your department?"
+                                                          name="COH_UIR_FSC_ME_DesiredLocInDepartment__c"
+                                                          aura:id="intakeRequestForm"
+                                                          required="true">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_UIR_FSC_ME_DesiredLocInDepartment__c}" var="currentPicklistOption">
+                                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FSC_ME_DesiredLocInDepartment__c}">{!currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_FSC_ME_AvailableSpace__c}" 
+                                                          label="Is there available space in your desired location?"
+                                                          name="COH_UIR_FSC_ME_AvailableSpace__c"
+                                                          aura:id="intakeRequestForm"
+                                                          required="true">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_UIR_FSC_ME_AvailableSpace__c}" var="currentPicklistOption">
+                                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FSC_ME_AvailableSpace__c}">{!currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>    
+                            </div>        
+                            
+                            <!-- Require Reconfiguration -->
+                            <div class="slds-grid slds-wrap">        
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_FSC_ME_ReconfigRequiredMove__c}" 
+                                                          label="Does desired new location require reconfiguration?"
+                                                          name="COH_UIR_FSC_ME_ReconfigRequiredMove__c"
+                                                          aura:id="intakeRequestForm"
+                                                          required="true">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_UIR_FSC_ME_ReconfigRequiredMove__c}" var="currentPicklistOption">
+                                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FSC_ME_ReconfigRequiredMove__c}">{!currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_FSC_ME_ReconfigRequiredExit__c}" 
+                                                          label="Does exit location require reconfiguration?"
+                                                          name="COH_UIR_FSC_ME_ReconfigRequiredExit__c"
+                                                          aura:id="intakeRequestForm"
+                                                          required="true">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_UIR_FSC_ME_ReconfigRequiredExit__c}" var="currentPicklistOption">
+                                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FSC_ME_ReconfigRequiredExit__c}">{!currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>                                   
+                            </div>                                 
+                            
+                            <!-- Move Requirements -->
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:checkboxGroup name="COH_UIR_FSC_ME_MoveRequirements__c"
+                                                                 label="Will this move require any of the following?"
+                                                                 options="{!v.mPicklists.COH_UIR_FSC_ME_MoveRequirements__c}"
+                                                                 value="{!v.mCheckboxGroupValues.COH_UIR_FSC_ME_MoveRequirements__c}"
+                                                                 aura:id="intakeRequestForm"
+                                                                 required="true"
+                                                                 onchange="{!c.onCheckboxGroupChange}"/>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </aura:if>
+                    <!-- End Move Secion -->
+                    
+                    <!-- New Hire Section -->
+                    <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_MoveOrNewHires__c.LocationforNewHire}">
+                        <div class="slds-box slds-m-around_small slds-box_x-small">
+                            <div class="slds-p-horizontal_medium"><div class="slds-border_bottom"><b>Location for New Hire Details</b></div></div>                        
+                            <!-- # of employees that need space -->
+                            <div class="slds-grid slds-wrap">        
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_FSC_NH_NumberOfNewHires__c}" 
+                                                          label="Enter the number of new hires which require space"
+                                                          name="COH_UIR_FSC_NH_NumberOfNewHires__c"
+                                                          aura:id="intakeRequestForm"
+                                                          required="true">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_UIR_FSC_NH_NumberOfNewHires__c}" var="currentPicklistOption">
+                                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FSC_NH_NumberOfNewHires__c}">{!currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_NH_StartDate__c}"
+                                                         label="Select your new hire(s)'s start date"
+                                                         name="COH_UIR_FSC_NH_StartDate__c"
+                                                         aura:id="intakeRequestForm"
+                                                         required="true"
+                                                         type="date"/>
+                                    </div>
+                                </div>                                
+                            </div>      
+                            
+                            <!-- Locatiion for new hire -->
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_NH_NumberOfNewHires__c >= 1}">
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_NH_Role1}"
+                                                             label="1. Enter New Hire Role"
+                                                             name="COH_UIR_FSC_NH_Role1"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_NH_BuildingNumber1}"
+                                                             label="1. Enter Desired Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_NH_BuildingNumber1"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>                                 
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_NH_FloorNumber1}"
+                                                             label="1. Enter Desired Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_NH_FloorNumber1"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_NH_NumberOfNewHires__c >= 2}">    
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_NH_Role2}"
+                                                             label="2. Enter New Hire Role"
+                                                             name="COH_UIR_FSC_NH_Role2"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_NH_BuildingNumber2}"
+                                                             label="2. Enter Desired Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_NH_BuildingNumber2"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>                                 
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_NH_FloorNumber2}"
+                                                             label="2. Enter Desired Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_NH_FloorNumber2"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                </div>                            
+                            </aura:if>
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_NH_NumberOfNewHires__c >= 3}">
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_NH_Role3}"
+                                                             label="3. Enter New Hire Role"
+                                                             name="COH_UIR_FSC_NH_Role3"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_NH_BuildingNumber3}"
+                                                             label="3. Enter Desired Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_NH_BuildingNumber3"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>                                 
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_NH_FloorNumber3}"
+                                                             label="3. Enter Desired Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_NH_FloorNumber3"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                </div>                            
+                            </aura:if>
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_NH_NumberOfNewHires__c >= 4}">
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_NH_Role4}"
+                                                             label="4. Enter New Hire Role"
+                                                             name="COH_UIR_FSC_NH_Role4"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_NH_BuildingNumber4}"
+                                                             label="4. Enter Desired Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_NH_BuildingNumber4"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>                                 
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_NH_FloorNumber4}"
+                                                             label="4. Enter Desired Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_NH_FloorNumber4"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                </div>                            
+                            </aura:if>
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_NH_NumberOfNewHires__c >= 5}">
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_NH_Role5}"
+                                                             label="5. Enter New Hire Role"
+                                                             name="COH_UIR_FSC_NH_Role5"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_NH_BuildingNumber5}"
+                                                             label="5. Enter Desired Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_NH_BuildingNumber5"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>                                 
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_NH_FloorNumber5}"
+                                                             label="5. Enter Desired Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_NH_FloorNumber5"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aura:if>
+                            
+                            
+                            <!-- Desired Location Assigned, Space Available -->
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_FSC_NH_DesiredLocInDepartment__c}" 
+                                                          label="Is the desired location already assigned to your department?"
+                                                          name="COH_UIR_FSC_NH_DesiredLocInDepartment__c"
+                                                          aura:id="intakeRequestForm"
+                                                          required="true">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_UIR_FSC_NH_DesiredLocInDepartment__c}" var="currentPicklistOption">
+                                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FSC_NH_DesiredLocInDepartment__c}">{!currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_FSC_NH_AvailableSpace__c}" 
+                                                          label="Is there available space in your desired location?"
+                                                          name="COH_UIR_FSC_NH_AvailableSpace__c"
+                                                          aura:id="intakeRequestForm"
+                                                          required="true">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_UIR_FSC_NH_AvailableSpace__c}" var="currentPicklistOption">
+                                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FSC_NH_AvailableSpace__c}">{!currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>    
+                            </div>        
+                            
+                            <!-- Require Reconfiguration, Related Items -->
+                            <div class="slds-grid slds-wrap">        
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_FSC_NH_ReconfigRequiredNewHire__c}" 
+                                                          label="Does desired new location require reconfiguration?"
+                                                          name="COH_UIR_FSC_NH_ReconfigRequiredNewHire__c"
+                                                          aura:id="intakeRequestForm"
+                                                          required="true">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_UIR_FSC_NH_ReconfigRequiredNewHire__c}" var="currentPicklistOption">
+                                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FSC_NH_ReconfigRequiredNewHire__c}">{!currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:checkboxGroup name="COH_UIR_FSC_NH_RelatedItems__c"
+                                                                 label="Will this move require any of the following?"
+                                                                 options="{!v.mPicklists.COH_UIR_FSC_NH_RelatedItems__c}"
+                                                                 value="{!v.mCheckboxGroupValues.COH_UIR_FSC_NH_RelatedItems__c}"
+                                                                 aura:id="intakeRequestForm"
+                                                                 required="true"/>
+                                    </div>
+                                </div>                  
+                            </div>
+                        </div>
+                    </aura:if>
+                </div>
+            </div>
+        </aura:if>
+        
+        <!-- If New Furniture/Artwork -->
+        <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_FacilityRequestType__c == 'New Furnitures/Artwork'}">
+            <div class="slds-size_1-of-1">
+                <div class="slds-box slds-m-vertical_small slds-box_no-padding">            
+                    <!-- Sub Request Furniture/Artwork-->
+                    <div class="slds-grid slds-wrap">        
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:checkboxGroup name="COH_UIR_FSC_SubRequestFurnitureArtwork__c"
+                                                         label="Select Type of Sub-Request"
+                                                         options="{!v.mPicklists.COH_UIR_FSC_SubRequestFurnitureArtwork__c}"
+                                                         value="{!v.mCheckboxGroupValues.COH_UIR_FSC_SubRequestFurnitureArtwork__c}"
+                                                         aura:id="intakeRequestForm"
+                                                         required="true"
+                                                         onchange="{!c.onCheckboxGroupChange}"/>
+                            </div>
+                        </div>         
+                    </div>
+                    
+                    <!-- If sub request == furniture-->
+                    <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_SubRequestFurnitureArtwork__c.NewFurniture}">
+                        <div class="slds-box slds-m-around_small slds-box_x-small">
+                            <div class="slds-p-horizontal_medium"><div class="slds-border_bottom"><b>New Furniture Details</b></div></div>                        
+                            <!-- Furniture Location -->
+                            <div class="slds-grid slds-wrap">        
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_FSC_FurnitureLocation__c}" 
+                                                          label="Select Location for Furniture"
+                                                          name="COH_UIR_FSC_FurnitureLocation__c"
+                                                          aura:id="intakeRequestForm"
+                                                          required="true">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_UIR_FSC_FurnitureLocation__c}" var="currentPicklistOption">
+                                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FSC_FurnitureLocation__c}">{!currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>   
+                            </div>
+                            
+                            <!-- Clinical Furniture -->
+                            <!-- If Furniture location == clinical -->
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_FurnitureLocation__c == 'Clinical'}"> 
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:checkboxGroup name="COH_UIR_FSC_DesiredFurnitureClinic__c"
+                                                                     label="Select desired furniture. Select all that apply"
+                                                                     options="{!v.mPicklists.COH_UIR_FSC_DesiredFurnitureClinic__c}"
+                                                                     value="{!v.mCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureClinic__c}"
+                                                                     aura:id="intakeRequestForm"
+                                                                     required="true"
+                                                                     onchange="{!c.onCheckboxGroupChange}"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Number of Furniture -->
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-grid slds-wrap">
+                                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureClinic__c.ExamChair}">
+                                                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_small">
+                                                    <div class="slds-form-element__control">
+                                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ClinicExamChair__c}"
+                                                                         label="Enter the number of Exam Chairs"
+                                                                         name="COH_UIR_FSC_ClinicExamChair__c"
+                                                                         aura:id="intakeRequestForm"
+                                                                         type="number"
+                                                                         min="0"
+                                                                         required="true"/>
+                                                    </div>
+                                                </div>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureClinic__c.ReceptionChair}">
+                                                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_small">
+                                                    <div class="slds-form-element__control">
+                                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ClinicReceptionChair__c}"
+                                                                         label="Enter the number of Reception Chairs"
+                                                                         name="COH_UIR_FSC_ClinicReceptionChair__c"
+                                                                         aura:id="intakeRequestForm"
+                                                                         type="number"
+                                                                         min="0"                                
+                                                                         required="true"/>
+                                                    </div>
+                                                </div>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureClinic__c.SideChair}">
+                                                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_small">
+                                                    <div class="slds-form-element__control">
+                                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ClinicSideChair__c}"
+                                                                         label="Enter the number of Side Chairs"
+                                                                         name="COH_UIR_FSC_ClinicSideChair__c"
+                                                                         aura:id="intakeRequestForm"
+                                                                         type="number"
+                                                                         min="0"                                
+                                                                         required="true"/>
+                                                    </div>
+                                                </div>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureClinic__c.ExamRoomTable}">
+                                                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_small">
+                                                    <div class="slds-form-element__control">
+                                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ClinicExamTable__c}"
+                                                                         label="Enter the number of Exam Room Tables"
+                                                                         name="COH_UIR_FSC_ClinicExamTable__c"
+                                                                         aura:id="intakeRequestForm"
+                                                                         type="number"
+                                                                         min="0"                                
+                                                                         required="true"/>
+                                                    </div>
+                                                </div>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureClinic__c.TrashCan}">
+                                                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_small">
+                                                    <div class="slds-form-element__control">
+                                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ClinicTrashCan__c}"
+                                                                         label="Enter the number of Trash Cans"
+                                                                         name="COH_UIR_FSC_ClinicTrashCan__c"
+                                                                         aura:id="intakeRequestForm"
+                                                                         type="number"
+                                                                         min="0"                                
+                                                                         required="true"/>
+                                                    </div>
+                                                </div>    
+                                            </aura:if>
+                                        </div>        
+                                    </div>
+                                </div>
+                                
+                                <!-- How Many Pieces of Furniture -->
+                                <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureClinic__c.Other}">                                 
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                            <div class="slds-form-element__control">
+                                                <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_DesiredFurnitureClinicOther__c}"
+                                                                 label="Enter Other type of furniture"
+                                                                 name="COH_UIR_FSC_DesiredFurnitureClinicOther__c"
+                                                                 aura:id="intakeRequestForm"
+                                                                 required="true"/>
+                                            </div>
+                                        </div>            
+                                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                            <div class="slds-form-element__control">
+                                                <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ClinicOtherFurniture__c}"
+                                                                 label="Enter the number of Other Furniture"
+                                                                 name="COH_UIR_FSC_ClinicOtherFurniture__c"
+                                                                 aura:id="intakeRequestForm"
+                                                                 type="number"
+                                                                 min="0"                                
+                                                                 required="true"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </aura:if>     
+                            </aura:if>
+                            <!-- End Clinical Furniture -->
+                            
+                            <!-- Office Furniture -->
+                            <!-- If Furniture Location == Office -->
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_FurnitureLocation__c == 'Office'}"> 
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:checkboxGroup name="COH_UIR_FSC_DesiredFurnitureOffice__c"
+                                                                     label="Select desired furniture. Select all that apply"
+                                                                     options="{!v.mPicklists.COH_UIR_FSC_DesiredFurnitureOffice__c}"
+                                                                     value="{!v.mCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureOffice__c}"
+                                                                     aura:id="intakeRequestForm"
+                                                                     required="true"
+                                                                     onchange="{!c.onCheckboxGroupChange}"/>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- How Many Pieces of Furniture -->
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-grid slds-wrap">
+                                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureOffice__c.Desk}">
+                                                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_small">
+                                                    <div class="slds-form-element__control">
+                                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_OfficeDesk__c}"
+                                                                         label="Enter the number of Desks"
+                                                                         name="COH_UIR_FSC_OfficeDesk__c"
+                                                                         aura:id="intakeRequestForm"
+                                                                         type="number"
+                                                                         min="0"
+                                                                         required="true"/>
+                                                    </div>
+                                                </div>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureOffice__c.DeskChair}">
+                                                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_small">
+                                                    <div class="slds-form-element__control">
+                                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_OfficeDeskChair__c}"
+                                                                         label="Enter the number of Desk Chairs"
+                                                                         name="COH_UIR_FSC_OfficeDeskChair__c"
+                                                                         aura:id="intakeRequestForm"
+                                                                         type="number"
+                                                                         min="0"                                
+                                                                         required="true"/>
+                                                    </div>
+                                                </div>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureOffice__c.SideChair}">
+                                                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_small">
+                                                    <div class="slds-form-element__control">
+                                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_OfficeSideChair__c}"
+                                                                         label="Enter the number of Side Chairs"
+                                                                         name="COH_UIR_FSC_OfficeSideChair__c"
+                                                                         aura:id="intakeRequestForm"
+                                                                         type="number"
+                                                                         min="0"                                
+                                                                         required="true"/>
+                                                    </div>
+                                                </div>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureOffice__c.ConferenceTableRound}">
+                                                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_small">
+                                                    <div class="slds-form-element__control">
+                                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_OfficeConferenceTableRound__c}"
+                                                                         label="Enter the number of Conference Tables (Round)"
+                                                                         name="COH_UIR_FSC_OfficeConferenceTableRound__c"
+                                                                         aura:id="intakeRequestForm"
+                                                                         type="number"
+                                                                         min="0"                                
+                                                                         required="true"/>
+                                                    </div>
+                                                </div>
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureOffice__c.ConferenceTableSquare}">
+                                                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_small">
+                                                    <div class="slds-form-element__control">
+                                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_OfficeConferenceTableSquare__c}"
+                                                                         label="Enter the number of Conference Tables (Square)"
+                                                                         name="COH_UIR_FSC_OfficeConferenceTableSquare__c"
+                                                                         aura:id="intakeRequestForm"
+                                                                         type="number"
+                                                                         min="0"                                
+                                                                         required="true"/>
+                                                    </div>
+                                                </div>    
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureOffice__c.ConferenceChair}">
+                                                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_small">
+                                                    <div class="slds-form-element__control">
+                                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_OfficeConferenceChair__c}"
+                                                                         label="Enter the number of Conference Chairs"
+                                                                         name="COH_UIR_FSC_OfficeConferenceChair__c"
+                                                                         aura:id="intakeRequestForm"
+                                                                         type="number"
+                                                                         min="0"                                
+                                                                         required="true"/>
+                                                    </div>
+                                                </div>    
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureOffice__c.FileCabinet}">
+                                                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_small">
+                                                    <div class="slds-form-element__control">
+                                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_OfficeFIleCabinet__c}"
+                                                                         label="Enter the number of Filinig Cabinets"
+                                                                         name="COH_UIR_FSC_OfficeFIleCabinet__c"
+                                                                         aura:id="intakeRequestForm"
+                                                                         type="number"
+                                                                         min="0"                                
+                                                                         required="true"/>
+                                                    </div>
+                                                </div>    
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureOffice__c.StorageShelves}">
+                                                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_small">
+                                                    <div class="slds-form-element__control">
+                                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_OfficeStorageShelves__c}"
+                                                                         label="Enter the number of Storage Shelves"
+                                                                         name="COH_UIR_FSC_OfficeStorageShelves__c"
+                                                                         aura:id="intakeRequestForm"
+                                                                         type="number"
+                                                                         min="0"                                
+                                                                         required="true"/>
+                                                    </div>
+                                                </div>    
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureOffice__c.InformalFurniturecoucharmchairsetc}">
+                                                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_small">
+                                                    <div class="slds-form-element__control">
+                                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_OfficeInformalFurniture__c}"
+                                                                         label="Enter the number of 	Informal Furniture (couch, arm chairs, etc.)"
+                                                                         name="COH_UIR_FSC_OfficeInformalFurniture__c"
+                                                                         aura:id="intakeRequestForm"
+                                                                         type="number"
+                                                                         min="0"                                
+                                                                         required="true"/>
+                                                    </div>
+                                                </div>    
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureOffice__c.TrainingRoomTable}">
+                                                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_small">
+                                                    <div class="slds-form-element__control">
+                                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_OfficeTrainingRoomTable__c}"
+                                                                         label="Enter the number of Training Room Tables"
+                                                                         name="COH_UIR_FSC_OfficeTrainingRoomTable__c"
+                                                                         aura:id="intakeRequestForm"
+                                                                         type="number"
+                                                                         min="0"                                
+                                                                         required="true"/>
+                                                    </div>
+                                                </div>    
+                                            </aura:if>
+                                            <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureOffice__c.TrainingRoomChairs}">
+                                                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_small">
+                                                    <div class="slds-form-element__control">
+                                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_OfficeTrainingRoomChairs__c}"
+                                                                         label="Enter the number of Training Room Chairs"
+                                                                         name="COH_UIR_FSC_OfficeTrainingRoomChairs__c"
+                                                                         aura:id="intakeRequestForm"
+                                                                         type="number"
+                                                                         min="0"                                
+                                                                         required="true"/>
+                                                    </div>
+                                                </div>    
+                                            </aura:if>                                                
+                                        </div>        
+                                    </div>
+                                </div>
+                                    
+                                <!-- If Other -->
+                                <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_DesiredFurnitureOffice__c.Other}">
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                            <div class="slds-form-element__control">
+                                                <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_DesiredFurnitureOfficeOther__c}"
+                                                                 label="Enter Other type of furniture"
+                                                                 name="COH_UIR_FSC_DesiredFurnitureOfficeOther__c"
+                                                                 aura:id="intakeRequestForm"
+                                                                 required="true"/>
+                                            </div>
+                                        </div>
+                                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                            <div class="slds-form-element__control">
+                                                <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_OfficeOtherFurniture__C}"
+                                                                 label="Enter the number of Other Furniture"
+                                                                 name="COH_UIR_FSC_OfficeOtherFurniture__C"
+                                                                 aura:id="intakeRequestForm"
+                                                                 type="number"
+                                                                 min="0"
+                                                                 required="true"/>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </aura:if>    
+                                
+                            </aura:if>
+                            <!-- End Office Furniture -->      
+                        </div>
+                    </aura:if>
+                    
+                    <!-- If Sub Request == Artwork -->
+                    <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_SubRequestFurnitureArtwork__c.NewArtwork}">
+                        <div class="slds-box slds-m-around_small slds-box_x-small">
+                            <div class="slds-p-horizontal_medium"><div class="slds-border_bottom"><b>New Artwork Details</b></div></div>                        
+                            <!-- Need artwork for multiple locations -->
+                            <div class="slds-grid slds-wrap">      
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_FSC_PiecesOfArtwork__c}" 
+                                                          label="How many pieces of artwork are needed?"
+                                                          name="COH_UIR_FSC_PiecesOfArtwork__c"
+                                                          aura:id="intakeRequestForm"
+                                                          required="true">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_UIR_FSC_PiecesOfArtwork__c}" var="currentPicklistOption">
+                                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FSC_PiecesOfArtwork__c}">{!currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Artwork Locations -->
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_PiecesOfArtwork__c >= 1}">
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ArtworkBuildingNumber1}"
+                                                             label="1. Enter Desired Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ArtworkBuildingNumber1"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ArtworkFloorNumber1}"
+                                                             label="1. Enter Desired Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ArtworkFloorNumber1"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_PiecesOfArtwork__c >= 2}">
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ArtworkBuildingNumber2}"
+                                                             label="2. Enter Desired Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ArtworkBuildingNumber2"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ArtworkFloorNumber2}"
+                                                             label="2. Enter Desired Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ArtworkFloorNumber2"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_PiecesOfArtwork__c >= 3}">
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ArtworkBuildingNumber3}"
+                                                             label="3. Enter Desired Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ArtworkBuildingNumber3"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ArtworkFloorNumber3}"
+                                                             label="3. Enter Desired Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ArtworkFloorNumber3"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_PiecesOfArtwork__c >= 4}">
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ArtworkBuildingNumber4}"
+                                                             label="4. Enter Desired Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ArtworkBuildingNumber4"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ArtworkFloorNumber4}"
+                                                             label="4. Enter Desired Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ArtworkFloorNumber4"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                </div>                            
+                            </aura:if>
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_PiecesOfArtwork__c >= 5}">
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ArtworkBuildingNumber5}"
+                                                             label="5. Enter Desired Building (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ArtworkBuildingNumber5"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ArtworkFloorNumber5}"
+                                                             label="5. Enter Desired Floor Number (Please do not enter N/A)"
+                                                             name="COH_UIR_FSC_ArtworkFloorNumber5"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                </div>        
+                            </aura:if>
+                            
+                            <!-- Artwork Theme -->
+                            <div class="slds-grid slds-wrap">        
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ArtworkTheme__c}"
+                                                         label="Enter Preferred Artwork Theme"
+                                                         name="COH_UIR_FSC_ArtworkTheme__c"
+                                                         aura:id="intakeRequestForm"
+                                                         required="true"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </aura:if>
+                </div>
+            </div>
+        </aura:if>
+        
+        <!-- If Space Planning -->
+        <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_FacilityRequestType__c == 'Space Planning/Construction'}">
+            <div class="slds-size_1-of-1">
+                <div class="slds-box slds-m-vertical_small slds-box_no-padding">            
+                    <!-- Sub Request Type -->
+                    <div class="slds-grid slds-wrap">        
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:checkboxGroup name="COH_UIR_FSC_SubRequestSpacePlanning__c"
+                                                         label="Select Type of Sub-Request"
+                                                         options="{!v.mPicklists.COH_UIR_FSC_SubRequestSpacePlanning__c}"
+                                                         value="{!v.mCheckboxGroupValues.COH_UIR_FSC_SubRequestSpacePlanning__c}"
+                                                         aura:id="intakeRequestForm"
+                                                         required="true"
+                                                         onchange="{!c.onCheckboxGroupChange}"/>
+                            </div>
+                        </div>            
+                    </div>
+                    
+                    <!-- If New Construction -->
+                    <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_SubRequestSpacePlanning__c.NewConstruction}">
+                        <div class="slds-box slds-m-around_small slds-box_x-small">
+                            <div class="slds-p-horizontal_medium"><div class="slds-border_bottom"><b>New Construction Details</b></div></div>                        
+                            <!-- Completion Date, Require New Lease -->
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_CompletionDateNewConst__c}"
+                                                         label="Desired Time of Completion"
+                                                         name="COH_UIR_FSC_CompletionDateNewConst__c"
+                                                         aura:id="intakeRequestForm"
+                                                         required="true"
+                                                         type="date"/>
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_FSC_RequireNewLease__c}" 
+                                                          label="Would this request require a new lease?"
+                                                          name="COH_UIR_FSC_RequireNewLease__c"
+                                                          aura:id="intakeRequestForm"
+                                                          required="true">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_UIR_FSC_RequireNewLease__c}" var="currentPicklistOption">
+                                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FSC_RequireNewLease__c}">{!currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>                    
+                            </div>
+                            
+                            <!-- Requre Renovation-->
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_FSC_RequireRenovation__c}" 
+                                                          label="Would this request require a renovation of existing space? (ex: moving walls)"
+                                                          name="COH_UIR_FSC_RequireRenovation__c"
+                                                          aura:id="intakeRequestForm"
+                                                          required="true">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_UIR_FSC_RequireRenovation__c}" var="currentPicklistOption">
+                                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FSC_RequireRenovation__c}">{!currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Project Funded, Cost Center -->
+                            <div class="slds-grid slds-wrap">        
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_FSC_ProjectFunded__c}" 
+                                                          label="Is this project funded?"
+                                                          name="COH_UIR_FSC_ProjectFunded__c"
+                                                          aura:id="intakeRequestForm"
+                                                          required="true">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_UIR_FSC_ProjectFunded__c}" var="currentPicklistOption">
+                                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FSC_ProjectFunded__c}">{!currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>
+                                <!-- If Funded -->
+                                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_ProjectFunded__c == 'Yes'}">
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_CostCenter__c}"
+                                                             label="Please enter the cost center information"
+                                                             name="COH_UIR_FSC_CostCenter__c"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>
+                                </aura:if>
+                            </div>
+                            
+                            <!-- Programmatic needs been Identified -->
+                            <div class="slds-grid slds-wrap">        
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_FSC_ProgramNeedsNewConst__c}" 
+                                                          label="Have the programmatic needs been identified?"
+                                                          name="COH_UIR_FSC_ProgramNeedsNewConst__c"
+                                                          aura:id="intakeRequestForm"
+                                                          required="true">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_UIR_FSC_ProgramNeedsNewConst__c}" var="currentPicklistOption">
+                                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FSC_ProgramNeedsNewConst__c}">{!currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>
+                            </div>                  
+                            
+                            <!-- If Programmatic needs identified -->
+                            <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_FSC_ProgramNeedsNewConst__c == 'Yes'}">
+                                <div class="slds-grid slds-wrap">        
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:checkboxGroup name="COH_UIR_FSC_ProgramItems__c"
+                                                                     label="Select program items and quantities"
+                                                                     options="{!v.mPicklists.COH_UIR_FSC_ProgramItems__c}"
+                                                                     value="{!v.mCheckboxGroupValues.COH_UIR_FSC_ProgramItems__c}"
+                                                                     aura:id="intakeRequestForm"
+                                                                     required="true"
+                                                                     onchange="{!c.onCheckboxGroupChange}"/>
+                                        </div>
+                                    </div>
+                                    <!-- If other -->
+                                    <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_ProgramItems__c.Other}">        
+                                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                            <div class="slds-form-element__control">
+                                                <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ProgramItemsOther__c}"
+                                                                 label="If 'Other', please specify"
+                                                                 name="COH_UIR_FSC_ProgramItemsOther__c"
+                                                                 aura:id="intakeRequestForm"
+                                                                 required="true"/>
+                                            </div>
+                                        </div>
+                                    </aura:if>
+                                </div>
+                                <div class="slds-grid slds-wrap">   
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_FSC_ProgramQuantitiesNewConst__c}"
+                                                                label="Enter the number of program quantities"
+                                                                name="COH_UIR_FSC_ProgramQuantitiesNewConst__c"
+                                                                aura:id="intakeRequestForm"
+                                                                required="true"/>
+                                        </div>         
+                                    </div>   
+                                </div>                    
+                            </aura:if>
+                        </div>
+                    </aura:if>
+                    
+                    <!-- If Reconfiguration -->
+                    <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_SubRequestSpacePlanning__c.Reconfiguration}">
+                        <div class="slds-box slds-m-around_small slds-box_x-small">
+                            <div class="slds-p-horizontal_medium"><div class="slds-border_bottom"><b>Reconfiguration Details</b></div></div>                        
+                            <div class="slds-grid slds-wrap">        
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_CompletionDateReconfig__c}"
+                                                         label="Desired Time of Completion"
+                                                         name="COH_UIR_FSC_CompletionDateReconfig__c"
+                                                         aura:id="intakeRequestForm"
+                                                         required="true"
+                                                         type="date"/>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-grid slds-wrap">        
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:checkboxGroup name="COH_UIR_FSC_ReconfigGoals__c"
+                                                                 label="What is the goal of the reconfiguration?"
+                                                                 options="{!v.mPicklists.COH_UIR_FSC_ReconfigGoals__c}"
+                                                                 value="{!v.mCheckboxGroupValues.COH_UIR_FSC_ReconfigGoals__c}"
+                                                                 aura:id="intakeRequestForm"
+                                                                 required="true"
+                                                                 onchange="{!c.onCheckboxGroupChange}"/>
+                                    </div>
+                                </div>
+                                <!-- If Other -->
+                                <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_UIR_FSC_ReconfigGoals__c.Other}">
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input value="{!v.mIntakeRequest.COH_UIR_FSC_ReconfigGoalsOther__c}"
+                                                             label="If 'Other', please specify"
+                                                             name="COH_UIR_FSC_ReconfigGoalsOther__c"
+                                                             aura:id="intakeRequestForm"
+                                                             required="true"/>
+                                        </div>
+                                    </div>        
+                                </aura:if>
+                            </div>                
+                            
+                            <div class="slds-grid slds-wrap">        
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_FSC_ProgramNeedsReconfig__c}" 
+                                                          label="Have the programmatic needs been identified?"
+                                                          name="COH_UIR_FSC_ProgramNeedsReconfig__c"
+                                                          aura:id="intakeRequestForm"
+                                                          required="true">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_UIR_FSC_ProgramNeedsReconfig__c}" var="currentPicklistOption">
+                                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_FSC_ProgramNeedsReconfig__c}">{!currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_FSC_ProgramQuantitiesReconfig__c}"
+                                                            label="Select program items and quantities"
+                                                            name="COH_UIR_FSC_ProgramQuantitiesReconfig__c"
+                                                            aura:id="intakeRequestForm"
+                                                            required="true"/>
+                                    </div>         
+                                </div>    
+                            </div>
+                        </div>
+                    </aura:if>
+                </div>
+            </div>
+        </aura:if>
+    </div>
+</aura:component>

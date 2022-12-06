@@ -1,0 +1,211 @@
+<template>
+    <div if:true={isLoading}> class="slds-is-relative">
+        <lightning-spinner alternative-text="Loading...."></lightning-spinner>
+    </div>
+    <template if:true={AccountMRN}>
+        <lightning-card>
+            <h3 slot = "title">
+                <div class="slds-m-around_small">
+                    <lightning-icon icon-name="standard:unified_health_score" size="medium"></lightning-icon>
+                    &nbsp; | Referring Doctor
+                </div>
+            </h3>
+            <lightning-record-view-form record-id={epicAccountDataId} object-api-name="Epic_Account_Data__c">
+                <div class="slds-box slds-theme_default">
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-size_1-of-2">
+                            <label for="Referring_Doctor__c">Referring Doctor</label>
+                            <lightning-output-field field-name="Referring_Doctor__c" variant="label-hidden" id="Referring_Doctor__c"> </lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2">
+                            <label for="Epic_Referring_Doctor_Provider_Id__c">Epic Provider Id</label>
+                            <lightning-output-field field-name="Epic_Referring_Doctor_Provider_Id__c" variant="label-hidden" id="Epic_Referring_Doctor_Provider_Id__c"> </lightning-output-field>
+                        </div>
+                    </div><br/>
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-size_1-of-2">
+                            <label for="Referring_Doctor_First_Name__c">First Name</label>
+                            <lightning-output-field field-name="Referring_Doctor_First_Name__c" variant="label-hidden" id="Referring_Doctor_First_Name__c"> </lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2">
+                            <label for="Referring_Doctor_Provider_Id__c">Provider Id</label>
+                            <lightning-output-field field-name="Referring_Doctor_Provider_Id__c" variant="label-hidden" id="Referring_Doctor_Provider_Id__c"> </lightning-output-field>
+                        </div>
+                    </div><br/>
+                        <div class="sizing slds-grid slds-wrap">
+                            <div class="slds-size_1-of-2">
+                                <label for="Referring_Doctor_Last_Name__c">Last Name</label>
+                                <lightning-output-field field-name="Referring_Doctor_Last_Name__c" variant="label-hidden" id="Referring_Doctor_Last_Name__c"> </lightning-output-field>
+                            </div>
+                            <div class="slds-size_1-of-2">
+                                <label for="Attending_NPI__c">NPI</label>
+                                <lightning-output-field field-name="Referring_NPI__c" variant="label-hidden" id="Referring_NPI__c"> </lightning-output-field>
+                            </div>
+                        </div><br/>
+                        <div class="sizing slds-grid slds-wrap">
+                            <div class="slds-size_1-of-2">
+                            </div>
+                            <div class="slds-size_1-of-2">
+                                <label for="Referring_Doctor_Department__c">Department</label>
+                                <lightning-output-field field-name="Referring_Doctor_Department__c" variant="label-hidden" id="Referring_Doctor_Department__c"> </lightning-output-field>
+                            </div>        
+                    </div><br/>    
+                </div>                 
+            </lightning-record-view-form>
+        </lightning-card>
+        <lightning-card>
+            <h3 slot = "title">
+                <div class="slds-m-around_small">
+                    <lightning-icon icon-name="standard:unified_health_score" size="medium"></lightning-icon>
+                    &nbsp; | Original Referring Doctor
+                </div>
+            </h3>
+            <lightning-record-view-form record-id={epicAccountDataId} object-api-name="Epic_Account_Data__c">
+                <div class="slds-box slds-theme_default">
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-size_1-of-2">
+                            <label for="Original_Referring_Doctor__c">Original Referring Doctor</label>
+                            <lightning-output-field field-name="Original_Referring_Doctor__c" variant="label-hidden" id="Original_Referring_Doctor__c"> </lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2">
+                            <label for="Epic_Orig_Referring_Doctor_Provider_Id__c">Epic Provider Id</label>
+                            <lightning-output-field field-name="Epic_Orig_Referring_Doctor_Provider_Id__c" variant="label-hidden" id="Epic_Orig_Referring_Doctor_Provider_Id__c"> </lightning-output-field>
+                        </div>
+                    </div><br/>
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-size_1-of-2">
+                            <label for="Consulting_Doctor_First_Name__c">First Name</label>
+                            <lightning-output-field field-name="Original_Referring_Doctor_First_Name__c" variant="label-hidden" id="Original_Referring_Doctor_First_Name__c"> </lightning-output-field>
+                        </div>
+                        <div class="slds-size_1-of-2">
+                            <label for="Original_Referring_Doctor_Provider_Id__c">Provider Id</label>
+                            <lightning-output-field field-name="Original_Referring_Doctor_Provider_Id__c" variant="label-hidden" id="Original_Referring_Doctor_Provider_Id__c"> </lightning-output-field>
+                        </div>
+                    </div><br/>
+                        <div class="sizing slds-grid slds-wrap">
+                            <div class="slds-size_1-of-2">
+                                <label for="Original_Referring_Doctor_Last_Name__c">Last Name</label>
+                                <lightning-output-field field-name="Original_Referring_Doctor_Last_Name__c	" variant="label-hidden" id="Original_Referring_Doctor_Last_Name__c"> </lightning-output-field>
+                            </div>
+                            <div class="slds-size_1-of-2">
+                                <label for="Original_Referring_NPI__c">NPI</label>
+                                <lightning-output-field field-name="Original_Referring_NPI__c" variant="label-hidden" id="Original_Referring_NPI__c"> </lightning-output-field>
+                            </div>
+                        </div><br/>
+                        <div class="sizing slds-grid slds-wrap">
+                            <div class="slds-size_1-of-2">
+                            </div>
+                            <div class="slds-size_1-of-2">
+                                <label for="Original_Referring_Doctor_Department__c">Department</label>
+                                <lightning-output-field field-name="Original_Referring_Doctor_Department__c" variant="label-hidden" id="Original_Referring_Doctor_Department__c"> </lightning-output-field>
+                            </div>
+                        </div><br/>     
+                </div>                 
+            </lightning-record-view-form>
+        </lightning-card>
+    </template>
+    <template if:false={AccountMRN}>
+        <lightning-card>
+            <h3 slot = "title">
+                <div class="slds-m-around_small">
+                    <lightning-icon icon-name="standard:unified_health_score" size="medium"></lightning-icon>
+                    &nbsp; | Referring Doctor
+                </div>
+            </h3>
+            <lightning-record-edit-form record-id={epicAccountDataId} object-api-name="Epic_Account_Data__c" onsuccess={handleSuccessProvider1} onsubmit={handleSubmit}>
+                <div class="slds-box slds-theme_default">
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="editReferring_Doctor__c">Referring Doctor</label>
+                            <lightning-input-field field-name="Referring_Doctor__c" variant="label-hidden" id="editReferring_Doctor__c"> </lightning-input-field>
+                        </div>
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="editEpic_Referring_Doctor_Provider_Id__c">Epic Referring Doctor Provider Id</label>
+                            <lightning-input-field field-name="Epic_Referring_Doctor_Provider_Id__c" variant="label-hidden" id="editEpic_Referring_Doctor_Provider_Id__c"> </lightning-input-field>
+                        </div>
+                    </div><br/>
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="editReferring_Doctor_First_Name__c">First Name</label>
+                            <lightning-output-field field-name="Referring_Doctor_First_Name__c" variant="label-hidden" id="editReferring_Doctor_First_Name__c"> </lightning-output-field>
+                        </div>
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="editReferring_Doctor_Provider_Id__c">Provider Id</label>
+                            <lightning-output-field field-name="Referring_Doctor_Provider_Id__c" variant="label-hidden" id="editReferring_Doctor_Provider_Id__c"> </lightning-output-field>
+                        </div>
+                    </div><br/>
+                        <div class="sizing slds-grid slds-wrap">
+                            <div class="slds-col--padded slds-size_1-of-2">
+                                <label for="editReferring_Doctor_Last_Name__c">Last Name</label>
+                                <lightning-output-field field-name="Referring_Doctor_Last_Name__c" variant="label-hidden" id="editReferring_Doctor_Last_Name__c"> </lightning-output-field>
+                            </div>
+                            <div class="slds-col--padded slds-size_1-of-2">
+                                <label for="editReferring_NPI__c">NPI</label>
+                                <lightning-output-field field-name="Referring_NPI__c" variant="label-hidden" id="editReferring_NPI__c"> </lightning-output-field>
+                            </div>
+                        </div><br/>
+                        <div class="sizing slds-grid slds-wrap">
+                            <div class="slds-col--padded slds-size_1-of-2">
+                            </div>
+                            <div class="slds-col--padded slds-size_1-of-2">
+                                <label for="editReferring_Doctor_Department__c">Department</label>
+                                <lightning-output-field field-name="Referring_Doctor_Department__c" variant="label-hidden" id="editReferring_Doctor_Department__c"> </lightning-output-field>
+                            </div>
+                        </div><br/>    
+                    <lightning-button variant="brand" type="submit" label="Update"></lightning-button>
+                </div>                 
+            </lightning-record-edit-form>
+        </lightning-card>
+        <lightning-card>
+            <h3 slot = "title">
+                <div class="slds-m-around_small">
+                    <lightning-icon icon-name="standard:unified_health_score" size="medium"></lightning-icon>
+                    &nbsp; | Original Referring Doctor
+                </div>
+            </h3>
+            <lightning-record-edit-form record-id={epicAccountDataId} object-api-name="Epic_Account_Data__c" onsuccess={handleSuccessProvider2} onsubmit={handleSubmit}>
+                <div class="slds-box slds-theme_default">
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="editOriginal_Referring_Doctor__c">Original Referring Doctor</label>
+                            <lightning-input-field field-name="Original_Referring_Doctor__c" variant="label-hidden" id="editOriginal_Referring_Doctor__c"> </lightning-input-field>
+                        </div>
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="editEpic_Orig_Referring_Doctor_Provider_Id__c">Epic Original Referring Doctor Provider Id</label>
+                            <lightning-input-field field-name="Epic_Orig_Referring_Doctor_Provider_Id__c" variant="label-hidden" id="editEpic_Orig_Referring_Doctor_Provider_Id__c"> </lightning-input-field>
+                        </div>
+                    </div><br/>
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="editOriginal_Referring_Doctor_First_Name__c">First Name</label>
+                            <lightning-output-field field-name="Original_Referring_Doctor_First_Name__c" variant="label-hidden" id="editOriginal_Referring_Doctor_First_Name__c"> </lightning-output-field>
+                        </div>
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <label for="editOriginal_Referring_Doctor_Provider_Id__c">Provider Id</label>
+                            <lightning-output-field field-name="Original_Referring_Doctor_Provider_Id__c" variant="label-hidden" id="editOriginal_Referring_Doctor_Provider_Id__c"> </lightning-output-field>
+                        </div>
+                    </div><br/>
+                        <div class="sizing slds-grid slds-wrap">
+                            <div class="slds-col--padded slds-size_1-of-2">
+                                <label for="editOriginal_Referring_Doctor_Last_Name__c">Last Name</label>
+                                <lightning-output-field field-name="Original_Referring_Doctor_Last_Name__c" variant="label-hidden" id="editOriginal_Referring_Doctor_Last_Name__c"> </lightning-output-field>
+                            </div>
+                            <div class="slds-col--padded slds-size_1-of-2">
+                                <label for="editOriginal_Referring_NPI__c">NPI</label>
+                                <lightning-output-field field-name="Original_Referring_NPI__c" variant="label-hidden" id="editOriginal_Referring_NPI__c"> </lightning-output-field>
+                            </div>
+                        </div><br/>
+                        <div class="sizing slds-grid slds-wrap">
+                            <div class="slds-col--padded slds-size_1-of-2">
+                            </div>
+                            <div class="slds-col--padded slds-size_1-of-2">
+                                <label for="editOriginal_Referring_Doctor_Department__c">Department</label>
+                                <lightning-output-field field-name="Original_Referring_Doctor_Department__c" variant="label-hidden" id="editOriginal_Referring_Doctor_Department__c"> </lightning-output-field>
+                            </div>
+                        </div><br/>    
+                    <lightning-button variant="brand" type="submit" label="Update"></lightning-button>
+                </div>                 
+            </lightning-record-edit-form>
+        </lightning-card>
+    </template>
+</template>

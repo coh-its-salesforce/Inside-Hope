@@ -1,0 +1,199 @@
+<apex:page StandardController="BMCServiceDesk__BMC_BaseElement__c" extensions="VFC_CreateCI" sidebar="false" showHeader="false" showChat="false" id="thePage" title="Manage Configuration Items">
+<!-- CSS -->
+<style>
+.searchClass {
+  font-weight: bold;
+  padding: 2px 5px 2px 2px;
+}
+.rich-tab-inactive {
+  background-color: #000000;
+  }
+.tabClass{
+  background-image:none;
+  background-color: #ffffff;
+  color: #000;
+  border-bottom-color: #C0C0C0;
+  border-right-color: #C0C0C0;
+  border-left-color: #C0C0C0;
+  font-size: 11px;
+  font-family: Arial;
+}
+.highlight
+    {
+        background-color: #ffa;
+    }
+</style>
+<apex:pagemessages escape="false"></apex:pagemessages>
+<apex:form id="theForm">
+<apex:tabPanel id="thePanel">
+<apex:tab label="Search Configuration Item" styleClass="tabClass" id="theTab2">
+    <apex:pageBlock id="thePageblock2">
+        <apex:pageBlockSection columns="2" >
+            <apex:pageBlockSectionItem >
+                <apex:outputPanel ><apex:outputLabel styleClass="searchClass">Search</apex:outputLabel>&nbsp;
+                <apex:inputText value="{!searchStr}"/>&nbsp;&nbsp;&nbsp;
+                <apex:commandButton value="Go!" action="{!SearchItems}"/> &nbsp;
+                <apex:commandButton value="Cancel" onclick="window.top.close();" />
+                </apex:outputPanel>  
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:commandButton action="{!saveme}" id="saveButton" value="Update Configuration Item" rendered="{!showSearchResults}"/>
+            </apex:pageBlockSectionItem>
+        
+        </apex:pageBlockSection>
+
+        <apex:pageblockSection columns="1" title="{!searchResults }" collapsible="false" id="theSection2" >
+            <apex:variable var="rowNum" value="{!0}" /> 
+            <apex:pageBlockTable value="{!SearchList }" var="ci" rendered="{!showSearchResults}">
+                <apex:column headerValue="Action" width="50px"> 
+                    <apex:commandLink value="Delete" action="{!removeCI}">
+                        <apex:param value="{!rowNum}" name="index" />
+                    </apex:commandLink>  
+                    <apex:variable var="rowNum" value="{!rowNum+1}" />
+                </apex:column> 
+
+                <apex:column headerValue="Name" width="200px">              
+                    <apex:outputField value="{!ci.name}">
+                        <!-- <apex:inlineEditSupport showOnEdit="saveButton" hideOnEdit="" event="ondblclick" resetFunction="resetInlineEdit"/> -->
+                    </apex:outputField>
+                    </apex:column>                
+                <apex:column headerValue="MFG" width="200px">
+                    <apex:outputField value="{!ci.BMCServiceDesk__ManufacturerName__c}">
+                        <apex:inlineEditSupport showOnEdit="saveButton" hideOnEdit="" event="ondblclick" resetFunction="resetInlineEdit"/>
+                    </apex:outputField>
+                </apex:column>                 
+                <apex:column headerValue="Model" width="200px">
+                    <apex:outputField value="{!ci.BMCServiceDesk__Model__c}">
+                        <apex:inlineEditSupport showOnEdit="saveButton" hideOnEdit="" event="ondblclick" resetFunction="resetInlineEdit"/>
+                    </apex:outputField>
+                </apex:column>                 
+                <apex:column headerValue="MFG SN" width="200px">
+                    <apex:outputField value="{!ci.BMCServiceDesk__SerialNumber__c}">
+                        <apex:inlineEditSupport showOnEdit="saveButton" hideOnEdit="" event="ondblclick" resetFunction="resetInlineEdit"/>
+                    </apex:outputField>
+                </apex:column>                
+                <apex:column headerValue="Asset Tag"  width="200px">
+                    <apex:outputField value="{!ci.BMCServiceDesk__CITag__c}">
+                        <apex:inlineEditSupport showOnEdit="saveButton" hideOnEdit="" event="ondblclick" resetFunction="resetInlineEdit"/>
+                    </apex:outputField>                
+                </apex:column>                
+                <apex:column headerValue="Assigned to" width="200px">
+                    <apex:outputField value="{!ci.BMCServiceDesk__PrimaryClient__c}">
+                        <apex:inlineEditSupport showOnEdit="saveButton" hideOnEdit="" event="ondblclick" resetFunction="resetInlineEdit"/>
+                    </apex:outputField>
+                </apex:column>  
+            </apex:pageBlockTable>
+        </apex:pageblockSection>
+    </apex:pageBlock>
+</apex:tab>
+
+
+<apex:tab label="Create Configuration Item" styleClass="tabClass" id="theTab3">
+    <apex:pageBlock id="thePageblock3" rendered="{!NOT(created) && NOT(preview)}">
+        <apex:pageBlockSection columns="2" title="Create Configuration Item" collapsible="false" id="theSection3" rendered="{!NOT(created) && NOT(preview)}">
+            <apex:pageBlockSectionItem >
+                <apex:outputText >Name</apex:outputText>
+                <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                    <apex:inputField value="{!ci.name}" styleClass="{!if(conflictname == true, 'highlight', '')}"/>
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputText >Manufacturer Name</apex:outputText>
+                <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                    <apex:inputField value="{!ci.BMCServiceDesk__ManufacturerName__c}"/>
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputText >Model</apex:outputText>
+                <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                    <apex:inputField value="{!ci.BMCServiceDesk__Model__c}"/>
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputText >Serial #</apex:outputText>
+                <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                    <apex:inputField value="{!ci.BMCServiceDesk__SerialNumber__c}" styleClass="{!if(conflictSno == true, 'highlight', '')}"/>
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputText >Asset #</apex:outputText>
+                <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                    <apex:inputField value="{!ci.BMCServiceDesk__CITag__c}" styleClass="{!if(conflictAsset == true, 'highlight', '')}"/>
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:inputField value="{!ci.BMCServiceDesk__PrimaryClient__c}" id="client"/>
+            <apex:pageBlockSectionItem >
+                <apex:outputText >Class</apex:outputText>
+                <apex:outputPanel layout="block" styleClass="requiredInput">
+                    <apex:outputPanel layout="block" styleClass="requiredBlock"/>
+                    <apex:selectList id="classes" value="{!classsel}" size="1" title="Class">
+                        <apex:selectOptions value="{!classes}"></apex:selectOptions>
+                    </apex:selectList>
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Validate" action="{!validate}" rendered="{!NOT(flagConflict && flag)}"/>
+            <apex:commandButton value="Re-Validate" action="{!validate}" rendered="{!flagConflict && flag}"/>
+            <apex:commandButton value=" Exit" onclick="window.top.close();" rendered="{!NOT(flagConflict && flag)}"/>
+            <apex:commandButton value="Exit without Saving" onclick="window.top.close();" rendered="{!flagConflict && flag}"/>
+        </apex:pageBlockButtons>
+    </apex:pageBlock>
+        
+    <apex:pageBlock rendered="{!flagConflict && flag}">
+        <apex:pageBlockSection rendered="{!flagConflict && flag}" columns="1" title="Duplicates Found!" collapsible="false">
+            <apex:pageBlockTable value="{!ListConflictCI }" var="ci" >
+                <apex:column value="{!ci.name}" width="200px"/>
+                <apex:column value="{!ci.BMCServiceDesk__ManufacturerName__c}" width="200px"/>
+                <apex:column value="{!ci.BMCServiceDesk__Model__c}" width="200px"/>
+                <apex:column value="{!ci.BMCServiceDesk__SerialNumber__c}" width="200px"/>
+                <apex:column value="{!ci.BMCServiceDesk__CITag__c}" width="200px"/>
+                <apex:column value="{!ci.BMCServiceDesk__PrimaryClient__c}" width="200px"/>
+                <apex:column value="{!ci.BMCServiceDesk__ClassName__c}" width="200px"/>
+            </apex:pageBlockTable>
+        </apex:pageBlockSection>
+    </apex:pageblock>
+    
+    <apex:pageblock mode="{!if(created == true,'mainDetail','')}" rendered="{!(Not(flagConflict ) && flag && Preview) || created}">
+        <apex:pageBlockSection title="{!if(created == true,ci.name,'Preview')}"  columns="2" collapsible="false">
+            <apex:outputField value="{!ci.name}" style="background-color: #ffa;"></apex:outputField>
+            <apex:outputField value="{!ci.BMCServiceDesk__ManufacturerName__c}"/>
+            <apex:outputField value="{!ci.BMCServiceDesk__Model__c}"/>
+            <apex:outputField value="{!ci.BMCServiceDesk__SerialNumber__c}"/>
+            <apex:outputField value="{!ci.BMCServiceDesk__CITag__c}"/>
+            <apex:outputField value="{!ci.BMCServiceDesk__PrimaryClient__c}"/>
+            <apex:pageBlockSectionItem >
+                <apex:outputText >Class</apex:outputText>
+                <apex:outputText value="{!classSelName}"/>
+             </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+            <apex:commandButton value="Save" rendered="{!Not(flagConflict ) && Not(Created)}" action="{!createCI}" />
+            <apex:commandButton value="Cancel" rendered="{!Not(flagConflict ) && Not(Created)}" action="{!reValidateScreen}"/>
+            <apex:commandButton value="Exit without Saving" onclick="window.top.close();" rendered="{!Not(flagConflict ) && Not(Created)}" />
+            <apex:commandButton value="CREATE NEW" rendered="{!Not(flagConflict ) && (Created)}" action="{!createNew}" />
+            <apex:commandButton value="Exit" onclick="window.top.close();" rendered="{!Not(flagConflict ) && (Created)}" />
+        </apex:pageBlockButtons>
+    </apex:pageblock>
+</apex:tab>
+</apex:tabPanel>
+</apex:form>
+
+<!-- javaScript -->
+<script>
+window.onload=function(){
+var divNxt = document.getElementById("{!$Component.theForm.thePageblock3.theSection3.client}").parentNode.parentNode.firstChild;
+divNxt.style.display='none';
+};
+</script>
+
+</apex:page>

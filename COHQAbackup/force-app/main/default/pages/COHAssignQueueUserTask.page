@@ -1,0 +1,66 @@
+<apex:page standardController="BMCServiceDesk__Task__c" extensions="ChangeOwnerWithNoteTaskController" sidebar="false" showHeader="false">
+<apex:includeScript value="{!URLFOR($Resource.jquery, 'jquery/jquery-1.10.2.min.js')}" />
+<apex:includeScript value="{!URLFOR($Resource.jquery, 'jquery/ui/jquery-ui.min.js')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.jquery, 'jquery/themes/smoothness/jquery-ui.css')}"/>
+<script type="text/javascript">
+//jQuery used for runtime validation
+	var $j = jQuery.noConflict();
+	$j(document).ready(function(){
+
+	//Hide the necessary fields and labels on load
+		$j('[id$=saveButton]').hide();
+		var tskState = {!state};
+        if (tskState == false){
+        	$j('[id$=Queues]').attr("disabled", "disabled");
+            $j('[id$=Staff]').attr("disabled", "disabled");
+            $j('[id$=inote]').attr("disabled", "disabled");
+        }
+        
+		$j('[id$=note]').bind('input propertychange', function(e){
+			var notesValue = $j('[id$=note]').val();
+			if (notesValue.length > 0 ){
+				$j('[id$=saveButton]').show();				
+			} else {
+            	$j('[id$=saveButton]').hide();    
+            }
+		});
+
+	});
+	
+</script>
+    <script>document.getElementById('{!$Component.inote}').disabled = {!state}; </script>
+
+    <apex:form id="changeOwnerForm" target="_parent">
+		<apex:actionFunction name="CallSave" />
+    	<apex:pageBlock mode="maindetail" id="block">
+	    	<apex:pageBlockButtons location="top">
+	    		<apex:commandButton value="Save" action="{!save}" id="saveButton" />
+	    	</apex:pageBlockButtons>
+	    	<apex:pageMessages />
+		<apex:pageBlockSection columns="1" showHeader="false" id="pbs">
+	    	<apex:pageBlockSectionItem id="pbsi">
+	    		<apex:outputLabel value="Queue Name" for="Queues" />
+	    		<apex:outputPanel id="op">
+			    	<apex:selectList size="1" value="{!selectedQueue}" id="Queues">
+			    		<apex:selectOptions value="{!QueueList}" />
+			    		<apex:actionSupport event="onchange" rerender="Staff" />
+			    	</apex:selectList>
+		    	</apex:outputPanel>
+		    </apex:pageBlockSectionItem>
+		    <apex:pageBlockSectionItem id="pbsi1">
+		    		<apex:outputLabel value="Staff Name" for="Staff" />
+			    	<apex:selectList size="1" value="{!selectedStaff}" id="Staff">
+			    		<apex:selectOptions value="{!StaffList}" />
+			    	</apex:selectList>        
+		    </apex:pageBlockSectionItem>
+		    <apex:pageBlockSectionItem id="pbsi2"> 
+		    		<apex:outputLabel value="Please enter a reason for Re-assigning the Task:" style="color:red;" for="inote" id="lblNote" />
+		    		<apex:inputTextArea id="inote" cols="120" rows="4" value="{!task.BMCServiceDesk__note__c}"/>
+		    </apex:pageBlockSectionItem>
+            <script>document.getElementById('{!$Component.Staff}').disabled = {!state}; </script>
+            <script>document.getElementById('{!$Component.Queues}').disabled = {!state}; </script>
+            
+	    </apex:pageBlockSection>
+		</apex:pageBlock>
+    </apex:form>
+</apex:page>

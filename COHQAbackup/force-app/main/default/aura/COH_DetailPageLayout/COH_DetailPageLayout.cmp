@@ -1,0 +1,55 @@
+<aura:component implements="forceCommunity:themeLayout" access="global" description="Sample Custom Theme Layout">
+    <aura:attribute name="search" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="profileMenu" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="navBar" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="newFooter" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="navigationBar" type="Aura.Component[]"/>
+    
+    <aura:attribute name="newHeader" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="section_title_1" type="Aura.Component[]"/>
+    <aura:attribute name="section_title_2" type="Aura.Component[]"/>
+    <aura:attribute name="section_title_3" type="Aura.Component[]"/>
+    <aura:attribute name="section_title_4" type="Aura.Component[]"/>
+    
+    <aura:attribute name="section_title_1a" type="Aura.Component[]"/>
+    <aura:attribute name="section_title_2a" type="Aura.Component[]"/>
+    <aura:attribute name="section_title_3a" type="Aura.Component[]"/>
+    <aura:attribute name="section_title_4a" type="Aura.Component[]"/>
+    <!-- <aura:attribute name="section_title_5a" type="Aura.Component[]"/>
+   
+    <aura:attribute name="section_title_1aa" type="Aura.Component[]"/>
+    <aura:attribute name="section_title_2aa" type="Aura.Component[]"/>
+    <aura:attribute name="section_title_3aa" type="Aura.Component[]"/>
+    <aura:attribute name="section_title_4aa" type="Aura.Component[]"/>
+-->
+    <aura:attribute name="section_2" type="Aura.Component[]"/>
+    <aura:attribute name="Announcement" type="Aura.Component[]"/>
+
+    <aura:attribute name="isDesktop" type="Boolean" default="false"/>
+    <aura:attribute name="isMobile" type="Boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div>
+        
+        
+        <c:COH_Header showShortcut="true"  profileMenuChild="{!v.profileMenu}" searchChild="{!v.search}"></c:COH_Header>
+        
+        
+        <div class="navigation" >
+            <!-- <c:COH_NavigationBar/> -->
+           <!-- <c:COH_Navigation_Menu/>
+            {!v.navBar}-->
+            <c:COH_Navigation_Menu/>
+        </div>
+
+        <div class="section">
+         
+           {!v.body}               
+        </div>
+         <div class="section">
+         
+          {!v.newFooter}
+            
+        </div>
+        
+    </div>
+</aura:component>

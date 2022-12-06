@@ -1,0 +1,372 @@
+<apex:page showHeader="true" sidebar="false" id="page" controller="TimesheetControllerNew" docType="html-5.0">
+  <apex:sectionHeader title="Time and Effort Tracking"/>
+  <apex:includeScript value="//code.jquery.com/jquery-1.11.2.min.js"/>
+  <style> 
+    .button {
+      border: 1px solid #0a3c59 !important;
+      background: #3e779d !important;
+
+      background: -webkit-gradient(linear, left top, left bottom, from(#65a9d7), to(#3e779d)) !important;
+      background: -webkit-linear-gradient(top, #65a9d7, #3e779d) !important;
+      background: -moz-linear-gradient(top, #65a9d7, #3e779d) !important;
+      background: -ms-linear-gradient(top, #65a9d7, #3e779d) !important;
+      background: -o-linear-gradient(top, #65a9d7, #3e779d) !important;
+      background-image: -ms-linear-gradient(top, #65a9d7 0%, #3e779d 100%) !important;
+      padding: 7.5px 15px !important;
+      -webkit-border-radius: 9px !important;
+      -moz-border-radius: 9px !important;
+      border-radius: 9px !important;
+      -webkit-box-shadow: rgba(255,255,255,0.4) 0 0px 0, inset rgba(255,255,255,0.4) 0 0px 0 !important;
+      -moz-box-shadow: rgba(255,255,255,0.4) 0 0px 0, inset rgba(255,255,255,0.4) 0 0px 0 !important;
+      box-shadow: rgba(255,255,255,0.4) 0 0px 0, inset rgba(255,255,255,0.4) 0 0px 0 !important;
+      text-shadow: #7ea4bd 0 1px 0 !important;
+      color: black !important;//#f2f7fa
+      font-size: 13px !important;
+      font-family: helvetica, serif !important;
+      text-decoration: none !important;
+      vertical-align: middle !important;
+     }
+      
+      /* Tooltip container */
+      .tooltip {
+      position: relative;
+      display: inline-block;
+      border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+      }
+      
+      /* Tooltip text */
+      .tooltip .tooltiptext {
+      visibility: hidden;
+      background-color: black;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      border-radius: 6px;
+      
+      /* Position the tooltip text - see examples below! */
+      position: absolute;
+      z-index: 1;
+      bottom: 100%;
+      left: 50%; 
+      margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+      }
+      
+      /* Show the tooltip text when you mouse over the tooltip container */
+      .tooltip:hover .tooltiptext {
+      visibility: visible;
+      }
+      
+      .informationLabels{
+          color: #4a4a56; 
+          text-align: right; 
+          font-size: 91%; 
+          font-weight: bold; 
+          padding-right: 20px;
+      }
+  </style>
+
+  <script>
+    function checkMethod(e){
+        if(e.which == 13)
+            e.preventDefault();
+    }
+  </script>
+  <span>Please <a href="https://cityofhope--c.na51.visual.force.com/apex/COHTimeEffort?sfdc.tabName=01r0V000001h0rO">Click Here</a> to go to the new timesheet</span>
+  <apex:form id="form" style="display:none">
+    <apex:actionFunction name="recalculateTotal" action="{!calculateTotalHours}" reRender="script,table" oncomplete="onCompleteRun();">
+      <apex:param value="" name="compId" assignTo="{!componentID}"/>
+    </apex:actionFunction> 
+      <apex:inputHidden id="comId"/>
+      <apex:pageblock id="panel">
+          <apex:pageMessages ></apex:pageMessages>
+          <apex:pageblockSection title="Information" id="sect1">
+              <apex:pageblockSectionItem >
+                  <apex:outputLabel value="Week"></apex:outputLabel>
+                  <apex:outputPanel >
+                     <apex:outputText value="{!selectedWeek}" label="Week" style="font-size:15px;" rendered="{!NOT(isCustomdate)}"/>
+                      <apex:outputPanel rendered="{!isCustomdate}" >
+                          <apex:inputField value="{!tr.Date__c}"/>
+                          <apex:commandButton value="Go" action="{!findCustomWeek}" status="loading" rerender="panel,script"/>
+                      </apex:outputPanel>
+                      <div>
+                          <apex:outputPanel rendered="{!NOT(isCustomdate)}">
+                          <apex:commandbutton value="Previous" status="loading" action="{!gotoPreviousWeek}" disabled="{!isInvalidWeek}" rerender="panel,script"/>
+                          <apex:commandbutton value="Current" style="margin-left:5px;" status="loading" action="{!goToCurrentWeek}" disabled="{!isCurretWeek}" rerender="panel,script"/>
+                          <apex:commandbutton value="Next" style="margin-left:5px;" status="loading" action="{!gotoNextWeek}" disabled="{!isCurretWeek}" rerender="panel,script"/>
+                          <apex:commandButton value="Custom" action="{!enterCustom}" status="loading" rerender="panel,script"/>
+                          </apex:outputPanel>
+                          <apex:actionStatus id="loading">
+                                 <apex:facet name="start">
+                                     <img src="/img/loading.gif" />
+                                 </apex:facet>
+                                 
+                             </apex:actionStatus>
+                      </div>    
+                  </apex:outputPanel>
+              </apex:pageblockSectionItem>
+              <apex:pageblockSectionItem >
+                  <apex:outputPanel >
+                  <apex:outputLabel value="Status" styleClass="informationLabels"></apex:outputLabel>
+                  <apex:outputField value="{!tsWeek.Status__c}"/>
+                  <div>
+                      <apex:outputLabel value="Last Saved/Submitted (Week)" styleClass="informationLabels"></apex:outputLabel>
+                      <apex:outputLabel value="{!lastSavedOn}"/>                      
+                  </div>
+                      </apex:outputPanel>
+              </apex:pageblockSectionItem>
+              
+          </apex:pageblockSection>
+          
+          <apex:pageblockSection title="Time Record for the week" columns="1" id="sect2">
+              
+              <apex:outputPanel id="table">
+                   <table class="list" border="0" cellspacing="0" cellpadding="0">
+                       <tr class="headerRow">
+                           <th></th><th></th><th></th><th></th><th></th>
+                           <apex:outputPanel rendered="{!linkAgileAcceleratorToTimesheet}" layout="none">
+                              <th></th><th></th>
+                           </apex:outputPanel>   
+                           <apex:repeat value="{!weekDates}" var="wd">
+                               <th>{!wd.dateStr}</th>
+                           </apex:repeat>
+                           <th></th>
+                       </tr>
+                       <tr class="headerRow">
+                           <th>
+                           </th>
+                           <th>
+                               <div class="tooltip">Activity
+                                   <span class="tooltiptext">{!$Label.Timesheet_Activity}</span>
+                               </div>
+                           </th>
+                           <th>                               
+                               <div class="tooltip">Activity Type
+                                   <span class="tooltiptext">{!$Label.Timesheet_Activity_Type}</span>
+                               </div>
+                           </th>
+                           <th>
+                               <div class="tooltip">Activity Sub Type
+                                   <span class="tooltiptext">{!$Label.Timesheet_Activity_Sub_Type}</span>
+                               </div>
+                           </th>
+                           <apex:outputPanel rendered="{!linkAgileAcceleratorToTimesheet}" layout="none">
+                              <th>
+                                 <div class="tooltip">User Story
+                                     <span class="tooltiptext">{!$Label.Timesheet_User_Story}</span>
+                                 </div>
+                             </th>
+                              <th>
+                                 <div class="tooltip">Task
+                                     <span class="tooltiptext">{!$Label.Timesheet_Task}</span>
+                                 </div>
+                             </th>
+                           </apex:outputPanel>                           
+                           <th>
+                               <div class="tooltip">System/Infrastructure
+                                   <span class="tooltiptext">{!$Label.Timesheet_System}</span>
+                               </div>
+                           </th>
+                           <apex:repeat value="{!weekDates}" var="wd">
+                               <th>{!wd.dayname}</th>
+                           </apex:repeat>
+                           <th>Total</th>
+                       </tr>
+                       <apex:repeat id="projRep" value="{!projectWrapperList}" var="pw" rendered="{!AND(NOT(ISNULL(projectWrapperList)), projectWrapperList.size > 0)}">
+                        <tr>
+                           <td>
+                               <apex:outputPanel >
+                                   <apex:actionStatus id="delst" rendered="{!isEditable}">
+                                       <apex:facet name="stop">
+                                           <apex:outputPanel >
+                                           <apex:commandLink action="{!removeRow}" status="delst" rerender="table" style="font-weight:bold;color:#d9534f;" title="Remove Row">
+                                               Del
+                                               <apex:param name="delRow" value="{!pw.roworder}" assignTo="{!projectRoworder }"/>    
+                                           </apex:commandLink>
+                                           </apex:outputPanel>
+                                       </apex:facet>
+                                       <apex:facet name="start">
+                                           <img src="/img/loading.gif" />
+                                       </apex:facet>
+                                   </apex:actionStatus>
+                               </apex:outputPanel>    
+                           </td>                            
+                            <td>                                    
+                                <apex:outputField value="{!pw.trObj.ITS_Activity_Portfolio_New__c}" rendered="{!NOT(isEditable)}"/>
+                                <apex:outputPanel id="Activity" layout="block" styleClass="requiredInput" rendered="{!isEditable}">
+                                    <apex:outputPanel layout="block" styleClass="requiredBlock"></apex:outputPanel>
+                                    <apex:inputField value="{!pw.trObj.ITS_Activity_Portfolio_New__c}" onchange="getActivityDependents({!pw.roworder});" onkeypress="checkMethod(event);"></apex:inputField>
+                                </apex:outputPanel>
+                                <br/>
+                            </td>
+                            <td>
+                                <apex:OutputPanel >
+                                    <apex:selectList id="ActivityType" value="{!pw.ActivityType}" size="1" multiselect="false" style="width:125px;">
+                                        <apex:actionSupport event="onchange" action="{!getActivitySubTypes}" reRender="ActivitySubTypes, UserStories, Tasks">
+                                            <apex:param value="{!pw.roworder}" name="RowOrder"/>
+                                        </apex:actionSupport>
+                                        <apex:selectOptions value="{!pw.ActivityTypes}" />
+                                    </apex:selectList>
+                                </apex:OutputPanel>
+                            </td>
+                            <td>                                
+                                <apex:OutputPanel >
+                                    <apex:selectList id="ActivitySubTypes" value="{!pw.ActivitySubType}" size="1" multiselect="false" style="width:150px;">
+                                        <apex:selectOptions value="{!pw.ActivitySubTypes}" />
+                                    </apex:selectList>
+                                </apex:OutputPanel>
+                            </td>
+                            <apex:outputPanel rendered="{!linkAgileAcceleratorToTimesheet}" layout="none">
+                                <td>                            
+                                    <apex:OutputPanel >
+                                        <apex:selectList id="UserStories" value="{!pw.userStory}" size="1" multiselect="false" style="width:125px;">
+                                            <apex:actionSupport event="onchange" action="{!getUserStoryTasks}" reRender="UserStoryTasks">
+                                                <apex:param value="{!pw.roworder}" name="RowOrder"/>
+                                            </apex:actionSupport>   
+                                            <apex:selectOptions value="{!pw.userStories}" />
+                                        </apex:selectList>
+                                    </apex:OutputPanel>
+                                </td>
+                                <td>                                
+                                    <apex:OutputPanel >
+                                        <apex:selectList id="UserStoryTasks" value="{!pw.userStoryTask}" size="1" multiselect="false" style="width:125px;">
+                                            <apex:actionSupport event="onchange" reRender="RemainingHours" action="{!getRemainingHours}">
+                                                <apex:param value="{!pw.roworder}" name="RowOrder"/>
+                                            </apex:actionSupport>
+                                            <apex:selectOptions value="{!pw.userStoryTasks}" />
+                                        </apex:selectList>
+                                    </apex:OutputPanel>
+                                    <br/>
+                                    <apex:outputPanel id="RemainingHours" rendered="{!pw.userStoryTask <> null && pw.userStoryTask <> '' && pw.userStoryTask <> '-1' }" style="color: red;">
+                                      <apex:outputLabel value="Hrs Remaining: "/>
+                                      <apex:outputText value="{!pw.hoursRemaining}"/>
+                                    </apex:outputPanel>
+                                </td>
+                            </apex:outputPanel>  
+                            <td>
+                                <apex:OutputPanel >
+                                    <apex:selectList id="ProjectApplications" value="{!pw.Application}" size="1" multiselect="false" style="width:100px;">
+                                        <apex:selectOptions value="{!Applications}" />
+                                    </apex:selectList>
+                                </apex:OutputPanel>
+                            </td>
+                            <apex:variable value="{!0}" var="colCount"/>
+                            <apex:repeat value="{!pw.timeRecordmap}" var="wd" id="dateRowRep" rendered="{!NOT(ISNULL(pw.timeRecordmap))}">
+                                <td >
+                                    <apex:outputField value="{!pw.timeRecordmap[wd].hours__c}" rendered="{!NOT(isEditable)}"/>
+                                    <apex:inputField styleClass="hours rowHr-{!TEXT(pw.rowOrder)} colhr-{!TEXT(colCount)}" onkeypress="checkMethod(event);" style="width:50%" id="hrs" value="{!pw.timeRecordmap[wd].hours__c}" rendered="{!isEditable}"/>
+                                </td>
+                                <apex:variable value="{!colCount+1}" var="colCount"/>
+                            </apex:repeat>
+                            <td style="text-align:right;">
+                                <p class="rowHr-{!TEXT(pw.rowOrder)}-total">
+                                    {!pw.total}
+                                </p>
+                            </td>
+                        </tr>
+                       </apex:repeat>
+                       <tr  class="success">
+                           <th></th><th></th><th></th><th></th>
+                           <apex:outputPanel rendered="{!linkAgileAcceleratorToTimesheet}" layout="none">
+                              <th></th><th></th>
+                           </apex:outputPanel>
+                           <th style="text-align:right;vertical-align: bottom;">Grand Total</th>
+                          
+                           <apex:repeat value="{!weekDates}" var="w">
+                                  
+                               <th ><p class="colhr-{!TEXT(w.order)}-total">
+                                        {!totalMap[w.order]} 
+                                   </p></th>
+                           </apex:repeat> 
+                            <th style="text-align:right;" ><p class="hours-total">
+                                {!grandTotal}
+                                </p>
+                           </th>
+                       </tr>
+                    </table>
+                 </apex:outputPanel>
+                 <apex:outputPanel rendered="{!isEditable}">
+                     <apex:panelGrid columns="2" width="100%">
+                         <apex:outputPanel >
+                             <apex:actionStatus id="addrowSt">
+                                    <apex:facet name="start">
+                                        <a href="#" disabled="true" class="button">Adding...</a>
+                                    </apex:facet>
+                                    <apex:facet name="stop">
+                                        <apex:commandLink action="{!addRow}" styleClass="button" style="text-decoration:none;" rerender="table,script" status="addrowSt">
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> + Add Row
+                                        </apex:commandLink>
+                                    </apex:facet>
+                                </apex:actionStatus>
+                         </apex:outputPanel>
+                         <apex:outputPanel >
+                             
+                             <apex:outputPanel style="float:right" >
+                                 <apex:actionStatus id="saveSt" >
+                                    <apex:facet name="start">
+                                       <apex:outputPanel >
+                                           <apex:commandButton style="text-decoration:none;" styleClass="button" disabled="true" value="Processing.."></apex:commandButton>
+                                           &nbsp;
+                                           <apex:commandButton style="text-decoration:none;" styleClass="button" disabled="true" value="Processing.."></apex:commandButton>
+                                            
+                                       </apex:outputPanel>
+                                    </apex:facet>
+                                    <apex:facet name="stop">
+                                       <apex:outputPanel >
+                                            <apex:commandButton action="{!doSave}" value="Calculate & Save" style="text-decoration:none;" styleClass="button" rerender="panel,script" status="saveSt">
+                                                
+                                            </apex:commandButton>
+                                             &nbsp;
+                                            <apex:commandButton action="{!doSubmit}" value="Submit" style="text-decoration:none;" styleClass="button" rerender="panel,script" status="saveSt">
+                                              
+                                            </apex:commandButton>
+                                         </apex:outputPanel>
+                                    </apex:facet>
+                                </apex:actionStatus>
+                               
+                             </apex:outputPanel> 
+                             
+                         </apex:outputPanel>
+                     </apex:panelGrid>    
+                 </apex:outputPanel>
+              
+              
+          </apex:pageblockSection>
+      </apex:pageblock>
+      
+       <apex:outputPanel id="script">
+           <script>
+                var flag = false;
+                function onCompleteRun(){
+                    var comIval = document.getElementById('page:form:comId').value;
+                    if(comIval!= ''){
+                        document.getElementById(comIval).focus();
+                    }
+                }
+                $(document).ready(function() {
+                    
+                    $('.hours').keyup(function(e){
+                        if(e.keyCode == 9){
+                          document.getElementById('page:form:comId').value =this.id ;
+                          recalculateTotal(); 
+                        }
+                    });
+                    
+                });
+                
+                function focusonNext(){
+                    var compId = '';
+                }
+           
+           function getActivityDependents(txtValue)
+           {
+               GetActivityDependents(txtValue);
+           }
+
+            </script>
+        </apex:outputPanel>
+      
+      <apex:actionFunction name="GetActivityDependents" action="{!getActivityDependents}" reRender="UserStories, UserStoryTasks, ActivityType, ActivitySubTypes, ProjectStages, ProjectTasks, ProjectCostCenter, ProjectApplications, WorkHours,">
+          <apex:param value="" name="RowOrder"/>
+      </apex:actionFunction>
+  </apex:form>
+</apex:page>

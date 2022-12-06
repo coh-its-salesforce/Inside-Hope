@@ -1,0 +1,302 @@
+<!--
+  -- This is the Visualforce page for the IMS Status Report Form object (clinical forms).
+  --
+  -- Raymond Tam
+  -- City of Hope
+  -- Copyright (c) 2015
+  -- 
+  -- No portion of this code may be copied, transferred, or transmitted
+  -- in any form (written, electronic, or otherwise) without the prior
+  -- written consent from the City of Hope.
+  --
+ -->
+<apex:page StandardController="IMS_Status_Report_Form__c" extensions="IMSStatusReportFormController" id="userTaskDetails" sidebar="false" showHeader="true" title="User Task Details">
+    <apex:stylesheet value="{!$Resource.IMS_Stylesheet}"/>
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"/>
+    <script type="text/javascript">
+        var j$=jQuery.noConflict();
+        j$(document).ready(function() {
+            j$(".assignedPersonCustomTask_mlktp").hide();
+        });
+        
+    	//  Create a basic popup window
+    
+        function popitup(url, windowName, height, width) {
+			newwindow = window.open(url, windowName, 'height=' + height + ', width=' + width);
+            if (window.focus) {
+                newwindow.focus();
+            }
+            return false;
+        }
+    
+    	// Create a popup window and pass the parentID parameter to it
+    
+        function popitup2(url, parentID, windowName, height, width) {
+			newwindow = window.open(url + '?param=' + parentID + '&windowNameParam=' + windowName, windowName, 'height=' + height + ', width=' + width);
+            if (window.focus) {
+                newwindow.focus();
+            }
+            return false;
+        }
+    
+    	// Create a popup window and pass the parentID and objectID parameters to it
+    
+        function popitup3(url, parentID, objectID, windowName, height, width) {
+			newwindow = window.open(url + '?param=' + parentID + '&objIDParam=' + objectID + '&windowNameParam=' + windowName, windowName, 'height=' + height + ', width=' + width);
+            if (window.focus) {
+                newwindow.focus();
+            }
+            return false;
+        }
+
+    	// Create a popup window and pass the parentID parameter and the record type to it
+        function popitup4(url, parentID, windowName, recordType, height, width) {
+			newwindow = window.open(url + '?param=' + parentID + '&windowNameParam=' + windowName +'&recordTypeParam=' + recordType, windowName, 'height=' + height + ', width=' + width);
+            if (window.focus) {
+                newwindow.focus();
+            }
+            return false;
+        }
+    
+    	// Close the window if it is a popup window for a new record
+    	function closePopupWindow(isExistingRecord) {
+            if (isExistingRecord == false) {
+	            var newWindow = window.top;
+    	        newWindow.close();
+            } else {
+            	window.history.go(-1)            
+			}
+        }
+    
+    	// Close the window 
+    	function closeWindow(msg) {
+            window.alert(msg);
+            var newWindow = window.top;
+  	        newWindow.close();
+        }
+        </script>                    
+
+
+    <apex:form >
+        <apex:pageBlock title="Status Report Form (Clinical)" id="statusReportFormPageBlock">
+            <apex:pageBlockButtons >
+                <apex:commandButton id="startNewReport" title="{!editButtonMessage}" value="{!editButtonMessage}" action="{!startNewClinicalReport}" disabled="{!isStartReportDisabled}" reRender="statusReportFormPageBlock"/>
+                <!--testing raymond tam-->
+                <!--apex:commandButton id="cancelReport" title="Cancel" value="Cancel" action="{!cancelReport}" disabled="{!isSubmitReportDisabled}" reRender="statusReportFormPageBlock"/>
+                <apex:commandButton id="submitReport" title="Submit" value="Submit" action="{!submitReport}" disabled="{!isSubmitReportDisabled}" reRender="statusReportFormPageBlock"/-->
+                <apex:commandButton id="submitReport" title="Submit" value="Submit" action="{!submitReport}" onclick="closeWindow('Record saved')" disabled="{!isSubmitReportDisabled}" reRender="statusReportFormPageBlock"/>
+                <apex:commandButton id="cancelReport" title="Cancel" value="Cancel" action="{!cancelReport}"  onclick="closePopupWindow({!isExistingRecord})" reRender="statusReportFormPageBlock"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="Unit / Department Contact Information" columns="2" rendered="{!isStartReportDisabled}" collapsible="true">
+                <apex:inputField value="{!statusReportFormObj.Incident_Name__c}"/>
+                <br/>
+            <!-- testing raymond tam -->
+				<!--apex:inputField value="{!statusReportFormObj.Building__c}"/-->
+                <apex:inputField value="{!statusReportFormObj.Able_To_Operate_For_Next_2_Hours__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Operation_Hours_Remaining__c}" rendered="{!renderRemainingOperationHours}"/>
+                <apex:inputField value="{!statusReportFormObj.Department_Unit__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Person_Currently_In_Charge__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Preferred_Contact_Method__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Job_Title__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Primary_Phone__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Red_Phone__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Fax__c}"/>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Staff / Occupant Census" rendered="{!isStartReportDisabled}" columns="2" collapsible="true" >
+                <apex:inputField value="{!statusReportFormObj.Number_Of_Staff_Present__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Number_Of_Staff_Unaccounted__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Number_Of_Staff_Present_From_Other_Depts__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Number_Of_People_Non_Staff__c}"/>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Staff / Occupant Census Availability" rendered="{!isStartReportDisabled}" columns="1" collapsible="true" >
+                <apex:panelGrid columns="4" id="staffCensusGrid">
+                    <br/>
+                    <apex:outputText value="On Duty" styleClass="boldText"/>
+                    <apex:outputText value="Avaliable to Assist Now" styleClass="boldText"/>
+                    <apex:outputText value="Available to Assist in 2 Hours" styleClass="boldText"/>
+                    <apex:outputText value="RNs" title="RNs" styleClass="boldText"/>
+                    <apex:inputField value="{!statusReportFormObj.RNs_On_Duty__c}"/>
+                    <apex:inputField value="{!statusReportFormObj.RNs_Available_Now__c}"/>
+                    <apex:inputField value="{!statusReportFormObj.RNs_Available_In_2_hours__c}"/>
+                    <apex:outputText value="MD/PA/Surgeons" title="MD / PA / Surgeons" styleClass="boldText"/>
+                    <apex:inputField value="{!statusReportFormObj.Doctors_etc_On_Duty__c}"/>
+                    <apex:inputField value="{!statusReportFormObj.Doctors_etc_Available_Now__c}"/>
+                    <apex:inputField value="{!statusReportFormObj.Doctors_etc_Available_In_2_Hours__c}"/>
+                    <apex:outputText value="PCAs/LVNs/ACAs" title="PCAs / LVNs / ACAs" styleClass="boldText"/>
+                    <apex:inputField value="{!statusReportFormObj.Other_Nursing_Staff_On_Duty__c}"/>
+                    <apex:inputField value="{!statusReportFormObj.Other_Nursing_Staff_Available_Now__c}"/>
+                    <apex:inputField value="{!statusReportFormObj.Other_Nursing_Staff_Available_In_2_hours__c}"/>
+                    <apex:outputText value="Managers/Directors" title="Managers / Directors" styleClass="boldText"/>
+                    <apex:inputField value="{!statusReportFormObj.Managerial_On_Duty__c}"/>
+                    <apex:inputField value="{!statusReportFormObj.Managerial_Available_Now__c}"/>
+                    <apex:inputField value="{!statusReportFormObj.Managerial_Available_In_2_Hours__c}"/>
+                    <apex:outputText value="Clerical/Support" title="Clerical, Support, etc." styleClass="boldText"/>
+                    <apex:inputField value="{!statusReportFormObj.Support_On_Duty__c}"/>
+                    <apex:inputField value="{!statusReportFormObj.Support_Available_Now__c}"/>
+                    <apex:inputField value="{!statusReportFormObj.Support_Available_In_2_Hours__c}"/>
+                    <apex:outputText value="RT/PT/OT/Radiology" title="Clerical, Support, etc." styleClass="boldText"/>
+                    <apex:inputField value="{!statusReportFormObj.RT_PT_OT_Radiology_On_Duty__c}"/>
+                    <apex:inputField value="{!statusReportFormObj.RT_PT_OT_Radiology_Available_Now__c}"/>
+                    <apex:inputField value="{!statusReportFormObj.RT_PT_OT_Radiology_Available_In_2_Hrs__c}"/>
+                    <apex:outputText value="Other" title="Please sepcify the titles or types in the notes" styleClass="boldText"/>
+                    <apex:inputField value="{!statusReportFormObj.Other_Clinical_On_Duty__c}"/>
+                    <apex:inputField value="{!statusReportFormObj.Other_Clinical_Available_Now__c}"/>
+                    <apex:inputField value="{!statusReportFormObj.Other_Clinical_Available_In_2_Hours__c}"/>
+                </apex:panelGrid>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection id="occupantInjuries" title="Staff / Occupant Injuries" rendered="{!isStartReportDisabled}" columns="1" collapsible="true" >
+                <apex:outputField value="{!statusReportFormObj.Number_Of_Injured_People__c}"/>
+                <apex:panelGrid id="occupantInjuriesButtonsGrid" columns="2">
+                    <apex:commandButton id="addInjuryReport" disabled="{!isOccupantInjuryReportRefreshRequired}" action="{!setOccupantInjuryReportRefreshRequiredToTrue}" title="Add Injury Report" value="Add Injury Report" onclick="popitup4('/apex/IMS_Injury_Report_Non_Clinical', '{!statusReportFormObj.Id}', 'New Staff / Occupant Injury Report', '{!recordType}', 740, 1230)"/>
+                    <apex:commandButton id="refreshInjuryReport" disabled="{!NOT(isOccupantInjuryReportRefreshRequired)}" reRender="occupantInjuries" action="{!searchOccupantInjuries}" title="Refresh List" value="Refresh List"/>
+                </apex:panelGrid>
+                <apex:outputText id="refreshOccupantInjuryReportPrompt" rendered="{!isOccupantInjuryReportRefreshRequired}" value="Click on the Refresh List button to continue" />
+                
+                <apex:pageBlockTable columns="7" rendered="{!isStartReportDisabled}" id="occupantInjuriesTable" rows="20" value="{!staffInjuriesList}" var="item">
+                    <apex:column headerValue="Name" value="{!item.Name__c}" width="100 px"/>
+                    <apex:column headerValue="Person Category" value="{!item.Person_Category_Non_Clinical__c}" width="40 px"/>
+                    <apex:column headerValue="Injury Type" value="{!item.Injury_Type__c}" width="40 px"/>
+                    <apex:column headerValue="Assistance Status" value="{!item.Assistance_Status__c}" width="40 px"/>
+                    <apex:column headerValue="Description" value="{!item.Description__c}" width="80 px"/>
+                    <apex:column width="40 px">
+                        <apex:commandLink styleClass="commandLink" value="Edit" title="Edit" action="{!editOccupantInjuryReport}" reRender="occupantInjuries, occupantInjuriesTable" onclick="popitup3('/apex/IMS_Injury_Report_Non_Clinical', '{!statusReportFormObj.Id}', '{!item.Id}', 'Edit Occupant Injury', 640, 1000)"/>
+                    </apex:column>
+                    <apex:column width="40 px">
+                        <apex:commandLink styleClass="commandLink" value="Delete" title="Delete" action="{!deleteOccupantInjuryReport}" reRender="occupantInjuries, occupantInjuriesTable">
+                            <apex:param assignTo="{!selectedInjuriesReportID}" name="deleteInjuryReport" value="{!item.Id}"/>
+                        </apex:commandLink>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Patient Census" rendered="{!isStartReportDisabled}" columns="2" collapsible="true">
+                <apex:inputField value="{!statusReportFormObj.Occupied_Beds__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Empty_Beds__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Dischargable_Patients__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Critical_Patients__c}"/>
+            </apex:pageBlockSection>
+			<!-- testing raymond tam -->
+			<!-- disable for now -->            
+            <!--apex:pageBlockSection id="patientInjuries" title="Patient Injuries" rendered="{!isStartReportDisabled}" columns="1" collapsible="true"-->
+            <apex:pageBlockSection id="patientInjuries" title="New Patient (Triaged)" rendered="false" columns="1" collapsible="true" >
+                <apex:outputField value="{!statusReportFormObj.Number_Of_Injured_Patients__c}"/>
+                <apex:panelGrid id="patientInjuriesButtonsGrid" columns="2">
+                    <apex:commandButton id="addPatientInjuryReport" disabled="{!isPatientInjuryReportRefreshRequired}" action="{!setPatientInjuryReportRefreshRequiredToTrue}" title="Add Injury Report" value="Add Injury Report" onclick="popitup4('/apex/IMS_Injury_Report_Clinical', '{!statusReportFormObj.Id}', 'New Patient Injury Report', '{!recordType}', 740, 1230)"/>
+                    <apex:commandButton id="refreshPatientInjuryReport" disabled="{!NOT(isPatientInjuryReportRefreshRequired)}" reRender="patientInjuries" action="{!searchPatientInjuries}" title="Refresh List" value="Refresh List"/>
+                </apex:panelGrid>
+                <apex:outputText id="refreshPatientInjuryReportPrompt" rendered="{!isPatientInjuryReportRefreshRequired}" value="Click on the Refresh List button to continue" />
+                
+                <apex:pageBlockTable columns="7" id="patientInjuriesTable" rows="20" value="{!patientInjuriesList}" var="item">
+                    <apex:column headerValue="First Name" value="{!item.First_Name__c}" width="55 px"/>
+                    <apex:column headerValue="Last Name" value="{!item.Last_Name__c}" width="55 px"/>
+                    <apex:column headerValue="Patient ID Number" value="{!item.Patient_ID_Number__c}" width="35 px"/>
+                    <apex:column headerValue="Person Category" value="{!item.Person_Category__c}" width="35 px"/>
+                    <apex:column headerValue="Injury Type" value="{!item.Injury_Type__c}" width="40 px"/>
+                    <apex:column headerValue="Assistance Status" value="{!item.Assistance_Status__c}" width="40 px"/>
+                    <apex:column headerValue="Description" value="{!item.Description__c}" width="80 px"/>
+                    <apex:column width="30 px">
+                        <apex:commandLink styleClass="commandLink" value="Edit" title="Edit" action="{!editPatientInjuryReport}" reRender="patientInjuries, patientInjuriesTable" onclick="popitup3('/apex/IMS_Injury_Report_Clinical', '{!statusReportFormObj.Id}', '{!item.Id}', 'Edit Patient Injury', 640, 1000)"/>
+                    </apex:column>
+                    <apex:column width="30 px">
+                        <apex:commandLink styleClass="commandLink" value="Delete" title="Delete" action="{!deletePatientInjuryReport}" reRender="patientInjuries, patientInjuriesTable">
+                            <apex:param assignTo="{!selectedInjuriesReportID}" name="deleteInjuryReport" value="{!item.Id}"/>
+                        </apex:commandLink>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Cardiopulmonary / Respiratory Therapy" rendered="{!isStartReportDisabled}" columns="2" collapsible="true">
+                <apex:inputField value="{!statusReportFormObj.Adult_Patients_On_Ventilators__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Pediatric_Patients_On_Ventilators__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Adult_Ventilator_Units_Available__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Pediatric_Capable_Ventilators_Available__c}"/>
+                <apex:inputField value="{!statusReportFormObj.CIPAP_CPAP_Units_Avaliable__c}"/>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Surgery / Radiology (only)" rendered="{!isStartReportDisabled}" columns="2" collapsible="true">
+                <apex:inputField value="{!statusReportFormObj.Suites_Available_Now_Surgery_Radiology__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Suites_Avail_2_Hours_Surgery_Radiology__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Cases_In_Progress_Surgery_Radiology__c}"/>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Laboratory / Blood Bank (only)" rendered="{!isStartReportDisabled}" columns="2" collapsible="true">
+                <apex:inputField value="{!statusReportFormObj.Available_Platelet_Units__c}"/>
+                <br/>
+                <apex:inputField value="{!statusReportFormObj.Available_O_Positive_Units__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Available_O_Negative_Units__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Available_A_Positive_Units__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Available_A_Negative_Units__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Available_B_Positive_Units__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Available_B_Negative_Units__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Available_AB_Positive_Units__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Available_AB_Negative_Units__c}"/>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Current Deparatment Utility Status" rendered="{!isStartReportDisabled}" columns="2" collapsible="true">
+                <apex:outputText >Choose "Yes" for all available utilities</apex:outputText>
+                <br/>
+                <apex:inputField value="{!statusReportFormObj.Telephone_Fax_Available__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Cell_Phone_Available__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Water_Available__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Electricity_Available__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Computer_Network_Available__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Elevator_Available__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Sewer_System_Available__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Natural_Gas_Available__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Air_Conditioning_HVAC_Available__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Clinical_Information_System_Available__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Oxygen_Available__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Medical_Vacuum_Aavailable__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Computers_Printers_Fax_Available__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Pharmacy_Medications_Access_Available__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Door_Access__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Call_Light_System__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Other_Utilities_Status__c}"/>
+            </apex:pageBlockSection>
+            
+            <!-- testing raymond tam -->
+            <!--apex:pageBlockSection title="Status Report" rendered="{!isStartReportDisabled}" columns="2" collapsible="true">
+                <apex:inputField value="{!statusReportFormObj.Able_To_Operate_For_Next_2_Hours__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Operation_Hours_Remaining__c}" rendered="{!renderRemainingOperationHours}"/>
+                <apex:inputField value="{!statusReportFormObj.Immediate_Concerns_Issues__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Delayed_Concerns_Issues__c}"/>
+            </apex:pageBlockSection-->
+            
+            <apex:pageBlockSection id="resourceBlockSection" title="Resource Request" rendered="{!isStartReportDisabled}" columns="1" collapsible="true">
+                <apex:panelGrid id="resourceBlockButtonsGrid" columns="2">
+                    <apex:commandButton id="addResourceRequest" disabled="{!isResourceRequestRefreshRequired}" action="{!setResourceRequestRefreshRequiredToTrue}" title="Add Resource Request" value="Add Resource Request" onclick="popitup2('/apex/IMS_Resource_Request', '{!statusReportFormObj.Id}', 'New Resource Request', 740, 1230)"/>
+                    <apex:commandButton id="refreshResourceRequest" disabled="{!NOT(isResourceRequestRefreshRequired)}" reRender="resourceBlockSection" action="{!searchResourceRequests}" title="Refresh List" value="Refresh List"/>
+                </apex:panelGrid>
+                <apex:outputText id="refreshInjuryReportPrompt" rendered="{!isResourceRequestRefreshRequired}" value="Click on the Refresh List button to continue" />
+                <br/>
+                
+                <apex:pageBlockTable columns="7" id="resourceRequestsTable" rows="20" value="{!resourceRequestsList}" var="item">
+                    <apex:column headerValue="Category" value="{!item.Category__c}" width="40 px"/>
+                    <apex:column headerValue="Description" value="{!item.Description__c}" width="80 px"/>
+                    <apex:column headerValue="Quantity" value="{!item.Quantity__c}" width="40 px"/>
+                    <apex:column headerValue="Duration" value="{!item.Duration__c}" width="40 px"/>
+                    <apex:column headerValue="Status" value="{!item.Status__c}" width="40 px"/>
+                    <apex:column width="40 px">
+                        <apex:commandLink styleClass="commandLink" rendered="{!NOT(isResourceRequestRefreshRequired)}" value="Edit" title="Edit" action="{!editResourceRequest}" reRender="resourceBlockSection, resourceRequestsTable" onclick="popitup3('/apex/IMS_Resource_Request', '{!statusReportFormObj.Id}', '{!item.Id}','Edit Resource Request', 640, 1000)"/>
+                    </apex:column>
+                    <apex:column width="40 px">
+                        <apex:commandLink styleClass="commandLink" rendered="{!NOT(isResourceRequestRefreshRequired)}" value="Delete" title="Delete" action="{!deleteResourceRequest}" reRender="resourceBlockSection, resourceRequestsTable">
+                            <apex:param assignTo="{!selectedResourceRequestID}" name="deleteResourceRequest" value="{!item.Id}"/>
+                        </apex:commandLink>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection title="Command Center Staff Use Only" columns="2" rendered="{!isStartReportDisabled}" collapsible="true">
+                <apex:inputField value="{!statusReportFormObj.Planning_Section_Received_By__c}"/>
+				<apex:inputField value="{!statusReportFormObj.Status__c}"/>
+                <apex:inputField value="{!statusReportFormObj.Received_Date_Time__c}"/>
+                <apex:outputField value="{!statusReportFormObj.LastModifiedDate}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    
+</apex:page>

@@ -1,0 +1,141 @@
+<apex:page standardController="Knowledge__kav" sidebar="false" showHeader="false">
+    <style>
+        body
+        {
+        background-color:#fff !important;
+        }
+        caption{
+        font-size: 15px;
+        font-family: Arial;
+       
+        }
+        
+        .SectionHeaders {
+        font-family: Arial,Helvetica,sans-serif;
+        color: #222;
+        font-weight: bold;
+        font-size: 14.0pt;
+        text-decoration: underline;
+        }
+        
+        td.tableSection
+        {
+        width: 700px;
+        padding: 10px;
+        height: 45px;
+        border: 1px;
+        font-size: 14px;
+        border: solid 1px #000;
+        
+        }
+        
+        li, p {
+        font-size: 14px !important;
+        }
+        
+        ul li, ol li {
+        margin-left: 1.5em;
+        padding-left: 0;
+        list-style-type: disc;
+        }        
+    </style>
+    <apex:pageblock >
+        
+        
+        <table align="center">
+            <tr>
+                <td style="text-align: center;font-size: 25px;"><span style="text-decoration: underline">{!Custom__kav.Title}</span></td>
+            </tr>
+        </table>
+        
+        <br/><br/><br/>
+        
+        <table align="center">
+            <tr>
+                <td><span class="SectionHeaders">Overview:</span></td>
+            </tr>
+            <tr >
+                <td class="tableSection" bgcolor="#FFFFFF" ><apex:outputLabel escape="false" Value="{!Knowledge__kav.overview__c}" ></apex:outputLabel></td>
+            </tr>
+        </table>
+        
+        <br/>
+        
+        <table align="center" cellpadding="10">
+            <tr>
+                <td><span class="SectionHeaders">Call Scripting:</span></td>
+            </tr>
+            <tr >
+                <td class="tableSection" bgcolor="#FFFFFF" ><apex:outputLabel escape="false" Value="{!Knowledge__kav.Script__c}" ></apex:outputLabel></td>
+            </tr>
+        </table>
+        <br/>
+        
+        <table align="center">
+            <tr>
+                <td><span class="SectionHeaders">Article:</span></td>
+            </tr>
+            <tr >
+                <td class="tableSection" bgcolor="#F5F5DC"><apex:outputLabel escape="false" Value="{!Knowledge__kav.Article__c}" ></apex:outputLabel></td>
+            </tr>
+        </table>
+        <br/><br/><br/>
+        
+        <table align="center" cellpadding="10">
+            <tr>
+                <td><span class="SectionHeaders">Exceptions:</span></td>
+            </tr>
+            <tr>
+                <td class="tableSection" bgcolor="FFC999" style="color: #FF0000; font-style:Arial; " ><apex:outputLabel escape="false" Value="{!Knowledge__kav.Exceptions__c}" ></apex:outputLabel></td>
+            </tr>
+        </table>
+        <br/>
+        
+        
+        
+        
+        <table align="center">
+            <tr>
+                <td><span class="SectionHeaders">Supporting Docs/Info:</span></td>
+            </tr>            
+            <tr >
+                <td class="tableSection" bgcolor="#FFFFFF" ><apex:outputLabel escape="false" Value="{!Knowledge__kav.Supporting_Docs_Info__c}" ></apex:outputLabel></td>
+            </tr>
+        </table>
+        <br/><br/>
+        <table align="center">
+            <tr>
+                <td><span class="SectionHeaders">KeyWords:</span></td>
+            </tr>    
+            <tr >
+                <td class="tableSection" bgcolor="#BDEDFF"><apex:outputLabel escape="false" Value="{!Knowledge__kav.Keywords__c}" ></apex:outputLabel></td>
+            </tr>
+        </table>
+         
+        
+       
+        
+        
+        
+        
+        <!--<apex:pageblocksection title="2 section">
+</apex:pageblocksection>
+<apex:pageblocksection title="3 section">
+</apex:pageblocksection>
+<apex:pageblocksection title="4 section" >
+</apex:pageblocksection>
+<apex:pageblocksection title="5 section">
+</apex:pageblocksection>-->
+    </apex:pageblock>
+    
+    <!--<apex:pagemessage Rendered="{!pageMessage}" severity="Error"></apex:pagemessage>-->
+    
+    
+    <!--<apex:outputLink value="{!URLFOR($Action.Custom__kav.FileFieldDownload, 
+Custom__kav.id, ['field'=$ObjectType.Custom__kav.fields.my_file__Body__s.name])}"> Click
+me</apex:outputLink>-->
+    <knowledge:articleRendererToolBar articleId="{! $CurrentPage.parameters.id}"
+                                      />
+    
+    
+</apex:page>

@@ -1,0 +1,55 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" controller="COH_UTIL_ShareRecordController">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:attribute name="mUserId" type="String" />
+    <aura:attribute name="mDisableShareBtn" type="Boolean" default="false" />
+    <aura:attribute name="mLoading" type="Boolean" default="true" />
+    <aura:attribute name="mNotificationMessage" type="String" default=""/>
+    <aura:attribute name="mShowNotification" type="Boolean" default="false"/>
+    <aura:attribute name="mEmailUser" type="Boolean" default="false"/>
+    
+    <!-- The following attributes can be set in COH_UTIL_ShareRecord_Defaults -->
+    <aura:attribute name="mSharingAccessLevel" type="String" default="Read"/>
+    <aura:attribute name="mComponentHeader" type="String" default="Share Record"/>
+    <aura:attribute name="mEmailTemplateId" type="String" />    
+            
+    <lightning:notificationsLibrary aura:id="notifLib"/>
+    <aura:if isTrue="{!not(v.mLoading)}">
+        <header class="slds-modal__header">
+            <div class="slds-media__body">
+                <h2 class="slds-text-heading_medium slds-hyphenate">{!v.mComponentHeader}</h2> 
+            </div>
+        </header>
+        <div class="slds-p-vertical_small">
+            <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                    mSelectedRecord="{!v.mUserId}" 
+                                    mLabel="Share With"
+                                    mPrimaryFieldAPIName="Name"
+                                    mSecondaryFieldAPIName="Title"
+                                    mAdditionalSelectFields="IsActive"
+                                    mAdditionalSearchConditions="AND IsActive = true"
+                                    mRequired="true"
+                                    aura:id="childComponent"/>
+        </div>
+        <div class="slds-p-vertical_small">
+            <lightning:input type="checkbox" label="Email User?" name="mInputUser" checked="{!v.mEmailUser}"/>
+        </div>
+        <footer class="slds-p-vertical_small slds-text-align_right">
+            <lightning:button class="slds-button slds-button_neutral" label="Cancel" onclick="{!c.closeModal}"/>
+            <lightning:button class="slds-button slds-button_brand" label="Share" disabled="{!v.mDisableShareBtn}" onclick="{!c.shareBtnClick}"/>
+            <aura:if isTrue="{!v.mShowNotification}">
+                <div class="slds-notify_container slds-is-relative">
+                    <div class="slds-notify slds-notify_toast slds-theme_success" role="alert">
+                        <h2 class="slds-text-heading_small">{!v.mNotificationMessage}</h2>
+                    </div>   
+                </div>
+            </aura:if>
+        </footer>
+        <aura:set attribute="else">
+            <center>
+                <div class="slds-is-relative" style="height:500px">
+                    <lightning:spinner/>
+                </div>
+            </center>
+        </aura:set>
+    </aura:if>
+</aura:component>

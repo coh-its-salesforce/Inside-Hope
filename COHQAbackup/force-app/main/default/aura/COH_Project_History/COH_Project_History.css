@@ -1,0 +1,102 @@
+.THIS.customRadioCls .slds-form-element__control .slds-radio{
+    display : inline-block !important;
+}
+.THIS .Texth1 {
+    
+    font-weight: bold;
+    font-size: 16px;
+    text-align: left;
+}
+.THIS .Text1{
+    color:blue;
+}
+.THIS .Text11{
+    color:blue;
+    font-size: 20px;
+}
+
+.THIS .inputyellow{
+  height:50px;
+  width:50px;
+  margin-right: 2px;
+  content: " ";
+  display:inline-block;
+  vertical-align: baseline;
+  border:1px solid #777;
+}
+.THIS .green1 {
+  height: 26px;
+  width: 26px;
+  background-color: #008900;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid #A9A9A9;
+}
+.THIS .green2 {
+  height: 18px;
+  width: 18px;
+  background-color: #008900;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid #A9A9A9;
+}
+.THIS .yellow1 {
+  height: 26px;
+  width: 26px;
+  background-color: #ffbd00;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid #A9A9A9;
+}
+.THIS .yellow2 {
+  height: 18px;
+  width: 18px;
+  background-color: #ffbd00;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid #A9A9A9;
+}
+.THIS .red1 {
+  height: 26px;
+  width: 26px;
+  background-color: #ff0000;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid #A9A9A9;
+}
+.THIS .red2 {
+  height: 18px;
+  width: 18px;
+  background-color: #ff0000;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid #A9A9A9;
+}
+.THIS .green11 {
+  height: 26px;
+  width: 26px;
+  background-color: #008900;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid #A9A9A9;
+}
+.THIS .yellow11 {
+  height: 26px;
+  width: 26px;
+  background-color: #ffbd00;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid #A9A9A9;
+}
+.THIS .red11 {
+  height: 26px;
+  width: 26px;
+  background-color: #ff0000;
+  border-radius: 50%;
+  display: inline-block;
+  border: 2px solid #A9A9A9;
+}
+.THIS .valueFont {
+    
+    font: 14px arial, sans-serif;
+}

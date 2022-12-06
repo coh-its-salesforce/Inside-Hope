@@ -1,0 +1,6 @@
+<design:component label="HR Portal Panel">
+    <design:attribute name="PanelName" label="Panel Name" description="Enter unique Panel Name for Ex- 'Top_Left_Panel'"/>
+    <design:attribute name="panelHeading" label="Panel Heading" description="Enter Panel heading if any" />
+    <design:attribute name="backgroundColor" label="background color" description="Enter color code for panel background ." />
+    <design:attribute name="fontColor" label="font color" description="Enter color code for font ." />
+</design:component>

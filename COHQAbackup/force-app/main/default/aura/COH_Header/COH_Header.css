@@ -1,0 +1,175 @@
+.THIS .Wrapper {
+    margin:0 auto;
+    padding:0px;
+    border-top:8px solid #066dc0;
+    width:100%;
+}
+.THIS .shortcutMenuCss > .slds-form-element__control > .slds-select_container{
+    /*width: 18.6rem !important;*/
+    position:unset;
+    margin-bottom:7px;
+}
+.THIS .shortcutMenuCss > .slds-form-element__label{
+    /*width: 18.6rem !important;*/
+    margin-right:0px !important;
+}
+.THIS .shortcutMenuCss > .slds-form-element__control {
+    /*width: 18.6rem !important;*/
+    display:block;
+}
+.THIS.TopMost{
+    background-repeat:no-repeat;
+    
+    background-size:cover;
+    /*background-image: url(/resource/COHHhopeLlogo ) ;*/
+    background-image : url('https://cityofhope--qatest.sandbox.file.force.com/servlet/servlet.ImageServer?id=01552000000foTr&oid=00D52000000JQFl&lastMod=1664835574000')
+}
+.THIS .mobileBg {
+    background-image : url('https://cityofhope--qatest.sandbox.file.force.com/servlet/servlet.ImageServer?id=01552000000foTr&oid=00D52000000JQFl&lastMod=1664835574000');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.THIS .inlineBlock{
+    text-align:right
+}
+
+
+.THIS .btnMobile{
+    height : 20px;
+    width : 100%
+}
+
+
+
+.THIS .Header {
+    margin:0 auto;
+    padding:0px;
+    width: 100%;
+    height: 75px;
+}
+
+.THIS .Header .Top{
+    margin:0px;
+    padding:0px;
+    width:100%;
+    height: 50px;
+}
+
+.THIS .Header .Left{margin:0px; padding-left:10px; float:left; color:#fdab00; font-size:30px;}
+.THIS .Header .Right{margin:0px; padding:15px 10px 0 0; float:right; color:#464749;}
+.THIS .Header .Right ul{margin:0px; padding:0px;}
+.THIS .Header .Right ul li{margin:0px; padding:0px; list-style-type:none; float:left; font-size:10px;}
+.THIS .Header .Right ul li a{color:#2c6ce7; text-decoration:underline;}
+.THIS .Header .Right ul li a:hover{color:#000; text-decoration:none;}
+.THIS .Header .Right ul li span{padding:0 5px; margin:0px; color:#989a9d;}
+.THIS .Header .Ihome{margin:0px; padding:0px;}
+.THIS .Header .IEmail{margin:0px; padding:0px;}
+
+
+.THIS .FourIconTxt{margin:0px; padding:0px; font-size:11px; font-weight:bold;height:25px;}
+.THIS .uiInput--input {
+    border-style: solid;
+    border-color: #2574a9;
+    border-radius: 15px;
+}
+
+.THIS .search-button{
+    border-radius: 18px;
+}
+
+.THIS .btnHope{
+    background-color: #40B5AD;
+    border: none;
+    height : 20px;
+    margin-top: 2%; /*Changes by Sanjay on 09-26-2022*/
+    
+}
+
+.THIS .btnOrg{
+    background-color: orange;
+    border: none;
+    height : 20px;
+    
+}
+.THIS .btnHopemob{
+    background-color: #40B5AD;
+    border: none;
+    height: 20px;
+    width: 100%;
+}
+.THIS .btnmob{
+    height: 20px;
+    width: 100%;
+    background-color: #061037;
+}
+.THIS .btnOrgmob{
+    background-color: orange;
+    border: none;
+    height: 20px;
+    width: 100%;
+}
+
+
+.THIS .btn{
+    background-color: #061037;
+    height : 20px;
+    
+}
+
+
+.THIS.twUpcomingFoot{
+    display:none !important;
+}
+
+.THIS .profileName{
+    display:none !important;
+}
+
+.THIS .home {
+    display:none !important;
+}
+
+.THIS .profile {
+    display:none !important;
+}
+
+.THIS .logOut {
+    height:25px !important; 
+}
+
+.THIS .paddingTop{
+    padding-top:10px;
+}
+
+.THIS .myAccount {
+    display:none !important;
+}
+
+.THIS .selfServiceUserProfileMenu li.uiMenuItem a  {
+    padding:10px;
+}
+
+.THIS .siteforceServiceBody .cHeaderLine{
+    display:none !important;
+}
+/*Changes by Sanjay on 09-26-2022*/
+.THIS .searchIcon *{
+    fill: white;
+}
+.THIS .csm label {
+    display: none;
+}
+/*Changes by Sanjay on 09-26-2022*/
+/*Changes by Sanjay on 10-06-2022*/
+.THIS .marginBtm {
+    margin-bottom: 15px;
+}
+/*Changes by Sanjay on 10-06-2022*/
+/*Changes by Sanjay on 11-03-2022*/
+.THIS .btnDiv {
+    text-align: right;
+    
+}
+.THIS .rightAlgn{
+    text-align: right;
+}

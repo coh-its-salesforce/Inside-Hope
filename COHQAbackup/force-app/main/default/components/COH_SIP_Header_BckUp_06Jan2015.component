@@ -1,0 +1,178 @@
+<apex:component controller="COH_SIP_Header_Controller">
+    <div class="container-fluid Header">
+        <div class="row Top">
+            <div class="col-xs-3 Left"><a href="/apex/COH_SIRP_HOME_PAGE"><apex:image value="{!$Resource.headerLogoMobile}" style="margin-top:0px;" styleClass="visible-xs hidden-sm"/><apex:image value="{!$Resource.headerLogoDesktop}" style="margin-top:0px;width:325px;" styleClass="hidden-xs visible-sm visible-md visible-lg"/></a></div>
+            <div class="col-xs-9 Right">
+                <ul class="pull-right">
+                    <li><apex:image value="{!$Resource.homeicon}" style="margin-top:0px;" />&nbsp;<apex:outputText value="Welcome"/>:&nbsp;<apex:outputLink value="{!$Page.UserProfile}?uid={!$User.Id}">{!$User.FirstName} {!$User.LastName}</apex:outputLink></li>
+                    <li><span>|</span></li>
+                    <li><apex:outputLink value="{!$Site.Prefix}/secur/logout.jsp" styleClass="nav0-link" > Logout</apex:outputLink></li>
+                    <li class="hidden-xs"><span>|</span></li>
+                    <li class="hidden-xs"><a href="/">Salesforce Home</a></li>
+                    <li class="hidden-xs"><span>|</span></li>
+                    <li class="hidden-xs"><a href="http://archive.coh.org">Previous Intranet Site</a></li> 
+                    <!-- Changes Made by Pavani-->
+                    <li class="hidden-xs"><span>|</span></li>
+                    <li class="hidden-xs"><a href="/a6b/e?retURL=%2Fa6b%3Ffcf%3D00Bd0000005qHY2" target="_blank">Report Bugs</a></li>  
+                    <!-- End of changes by Pavani-->             
+                </ul>
+            </div>
+        </div>
+        <div class="row"> 
+            <nav id='cssmenu'>
+                <div id="head-mobile"></div>
+                <div class="button"></div>
+                <ul>
+                    <li><a href='#'>ABOUT US <span class="caret hidden-sm hidden-xs"></span></a>
+                        <ul>
+                            <apex:repeat value="{!mapMenuWrapper['ABOUTUS']}" var="dep" rendered="{!IF(CONTAINS(menuContains,'ABOUTUS'),true,false)}" >
+                                <li><a href='{!dep.url}'>{!dep.Name}</a></li>
+                            </apex:repeat>
+                        </ul>
+                    </li>
+                    <li><a href='#'>HR &amp; WORK LIFE <span class="caret hidden-sm hidden-xs"></span></a>
+                        <ul>
+                            <apex:repeat value="{!mapMenuWrapper['HR&WORKLIFE']}" var="dep" rendered="{!IF(CONTAINS(menuContains,'HR&WORKLIFE'),true,false)}" >
+                                <li><a href='{!dep.url}'>{!dep.Name}</a></li>
+                            </apex:repeat>
+                        </ul>
+                    </li>                    
+                    <li class=''><a href='/apex/DepartmentPortal?id=a6Gd0000000blMh'>POLICIES &amp; PROCEDURES</a></li>
+                    <!-- SFIP-122
+                    <li><a href='#'>ENTITIES <span class="caret hidden-sm hidden-xs"></span></a>
+                        <ul>
+                            <apex:repeat value="{!mapMenuWrapper['ENTITIES']}" var="dep" rendered="{!IF(CONTAINS(menuContains,'ENTITIES'),true,false)}" >
+                                <li><a href='{!dep.url}'>{!dep.Name}</a></li>
+                            </apex:repeat>
+                        </ul>
+                    </li>--> 
+                    <li><a href='#'>DEPARTMENTS <span class="caret hidden-sm hidden-xs"></span></a>
+                        <ul>
+                            <apex:repeat value="{!mapMenuWrapper['DEPARTMENTS']}" var="dep" rendered="{!IF(CONTAINS(menuContains,'DEPARTMENTS'),true,false)}" >
+                                <li><a href='{!dep.url}'>{!dep.Name}</a></li>
+                            </apex:repeat>
+                        </ul>
+                    </li>
+                    <li><a href='#'>RESOURCES &amp; TOOLS <span class="caret hidden-sm hidden-xs"></span></a>
+                        <ul>
+                            <apex:repeat value="{!mapMenuWrapper['RESOURCES AND TOOLS']}" var="dep" rendered="{!IF(CONTAINS(menuContains,'RESOURCES AND TOOLS'),true,false)}" >
+                                <li><a href='{!dep.url}'>{!dep.Name}</a></li>
+                            </apex:repeat>
+                        </ul>
+                    </li>
+                    <li><a href="/_ui/core/chatter/groups/GroupListPage">CHATTER</a></li>
+                    <li class="initiator"><a href='#'>SHORTCUTS <span class="caret hidden-sm hidden-xs"></span></a>
+                        <ul class="hidden-md hidden-lg open">
+                            <apex:repeat value="{!Link_Group}" var="LinkGroup" >
+                                <li class="{!if(LinkGroup.Group_Name__c == userPersona,'openPersonaMenu', '')}"><a href='{!LinkGroup.Link__c}' >{!LinkGroup.Group_Name__c}</a>
+                                    <ul>
+                                        <apex:repeat value="{!Links}" var="Link">
+                                            <li style="display: {!if(LinkGroup.id == Link.Group__c,'','none')}">
+                                                <a href='{!Link.Link_Url__c}'>{!Link.Name}</a></li>
+                                        </apex:repeat>                                        
+                                    </ul>
+                                </li>
+                            </apex:repeat>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>    
+        </div>        
+        <div class="dvShortcuts hidden-xs hidden-sm visible-md-up visible-lg-up">
+            <div class="personaSubs">
+                <apex:variable value="{!0}" var="personaContentCount"/>
+                <apex:repeat value="{!Link_Group}" var="LinkGroup" >
+                    <div class="persona{!personaContentCount} personaSubLinks">
+                        <div class="column1">
+                            <apex:variable value="{!0}" var="column1Count"/>
+                            <apex:repeat value="{!Links}" var="Link">
+                                <span style="display: {!if(column1Count < 18 && LinkGroup.id == Link.Group__c,'','none')}">                                    
+                                    <a href='{!Link.Link_Url__c}'>{!Link.Name}</a></span>                            
+                                <apex:variable var="column1Count" value="{!if(LinkGroup.id == Link.Group__c,column1Count + 1, column1Count)}"/>
+                            </apex:repeat>  
+                        </div>  
+                        <div class="column2">
+                            <apex:variable value="{!0}" var="column2Count"/>
+                            <apex:repeat value="{!Links}" var="Link">
+                                <span style="display: {!if(column2Count > 17 && LinkGroup.id == Link.Group__c,'','none')}"> 
+                                    <a href='{!Link.Link_Url__c}'>{!Link.Name}</a></span>                            
+                                <apex:variable var="column2Count" value="{!if(LinkGroup.id == Link.Group__c, column2Count + 1, column2Count)}"/>
+                            </apex:repeat> 
+                        </div>                                         
+                    </div>  
+                    <apex:variable var="personaContentCount" value="{!personaContentCount + 1}"/>
+                </apex:repeat>
+            </div> 
+            <div class="personas">
+                <apex:variable value="{!0}" var="personaGroupCount"/>
+                <apex:repeat value="{!Link_Group}" var="LinkGroup" >
+                    <span id="persona{!personaGroupCount}" class="{!if(LinkGroup.Group_Name__c == userPersona,'openPersonaMenu', '')}">                                
+                        <a href='{!LinkGroup.Link__c}' >{!LinkGroup.Group_Name__c}</a>
+                    </span>
+                    <apex:variable var="personaGroupCount" value="{!personaGroupCount + 1}"/>
+                </apex:repeat>
+            </div>
+        </div>
+    </div>  
+    <script type="text/javascript">
+    var jHeader$ = jQuery.noConflict();
+    jHeader$(function(){
+        //jHeader$(document).ready(function(){     
+        var mediasize = 1000;
+        if (jHeader$( window ).width() > mediasize) {                
+            jHeader$('.initiator').on('mouseenter', function(e){
+                jHeader$('.dvShortcuts').show();
+                jHeader$('.initiator').addClass('active');
+                jHeader$('.openPersonaMenu').each(function(index) {
+                    if (jHeader$(this) != null)
+                    {
+                        jHeader$('.' + jHeader$(this).attr('id')).show();
+                        jHeader$(this).addClass('active');
+                    }
+                });
+            })
+            
+            jHeader$('.dvShortcuts').on('mouseenter', function(e){
+                jHeader$('.dvShortcuts').show();
+                jHeader$('.initiator').addClass('active');
+                jHeader$('.openPersonaMenu').each(function(index) {
+                    if (jHeader$(this) != null)
+                    {
+                        jHeader$('.' + jHeader$(this).attr('id')).show();
+                        jHeader$(this).addClass('active');
+                    }
+                });
+            })
+            
+            jHeader$('.initiator').on('mouseleave', function(e){
+                jHeader$('.dvShortcuts').hide();
+                jHeader$('.initiator').removeClass('active');
+                jHeader$('.personaSubLinks').hide();
+                jHeader$('.personas > span').removeClass('active');
+            })
+            
+            jHeader$('.dvShortcuts').on('mouseleave', function(e){
+                jHeader$('.dvShortcuts').hide();
+                jHeader$('.initiator').removeClass('active');
+                jHeader$('.personaSubLinks').hide();
+                jHeader$('.personas > span').removeClass('active');
+            })
+            
+            jHeader$('.personas > span').on('mouseenter', function(e){
+                jHeader$('.personaSubLinks').hide();
+                jHeader$('.personas > span').removeClass('active');
+                jHeader$('.' + jHeader$(this).attr('id')).show();
+                jHeader$(this).addClass('active');
+            })
+        }
+    });
+    
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+    ga('create', 'UA-3289688-3', 'auto');//Update actual analytics code here
+    ga('send', 'pageview');
+    </script>
+</apex:component>

@@ -1,0 +1,49 @@
+<apex:page controller="CarouselEditController" sideBar="false">
+    <script type = "text/javascript">
+        
+        function deleteConfirmation() {
+            var r = confirm("Please click OK to remove the selected Section.");
+            return r;
+        }
+         
+    </script>
+    <apex:form id="formId">
+        <apex:pageBlock title="Carousel" id="pbId">
+            <apex:pageMessages />
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!customSave}" />
+                <apex:commandButton value="Delete" action="{!customDelete}" onClick="return deleteConfirmation();" />
+                <apex:commandButton value="Add" action="{!addCarousel}" />
+                <apex:commandButton value="Cancel" action="{!cancel}" />                
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!lstCarouselWrapper}" var="ca" id="thePageBlockTable">
+                <apex:column >
+                   <apex:inputCheckbox value="{!ca.isSelected}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">Title</apex:facet>
+                    <apex:inputField value="{!ca.carousel.CarouselTitle__c}" /> 
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">Description</apex:facet>
+                    <apex:inputField value="{!ca.carousel.CarouselDescription__c}" style="height: 60px; width: 400px;" />
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">Image</apex:facet>
+                    <apex:outputPanel >
+                        <apex:inputText value="{!ca.imageName}" id="img1" disabled="true" />
+                        <apex:inputFile value="{!ca.imageContent}" filename="{!ca.imageName}" id="filePath"/>
+                    </apex:outputPanel>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">Active On Page Load</apex:facet>
+                    <apex:inputField value="{!ca.carousel.PageLoadImage__c}" /> 
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">Display</apex:facet>
+                    <apex:inputField value="{!ca.carousel.Display__c}" /> 
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

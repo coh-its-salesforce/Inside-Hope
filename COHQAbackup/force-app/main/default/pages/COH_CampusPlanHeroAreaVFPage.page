@@ -1,0 +1,25 @@
+<apex:page showHeader="false" sidebar="false" lightningStylesheets="true">
+    <apex:includeLightning />    
+    <apex:includeScript value="/lightning/lightning.out.js" />
+
+<apex:includeScript value="{!$Resource.GoogleTagManager}"/>
+
+
+<!-- Google Tag Manager (noscript) -->
+<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NZTLMPZ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe>
+<!-- End Google Tag Manager (noscript) -->
+
+    <script>
+    $Lightning.use("c:COH_CampusPlanHomePage", function() {
+        $Lightning.createComponent("c:COH_CampusPlanMainContainer","",
+          "LightningComponentid",
+          function(cmp) {
+             console.log('Display Lightning component in visualforce page');
+          });
+    });
+    </script>
+
+    <div id="LightningComponentid" />
+    
+</apex:page>

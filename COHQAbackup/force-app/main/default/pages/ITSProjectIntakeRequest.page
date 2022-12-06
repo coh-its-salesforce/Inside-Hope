@@ -1,0 +1,203 @@
+<apex:page controller="ITSProjectIntakeRequestController" showHeader="true" sidebar="false" docType="html-5.0" language="en-US" standardStylesheets="true" cache="false" expires="0" id="ITSProjectIntakeRequestPage" title="TPO Project Intake">
+    <apex:sectionHeader title="TPO Project Intake"/>
+    <apex:pageMessages ></apex:pageMessages>
+    <apex:form >     
+        <apex:pageBlock mode="edit">
+            <apex:pageBlockSection title="Request Details">
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Request_Date__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Request_Date__c.label}			
+                    <apex:inputField taborderhint="1" value="{!mPortfolioObject.Request_Date__c}" required="true"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Investment_Category__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Investment_Category__c.label}
+                    <apex:inputField taborderhint="13" value="{!mPortfolioObject.Investment_Category__c}"/>
+                </apex:pageBlockSectionItem>                        
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Request_Name__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Request_Name__c.label}			
+                    <apex:inputField taborderhint="2" value="{!mPortfolioObject.Request_Name__c}" required="true"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Strategic_Business_Initatitves__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Strategic_Business_Initatitves__c.label}
+                    <apex:inputField taborderhint="14" value="{!mPortfolioObject.Strategic_Business_Initatitves__c}" />
+                </apex:pageBlockSectionItem>                        
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Alternate_Request_Name__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Alternate_Request_Name__c.label}			
+                    <apex:inputField taborderhint="3" value="{!mPortfolioObject.Alternate_Request_Name__c}" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Demand_Source__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Demand_Source__c.label}
+                    <apex:inputField taborderhint="15" value="{!mPortfolioObject.Demand_Source__c}" />
+                </apex:pageBlockSectionItem>                        
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Project_Short_Description__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Project_Short_Description__c.label}			
+                    <apex:inputField taborderhint="4" value="{!mPortfolioObject.Project_Short_Description__c}" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Request_Category__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Request_Category__c.label}
+                    <apex:inputField taborderhint="16" value="{!mPortfolioObject.Request_Category__c}" required="true"/>
+                </apex:pageBlockSectionItem>                         
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Program__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Program__c.label}			
+                    <apex:inputField taborderhint="5" value="{!mPortfolioObject.Program__c}" required="true"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Budget_Category__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Budget_Category__c.label}
+                    <apex:inputField taborderhint="17" value="{!mPortfolioObject.Budget_Category__c}" required="true"/>
+                </apex:pageBlockSectionItem>                        
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Requester_Name__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Requester_Name__c.label}			
+                    <apex:inputField taborderhint="6" value="{!mPortfolioObject.Requester_Name__c}" required="true"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Funding_Type__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Funding_Type__c.label}
+                    <apex:inputField taborderhint="18" value="{!mPortfolioObject.Funding_Type__c}" required="true"/>
+                </apex:pageBlockSectionItem>                      
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Requester_Priority__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Requester_Priority__c.label}			
+                    <apex:inputField taborderhint="7" value="{!mPortfolioObject.Requester_Priority__c}" required="true"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Funding_Source__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Funding_Source__c.label}
+                    <apex:inputField taborderhint="19" value="{!mPortfolioObject.Funding_Source__c}" required="true"/>
+                </apex:pageBlockSectionItem>                      
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Project_Size__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Project_Size__c.label}			
+                    <apex:inputField taborderhint="8" value="{!mPortfolioObject.Project_Size__c}" required="true"/>
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Funding_Source_Sub_Category__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Funding_Source_Sub_Category__c.label}
+                    <apex:inputField taborderhint="20" value="{!mPortfolioObject.Funding_Source_Sub_Category__c}" />
+                </apex:pageBlockSectionItem>                        
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Requested_Project_Start_Date__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Requested_Project_Start_Date__c.label}			
+                    <apex:inputField taborderhint="9" value="{!mPortfolioObject.Requested_Project_Start_Date__c}" required="true"/>
+                </apex:pageBlockSectionItem>
+                  
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Funding_Source_Other__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Funding_Source_Other__c.label}
+                    <apex:inputField taborderhint="21" value="{!mPortfolioObject.Funding_Source_Other__c}" style="width: 60%"/>
+                </apex:pageBlockSectionItem>                       
+            </apex:pageBlockSection>    
+            
+            <apex:pageBlockSection >
+                 <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Requested_Project_End_Date__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Requested_Project_End_Date__c.label}			
+                    <apex:inputField taborderhint="10" value="{!mPortfolioObject.Requested_Project_End_Date__c}" required="true"/>
+                </apex:pageBlockSectionItem>
+                <!-- Modified by saidaiah cause of no need of regulatory as per intake enhancements-->
+                 <!--<apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Regulatory__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Regulatory__c.label}
+                    <apex:inputField taborderhint="22" value="{!mPortfolioObject.Regulatory__c}" required="true"/>
+                      </apex:pageBlockSectionItem>-->
+               <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Regulatory_Due_Date__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Regulatory_Due_Date__c.label}
+                    <apex:inputField taborderhint="22" value="{!mPortfolioObject.Regulatory_Due_Date__c}" />
+                 </apex:pageBlockSectionItem>
+                 
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Notes__c.inlineHelpText}" >
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Notes__c.label}			
+                    <apex:inputField taborderhint="11" value="{!mPortfolioObject.Notes__c}" style="width: 60%;" required="true"/>
+                </apex:pageBlockSectionItem>
+                 
+                 
+                     <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Expedited_Request__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Expedited_Request__c.label}
+                    <apex:inputField taborderhint="23" value="{!mPortfolioObject.Expedited_Request__c}" />
+                         </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.If_Expedited_Request__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.If_Expedited_Request__c.label}
+                    <apex:inputField taborderhint="12" value="{!mPortfolioObject.If_Expedited_Request__c}" />
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            
+
+            
+        
+            <apex:pageBlockSection title="Background" >
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Project_Background__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Project_Background__c.label}			
+                    <apex:inputField taborderhint="24" value="{!mPortfolioObject.Project_Background__c}" required="true"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Short_Term_Benefits__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Short_Term_Benefits__c.label}
+                    <apex:inputField taborderhint="29" value="{!mPortfolioObject.Short_Term_Benefits__c}" required="true"/>
+                </apex:pageBlockSectionItem>                        
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Executive_Summary__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Executive_Summary__c.label}			
+                    <apex:inputField taborderhint="25" value="{!mPortfolioObject.Executive_Summary__c}" required="true"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Long_Term_Benefits__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Long_Term_Benefits__c.label}
+                    <apex:inputField taborderhint="30" value="{!mPortfolioObject.Long_Term_Benefits__c}" required="true"/>
+                </apex:pageBlockSectionItem>                        
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Describe_goals_and_objectives__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Describe_goals_and_objectives__c.label}			
+                    <apex:inputField taborderhint="26" value="{!mPortfolioObject.Describe_goals_and_objectives__c}" required="true"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Key_Assumptions__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Key_Assumptions__c.label}
+                    <apex:inputField taborderhint="31" value="{!mPortfolioObject.Key_Assumptions__c}" />
+                </apex:pageBlockSectionItem>                        
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Project_Justification__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Project_Justification__c.label}			
+                    <apex:inputField taborderhint="27" value="{!mPortfolioObject.Project_Justification__c}" required="true"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Key_Dependencies__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Key_Dependencies__c.label}
+                    <apex:inputField taborderhint="32" value="{!mPortfolioObject.Key_Dependencies__c}"/>
+                </apex:pageBlockSectionItem>                        
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem helpText="{!$ObjectType.TPO_Project_Portfolio__c.fields.Scope_Considerations__c.inlineHelpText}">
+                    {!$ObjectType.TPO_Project_Portfolio__c.fields.Scope_Considerations__c.label}			
+                    <apex:inputField taborderhint="28" value="{!mPortfolioObject.Scope_Considerations__c}" required="true"/>
+                </apex:pageBlockSectionItem>
+                                        
+            </apex:pageBlockSection>
+                  <div align="center" draggable="false">
+                     <apex:commandButton tabindex="210"  action="{!submitRequest}" value="Submit"/>                
+                  </div>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

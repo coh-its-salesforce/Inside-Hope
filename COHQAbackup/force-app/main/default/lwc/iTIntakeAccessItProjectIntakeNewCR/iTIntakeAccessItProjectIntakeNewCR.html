@@ -1,0 +1,258 @@
+<template>
+    <div class="slds-m-around_small">
+
+            <div style="text-align: center" class="slds-m-around_small">
+                <lightning-button label="New Change Request" variant="brand" onclick={handleNew}></lightning-button>
+            </div>
+
+        <br/>
+        <br/>
+        <template if:true={showForm}>
+            <div style="text-align: center" class="slds-m-around_small">
+                    <lightning-button label="Cancel" variant="brand" onclick={handleCancel}></lightning-button>  
+            </div>
+            <br/>
+            <lightning-card title="Project Change Request" icon-name="action:add_file">        
+            <div class="slds-m-around_small"> 
+            <lightning-record-edit-form object-api-name="TPO_Project_Portfolio__c" onsuccess={handleSuccess} onsubmit={handleSubmit} record-type-id="0120V00000222ezQAA" density="comfy" onerror={handleError}>
+                <lightning-messages></lightning-messages>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Change_Request_ID__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="OwnerId"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Request_ID_Request_Name__c" value={recordId} required></lightning-input-field><!--Original Request-->
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Requester_Name__c" required></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="CR__c" required></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="CR_Priority__c" required></lightning-input-field>
+                    </div>
+                    </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Change_Request_Submission_Date__c" required ></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Change_RequestName__c" ></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Impacted_ISC_s__c"></lightning-input-field>
+                    </div>
+                </div><div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Change_Request_Short_Description__c" required></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Impact_Risks_if_Change_RequestUnapproved__c" required></lightning-input-field>
+                    </div>
+                </div><div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Description_of_Proposed_Change__c" required></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Impacted_Fiscal_Year__c"></lightning-input-field>
+                    </div>
+                </div><div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Approval_Needed_By__c" required></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Change_Classification__c" required></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Change_Request_Notes__c"></lightning-input-field>
+                    </div>
+                </div>
+                <span class="slds-truncate" title="Section Title"> Scope Change </span>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Description_of_Scope_Change__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Impact_of_Scope_Change__c"></lightning-input-field>
+                    </div>
+                </div><div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Im__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Change_in_Impacted_Systems_Applications__c"></lightning-input-field>
+                    </div>   
+                </div>
+                <span class="slds-truncate" title="Section Title"> Schedule Change </span>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Description_of_Schedule_Change__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Impact_of_Schedule_Change__c"></lightning-input-field>
+                    </div>
+                </div><div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Revised_Request_Start_Date__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Revised_Request_End_Date__c"></lightning-input-field>
+                    </div>
+                </div><div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Revised_Go_Live_Date__c"></lightning-input-field>
+                    </div>   
+                </div>
+                <span class="slds-truncate" title="Section Title"> Budget Change </span>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Description_Of_Budget_Change__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Impact_Of_Budget_Change__c"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Internal_IT_Labor_Hours_Year_1_Capex__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="AdditionalRequested_Opex_Internal_ITS_LH__c"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Additional_Requested_Capex_TS_Hours__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="AdditionalRequested_Opex_External_ITS_LH__c"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Requested_Managed_Svcs_Hrs_Yr_1_Capex__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Requested_Managed_Svcs_Hrs_Yr_1_Opex__c"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Requested_Total_Hrs_Yr_1__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Requested_Total_Hrs_Yr_3__c"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Requested_Total_Hrs_Yr_2__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Requested_Total_Hrs_Multi_Year__c"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Requested_Internal_Cost_Yr_1_Capex__c"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Capex_Temp_Staffing_Amount__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Additional_Requested_Opex_Consult_Amount__c"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Additional_Requested_Hardware_Amount__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Additional_Requested_HW_Maintenance_Amt__c"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Additional_Requested_Software_Amount__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Additional_Requested_SW_Maintenance_Amt__c"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2"></div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="AdditionalRequested_SaaS_Remote_HostAmt__c"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Additional_Requested_Contingency_Amt__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Contingency_Year_1_Opex__c"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Total_Requested_Budget_Capex__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Total_Requested_Budget_Opex__c"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Requested_CAPEX_Year_2__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Requested_OPEX_Year_2__c"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Requested_CAPEX_Year_3__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Requested_OPEX_Year_3__c"></lightning-input-field>
+                    </div>
+                </div>
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Total_Requested_Capex_Budget_IT__c"></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Total_Requested_Opex_Budget_IT__c"></lightning-input-field>
+                    </div>
+                </div>
+                <div style="text-align:center" class="slds-m-around_small"><lightning-button class="slds-m-top_small" type="submit" label="Create Change Request" variant="brand"></lightning-button></div>
+            
+  
+                <div class="spinner">
+                    <template if:true={isLoading}>
+                         <lightning-spinner alternative-text="Loading" variant="brand" size="large">
+                         </lightning-spinner>
+                    </template>
+                </div>
+            </lightning-record-edit-form>
+        </div>
+        </lightning-card>
+        </template>  
+    </div>
+</template>

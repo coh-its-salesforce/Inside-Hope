@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="Sample Component Event">
+       <aura:attribute type="Campus_Plan_Timeline__c" name="timelinerecord"/>
+</aura:event>

@@ -1,0 +1,40 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<h1 style="font-size: 20px ;font-weight: bold;">Manager Central</h1><br/><br/>
+    
+    
+    <c:HRPortalCommonPageContent pageName="Manager_Central"></c:HRPortalCommonPageContent>
+    <!--
+    <p><b>All FY19 merit increases have been approved!</b></p> <br/>
+    
+    <p>
+    	Merit Statements are now available in My Learning and Performance portal. The new merit is effective on January 5, 2020 and will be reflected on the January 24th paycheck. You can start communicating merit with your employee.
+        
+    </p> 
+    
+    <p>
+    	<b>
+            Please distribute the Merit Statements to your managers with direct reports, whom you entered meritincreases for.
+    	
+        </b>
+    </p>
+    <p>
+    	If you have any questions, please send an email to <a href="mailto:mylearningandperformance@coh.org">mylearningandperformance@coh.org</a>
+    </p>
+  
+    <div style="margin-top:50px;padding:50px;">
+    <lightning:layout pullToBoundary="medium">
+            <lightning:layoutItem flexibility="auto" padding="horizontal-medium">
+                <c:HRPortalPanel PanelName="Manager_Central_My_Team"
+                                 backgroundColor="#C6CFDE"
+                                 panelHeading="My Team"
+                                 fontColor="black"></c:HRPortalPanel>
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto" padding="horizontal-medium">
+                <c:HRPortalPanel PanelName="Manager_Central_My_Dashboards"
+                                 backgroundColor="#538ADA"
+                                 panelHeading="My Dashboards"
+                                 fontColor="black"></c:HRPortalPanel>
+            </lightning:layoutItem>
+    </lightning:layout>  
+        </div>-->
+</aura:component>

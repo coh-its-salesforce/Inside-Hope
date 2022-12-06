@@ -1,0 +1,89 @@
+<!--
+  @description       : 
+  @author            : Sanjay
+  @group             : 
+  @last modified on  : 02-25-2021
+  @last modified by  : Sanjay
+  Modifications Log 
+  Ver   Date         Author   Modification
+  1.0   02-04-2021   Sanjay   Initial Version
+-->
+<template>
+    <template if:true={loading}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+    
+    <lightning-card title="Please Select Object and Queue">
+        <template if:false={readOnly}> 
+            <lightning-button label="Cancel" slot="actions"  onclick={handleCancel}></lightning-button>
+            <lightning-button label="Save" variant="brand" slot="actions" onclick={handleSave} style="margin-left:10px;"></lightning-button>
+        </template>
+        <template if:true={readOnly}> 
+            <lightning-button label="Delete" slot="actions"  onclick={handleDelete}></lightning-button>
+            <lightning-button label="Edit" variant="brand" slot="actions" onclick={handleEdit} style="margin-left:10px;"></lightning-button>
+        </template>
+        <div>
+
+            <lightning-layout vertical-align="start" multiple-rows>
+                <lightning-layout-item size="4" padding="around-small">
+                    <lightning-combobox name="Objects" label="Select Object" value={selctedObject}
+                        placeholder="Select Object" options={objectList} onchange={handleObjectChange} 
+                        disabled={readOnly} >
+                    </lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size="4" padding="around-small">
+                    <lightning-combobox name="queues" label="Select Queue" value={selectedQueue}
+                        placeholder="Select object" options={queueList} disabled={isQueueListDisabled}
+                        onchange={handleQueueChange}>
+                    </lightning-combobox>
+
+                </lightning-layout-item>
+                <lightning-layout-item size="4" padding="around-small">
+                    <lightning-input type="checkbox"
+                                label="Active"
+                                checked={isActive}
+                                onchange={handleActiveChange} 
+                                disabled={readOnly}
+                                >
+                    </lightning-input>
+
+                </lightning-layout-item>
+                
+            </lightning-layout>
+        </div>
+    </lightning-card>
+    <template if:true={avaibaleQueueMember}>
+        <lightning-card title="Available Queue Members" style="margin-top: 10px;">
+            <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col" style="width: 5%;">
+                            <div class="slds-truncate" title="Order">Order</div>
+                        </th>
+                        <th class="" scope="col"  style="width: 50%;">
+                            <div class="slds-truncate" title="User">User</div>
+                        </th>
+                        <th class="" scope="col"  style="width: 50%;">
+                            <div class="slds-truncate" title="Last Assigned">Last Assigned</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Associated to Round Robin Queue">Associated to Round Robin Queue</div>
+                        </th>
+                     
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Active">Active</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={avaibaleQueueMember} for:item="user"> 
+                      <c-coh-round-robin-queue-member-row read-only={readOnly} member={user} key={user.userRec.Id} ondetailchange={handleMemberChange}>
+
+                      </c-coh-round-robin-queue-member-row>
+                    </template>
+                </tbody>
+            </table>
+        </lightning-card>
+    </template>
+   
+</template>

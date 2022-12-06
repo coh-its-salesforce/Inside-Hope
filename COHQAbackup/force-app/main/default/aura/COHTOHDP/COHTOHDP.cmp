@@ -1,0 +1,6 @@
+<aura:component controller="COHTOHDPRestApiCallOnRW" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithOutHeader" access="global" >
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h2>Are you sure to send the records to HDP ?</h2><br/>
+   
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<lightning:button label="Cancel" onclick="{!c.handleCancel}"  iconPosition="center"/>
+    <lightning:button label="Send" onclick="{!c.sendRecord}"  variant="brand" iconPosition="center"/>
+</aura:component>

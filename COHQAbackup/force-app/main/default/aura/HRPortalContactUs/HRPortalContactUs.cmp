@@ -1,0 +1,42 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<div class="customcss" style="background-color: #5BC2E7 !important;color: white;padding: 8px;border-radius: 8px;">
+        <div class="slds-media slds-media_center ">
+            <div class="slds-media__figure">
+                <span class="slds-avatar slds-avatar_small">
+                    <lightning:icon iconName="standard:email" size="small" class="iconcss"/>
+                </span>
+            </div>
+            <div class="slds-media__body">
+                <!-- Start Sanjay Singh 02/23/2022 <a target="_blank" href="https://cityofhope.lightning.force.com/lightning/r/ContentDocument/0693o000009wqNgAAI/view" style="font-size:12px;color: white;"><b>Contact Us</b></a><br/> -->
+                <a target="_blank" href="https://cityofhope.force.com/HRPortal/s/hr-case">
+                <b style="font-size:12px;color: white;">AskHR</b> <!-- Changes Sanjay Singh 03/09/2022 -->
+                <i style="font-size:18px;color: purple;margin-left:10px;font-family: Mistral;">New!</i> <!-- Changes Sanjay Singh 03/09/2022 -->
+              </a><br/>	
+            </div>
+        </div>
+       <!--  <div class="slds-media slds-media_center ">
+            <div class="slds-media__figure">
+                <span class="slds-avatar slds-avatar_small">
+                    <lightning:icon iconName="standard:email" size="small" class="iconcss"/>
+                </span>
+            </div>
+            <div class="slds-media__body">
+                <a href="mailto:HRIM@coh.org" style="font-size:10px;color: black;">Contact us</a><br/>
+            </div>
+        </div>
+        
+       <div class="slds-media slds-media_center ">
+            <div class="slds-media__figure">
+                <span class="slds-avatar slds-avatar_small">
+                    <lightning:icon iconName="standard:call" size="small" class="iconcss"/>
+                </span>
+            </div>
+            <div class="slds-media__body">
+                <p>
+                    <span> M-F 9am-5pm PT</span><br/>
+                    <span> (626) 268-HELP</span>
+                </p>
+            </div>
+        </div>-->
+    </div>
+</aura:component>

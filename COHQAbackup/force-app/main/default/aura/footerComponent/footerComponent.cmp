@@ -1,0 +1,50 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    <lightning:card>
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" largeDeviceSize="5" padding="around-small">
+                
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" largeDeviceSize="2"  >
+                <p style="text-align:center"><img src="https://cityofhope--qatest.sandbox.file.force.com/servlet/servlet.ImageServer?id=01552000000foTc&amp;oid=00D52000000JQFl&amp;lastMod=1665685675000" alt="" width="400" height="600" style= "max-width:50%"/></p>
+            </lightning:layoutItem>
+            <!--<lightning:layoutItem size="12" largeDeviceSize="1" padding="around-small">
+                <p style="color:white;font-size: xxx-large;white-space: nowrap;">
+                    City of  
+                    
+                </p>
+                   <p style="color:white;font-size: xxx-large;white-space: nowrap;">
+                    Hope ©
+                    
+                </p>
+            </lightning:layoutItem>-->
+            <lightning:layoutItem size="12" largeDeviceSize="5" padding="around-small">
+                
+            </lightning:layoutItem>
+           <!-- <lightning:layoutItem size="12" largeDeviceSize="12" padding="around-small">
+                <p style="color:white;text-align:center;">About City of Hope | Find a location | Visit our Newsroom | Learn about our outreach</p>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" largeDeviceSize="12" padding="around-small">
+                <p style="color:white;text-align:center;"><b>Join our community</b></p>
+            </lightning:layoutItem>-->
+            <lightning:layoutItem size="12" largeDeviceSize="12" padding="around-small">
+                <p style="color:white;text-align:center;">
+                    <a target="_blank" href="https://www.facebook.com/cityofhope">	<img  src="https://cityofhope--qatest.sandbox.file.force.com/servlet/servlet.ImageServer?id=01552000000foTN&amp;oid=00D52000000JQFl&amp;lastMod=1664835130000" alt="User avatar"/></a>
+                  &nbsp;<a target="_blank" href="https://www.instagram.com/cityofhope/"> <img src="https://cityofhope--qatest.sandbox.file.force.com/servlet/servlet.ImageServer?id=01552000000foTS&amp;oid=00D52000000JQFl&amp;lastMod=1664835168000" alt="User avatar"/></a>
+                  &nbsp;<a target="_blank" href="https://twitter.com/cityofhope"> <img src="https://cityofhope--qatest.sandbox.file.force.com/servlet/servlet.ImageServer?id=01552000000foTI&amp;oid=00D52000000JQFl&amp;lastMod=1664835088000" alt="User avatar"/></a>
+                  &nbsp;<a target="_blank" href="https://www.linkedin.com/company/city-of-hope"><img src="https://cityofhope--qatest.sandbox.file.force.com/servlet/servlet.ImageServer?id=01552000000foTX&amp;oid=00D52000000JQFl&amp;lastMod=1664843160000" alt="User avatar"/></a></p>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" largeDeviceSize="12" padding="around-small">
+                <p style="color:white;text-align:center;">
+                    City of Hope strongly supports and values the uniqueness of all individuals and promotes a work environment where diversity is embraced.
+                </p>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" largeDeviceSize="12" padding="around-small">
+                <p style="color:white;text-align:center;">
+                    © 2022 CITY OF HOPE and the City of Hope logo are registered trademarks of City of Hope.
+                </p>
+            </lightning:layoutItem>
+        </lightning:layout>
+        
+        
+    </lightning:card>
+</aura:component>

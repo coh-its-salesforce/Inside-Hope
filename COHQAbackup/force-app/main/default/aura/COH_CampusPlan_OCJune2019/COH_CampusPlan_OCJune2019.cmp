@@ -1,0 +1,86 @@
+<aura:component >
+   <aura:attribute name="Milestone" type="boolean" default="false"/>
+   <aura:attribute name="milestonepage3" type="boolean" default="true"/>
+   <aura:attribute name="VideoLink" type="String" default="https://players.brightcove.net/5069692884001/default_default/index.html?videoId=6051898941001"/>
+   <aura:if isTrue="{!v.milestonepage3}">
+     <div>
+         <div class="banner-container">
+             <div class="slds-grid slds-wrap">
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+                     <div class="banner-image">
+                         <img src = "{!$Resource.CampusPlanIrvine}"/> 
+                     </div>
+                 </div>
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12">
+                     <div class="banner-content">
+                         <h4 class="label-header"><label class="orange-bg">Orange County</label></h4>
+                         <h2> June 2019 </h2>
+                         <p class="banner-p"> City of Hope Reveals Its Bold Vision to Invest More Than $1B for World-Class Cancer Care in Orange County </p>
+                         <p class="banner-p"> City of Hope accelerates its plans to bring highly specialized cancer care to Orange County and increases its investment to $1 billion to change the way cancer care is delivered. </p>
+                     </div>
+                 </div>
+             </div>            
+         </div>
+        <div class="profile-content">
+            <p> City of Hope and its partner FivePoint expanded their vision to create a hub for health and wellness with the Orange County cancer campus at its center. This expanded vision is an unprecedented initiative in Orange County. By transforming a building of about 190,000-square-feet and its surrounding 11 acress into a center of innovative cancer research and treatment, City of Hope cuts it’s time to build the new campus in half. Our world-class cancer center of the future will open in 2021. </p>
+            <p>
+            	<strong> LATEST NEWS </strong>
+            </p>
+            <p>
+                <strong>INTERNAL UPDATES</strong><br/>
+                <ul class="content-ul"><!-- Frank updated embedded video 03/31/2020 -->
+                    <li>
+                        <p>
+                            <a target = '_blank' href= 'https://players.brightcove.net/5069692884001/default_default/index.html?videoId=6051898941001'> 
+                                Video Update from President and CEO Robert Stone
+                            </a>
+                        </p>
+                        <c:ExpandingHopeLightningEmbeddedVideo VideoLink="{!v.VideoLink}"/>
+                    </li>
+                    <li>
+                        <a target = '_blank' href= 'http://perspectives.coh.org/cancer-campus-of-the-future-our-vision-for-orange-county/'>
+                            Cancer Campus of the Future: Our Vision for Orange County
+                        </a>
+                    </li>
+                    <li>
+                        <a target = '_blank' href= 'https://cityofhope--c.na118.visual.force.com/apex/NewsAnnouncementDetailPage?id=a6E0V000001QgsuUAC'>
+                            Our $1B Vision for Orange County
+                        </a>
+                    </li>
+                </ul>
+            </p>
+            <p>
+            	<strong>NEWS HIGHLIGHTS</strong>
+                <ul class="content-ul">
+                    <li>
+         				<a target = '_blank' href= 'https://www.ocregister.com/2019/06/25/city-of-hope-to-invest-1-billion-for-cancer-treatment-and-research-near-irvines-great-park/'> 
+                            City of Hope to invest $1 billion for cancer treatment and research near Irvine’s Great Park </a> – The Orange County Register
+                    </li>
+                    <li>
+                    	<a target = '_blank' href= 'https://www.latimes.com/business/la-fi-city-of-hope-orange-county-20190625-story.html'> 
+                            City of Hope to develop $1 billion in new cancer hospital </a> –Los Angeles Times
+                    </li>
+                    <li>
+                        <a target = '_blank' href= 'https://labusinessjournal.com/news/2019/jun/25/duarte-based-city-hope-invest-1b-new-cancer-center/'> 
+                            City of Hope to Invest $1B in New Cancer Center in Irvine </a> – Los Angeles Business Journal
+                    </li>
+                    <li>
+                    	<a target = '_blank' href= 'https://www.modernhealthcare.com/providers/city-hope-more-doubles-investment-calif-cancer-campus'> 
+                            City of Hope more than doubles investment in Calif. Cancer campus </a> – Modern Healthcare
+                    </li>
+                    <li>
+            			<a target = '_blank' href= 'https://abc7.com/health/city-of-hope-to-open-specialty-cancer-hospital-in-irvine-by-2021/5364392/'>
+                            City of Hope to open dedicated cancer campus in Orange County by 2021 </a> - ABC7
+                    </li>
+                </ul>
+            </p>
+            
+         </div>
+       </div>
+       <div class="backbutton" onclick="{!c.goBackToMilestone}" ><lightning:icon iconName="utility:back" size="x-small" variant="inverse" />&nbsp;&nbsp;&nbsp;&nbsp;Back  
+    </div>
+       </aura:if>
+    <aura:if isTrue="{!v.Milestone}">
+        <c:COH_CampusPlan_Milestone/>
+    </aura:if>
+</aura:component>

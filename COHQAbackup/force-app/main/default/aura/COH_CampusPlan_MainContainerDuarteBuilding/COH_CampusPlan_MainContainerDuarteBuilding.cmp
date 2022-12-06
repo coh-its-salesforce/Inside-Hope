@@ -1,0 +1,50 @@
+<aura:component >
+   <aura:attribute name="openDuarteBuildings" type="boolean" default="false"/>
+   <aura:attribute name="DuarteOutpatientClinicProfile" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.DuarteOutpatientClinicProfile}">
+      <div class="banner-container">
+            <div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+      			 <div class="banner-image">
+      				<img src = "{!$Resource.DuarteOutpatientClinicProfile}"/> 
+                  </div> 
+      		</div>
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12" >
+               <div class="banner-content">
+                   <h4 class="label-header"><label class=" blue-bg">Duarte</label></h4>
+                   <h2> Duarte Outpatient Clinic (DOC)</h2>
+                   <p class="banner-p">
+                       <strong>Purpose</strong><br/> 
+                       The DOC will expand our ambulatory care services to support higher patient volumes and new treatment regimens. It will double our exam rooms and infusion capacity.
+                   </p>
+                   <p class="banner-p">
+                       <strong>Capacity</strong><br/> 
+                       The 8-story, 350,000 square-foot building will become the largest ambulatory care building on campus.
+                   </p>
+                   <p class="banner-p">
+                       <strong>Amenities</strong><br/> 
+                       It will house state-of-the-art equipment, specialty clinics, new radiation oncology vaults, laboratory services and dedicated clinical trial infusion and monitoring. Other features include break rooms, conference spaces, along with a farm-to-table café with indoor and outdoor seating.
+                   </p>
+                   <p class="banner-p">
+                       <strong>Notes</strong><br/> 
+                       It will occupy the current footprint of the Needleman, Wing IV, Machris and Modular 170. The DOC is considered a “30-year” building, enabling continued growth. It will open with two and a half “shelled” floors that will allow space to be accessed as needed in the future.
+                   </p>
+                   <p class="banner-p">
+                       <strong>Move in</strong><br/> 
+                       2024
+                   </p>
+               </div>      			
+      		</div>
+        </div>
+           <div class="backbutton" onclick="{!c.goBackToDuarteBuildingPage}" >
+               <lightning:icon iconName="utility:back" size="x-small" variant="inverse" />
+               Back  
+    		</div>
+       </div> 
+       
+       
+    </aura:if>
+        <aura:if isTrue="{!v.openDuarteBuildings}">
+         <c:COH_CampusPlan_DuarteBuilding/>
+     </aura:if>
+</aura:component>

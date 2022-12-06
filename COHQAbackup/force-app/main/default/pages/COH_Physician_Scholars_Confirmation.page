@@ -1,0 +1,31 @@
+<apex:page sidebar="false">
+    <Style>
+        .headerSearchContainer {
+        display: none;
+        }
+        .ThankYou {
+        margin: 0 auto;
+        margin-top: 40Px;
+        text-decoration: none;
+        font-size: medium;
+        color: #1797C0;
+        font-weight: bold;
+        width: 600px;
+        }
+        .Submitted {
+        margin: 0 auto;
+        margin-top: 40Px;
+        text-decoration: none;
+        font-size: medium;
+        color: #1797C0;
+        font-weight: bold;
+        width: 700px;
+        }
+    </Style>
+    <p class="ThankYou">
+        Thank you for your interested in the City of Hope VIS program.   
+    </p>
+    
+    <p class="Submitted">
+        For questions regarding the program, please email Yanghee Woo, M.D., Director of International Surgery, at <a href= "mailto:ywoo@coh.org">ywoo@coh.org</a>.  </p>
+</apex:page>

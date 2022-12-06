@@ -1,0 +1,124 @@
+<aura:component controller="COHCaseInsuranceTabController" implements="flexipage:availableForAllPageTypes,lightning:availableForFlowScreens,force:hasRecordId">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:attribute name="mLoading" type="Boolean" default="true"/>
+    <aura:attribute name="mCase" type="Case" default="{}"/>
+    <aura:attribute name="mApptStatus" type="List" default=""/>
+    <aura:attribute name="mApptStatusVal" type="String" default=""/>
+    <aura:attribute name="mApptStatusInitialVal" type="String" default=""/>
+    <aura:attribute name="mApptCanceledByVal" type="String" default=""/>
+    <aura:attribute name="mApptCancelationReason" type="List" default=""/>
+    <aura:attribute name="mApptCancelationReasonVal" type="String" default=""/>
+    <aura:attribute name="mApptRescheduled" type="List" default=""/>
+    <aura:attribute name="mApptRescheduledVal" type="String" default=""/>
+    <aura:attribute name="mApptResultConfirmationCall" type="List" default=""/>
+    <aura:attribute name="mOtherReasonSelected" type="Boolean" default="false"/>
+    <aura:attribute name="mApptResultConfirmationCallVal" type="String" default=""/>
+    <aura:attribute name="mNotifyLeadershipInitialVal" type="Boolean" default="false"/>
+    <aura:attribute name="mIsCancelationAuthorizedVal" type="Boolean" default="false"/>
+    <aura:attribute name="mNotifyLeadershipVal" type="Boolean" default="false"/>
+    
+    <div class="slds-card slds-card_boundary" style="box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.16);">
+        <div class="slds-section slds-is-open slds-m-top_none">
+            <h3 class="slds-section__title">
+                <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                    <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                    <span class="slds-truncate" title="Section Title">Cancelation / No Show</span>
+                </button>
+            </h3>
+            <aura:if isTrue="{!not(v.mLoading)}">
+                <div aria-hidden="false" class="slds-section__content" id="expando-unique-id">
+                    <div class="slds-form">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="mApptStatusList" name="mApptStatusList" label="Appointment Status" onchange="{!c.onApptStatusChange}" value="{!v.mApptStatusVal}" >
+                                    <option text="--None--" value="" selected="{!v.mApptStatusVal == ''}"/>
+                                    <aura:iteration items="{!v.mApptStatus}" var="i">
+                                        <option text="{#i.label}" value="{#i.value}" selected="{#v.mCase.Appt_Status__c == i.value}"/>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:input type="date" aura:id="Appt_Call_Date__c" name="Appt_Call_Date__c" label="Call Date" disabled="{!v.mApptStatusVal != 'No Show'}" value="{!v.mCase.Appt_Call_Date__c}"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="mApptCancelationReasonList" name="mApptCancelationReasonList" label="Reason for Cancelation" disabled="{!v.mApptStatusVal != 'Canceled'}"  value="{!v.mApptCancelationReasonVal}" onchange="{!c.onCancelationReasonChange}" >
+                                    <option text="--None--" value="" selected="{!v.mApptCancelationReasonVal == ''}"/>
+                                    <aura:iteration items="{!v.mApptCancelationReason}" var="i">
+                                        <option text="{#i.label}" value="{#i.value}" selected="{#v.mCase.Appt_Cancelation_Reason__c  == i.value}"/>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:input aura:id="Appt_Canceled_By__c" name="Appt_Canceled_By__c" label="Canceled By" readonly="true" value="{!v.mApptCanceledByVal}"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:textarea aura:id="Appt_Cancelation_Reason_Other__c" name="Appt_Cancelation_Reason_Other__c" label="Other Reason" disabled="{!v.mOtherReasonSelected == false}" maxlength="16384" /> 
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:input type="date" aura:id="Appt_Cancelation_Date__c" name="Appt_Cancelation_Date__c" disabled="{!v.mApptStatusVal != 'Canceled'}" label="Cancelation Date" value="{!v.mCase.Appt_Cancelation_Date__c}"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:input type="date" aura:id="Appt_Cancelation_Email_Sent__c" name="Appt_Cancelation_Email_Sent__c" label="Cancelation Email Sent Date" disabled="{!not(v.mApptStatusVal == 'Canceled') }" value="{!v.mCase.Appt_Cancelation_Email_Sent__c}"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="mApptRescheduledList" name="mApptRescheduledList" label="Did Patient Reschedule?" disabled="{!v.mApptStatusVal == ''}" value="{!v.mApptRescheduledVal}" onchange="{!c.onPatientRescheduleChange}" >
+                                    <option text="--None--" value="" selected="{!v.mApptRescheduledVal == ''}"/>
+                                    <aura:iteration items="{!v.mApptRescheduled}" var="i">
+                                        <option text="{#i.label}" value="{#i.value}" selected="{#v.mCase.Appt_Rescheduled__c == i.value}"/>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:input type="datetime" aura:id="Appt_New_DateTime__c" name="Appt_New_DateTime__c" label="New Appointment" disabled= "{!v.mApptRescheduledVal != 'Yes'}" value="{!v.mCase.Appt_New_DateTime__c}"/>
+                            </div>
+
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:input type="date" aura:id="Appt_Confirm_Email_Sent__c" name="Appt_Confirm_Email_Sent__c" label="New Confirmation Email Sent" disabled="{!v.mApptRescheduledVal != 'Yes'}" value="{!v.mCase.Appt_Confirm_Email_Sent__c}"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:input type="date" aura:id="Appt_Confirmation_Call_Completed__c" name="Appt_Confirmation_Call_Completed__c" label="New Confirmation Call Completed" disabled="{!v.mApptRescheduledVal != 'Yes'}" value="{!v.mCase.Appt_Confirmation_Call_Completed__c}"/>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="mApptResultConfirmationCallList" name="mApptResultConfirmationCallList" label="Result of Confirmation Call" disabled="{!v.mApptRescheduledVal != 'Yes'}" value="{!v.mApptResultConfirmationCallVal}" >
+                                    <option text="--None--" value="" selected="{!v.mApptResultConfirmationCallVal == ''}"/>
+                                    <aura:iteration items="{!v.mApptResultConfirmationCall}" var="i">
+                                        <option text="{#i.label}" value="{#i.value}" selected="{#v.mCase.Appt_Result_of_Confirmation_Call__c == i.value}"/>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <!-- Start Changes By Sanjay Singh 08/18/2020-->
+                                <lightning:input type="checkbox" aura:id="mNotifyLeadership" name="mNotifyLeadership" checked = "{!v.mNotifyLeadershipVal}" label="Notify Leadership"/><!-- disabled="{!v.mApptStatusVal == ''}" -->
+                                <!-- End Sanjay 08/18/2020-->
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-text-align_center">
+                    <lightning:button aura:id="Save" label="Save Info" onclick="{!c.saveApptCancelationInfoClick}" variant="brand"/>
+                </div>
+                <aura:set attribute="else">
+                    <div style="height: 5rem;">
+                        <lightning:spinner/>
+                    </div>
+                </aura:set>
+            </aura:if>
+        </div>
+    </div>
+</aura:component>

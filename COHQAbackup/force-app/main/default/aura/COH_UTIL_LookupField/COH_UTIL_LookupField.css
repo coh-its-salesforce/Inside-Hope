@@ -1,0 +1,8 @@
+.THIS .inputField-LabelHidden label.slds-form-element__label {
+    display: none;
+    color: rgb(112, 110, 107);
+    font-size: .75rem;
+    line-height: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+}

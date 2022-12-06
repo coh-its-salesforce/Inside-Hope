@@ -1,0 +1,7 @@
+<apex:page >
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>Congratulations--</h1>
+  <b>---Hello World</B>
+  This is your new Page: OfferQuickEdit
+  <!-- End Default Content REMOVE THIS -->
+</apex:page>

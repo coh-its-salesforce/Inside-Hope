@@ -1,0 +1,71 @@
+<aura:component controller="COH_CampusPlanController">
+   <aura:attribute name="openDuarteBuildings" type="boolean" default="false"/>
+   <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+   <aura:attribute name="DuarteFAQ" type="boolean" default="true"/>
+   <aura:attribute name="CollapseSection" type="String[]"/>
+   <aura:attribute name="FAQRecs" type="COH_CampusPlanController.ParkingFAQs"/>
+  <!-- <aura:attribute name="DuarteCampusFAQList" type="Campus_Plan_FAQ__c[]"/>
+   <aura:attribute name="DuarteCampusHeader" type="String"/> -->
+   
+    <aura:attribute name="DCHeader" type="String"/>
+    <aura:attribute name="DCFAQList" type="Campus_Plan_FAQ__c[]"/>
+    <aura:attribute name="DUsectionData" type="Object" description="Used to store section data"/>
+    
+   <aura:if isTrue="{!v.DuarteFAQ}">
+       <div class="banner-container">
+    	<div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12" >
+                    <div class="banner-image">
+      					<img src = "{!$Resource.StackedEmployee}"/> 
+      				</div>
+      		</div>
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12">
+               <div class="banner-content">
+                   <h4 class="label-header"><label class=" blue-bg">Duarte</label></h4>
+                   <h2>Duarte Parking FAQs</h2>
+                  <!-- <p class="banner-p">
+                  	Below are answers to frequently asked questions about future parking on Duarte campus. We will continue to update this section, so check back frequently for new information.
+                   </p>
+                   <p class="banner-p"> 
+                       If you have a question you would like answered, please submit it here. [insert link to transportation]
+					</p> -->
+               </div>
+      		</div>
+      	</div>            
+       </div>
+        <div class="profile-content">
+           <!-- <aura:if isTrue="{!not(empty(v.DuarteCampusFAQList))}">
+        	<h1 class="faq-h1">{!v.DuarteCampusHeader}</h1>
+            	<lightning:accordion>
+                    <aura:iteration items="{!v.DuarteCampusFAQList}" var="f"  indexVar="index">
+                      <lightning:accordionSection name="{!f.Question__c}" label="{!f.Question__c}">
+                       <aura:unescapedHtml value="{!f.Answer__c}" />
+                      </lightning:accordionSection>                             
+                    </aura:iteration>
+               </lightning:accordion>
+            </aura:if> -->
+            <aura:if isTrue="{!not(empty(v.DUsectionData.groupList))}">
+            <h2>{!v.DUsectionData.sectionName}</h2>
+             <lightning:accordion>
+                <aura:iteration items="{!v.DUsectionData.groupList}" var="gd"  indexVar="index">
+                  <lightning:accordionSection name="{!gd.groupName}" label="{!gd.groupName}">
+                      <lightning:accordion>
+                          <aura:iteration items="{!gd.gQuestions}" var="gq"  indexVar="index">
+                              <lightning:accordionSection name="{!gq.Question__c}" label="{!gq.Question__c}">
+                               <aura:unescapedHtml value="{!gq.Answer__c}" />
+                              </lightning:accordionSection>                         
+                            </aura:iteration>
+                      </lightning:accordion>
+                  </lightning:accordionSection>                         
+                </aura:iteration>
+           	</lightning:accordion>
+            </aura:if>
+            
+           <!-- <div class="backbutton" onclick="{!c.goBackToDuarteBuildingPage}" ><lightning:icon iconName="utility:back" size="x-small" variant="inverse" />&nbsp;&nbsp;Back  
+    </div> -->
+		</div>
+    </aura:if>
+   <!-- <aura:if isTrue="{!v.openDuarteBuildings}">
+         <c:COH_CampusPlan_DuarteBuilding/>
+     </aura:if> -->
+</aura:component>

@@ -1,0 +1,90 @@
+@font-face {
+   font-family: Arial;
+   src: url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css');
+}
+.THIS .annmain{
+    width: 100%;
+    clear: both;
+    height: 50px;
+    display: flex;
+}
+.THIS .announcement-heading{
+    background-color: #0576ba;
+    color:white;
+    height:50px;
+    width:170px;
+    text-align: center;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.THIS .announcement-heading span{
+    color: #ffffff;
+    position: relative;
+    left: 3px;
+    font-size: 1.2rem;
+}
+.THIS .announcement-content{
+    background-color: deepskyblue;
+    height:50px;
+    overflow: hidden;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    padding-top: 0;
+    width: calc(100% - 170px);
+    
+}
+.THIS .announcement-content span{
+    color: #ffffff;
+}
+
+@media only screen and (max-width: 768px){
+    .THIS .announcement-heading{
+        display: none;
+    }
+	.THIS .announcement-content{
+        width: 100%;
+    }
+}
+/*
+@media only screen and (min-width: 1880px) {
+ .THIS .alertTitle {
+    background-color: black;
+    color: white;
+    height:20px;
+    width:1595px;
+   }
+.THIS .AnnounceText{
+    background-color:blue;
+    color:white;
+    height:40px;
+    width:330px;
+    text-align: center;
+}
+}
+@media only screen 
+and (min-device-width : 375px) 
+and (max-device-width : 667px) {
+    
+    .THIS .alertTitle {
+    background-color: black;
+    color: white;
+    height:75px;
+    width:368px;
+    text-align: center;
+   }
+.THIS .AnnounceText{
+    background-color:blue;
+    color:white;
+    height:40px;
+    width:368px;
+    text-align: center;
+}
+.THIS #MobileDevice{
+    width:368px;
+    }
+}
+
+*/

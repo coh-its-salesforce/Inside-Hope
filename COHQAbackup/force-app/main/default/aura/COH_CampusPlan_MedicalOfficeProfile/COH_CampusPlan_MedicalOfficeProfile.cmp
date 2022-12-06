@@ -1,0 +1,78 @@
+<aura:component >
+    <aura:attribute name="openDuarteBuildings" type="boolean" default="false"/>
+   <aura:attribute name="MedicalOffice" type="boolean" default="true"/>
+   <aura:attribute name="aboutMedical" type="Boolean" default="false"/>
+    <aura:attribute name="aboutMOB" type="Boolean" default="false"/>
+   <aura:if isTrue="{!v.MedicalOffice}">
+    <div>
+        <div class="banner-container">
+            <div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+      			 <div class="banner-image">
+      				<img src = "{!$Resource.cpMedicalOfficeBuilding}"/> 
+                  </div> 
+      		</div>
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12" >
+               <div class="banner-content">
+                   <h4 class="label-header"><label class=" blue-bg">Duarte</label></h4>
+                   <h2> Medical Office Building (MOB) </h2>
+                   <p class="banner-p">
+                       <strong>Purpose</strong><br/> 
+                       This four-story building will house physicians and leadership.
+                   </p>
+                   <p class="banner-p">
+                       <strong>Notes</strong><br/> 
+                       It will be connected by a bridge to the Michael Amini Transfusion Medicine Center and eventually the Duarte Outpatient Clinic
+                   </p>
+                   <p class="banner-p">
+                       <strong>Move In</strong><br/> 
+                       June 2020
+                   </p>
+               </div>      			
+      		</div>
+        </div>
+       </div>
+       
+        <div class="latest-news">
+                        <h1>LATEST NEWS</h1> 		
+            <div class="images-gallery"><c:CampusPlan_NewsAndAnnouncementComp pagesource="Medical Office Building"/></div>
+                           <!-- <ul class="slds-grid slds-wrap">
+                                <li class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">                         
+                                        <a class="news-item" onclick="{!c.getContent}" id="AboutcpMedical">
+                                            <div class="news-item-image">                            
+                                                <img src ="{!$Resource.cpMedicalOfficeBuilding}"/>
+                                            </div>
+                                            <h3 class="news-title">
+                                                About the NEW MOB
+                                            </h3>
+                                        </a> 
+                                </li>
+                                <li class="slds-col slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_3-of-12">
+                                        <a class="news-item" onclick="{!c.getContent1}" id="AboutMOBConstruction">
+                                            <div class="news-item-image">
+                                                <img src ="{!$Resource.CampusPlanMOB}"/>
+                                            </div>
+                                            <h3 class="news-title">
+                                                MOB Opening June
+                                            </h3>
+                                        </a>        
+                                </li>
+                               
+                            </ul>
+                        </div> -->
+                       </div>	
+  		
+          <div class="backbutton" onclick="{!c.goBackToDuarteBuildingPage}" ><lightning:icon iconName="utility:back" size="x-small" variant="inverse" />&nbsp;&nbsp;Back  
+    </div>
+       </div>
+        <br/></aura:if>
+    <aura:if isTrue="{!v.openDuarteBuildings}">
+         <c:COH_CampusPlan_DuarteBuilding/>
+     </aura:if>
+    <!--<aura:if isTrue="{!v.aboutMedical}">
+            <c:COH_CampusPlan_MOB/>
+        </aura:if>
+    <aura:if isTrue="{!v.aboutMOB}">
+            <c:COH_CampusPlan_MOB_News/>
+        </aura:if>-->
+</aura:component>

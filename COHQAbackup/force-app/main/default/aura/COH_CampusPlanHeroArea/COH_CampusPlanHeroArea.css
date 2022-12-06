@@ -1,0 +1,175 @@
+.THIS .home-banner-content{
+    padding: 15px 5em;
+}
+.THIS .home-banner-content-image{
+    padding: 0 0 15px 0;
+    margin: 0;
+    text-align: center;
+}
+.THIS .home-banner-content-image img{
+   max-width: 150px;
+   margin: 0 auto;
+}
+
+
+/*.THIS .cohDesc{
+    max-width: 310px;
+    margin: 20px auto 15px auto;
+    color: #0075bc;
+    font-size: 18px;
+    text-align: left;
+    line-height: 30px;
+}*/
+.THIS .home-banner-nav-area{
+    margin: 20px auto 4px auto;
+}
+.THIS .home-banner-ul{
+    margin: 0 auto !important;   
+    max-width: 350px;    
+}
+.THIS .home-banner-ul li{    
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     width: 100%;
+     max-width: 350px;
+     height: 50px;
+     background: #0075bc url(/resource/RightArrow) right center no-repeat;
+     margin: 5px auto;
+     padding-left: 30px !important;
+     background-position: right center;
+     background-repeat: no-repeat;
+     cursor: pointer; 
+     font-size: 1.2rem;
+     color: #fff;
+}
+.THIS .home-banner-ul li span{ 
+     font-size: 1.2rem;
+     color: #fff;
+}
+.THIS .home-banner-ul li:last-child{
+	background-color: darkorange;   
+}
+
+/* ADDED BY NICK - START */
+
+.THIS .banner-container {
+    background: url(/resource/1593649810000/ExpandingHope_WishingTree) center center no-repeat;
+}
+
+
+
+
+.THIS .banner-content h1 {
+    margin:45px 0 15px 0 !important;
+    padding: 0 !important;
+    color: #ffffff !important;
+    text-align: center;
+    font-size: 45px !important;
+    font-weight: 600!important;
+    letter-spacing: .3px!important;
+    line-height: 1!important;
+    text-shadow: rgba(0, 0, 0, 0.31) 0 2px 8px!important;
+}
+
+
+.THIS p.banner-p {
+    padding: 25px 2.5em !important;
+    color: #ffffff;
+    font-size: 24px !important;
+    line-height: normal;    
+    font-family: Catamaran,Arial,Verdana,-apple-system,BlinkMacSystemFont,sans-serif;
+    line-height: 1.4;
+    font-weight: 200;
+    letter-spacing: .23px;
+}
+
+.THIS p.banner-p span{
+    color: #ffffff !important;
+    font-size: 24px !important;
+    font-family: Catamaran, Arial, Verdana, -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+.THIS .banner-content button {
+	color: rgb(255, 255, 255);
+    background: rgb(0, 103, 186);
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: Catamaran, Arial, Verdana, -apple-system, BlinkMacSystemFont, sans-serif;
+    padding: 8px 16px;
+    margin: 20px auto;
+    text-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    width: 226px;
+    cursor: pointer;
+    border-radius: 32px;
+    text-decoration: none;
+    outline: none;
+    border: 1px solid rgb(91, 194, 231);
+    display: block;
+}
+
+.THIS button:hover {
+        background: rgba(0, 114, 206, 0.61);
+}
+
+.THIS .hero-button-text {
+    color: #ffffff;
+}
+
+.THIS .hero-button-text:hover {
+    color: #ffffff;
+}
+
+.THIS img.caution {
+    margin-top: -5px;
+}
+
+/* ADDED BY NICK - END */
+
+
+/*
+@media only screen and (min-width: 1880px) {
+.THIS .image1{
+    height:400px;
+    width:1000px;
+    border-style: groove;
+    cursor: pointer;
+}
+.THIS .images{
+    height:133.8px;
+    width:1000px;
+    border-style: groove;
+    cursor: pointer;
+}
+}
+*/
+@media only screen and (max-width: 768px){    
+    .THIS p.banner-p {
+        padding: 15px !important;
+        color: #ffffff;
+        font-size: 20px !important;
+    }
+    .THIS p.banner-p span {
+        color: #ffffff;
+        font-size: 20px !important;
+    }
+}
+@media only screen 
+and (min-device-width : 375px) 
+and (max-device-width : 667px) {
+  /*  .THIS .image1{
+    height:400px;
+    width:970px;
+    border-style: groove;
+    cursor: pointer;
+}
+.THIS .images{
+    height:133.8px;
+    width:970px;
+    border-style: groove;
+    cursor: pointer;
+}
+.THIS #MobileDevice{
+        width: 368px;
+    }*/
+}
+/* carousel code */

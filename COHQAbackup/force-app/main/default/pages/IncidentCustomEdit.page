@@ -1,0 +1,249 @@
+<apex:page standardController="BMCServiceDesk__Incident__c" extensions="LookupController" showChat="false">
+<style type="text/css">
+    .bPageBlock .detailList tr td, .bPageBlock .detailList tr th { border-bottom: 0px; }
+    div.left {
+        float: left;
+        width:50%;
+        height:100%;
+    }
+
+    div.right{
+        overflow: hidden;
+        width:50%;
+        height:100%;
+    }
+    div.top{
+        width:100%;
+        height:25px;
+        color:black;
+        font-weight:bold;
+    }
+
+    .container{
+        width:90%;
+    }
+    .clear {
+        clear: both;
+    }
+    
+    .fieldConfig{
+        width:50%;
+    }
+    input[type="text"]{
+    	width: 50%;
+    }
+
+    select{
+    	width: 50%;
+    }
+    textarea{
+    	width: 50%;
+    }
+    hr{
+        background:#94b9d1; 
+        border:0; 
+        height:2px;
+    }
+	.icon{
+    background-image: url("/img/func_icons/util/lookup20.gif");
+    background-position: left top;
+    height: 20px;
+    width: 20px;
+    vertical-align: middle;
+    }
+    .iconon{
+    background-image: url("/img/func_icons/util/lookup20.gif");
+    background-position: right top;
+    height: 20px;
+    width: 20px;    
+    vertical-align: middle;
+    cursor: pointer;
+    }
+
+</style>
+    <script>
+    	var recordId = '{!inc}';
+    	var popupId = 'incident';
+    	var objectName = 'Incident__c';
+    	var state='true';
+    	var incType='false';
+    function closeLookupPopup(){
+    	if (null != categoryTreeWindow){
+        	categoryTreeWindow.close();   
+        }
+    }
+    </script>
+    <apex:includeScript value="{!$Resource.cohJS}" />
+    <apex:form >
+    <apex:pageMessages />
+    <apex:pageBlock title="Create Incident" id="clientBlock">
+
+      
+
+
+<!--  Client Details Section -->
+    <div class="container">
+        <div class="top">
+            <h3>Client Details</h3>
+            <hr />
+        </div>
+        <div class="left">
+            <apex:pageBlockSection columns="1">
+                <apex:pageBlockSectionItem >
+                <apex:outputLabel value="Client Name" />
+                <apex:outputPanel id="clientData">
+                    <apex:inputText id="clienttext" styleClass="fieldConfig" />
+                    <apex:inputHidden value="{!BMCServiceDesk__Incident__c.BMCServiceDesk__FKClient__c}" id="clienttxt" />
+                    <c:AutoComplete objectname="User" autocomplete_textbox="{!$Component.clienttext}" autoID="{!$Component.clienttxt}" additionalfield="EmployeeNumber,Profile.Name" />
+                </apex:outputPanel> 
+                </apex:pageBlockSectionItem>
+                <apex:repeat value="{!$ObjectType.BMCServiceDesk__Incident__c.FieldSets.Custom_Client_Left}" var="f1">
+                    <apex:inputField value="{!BMCServiceDesk__Incident__c[f1]}" required="{!OR(f1.required, f1.dbrequired)}" />
+                </apex:repeat>      
+            </apex:pageBlockSection>
+        </div>
+        <div class="right">
+            <apex:pageBlockSection columns="1">   
+                     <apex:repeat value="{!$ObjectType.BMCServiceDesk__Incident__c.FieldSets.Custom_Client_Right}" var="f2">
+                         <apex:inputField value="{!BMCServiceDesk__Incident__c[f2]}"  required="{!OR(f2.required, f2.dbrequired)}" />
+                     </apex:repeat>     
+            </apex:pageBlockSection>
+        </div>
+    </div>
+    <div class="clear" />
+    
+<!--  Incident Details Section -->
+    <div class="container">
+        <div class="top">
+            <h3>Incident Details</h3>
+            <hr />
+        </div>
+        <div class="left">
+            <apex:pageBlockSection >  
+
+                 
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1">         
+                <apex:repeat value="{!$ObjectType.BMCServiceDesk__Incident__c.FieldSets.Custom_Incident_Details_Left}" var="f3">
+                    <apex:inputField value="{!BMCServiceDesk__Incident__c[f3]}" required="{!OR(f3.required, f3.dbrequired)}" />
+                </apex:repeat>    
+            <apex:pageBlockSectionItem >            
+
+                <apex:outputLabel value="Category Name" for="usertext" />
+                <apex:outputPanel id="CategoryData">
+                    <apex:inputText id="usertext" styleClass="fieldConfig" />
+                    <apex:inputHidden value="{!BMCServiceDesk__Incident__c.Parent_Category__c}" id="usertxt" />
+                    <apex:inputHidden value="{!BMCServiceDesk__Incident__c.Sub_Category__c}" id="subcat" />
+                    <c:COHAutoCompleteCategory objectname="BMCServiceDesk__Category__c" autocomplete_textbox="{!$Component.usertext}" autoID="{!$Component.subcat}" parentID="{!$Component.usertxt}" />
+                    <!--<c:AutoComplete objectname="BMCServiceDesk__Category__c" autocomplete_textbox="{!$Component.usertext}" autoID="{!$Component.usertxt}" />-->
+                    <apex:image id="arrow" onmouseover="this.className='iconon'" onmouseout="this.className='icon'" value="/s.gif" styleClass="icon" onclick="openCategoryTree('{!inc.Id}','{!$Component.usertxt}','{!$Component.subcat}','{!$Component.usertext}')" />
+                </apex:outputPanel> 
+            </apex:pageBlockSectionItem>    
+            <apex:pageBlockSectionItem >               
+                <apex:outputLabel value="Resolution" />
+                <apex:inputTextarea id="incDesc" value="{!BMCServiceDesk__Incident__c.BMCServiceDesk__incidentResolution__c}" rows="4" />
+                </apex:pageBlockSectionItem>           
+
+            </apex:pageBlockSection>
+        </div>
+        <div class="right">
+            <apex:pageBlockSection columns="1">   
+                     <apex:repeat value="{!$ObjectType.BMCServiceDesk__Incident__c.FieldSets.Custom_Incident_Details_Right}" var="f4">
+                         <apex:inputField value="{!BMCServiceDesk__Incident__c[f4]}" required="{!OR(f4.required, f4.dbrequired)}" />
+                     </apex:repeat>     
+            </apex:pageBlockSection>
+        </div>
+    </div>
+    <div class="clear" />
+    
+<!--  Status and Priority Section -->
+    <div class="container">
+        <div class="top">
+            <h3>Status and Priority</h3>
+            <hr />  
+        </div>
+        <div class="left">
+            <apex:pageBlockSection columns="1">
+                <apex:pageBlockSectionItem id="pbsi1" helpText="{!$ObjectType.BMCServiceDesk__Incident__c.Fields.BMCServiceDesk__FKImpact__c.inlineHelpText}">
+                        <apex:outputLabel value="Impact" for="impact" />
+                        <apex:selectList size="1" value="{!BMCServiceDesk__Incident__c.BMCServiceDesk__FKImpact__c}" id="impact">
+                            <apex:selectOptions value="{!ImpactList}" />
+                        </apex:selectList>
+                </apex:pageBlockSectionItem>  
+                <apex:pageBlockSectionItem id="pbsi2" helpText="{!$ObjectType.BMCServiceDesk__Incident__c.Fields.BMCServiceDesk__FKUrgency__c.inlineHelpText}">
+                        <apex:outputLabel value="Urgency" for="urgency" />
+                        <apex:selectList size="1" value="{!BMCServiceDesk__Incident__c.BMCServiceDesk__FKUrgency__c}" id="urgency">
+                            <apex:selectOptions value="{!UrgencyList}" />
+                        </apex:selectList>
+                </apex:pageBlockSectionItem>                  
+            </apex:pageBlockSection>
+        </div>
+        <div class="right">
+            <apex:pageBlockSection columns="1">   
+                <apex:repeat value="{!$ObjectType.BMCServiceDesk__Incident__c.FieldSets.Custom_Priority_Right}" var="PriorityRight">
+                    <apex:inputField value="{!BMCServiceDesk__Incident__c[PriorityRight]}" required="{!OR(PriorityRight.required, PriorityRight.dbrequired)}" />
+                </apex:repeat>     
+            </apex:pageBlockSection>
+        </div>
+    </div>
+    <div class="clear" />
+
+<!--  Durations Section -->
+    <div class="container">
+        <div class="top">
+            <h3>Durations</h3>
+            <hr />  
+        </div>
+        <div class="left">
+            <apex:pageBlockSection columns="1">
+                <apex:repeat value="{!$ObjectType.BMCServiceDesk__Incident__c.FieldSets.Custom_Durations_Left}" var="DurationLeft">
+                    <apex:inputField value="{!BMCServiceDesk__Incident__c[DurationLeft]}" required="{!OR(DurationLeft.required, DurationLeft.dbrequired)}" />
+                </apex:repeat>      
+            </apex:pageBlockSection>
+        </div>
+        <div class="right">
+            <apex:pageBlockSection columns="1">   
+                <apex:repeat value="{!$ObjectType.BMCServiceDesk__Incident__c.FieldSets.Custom_Durations_Right}" var="DurationRight">
+                    <apex:inputField value="{!BMCServiceDesk__Incident__c[DurationRight]}" required="{!OR(DurationRight.required, DurationRight.dbrequired)}" />
+                </apex:repeat>     
+            </apex:pageBlockSection>
+        </div>
+    </div>
+    <div class="clear" />
+
+<!--  Services and CI Section -->
+    <div class="container">
+        <div class="top">
+            <h3>Service and Configuration Item Details</h3>
+            <hr />  
+        </div>
+        <div class="left">
+            <apex:pageBlockSection columns="1">
+                <apex:repeat value="{!$ObjectType.BMCServiceDesk__Incident__c.FieldSets.Custom_Service_CI_Left}" var="CILeft">
+                    <apex:inputField value="{!BMCServiceDesk__Incident__c[CILeft]}" required="{!OR(CILeft.required, CILeft.dbrequired)}" />
+                </apex:repeat>      
+            </apex:pageBlockSection>
+        </div>
+        <div class="right">
+            <apex:pageBlockSection columns="1">   
+                <apex:repeat value="{!$ObjectType.BMCServiceDesk__Incident__c.FieldSets.Custom_Service_CI_Right}" var="CIRight">
+                    <apex:inputField value="{!BMCServiceDesk__Incident__c[CIRight]}" required="{!OR(CIRight.required, CIRight.dbrequired)}" />
+                </apex:repeat>     
+            </apex:pageBlockSection>
+        </div>
+    </div>
+    <div class="clear" />
+
+
+        <div id="buttons" style="clear:both;"> 
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!save}"/>
+                <apex:commandButton value="Cancel" action="{!cancel}"/>              
+            </apex:pageBlockButtons>
+        </div>
+    </apex:pageBlock>
+
+
+    </apex:form>
+
+</apex:page>

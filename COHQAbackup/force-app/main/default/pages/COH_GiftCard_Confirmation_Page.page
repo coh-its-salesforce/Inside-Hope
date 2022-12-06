@@ -1,0 +1,37 @@
+<apex:page sidebar="false" showHeader="false">
+    <Style>
+        .headerSearchContainer {
+        display: none;
+        }
+        .ThankYou {
+        margin: 0 auto;
+        margin-top: 40Px;
+        text-decoration: none;
+        font-size: medium;
+        color: #1797C0;
+        font-weight: bold;
+        width: 600px;
+        text-align: center
+        }
+       
+    </Style>
+<script>               
+    function navigatetoURL(){
+        window.open('/00O0V000005c5UE');}
+    function navigatetoGiftCard(){
+        window.open('/apex/coh_giftcard');}
+</script>
+    <p class="ThankYou">
+        Thank you for submitting your request. Please email recognition@coh.org if you have any changes or questions.
+    </p>
+    <br/>
+    <br/>
+<apex:form >                
+    <div align="center" draggable="false">         
+    <input type="button" value="Create New Request" class="btn" onclick="window.location='/apex/coh_giftcard'"/>
+    &nbsp;&nbsp;
+    <input type="button" value="Amount Spent" class="btn" onclick="navigatetoURL();"/>
+    </div>
+</apex:form>
+
+</apex:page>

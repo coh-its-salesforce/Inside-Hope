@@ -1,0 +1,21 @@
+<aura:component >
+	<ltng:require styles="{!join(',', $Resource.SlickMaster+'/slick/slick.css' , 
+                          $Resource.SlickMaster+'/slick/slick-theme.css' , 
+                          $Resource.cohHomeCSS) }"   
+                  scripts="{!join(',', 
+                           $Resource.JqueryLib,
+                           $Resource.SlickMaster +'/slick/slick.min.js')}" afterScriptsLoaded="{!c.doInit}"/>
+    <aura:attribute type="List" name="newsList" required="true" access="GLOBAL"/>
+    <aura:if isTrue="{!v.newsList.length>0}">
+       <h1>LATEST NEWS</h1>
+    </aura:if>
+    <div class="slds-grid slds-wrap">
+    	<div class="slider responsive" id="mySlider">
+      		<aura:iteration items="{!v.newsList}" var="item">
+        		<div>                    
+        			<c:CampusPlan_NewsCard newsInstance="{!item}"/>
+        		</div>
+    		</aura:iteration>  
+    	</div>
+    </div>
+</aura:component>

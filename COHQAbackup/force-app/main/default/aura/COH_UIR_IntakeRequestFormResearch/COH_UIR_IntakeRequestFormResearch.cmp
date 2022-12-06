@@ -1,0 +1,371 @@
+<aura:component controller="COH_UIR_IntakeRequestFormController">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:method name="validateFields" action="{!c.validateFields}"/>
+    <aura:attribute name="mIntakeRequest" type="COH_UniversalIntakeRequest__c"/>
+    <aura:attribute name="mShowChartStrings" type="Boolean[]" default="[false, false]"/>    
+    <aura:attribute name="mPicklists" type="Map" />
+    
+    <div class="slds-form-horizontal">
+        <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_small">
+            Research Request
+        </h3>
+        
+        <!-- How will capital be funded, request approved  -->
+		<div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_RSH_FundedBy__c}" 
+                                      label="How will this capital be funded?"
+                                      name="COH_UIR_RSH_FundedBy__c"
+                                      aura:id="intakeRequestFormResearch"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_RSH_FundedBy__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_RSH_FundedBy__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_RSH_ResearchRequestApproved__c}" 
+                                      label="Is this request approved by Beckman Council,the Director of BRI, or the SVP of Research Operations?"
+                                      name="COH_UIR_RSH_ResearchRequestApproved__c"
+                                      aura:id="intakeRequestFormResearch"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_RSH_ResearchRequestApproved__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_RSH_ResearchRequestApproved__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>            
+		</div>
+        
+        <!-- budgeted per award?, grant federally funded  -->
+        <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_RSH_FundedBy__c == 'Grant'}">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_RSH_BudgetedPerAward__c}" 
+                                          label="Is it budgeted per the award?"
+                                          name="COH_UIR_RSH_BudgetedPerAward__c"
+                                          aura:id="intakeRequestFormResearch"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_RSH_BudgetedPerAward__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_RSH_BudgetedPerAward__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_RSH_GrantFederallyFunded__c}" 
+                                          label="Is this grant federally funded?"
+                                          name="COH_UIR_RSH_GrantFederallyFunded__c"
+                                          aura:id="intakeRequestFormResearch"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_RSH_GrantFederallyFunded__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_RSH_GrantFederallyFunded__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>            
+            </div>
+        </aura:if>
+        
+        <!-- chart string 1 -->
+        <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_RSH_FundedBy__c == 'Grant'}">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-1">
+                    <div class="slds-box slds-m-vertical_small slds-box_no-padding">
+                        <!-- glbu, Account #, department -->
+                        <div class="slds-grid slds-wrap">
+                            <span class="slds-size_1-of-1 slds-p-vertical_small slds-p-horizontal_medium">Please specify the chart string and amount of grant funding.</span>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium ">
+                                <div class="slds-form-element__control">
+                                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_GLBU1__c}"
+                                                     label="GLBU"
+                                                     name="COH_UIR_RSH_GLBU1__c"
+                                                     aura:id="intakeRequestFormResearch"
+                                                     required="true"/>                
+                                </div>         
+                            </div>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium ">
+                                <div class="slds-form-element__control">
+                                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_AccountNumber1__c}"
+                                                     label="Account #"
+                                                     name="COH_UIR_RSH_AccountNumber1__c"
+                                                     aura:id="intakeRequestFormResearch"
+                                                     required="true"/>                
+                                </div>         
+                            </div>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium ">
+                                <div class="slds-form-element__control">
+                                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_Department1__c}"
+                                                     label="Department"
+                                                     name="COH_UIR_RSH_Department1__c"
+                                                     aura:id="intakeRequestFormResearch"
+                                                     required="true"/>                
+                                </div>         
+                            </div>                        
+                        </div>
+                        <!--  project, Acitivity, Funding Amount -->
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium ">
+                                <div class="slds-form-element__control">
+                                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_Project1__c}"
+                                                     label="Project"
+                                                     name="COH_UIR_RSH_Project1__c"
+                                                     aura:id="intakeRequestFormResearch"
+                                                     required="true"/>                
+                                </div>         
+                            </div>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium ">
+                                <div class="slds-form-element__control">
+                                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_Activity1__c}"
+                                                     label="Activity"
+                                                     name="COH_UIR_RSH_Activity1__c"
+                                                     aura:id="intakeRequestFormResearch"
+                                                     required="true"/>                
+                                </div>         
+                            </div>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium slds-p-bottom_small">
+                                <div class="slds-form-element__control">
+                                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_FundingAmount1__c}"
+                                                     label="Funding Amount"
+                                                     name="COH_UIR_RSH_FundingAmount1__c"
+                                                     aura:id="intakeRequestFormResearch"
+                                                     required="true"/>                
+                                </div>         
+                            </div>                      
+                        </div>                    
+                    </div>
+                    <aura:if isTrue="{!v.mShowChartStrings[0] == false}">
+                        <lightning:button label="Add another Chart String" onclick="{!c.toggleChartString}" value="0" />
+                    </aura:if>                    
+                </div>
+            </div>
+        </aura:if>
+        
+        <!-- chart string 2 -->
+        <aura:if isTrue="{!and(v.mShowChartStrings[0] == true, (v.mIntakeRequest.COH_UIR_RSH_FundedBy__c == 'Grant'))}">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-1">
+                    <div class="slds-box slds-m-vertical_small slds-box_no-padding">
+                        <!-- glbu, Account #, department -->
+                        <div class="slds-grid slds-wrap">
+                            <span class="slds-size_1-of-1 slds-p-vertical_small slds-p-horizontal_medium">Please specify the chart string and amount of grant funding.</span>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium ">
+                                <div class="slds-form-element__control">
+                                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_GLBU2__c}"
+                                                     label="GLBU"
+                                                     name="COH_UIR_RSH_GLBU2__c"
+                                                     aura:id="intakeRequestFormResearch"
+                                                     required="true"/>                
+                                </div>         
+                            </div>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium ">
+                                <div class="slds-form-element__control">
+                                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_AccountNumber2__c}"
+                                                     label="Account #"
+                                                     name="COH_UIR_RSH_AccountNumber2__c"
+                                                     aura:id="intakeRequestFormResearch"
+                                                     required="true"/>                
+                                </div>         
+                            </div>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium ">
+                                <div class="slds-form-element__control">
+                                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_Department2__c}"
+                                                     label="Department"
+                                                     name="COH_UIR_RSH_Department2__c"
+                                                     aura:id="intakeRequestFormResearch"
+                                                     required="true"/>                
+                                </div>         
+                            </div>                        
+                        </div>
+                        <!--  project, Acitivity, Funding Amount -->
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium ">
+                                <div class="slds-form-element__control">
+                                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_Project2__c}"
+                                                     label="Project"
+                                                     name="COH_UIR_RSH_Project2__c"
+                                                     aura:id="intakeRequestFormResearch"
+                                                     required="true"/>                
+                                </div>         
+                            </div>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium ">
+                                <div class="slds-form-element__control">
+                                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_Activity2__c}"
+                                                     label="Activity"
+                                                     name="COH_UIR_RSH_Activity2__c"
+                                                     aura:id="intakeRequestFormResearch"
+                                                     required="true"/>                
+                                </div>         
+                            </div>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium slds-p-bottom_small">
+                                <div class="slds-form-element__control">
+                                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_FundingAmount2__c}"
+                                                     label="Funding Amount"
+                                                     name="COH_UIR_RSH_FundingAmount2__c"
+                                                     aura:id="intakeRequestFormResearch"
+                                                     required="true"/>                
+                                </div>         
+                            </div>                           
+                        </div>                                                   
+                    </div>
+                    <aura:if isTrue="{!v.mShowChartStrings[1] == false}">
+                        <lightning:button label="Add another Chart String" onclick="{!c.toggleChartString}" value="1" />
+                        <lightning:button label="Delete" onclick="{!c.toggleChartString}" value="0" class="slds-float_right" />                        
+                    </aura:if>                
+                </div>
+            </div>        
+        </aura:if>
+        
+        <!-- chart string 3 -->
+        <aura:if isTrue="{!and(v.mShowChartStrings[1] == true, (v.mIntakeRequest.COH_UIR_RSH_FundedBy__c == 'Grant'))}">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-1">
+                    <div class="slds-box slds-m-vertical_small slds-box_no-padding">
+                        <!-- glbu, Account #, department -->
+                        <div class="slds-grid slds-wrap">
+                            <span class="slds-size_1-of-1 slds-p-vertical_small slds-p-horizontal_medium">Please specify the chart string and amount of grant funding.</span>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium ">
+                                <div class="slds-form-element__control">
+                                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_GLBU3__c}"
+                                                     label="GLBU"
+                                                     name="COH_UIR_RSH_GLBU3__c"
+                                                     aura:id="intakeRequestFormResearch"
+                                                     required="true"/>                
+                                </div>         
+                            </div>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium ">
+                                <div class="slds-form-element__control">
+                                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_AccountNumber3__c}"
+                                                     label="Account #"
+                                                     name="COH_UIR_RSH_AccountNumber3__c"
+                                                     aura:id="intakeRequestFormResearch"
+                                                     required="true"/>                
+                                </div>         
+                            </div>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium ">
+                                <div class="slds-form-element__control">
+                                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_Department3__c}"
+                                                     label="Department"
+                                                     name="COH_UIR_RSH_Department3__c"
+                                                     aura:id="intakeRequestFormResearch"
+                                                     required="true"/>                
+                                </div>         
+                            </div>                        
+                        </div>
+                        <!--  project, Acitivity, Funding Amount -->
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium ">
+                                <div class="slds-form-element__control">
+                                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_Project3__c}"
+                                                     label="Project"
+                                                     name="COH_UIR_RSH_Project3__c"
+                                                     aura:id="intakeRequestFormResearch"
+                                                     required="true"/>                
+                                </div>         
+                            </div>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium ">
+                                <div class="slds-form-element__control">
+                                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_Activity3__c}"
+                                                     label="Activity"
+                                                     name="COH_UIR_RSH_Activity3__c"
+                                                     aura:id="intakeRequestFormResearch"
+                                                     required="true"/>                
+                                </div>         
+                            </div>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-horizontal_medium slds-p-bottom_small">
+                                <div class="slds-form-element__control">
+                                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_FundingAmount3__c}"
+                                                     label="Funding Amount"
+                                                     name="COH_UIR_RSH_FundingAmount3__c"
+                                                     aura:id="intakeRequestFormResearch"
+                                                     required="true"/>                
+                                </div>         
+                            </div>                           
+                        </div>                                                   
+                    </div>
+                    <lightning:button label="Delete" onclick="{!c.toggleChartString}" value="1" class="slds-float_right" />
+                </div>
+            </div>        
+        </aura:if>
+        
+        <!-- equipment/construction greater than 5k, location -->
+		<div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_ResearchCostsGreaterThan5k__c}"
+                                        label="Are you buying equipment/ multiple pieces of equipment or undertaking a construction project that costs more than $5k and/or has 1 years of useful life?"
+                                        name="COH_UIR_RSH_ResearchCostsGreaterThan5k__c"
+                                        aura:id="intakeRequestFormResearch"
+                                        required="true"/>                
+                </div>         
+            </div>             
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_Location__c}"
+                                        label="Location (Building and room number)"
+                                        name="COH_UIR_RSH_Location__c"
+                                        aura:id="intakeRequestFormResearch"
+                                        required="true"/>                
+                </div>         
+            </div>                         
+		</div>        
+        
+        <!-- Desired Project/purchase timing, Life  -->
+		<div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_DesiredProjectPurchaseTiming__c}"
+                                        label="Desired Project / Purchase Timing"
+                                        name="COH_UIR_RSH_DesiredProjectPurchaseTiming__c"
+                                        aura:id="intakeRequestFormResearch"
+                                        required="true"/>                
+                </div>         
+            </div>  
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:input value="{!v.mIntakeRequest.COH_UIR_RSH_Life__c}"
+                                        label="Life (Years)"
+                                        name="COH_UIR_RSH_Life__c"
+                                        aura:id="intakeRequestFormResearch"
+                                        required="true"/>                
+                </div>         
+            </div>              
+		</div>        
+        
+        <!-- Accomplished in FY, Justification -->
+		<div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_RSH_AccomplishedInFiscalYear__c}" 
+                                      label="Will this request be accomplished in this current fiscal year?"
+                                      name="COH_UIR_RSH_AccomplishedInFiscalYear__c"
+                                      aura:id="intakeRequestFormResearch"
+                                      required="true">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_RSH_AccomplishedInFiscalYear__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_RSH_AccomplishedInFiscalYear__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_RSH_FiscalYearJustification__c}"
+                                        label="Please justify"
+                                        name="COH_UIR_RSH_FiscalYearJustification__c"
+                                        aura:id="intakeRequestFormResearch"
+                                        required="true"/>                
+                </div>         
+            </div>
+		</div>        
+    </div>
+</aura:component>

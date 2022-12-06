@@ -1,0 +1,7 @@
+<apex:page showHeader="false" sidebar="false">
+    <script>
+    window.onload = function(){
+        top.location.href = 'https://cityofhopeop.peoplefluent.com/HTML5_US/Chart/LoadChart/CityofHope/{!$User.EmployeeNumber}';
+    }
+    </script>
+</apex:page>

@@ -1,0 +1,160 @@
+<aura:component implements="flexipage:availableForAllPageTypes">
+    <div class="slds-card slds-card_boundary" style="box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.16);">
+        <div class="slds-section slds-is-open slds-m-top_none">
+            <h3 class="slds-section__title">
+                <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                    <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                    <span class="slds-truncate" title="Insurance Decision Tree Details">Insurance Decision Tree Details</span>
+                </button>
+            </h3>
+            <lightning:recordEditForm objectApiName="Insurance_Matrix__c">
+                <lightning:layout multipleRows="true">
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Auth_Fax__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Auth_Phone__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Auth_Required__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Auth_Time_List__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Cap_Hospital__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Comments__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Contract_Confirmed_Y_or_N__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Days_Out_to_Direct__c" />
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Entity_Referring__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Entity_to_Auth__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="HOSPITAL_Contract_Status__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="HOSP_Scheduling_Decision_Tree__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="inactive__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Internal_Entity_Type__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="LOCATION_for_Service__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="MAIN_Phone_Number__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Medical_Group__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="MSO_for_RBO__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Notes_Comments__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Payor_Predictive_Outcome__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="PROFESSIONAL_Contract_Status__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="PROF_Scheduling_Decision_Tree__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="QUESTION_Insurance_Plans__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="QUESTION_Line_of_Bus__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="QUESTION_Product__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="QUESTION_Service_Categories__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Risk_Arrangement_HIDDEN__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Term_Date__c" />
+                    </lightning:layoutItem>
+                </lightning:layout>
+                
+            </lightning:recordEditForm>
+            
+        </div>
+        
+        <div class="slds-section slds-is-open slds-m-top_none">
+            <h3 class="slds-section__title">
+                <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                    <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                    <span class="slds-truncate" title="Physician Decision Tree Details">Physician Decision Tree Details</span>
+                </button>
+            </h3>
+            <lightning:recordEditForm objectApiName="Physician_Matrix__c">
+                <lightning:layout multipleRows="true">
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Care_Center_Reference_Field__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Department__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Does_not_seetreat__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Geolocation__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Inactive__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Location__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="LocationLink__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Notes_Comments__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Provider__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Scheduling_Guidelines__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Service_Line__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Specialty_Diagnosis__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Subgroup_No__c" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="4" padding="around-small">
+                        <lightning:inputField fieldName="Type_of_Network__c" />
+                    </lightning:layoutItem>
+                </lightning:layout>
+                
+            </lightning:recordEditForm>
+            
+        </div>
+    </div>
+</aura:component>

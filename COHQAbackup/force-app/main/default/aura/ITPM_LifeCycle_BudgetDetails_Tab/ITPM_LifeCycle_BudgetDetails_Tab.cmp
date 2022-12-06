@@ -1,0 +1,449 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,lightning:isUrlAddressable" controller="ITPM_LifeCycle_Tabs_Controller">
+   
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:attribute name="ITPMObj" type="IT_Portfolio_Management__c" default=""/>
+    <aura:attribute name="IHrs" type="Integer"/>
+    <aura:attribute name="EHrs" type="Integer"/>   
+    
+     <div class="slds-card slds-card_boundary" style="box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.16);">
+        <div class="slds-section slds-is-open slds-m-top_none">
+            <h3 class="slds-section__title">
+                <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                    <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                    <span class="slds-truncate" title="Section Title"> Approved Revised Budget </span>
+                </button>
+            </h3>
+            
+                    <lightning:messages /><br/>
+        <div class="slds-p-left_medium">
+          
+          <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Revised Internal IT Hrs Yr 1 (Capex): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Internal_IT_Hrs_Yr_1_Capex__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Revised Internal IT Hrs Yr 1 (Opex): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Internal_IT_Hrs_Yr_1_Opex__c}"/></span>
+                </div>
+          </div><br/><br/>
+          <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Revised External IT Hrs Yr 1 (Capex): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_External_IT_Hrs_Yr_1_Capex__c}"/></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Revised External IT Hrs Yr 1 (Opex): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_External_IT_Hrs_Yr_1_Opex__c}"/></span>
+                </div>
+            </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Revised Managed Svcs Hrs Yr 1 (Capex): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Revised_Mg_Svc_Hrs_Yr_1_Capex__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Revised Managed Svcs Hrs Yr 1 (Opex): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Revised_Mg_Svc_Hrs_Yr_1_Opex__c}" /></span>
+                </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Revised Total Hrs Yr 1: </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Total_Hrs_Yr_1__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Revised Total Hrs Yr 3: </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Total_Hrs_Yr_3__c}" /></span>
+                </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Revised Total Hrs Yr 2: </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Total_Hrs_Yr_2__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Revised Total Hrs (Multi-Year): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Total_Hrs_Multi_Year__c}" /></span>
+                </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Revised Internal Cost Yr 1 (Capex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Internal_Cost_Yr_1_Capex__c}" /></span>
+                </div>
+                     <div class="slds-col--padded slds-large-size--6-of-12">
+                    </div>
+          	</div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Revised External Cost Yr 1 (Capex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Prof_Svcs_Cost_Yr_1_Capex__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Revised External Cost Yr 1 (Opex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Consulting_Cost_Yr_1_Opex__c}" /></span>
+                </div>
+          </div><br/><br/>
+
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Revised Hardware Cost Yr 1 (Capex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Hardware_Cost_Yr_1_Capex__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Revised Hardware Mtc Cost Yr 1 (Opex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Hardware_Mtc_Cost_Yr_1__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Revised Software Cost Yr 1 (Capex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Software_Cost_Yr_1_Capex__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Revised Software Mtc Cost Yr 1 (Opex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Software_Mtc_Cost_Yr_1_Opex__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                      </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Revised SaaS Cost Yr 1 (Opex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_SaaS_Cost_Yr_1_Opex__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Revised Contingency Yr 1 (Capex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Contingency_Yr_1_Capex__c}" /></span>
+               
+                      </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Revised Contingency Yr 1 (Opex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Contingency_Yr_1_Opex__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Revised Capex Budget Yr 1: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Capex_Budget_Year_1__c}" /></span>
+               
+                      </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Revised Opex Budget Yr 1: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Opex_Budget_Year_1__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Revised Capex Budget Yr 2: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Capex_Budget_Yr_2__c}" /></span>
+               
+                      </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Revised Opex Budget Yr 2: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Opex_Budget_Yr_2__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Revised Capex Budget Yr 3: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Capex_Budget_Yr_3__c}" /></span>
+               
+                      </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Revised Opex Budget Yr 3: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Revised_Opex_Budget_Yr_3__c}" /></span>
+                </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Total Approved Revised Capex Budget: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Total_Approved_Revised_Capex_Budget__c}" /></span>
+                
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Total Approved Revised Opex Budget: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Total_Approved_Revised_Opex_Budget__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Total Approved Revised Budget: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Total_Approved_Revised_Budget__c}" /></span>
+                
+                </div>
+                     <div class="slds-col--padded slds-large-size--6-of-12">
+                    </div>
+          </div><br/><br/>
+            <br/>
+            
+            </div>
+            
+            
+            <h3 class="slds-section__title">
+                <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                    <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                    <span class="slds-truncate" title="Section Title"> Approved Original Budget </span>
+                </button>
+            </h3>
+       
+        <lightning:messages /><br/>
+        <div class="slds-p-left_medium">
+          
+          <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Internal IT Hrs Yr 1 (Capex): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Total_Hours__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Internal IT Hrs Yr 1 (Opex): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Internal_IT_Labor_Hours_Year_1__c}"/></span>
+                </div>
+          </div><br/><br/>
+          <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved External IT Hrs Yr 1 (Capex): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_External_IT_Labor_Hours_Year1C__c	}"/></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved External IT Hrs Yr 1 (Opex): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_External_ITS_Hours__c}"/></span>
+                </div>
+            </div><br/><br/>
+            <div class="slds-grid">
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Managed Svcs Hrs Yr 1 (Capex): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Managed_Svcs_Hrs_Yr_1_Capex__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Managed Svcs Hrs Yr 1 (Opex): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Managed_Svcs_Hrs_Yr_1_Opex__c}" /></span>
+                </div>
+            </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Total Hrs Yr 1: </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Total_Hrs_Yr_1__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Total Hrs Yr 3: </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Total_Hrs_Yr_3__c}" /></span>                    
+                </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Total Hrs Yr 2: </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Total_Hrs_Yr_2__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Total Hrs (Multi-Year): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Total_Hrs_Multi_Year__c}" /></span>
+                </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Internal Cost Yr 1 (Capex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Internal_Cost_Yr_1_Capex__c}" /></span>
+                </div>
+                     <div class="slds-col--padded slds-large-size--6-of-12">
+                    </div>
+          	</div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved External Cost Yr 1 (Capex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Pro_Services_Cost_Yr1_Capex__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved External Cost Yr 1 (Opex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Consulting_Cost_Year_1_Opex__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Hardware Cost Yr 1 (Capex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Hardware_Cost_Year_1_Capex__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Hardware Mtc Cost Yr 1 (Opex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Hardware_Maint_Cost_Yr1_Opex__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Software Cost Yr 1 (Capex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Software_License_Cost_Yr1_Capex__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Software Mtc Cost Yr 1 (Opex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Software_Maint_Cost_Yr1_Opex__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                      </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved SaaS Cost Yr 1 (Opex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_SaaS_Rmt_Host_Cost_Yr1_Opex__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Contingency Yr 1 (Capex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Contingency_Year_1_Capex__c}" /></span>
+               
+                      </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Contingency Yr 1 (Opex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Contingency_Year_1_Opex__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Capex Budget Yr 1: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Capex_Budget_Year_1__c}" /></span>
+               
+                      </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Opex Budget Yr 1: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_Opex_Budget_Year_1__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Capex Budget Yr 2: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CAPEX_Year_2__c}" /></span>
+               
+                      </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Opex Budget Yr 2: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_OPEX_Year_2__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved Capex Budget Yr 3: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CAPEX_Year_3__c}" /></span>
+               
+                      </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved Opex Budget Yr 3: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_OPEX_Year_3__c}" /></span>
+                </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Total Approved Capex Budget: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Total_Approved_Capex_Budget_IT__c}" /></span>
+                
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Total Approved Opex Budget: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Total_Approved_Opex_Budget_IT__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Total Approved Budget: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Total_Approved__c}" /></span>
+                
+                </div>
+                     <div class="slds-col--padded slds-large-size--6-of-12">
+                    </div>
+          </div><br/><br/>
+          <br/>
+            
+            </div>
+            
+                        <h3 class="slds-section__title">
+                <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                    <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                    <span class="slds-truncate" title="Section Title"> Approved  Change Request Budget </span>
+                </button>
+            </h3>
+       
+        <lightning:messages /><br/>
+        <div class="slds-p-left_medium">
+          
+          <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved CR Internal IT Hrs Yr 1 (Capex): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Internal_IT_Hrs_Yr_1_Capex__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved CR Internal IT Hrs Yr 1 (Opex): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Internal_IT_Hrs_Yr_1_Opex__c}"/></span>
+                </div>
+          </div><br/><br/>
+          <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved CR External IT Hrs Yr 1 (Capex): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_External_IT_Hrs_Yr_1_Capex__c}"/></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved CR External IT Hrs Yr 1 (Opex): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_External_IT_Hrs_Yr_1_Opex__c}"/></span>
+                </div>
+            </div><br/><br/>
+            <div class="slds-grid">
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved CR Managed Svcs Hrs Yr 1 (Capex): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Managed_Svc_Hrs_Yr_1_Capex__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved CR Managed Svcs Hrs Yr 1 (Opex): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Managed_Svcs_Hrs_Yr_1_Opex__c}" /></span>
+                </div>
+            </div><br/><br/>
+            <div class="slds-grid">
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved CR Total Hrs Yr 1: </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Total_Hrs_Yr_1__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved CR Total Hrs Yr 3: </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Total_Hrs_Yr_3__c}" /></span>                    
+                </div>
+            </div><br/><br/>
+            <div class="slds-grid">
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved CR Total Hrs Yr 2: </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Total_Hrs_Yr_2__c}" /></span>                    
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved CR Total Hrs (Multi-Year): </span><span class="valueFont"><ui:outputNumber value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Total_Hrs_Multi_Year__c}" /></span>
+                </div>
+            </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved CR Internal Cost Yr 1 (Capex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Internal_Cost_Yr_1_Capex__c}" /></span>
+                </div>
+                     <div class="slds-col--padded slds-large-size--6-of-12">
+                    </div>
+          	</div><br/><br/>
+              <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved CR External Cost Yr 1 (Capex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Prof_Svcs_Cost_Yr_1_Capex__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved CR External Cost Yr 1 (Opex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Consulting_Cost_Yr_1_Opex__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved CR Hardware Cost Yr 1 (Capex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Hardware_Cost_Yr_1_Capex__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved CR Hardware Mtc Cost Yr 1 (Opex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Hardware_Mtc_Cost_Yr_1_Opex__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved CR Software Cost Yr 1 (Capex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Software_Cost_Yr_1_Capex__c}" /></span>
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved CR Software Mtc Cost Yr 1 (Opex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Software_Mtc_Cost_Yr_1_Opex__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                      </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved CR SaaS Cost Yr 1 (Opex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_SaaS_Cost_Yr_1_Opex__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved CR Contingency Yr 1 (Capex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Contingency_Yr_1_Capex__c}" /></span>
+               
+                      </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved CR Contingency Yr 1 (Opex): </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Contingency_Yr_1_Opex__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved CR Capex Budget Yr 1: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Capex_Budget_Year_1__c}" /></span>
+               
+                      </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved CR Opex Budget Yr 1: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Opex_Budget_Year_1__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved CR Capex Budget Yr 2: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Capex_Budget_Yr_2__c}" /></span>
+               
+                      </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved CR Opex Budget Yr 2: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Opex_Budget_Yr_2__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Approved CR Capex Budget Yr 3: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Capex_Budget_Yr_3__c}" /></span>
+               
+                      </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Approved CR Opex Budget Yr 3: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Approved_CR_Opex_Budget_Yr_3__c}" /></span>
+                </div>
+          </div><br/><br/>
+            <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Total Approved CR Capex Budget: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Total_Approved_CR_Capex_Budget__c}" /></span>
+                
+                </div>
+                <div class="slds-col--padded slds-large-size--6-of-12">
+                    <span class="slds-text-title_bold">Total Approved CR Opex Budget: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Total_Approved_CR_Opex_Budget__c}" /></span>
+                </div>
+          </div><br/><br/>
+             <div class="slds-grid">
+                 <div class="slds-col--padded slds-large-size--6-of-12">
+                     <span class="slds-text-title_bold">Total Approved CR Budget: </span><span class="valueFont"><ui:outputCurrency value="{!v.ITPMObj.ITS_Intake_Request__r.Total_Approved_CR_Budget__c}" /></span>
+                
+                </div>
+                     <div class="slds-col--padded slds-large-size--6-of-12">
+                    </div>
+          </div><br/><br/>
+            <br/>
+            
+            </div>
+            
+        </div>
+        </div>
+</aura:component>

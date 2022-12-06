@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="Sample Component Event">
+       <aura:attribute name="SingleArticle" type="Campus_Plan_Article__c" />
+    <aura:attribute name="Image" type="String"/>
+</aura:event>

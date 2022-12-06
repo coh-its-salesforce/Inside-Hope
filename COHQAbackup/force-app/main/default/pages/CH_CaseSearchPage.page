@@ -1,0 +1,147 @@
+<apex:page controller="CH_CaseSearchController">
+	<apex:form >
+		<script type="text/javascript">
+            function loading(val) {
+                if (val) {
+                    document.getElementById('contentLoading').style.display = 'block';
+                    document.getElementById('contentLoaded').style.display = 'none';
+                }
+                else {
+                    document.getElementById('contentLoading').style.display = 'none';
+                    document.getElementById('contentLoaded').style.display = 'block';
+                }
+            }
+            
+            function confirmJS(accountID){
+            	var confirmStatus = confirm('Do you want to add this patient to your queue?');
+            	if(confirmStatus == true){
+            		createCase(accountID);
+            	}
+            }
+        </script>
+
+		<style>
+			.navigationImage {
+				background-repeat: no-repeat;
+				height: 10px;
+				width: 9px;
+				background-image: url({! URLFOR($Resource.CH_NavigationImages, 'paginationArrows.gif')});
+			}
+		</style>
+
+
+		<div id="contentLoading" style="display: none;">
+			<div style="text-align: center;">
+				<apex:image url="{!URLFOR($Resource.GridImages, 'GridImages/LoadingImage.gif')}" />
+			</div>
+		</div>
+
+		<div id="contentLoaded">
+			<apex:pageblock id="pageblock">
+				<apex:pageMessages escape="false" />
+				<p style="margin-bottom: 10px;">
+					<apex:outputlabel value="Patient Name :" />
+					<apex:inputText value="{!Searchstring}" style="margin-left: 20px;" />
+					<apex:commandbutton action="{!setAccountList}" value="Search"
+						style=" margin-left: 50px;" status="loading" rerender="pageblock" />
+				</p>
+
+				<apex:outputpanel rendered="{!IF(accounts.size == 0 , true,false)}">
+					<apex:outputlabel value="No matching records found." />
+				</apex:outputpanel>
+				<apex:pageBlockTable value="{!accounts}" var="acc" id="accountTable"
+					rendered="{!IF(accounts.size > 0 , true,false)}">
+					<apex:column value="{!acc.Name}" headerValue="Patient Name" />
+					<apex:column value="{!acc.Owner.Name}" headerValue="Case Owner" />
+					<apex:column >
+						<apex:commandbutton value="Add to queue" rerender="pageblock"
+							onclick="confirmJS('{!acc.Id}');">
+						</apex:commandbutton>
+					</apex:column>
+				</apex:pageBlockTable>
+
+				<apex:actionFunction name="createCase" action="{!CreateCase}"
+					status="loading" rerender="pageblock">
+					<apex:param name="accId" value="" assignto="{!accountId}" />
+				</apex:actionFunction>
+
+				
+					
+				<apex:outputPanel layout="block" style="margin-top:10px;">
+					<apex:outputPanel >
+						<apex:outputlabel value="Page : {!pageNumber} of {!totalRecords}"
+							rendered="{!If(totalRecords >= 1,true,false)}" style="position:relative;left:10px;"/>
+					</apex:outputPanel>
+					
+					<apex:outputPanel style="margin-left:40px;">
+						<!-- First Page button rendering -->
+						<apex:outputPanel >
+							<apex:commandLink action="{!first}" status="loading" style="text-decoration:none;"
+								rendered="{!If(pageNumber!=1,true,false)}">
+								<apex:image value="{!URLFOR($Resource.CH_NavigationImages,'s.gif')}"
+									style=" background-position: 0px 1px;"
+									styleclass="navigationImage">&nbsp;</apex:image>
+								</apex:commandlink>
+								<apex:image value="{!URLFOR($Resource.CH_NavigationImages,'s.gif')}"
+									style=" background-position: 0px -10px;"
+									styleclass="navigationImage"
+									rendered="{!If(pageNumber=1,true,false)}">&nbsp;</apex:image>
+						</apex:outputPanel>
+	
+						<!-- Previous button rendering -->
+						<apex:outputPanel style="margin:0px 3px;">
+							<apex:commandLink action="{!previous}"
+								style="text-decoration:none;"
+								rendered="{!If(hasPrevious,true,false)}" status="loading">
+								<apex:image value="{!URLFOR($Resource.CH_NavigationImages,'s.gif')}"
+									style=" background-position: -10px 1px;"
+									styleclass="navigationImage"
+									rendered="{!If(hasPrevious,true,false)}" />Previous	
+							</apex:commandlink>
+								<apex:outputPanel rendered="{!If(hasPrevious,false,true)}"
+									style="color:#a8a8a8;">
+									<apex:image value="{!URLFOR($Resource.CH_NavigationImages,'s.gif')}"
+										style=" background-position: -10px -10px;"
+										styleclass="navigationImage" />Previous
+								</apex:outputPanel>
+						</apex:outputPanel>
+	
+						<!-- Next button rendering -->
+						<apex:outputPanel style="margin:0px 3px;">
+							<apex:commandLink action="{!next}" style="text-decoration:none;"
+								rendered="{!If(hasNext,true,false)}" status="loading">Next
+								<apex:image value="{!URLFOR($Resource.CH_NavigationImages,'s.gif')}"
+									style=" background-position: -17px 1px;"
+									styleclass="navigationImage"
+									rendered="{!If(hasNext,true,false)}" />
+								</apex:commandlink>
+								<apex:outputPanel style="color:#a8a8a8;"
+									rendered="{!If(hasNext,false,true)}">Next
+								<apex:image value="{!URLFOR($Resource.CH_NavigationImages,'s.gif')}"
+										style=" background-position: -17px -10px;"
+										styleclass="navigationImage" />
+								</apex:outputPanel>
+						</apex:outputPanel>
+	
+						<!-- Last Page button rendering -->
+						<apex:outputPanel >
+							<apex:commandLink action="{!last}" status="loading" style="text-decoration:none;"
+								rendered="{!If(pageNumber != totalrecords,true,false)}">
+								<apex:image value="{!URLFOR($Resource.CH_NavigationImages,'s.gif')}"
+									style=" background-position: -27px 1px;"
+									styleclass="navigationImage">&nbsp;</apex:image>
+								</apex:commandlink>
+								<apex:image value="{!URLFOR($Resource.CH_NavigationImages,'s.gif')}"
+									style="background-position: -27px -10px;"
+									styleclass="navigationImage"
+									rendered="{!If(pageNumber=totalrecords,true,false)}">&nbsp;</apex:image>
+						</apex:outputPanel>
+					</apex:outputPanel>
+				</apex:outputPanel>
+				
+				<apex:actionStatus id="loading" onstart="loading(true)"
+					onstop="loading(false)" />
+			</apex:pageblock>
+		</div>
+	</apex:form>
+</apex:page>

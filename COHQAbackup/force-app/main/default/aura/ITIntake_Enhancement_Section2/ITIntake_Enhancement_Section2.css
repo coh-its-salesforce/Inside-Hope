@@ -1,0 +1,10 @@
+.THIS .slds-is-open>.slds-accordion__summary, .THIS .slds-accordion__summary{
+	background: #f3f2f2;
+    padding: 6px;
+}
+.THIS .slds-accordion__summary .slds-truncate{
+    color: #333;
+}
+.THIS .slds-form-element__icon {
+    display: none !important;
+}

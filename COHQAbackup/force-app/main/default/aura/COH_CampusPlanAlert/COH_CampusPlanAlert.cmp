@@ -1,0 +1,29 @@
+<aura:component access="global">
+  
+   <aura:attribute name = "Announcements" type = "string[]" />
+  <div>
+   <div class="annmain">
+           <div class="announcement-heading"> Announcements 
+               <span>&#187;</span>              
+            </div>
+       
+        <div class="announcement-content">
+               <c:CampusPlan_HorizontalFloatingJS Announcements="{!v.Announcements}"/>
+        </div>
+    </div>
+    </div>
+    
+    <!--<div class="slds-grid slds-wrap">
+    <div class="slds-col slds-size_2-of-12 setHeight" id="Announce">
+    <h1 class="AnnounceText" id="Ann" style=""> <span style="padding:0.8rem;"> Announcements >></span></h1>
+        </div>
+    
+    <div class="slds-col slds-size_10-of-12" id="Title" aura:id="Titles">
+    <aura:iteration items="{!v.Announcements}" var="anc">
+        <div class="alertTitle" >
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style='font-size:80px;'>&#8208;</span> &nbsp;&nbsp;&nbsp;<span >{!anc.Title__c}</span><br/>
+        </div>
+    </aura:iteration> 
+        </div>
+    </div>-->
+</aura:component>

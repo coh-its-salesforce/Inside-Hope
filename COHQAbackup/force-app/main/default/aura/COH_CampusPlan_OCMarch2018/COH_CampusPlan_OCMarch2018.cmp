@@ -1,0 +1,36 @@
+<aura:component >
+   <aura:attribute name="Milestone" type="boolean" default="false"/>
+   <aura:attribute name="milestonepage1" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.milestonepage1}">
+     <div>
+         <div class="banner-container">
+             <div class="slds-grid slds-wrap">
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+                     <div class="banner-image">
+                         <img src = "{!$Resource.WhyOrangeCounty}"/> 
+                     </div>
+                 </div>
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12">
+                     <div class="banner-content">
+                         <h4 class="label-header"><label class="orange-bg">Orange County</label></h4>
+                         <h2> March 2018 </h2>
+                         <p class="banner-p"> City of Hope Announces it is Coming to Orange County </p>
+                         <p class="banner-p"> City of Hope’s expansion effort is first announced to Orange County, and the community responds with excitement. </p>
+                     </div>
+                 </div>
+             </div>            
+         </div>
+        <div class="profile-content">
+            <p>Emile Haddad, CEO and Chairman of the Board of FivePoint – an owner and developer of large, mixed-use communities in California – extended an invitation to City of Hope to be part of the Great Park neighborhood in Irvine. </p>
+            <p>In 2018, City of Hope and FivePoint announced our partnership to build a $200 million, 73,000-square-foot cancer center by 2025. As planning progressed, FivePoint and City of Hope recognized that the community’s pressing need for specialty cancer care and research required an expanded vision.</p>
+            <p>This includes investing more than $1 billion to develop and operate a regional cancer care network and cancer campus of the future. City of Hope will transform an existing 193,000-square-foot building and the surrounding 11 acres to transform into a world-class cancer campus. </p>
+            <p>FivePoint remains an exceptional partner to, and supporter of, City of Hope. FivePoint shares our vision of creating healthier communities and builds its neighborhoods around the principles of live, work, play, connect, learn – and now hope.</p>
+         </div>
+       </div>
+       <div class="backbutton" onclick="{!c.goBackToMilestone}" ><lightning:icon iconName="utility:back" size="x-small" variant="inverse" />&nbsp;&nbsp;&nbsp;&nbsp;Back  
+    </div>
+       </aura:if>
+    <aura:if isTrue="{!v.Milestone}">
+        <c:COH_CampusPlan_Milestone/>
+    </aura:if>
+</aura:component>

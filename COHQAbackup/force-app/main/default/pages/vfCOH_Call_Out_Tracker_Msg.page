@@ -1,0 +1,10 @@
+<apex:page >
+    <H>COVID-19 Absence Reasons Tracking Tool</H>
+    <P>
+        Please complete this form for each employee that calls out.<br/>
+        If an employee is out for multiple days, you must complete this form for each day that the employee is out
+    </P>
+    <P>
+        For tracking and reporting purposes, it is important to you correctly enter the employee ID and name
+    </P>
+</apex:page>

@@ -1,0 +1,196 @@
+html, body, form{
+    height:100%
+}
+
+body{
+    overflow-x:hidden;
+    margin:0px; 
+    padding:0px;
+    font-weight:normal;
+}    
+
+
+hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom:1em;
+    margin-left: 1em;
+    margin-right: 1em;
+    border-color: #fda800
+}
+
+h1,h2,h3,h4,h5,h6{margin:0px; padding:0px; font-weight:normal;}
+
+.Wrapper {
+    margin:0 auto;
+    padding:0px;
+    border-top:8px solid #066dc0;
+    width:100%;
+}
+	
+.Header {
+    margin:0 auto;
+    padding:0px;
+    width: 100%;
+    height: 75px;
+}
+
+.Header .Top{
+    margin:0px;
+    padding:0px;
+    width:100%;	
+    height: 50px;
+}
+    
+.Header .Left{margin:0px; padding:10px; float:left; color:#fdab00; font-size:30px;}
+.Header .Right{margin:0px; padding:15px 10px 0 0; float:right; color:#464749;}
+.Header .Right ul{margin:0px; padding:0px;}
+.Header .Right ul li{margin:0px; padding:0px; list-style-type:none; float:left; font-size:10px;}
+.Header .Right ul li a{color:#2c6ce7; text-decoration:underline;}
+.Header .Right ul li a:hover{color:#000; text-decoration:none;}
+.Header .Right ul li span{padding:0 5px; margin:0px; color:#989a9d;}
+.Header .Ihome{margin:0px; padding:0px;}
+.Header .IEmail{margin:0px; padding:0px;}
+.clearnone:after{
+    clear:none;
+}
+.seperator
+{
+    width:100%;
+    height:25px;
+}
+.top-margin
+{
+    margin-top:50px;
+}
+.SearchBox{margin:11px 0 0 0; padding:0px; float:left; width:100%; background:#3d66b5; height:60px;}
+.SerMidWrp{
+    margin:0 auto; 
+    padding:0px; 
+}
+
+.SerchBoxSecondary {
+    border: 10px solid #fda600;
+    border-radius: 10px;
+    display: table;
+    margin: 0 auto;
+    position: relative;
+    top: 35px;
+    width: 498px;
+    z-index: 1;
+}
+.SerInpT {
+    border: medium none;
+    border-radius: 0;
+    color: #000;
+    float: left;
+    font-size: 18px;
+    margin: 0;
+    padding: 12px 16px;
+    padding: 14px 16px\9;
+    width: 423px;
+}
+
+.GoButS {
+    background: none repeat scroll 0 0 #0074bc !important;
+    border: medium none !important;
+    color: #fff !important;
+    float: left;
+    font-size: 18px !important;
+    margin: 0 !important;
+    padding: 12px !important;
+    width:55px;
+    font-weight:normal !important;    
+}
+
+/* IE 9, 10 & 11 */
+@media screen and (min-width:0\0) { 
+    .GoButS {
+        font-size: 14px !important;
+    }
+}
+
+.ViewMore {margin:0 auto;width:135px;}
+.Footer{margin:20px 0 0 0; padding:15px 0; float:left; width:100%; background:#58595b;}
+.FooterMid{padding-left:10px;padding-right:10px;}
+.FooterMidL{margin:0px; padding-left:15px;}
+.FooterMidR{margin:0px; padding-right:15px; float:right; color:#FFF; text-align:right; font-weight:bold;}
+.FotNav{margin:0px; padding:0px;}
+.FotNav a{color:#ffffff; text-decoration:none;}
+.FotNav a:hover{color:#FFF; text-decoration:underline;}
+.FotNav span{padding:0 7px; margin:0px;}
+.FooterMidR p{margin:0px; padding:6px  0;}
+.citytext{margin:0px; padding:0px; font-size:10px;}
+.FourIconTxt{margin:0px; padding:0px; font-size:11px; font-weight:bold;height:25px;}
+label {
+    font-weight: normal !important;
+}
+.dvShortcuts {position:absolute;z-index:9999;right: 0;display:none;}
+.personaSubs{float:left;;width:650px;background:#979A9E;height: 600px;}
+.personaSubLinks{padding: 10px;clear:both;display:none;}
+.personaSubLinks span{display:block;}
+.personas{background:#626669;color:#fff;float:left;width:200px;display;height:600px;}
+.personas span{
+    display:block;
+    padding: 10px;
+    border-bottom: 1px solid #e2e2e2;
+}
+.personas span:hover, .personas span.active {cursor:pointer; background:#979A9E}
+.personaSubLinks span{
+    display:block;
+    padding: 5px;
+}
+.personaSubLinks .column1, .personaSubLinks .column2 {float:left;width:300px;}
+.personas a, .personaSubLinks span a{text-decoration:none; color:#fff;text-transform: capitalize;}
+.personaSubLinks span a:hover {text-decoration:underline;}
+.sticky{
+    width: 350px;
+    height: 350px;
+    position:fixed;
+    right:-312px;
+    top:25%;
+    z-index: 8888;
+}
+.pullOutImage{
+    width: 40px;
+    float: left;
+    margin-top: 65px;
+}
+.mod {
+    float: left;
+    background: #fff;
+}
+#favourite {
+    width:300px;
+    float: left;
+    background: #fff;
+}
+#usereditModal {
+    z-index:9999;
+}
+#loading_Modal {
+    z-index:9999;
+    overflow:hidden;
+}
+.mentions
+{
+    display:none;
+}
+.searchSectioHeader
+{
+    color: #000 !important;
+    background-color: #31C3EC !important;
+    border-color: #31C3EC !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+    padding: 5px !important;
+}
+.pbSubsection .detailList, .PhyConT, .PhyConT table
+{
+    width: 100%;
+}
+.reportsTolabel
+{
+    font-weight: normal;
+    font-size: 12px;
+}

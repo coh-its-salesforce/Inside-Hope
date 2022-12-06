@@ -1,0 +1,9 @@
+<apex:page showHeader="true" sidebar="false" docType="html-5.0" language="en-US" standardStylesheets="true" cache="false" expires="0" title="TPO Project Intake">
+    <br/>
+    <br/>
+    <div align="center" draggable="false">
+    	<h1>
+            Your Request has been submitted. Thank You.
+        </h1>
+    </div>
+</apex:page>

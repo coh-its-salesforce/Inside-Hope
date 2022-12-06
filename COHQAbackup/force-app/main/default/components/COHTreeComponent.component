@@ -1,0 +1,53 @@
+<apex:component controller="COHTreeController">
+<link rel="stylesheet" href="{!URLFOR($Resource.sftree,'sftree/jquery.treeview.css')}" />
+<link rel="stylesheet" href="{!URLFOR($Resource.sftree,'sftree/screen.css')}" />
+<script src="{!URLFOR($Resource.sftree,'sftree/jquery.js')}" type="text/javascript"></script>
+<script src="{!URLFOR($Resource.sftree,'sftree/jquery.cookie.js')}" type="text/javascript"></script>
+<style>
+.sftree{
+    border:1px solid #ccc;
+}
+.sftree .title{
+  background-color: #1797C0;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    height: 20px;
+    margin:2px;
+    padding-top: 4px;
+    padding-top: -2px;
+    text-align: center;
+}
+</style>
+<script src="{!URLFOR($Resource.sftree,'sftree/jquery.treeview.js')}" type="text/javascript"></script>
+
+    <script>
+    $(document).ready(function(){
+
+        // first example
+        $("#browser").treeview();
+
+        // second example
+        $("#navigation").treeview({
+            persist: "location",
+            collapsed: true,
+            unique: true
+        });
+
+});
+    </script>
+ <div class="sftree">
+ <div class="title" title="Select a Category">Select a Category</div>
+ <ul id="browser" class="filetree">
+ <apex:repeat value="{!nodeList}" var="node">
+     <li class="closed"><span class="folder" onclick="parentClickCall('{!node.id}','{!node.parent}');">{!node.name}</span>        
+        <ul>
+        <apex:repeat value="{!node.children}" var="child">
+            <li><span class="file" onclick="childClickCall('{!child.id}','{!child.parent}','{!child.name}','{!node.name}');">{!child.name}</span></li>
+        </apex:repeat>
+        </ul>
+    </li>
+ </apex:repeat>
+ </ul>
+ </div>
+</apex:component>

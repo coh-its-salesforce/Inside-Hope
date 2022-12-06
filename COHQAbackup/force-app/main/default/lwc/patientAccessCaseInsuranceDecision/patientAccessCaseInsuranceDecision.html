@@ -1,0 +1,97 @@
+<template>
+    <h1 class="insurance-title"><u>Insurance</u></h1>
+            <lightning-layout>
+                <lightning-layout-item size="4" padding="horizontal-small">
+                    <template if:true={servicecategoriesoptions}>
+                        <lightning-combobox
+                        name="ServiceCategories"
+                        label="Service Categories"
+                        value={servicecategoriesvalue}
+                        placeholder="Select Service Categories"
+                        options={servicecategoriesoptions}
+                        onchange={handleChangeServiceCategories}
+                        disabled="true" ></lightning-combobox>
+                    </template>
+                </lightning-layout-item>
+                <lightning-layout-item size="4" padding="horizontal-small">
+                    <template if:true={plantypeoptions}>
+                        <lightning-combobox
+                            name="PlanType"
+                            label="Plan Type"
+                            value={plantypevalue}
+                            placeholder="Select Plan Type"
+                            options={plantypeoptions}
+                            onchange={handleChangePlanType} 
+                            required></lightning-combobox>
+                    </template>
+                </lightning-layout-item>
+                <lightning-layout-item size="4" padding="horizontal-small">
+                    <template if:true={lineofbusinessoptions}>
+                        <lightning-combobox
+                            name="LineofBusiness"
+                            label="Line of Business"
+                            value={lineofbusinessvalue}
+                            placeholder="Select Line of Business"
+                            options={lineofbusinessoptions}
+                            onchange={handleChangeLineofBusiness}
+                            required></lightning-combobox>
+                    </template>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout>
+                <lightning-layout-item size="4" padding="horizontal-small">
+                    <template if:true={healthplanoptions}>
+                            <lightning-combobox
+                                name="HealthPlan"
+                                label="Health Plan"
+                                value={healthplanvalue}
+                                placeholder="Select Health Plan"
+                                options={healthplanoptions}
+                                onchange={handleChangeHealthPlan}
+                                required></lightning-combobox>
+                    </template> 
+                </lightning-layout-item>
+                <lightning-layout-item size="4" padding="horizontal-small">
+                    <template if:true={medicalgroupipaoptions}>
+                            <lightning-combobox
+                                name="MedicalGroupIPA"
+                                label="Medical Group / IPA"
+                                value={medicalgroupipavalue}
+                                placeholder="Select Medical Group / IPA"
+                                options={medicalgroupipaoptions}
+                                onchange={handleChangeMedicalGroupIPA}
+                                required></lightning-combobox>
+                    </template>
+                </lightning-layout-item>
+                <lightning-layout-item size="4" padding="around-medium">
+                    <div>
+                        <lightning-button variant="brand" onclick={resetPicklistValues} label="Reset Insurance Picklist Values" class="slds-m-left_x-small"></lightning-button>
+                    </div>    
+                </lightning-layout-item>
+            </lightning-layout>  
+            <br/>  
+            <lightning-layout> 
+                <lightning-layout-item size="6" padding="horizontal-small">
+                    <template if:true={authpicklistoptions}>
+                            <lightning-combobox
+                                name="AuthPickLists"
+                                label="Does patient have auth at time of scheduling?"
+                                value={doespatienthaveauthvalueyesorno}
+                                placeholder="Select AuthPickListoptions"
+                                options={authpicklistoptions}
+                                onchange={handleChangeAuthPickList}
+                                required></lightning-combobox>
+                    </template>
+                </lightning-layout-item>
+                <lightning-layout-item size="6" padding="horizontal-small">
+                    <template if:true={isAuthAvaliable}>
+                            <lightning-input
+                                label="Auth #"
+                                value={doespatienthaveauthvalue}
+                                onchange={handleChangeAuthvalue}
+                                required></lightning-input>
+                    </template>
+                </lightning-layout-item>
+            </lightning-layout> 
+            <br/>
+</template>

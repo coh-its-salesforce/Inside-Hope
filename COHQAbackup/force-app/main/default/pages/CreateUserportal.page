@@ -1,0 +1,40 @@
+<apex:page standardStylesheets="false" sidebar="false" standardController="Visa__c" >
+    <apex:includeScript value="/lightning/lightning.out.js"/>
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <script type="text/javascript" src="/canvas/sdk/js/publisher.js"></script> 
+            <script>
+               var urlstr = window.location.href;
+               //alert('url '+urlstr);
+               var RecId ='';
+               RecId = urlstr.substring(urlstr.indexOf('a7I'), urlstr.indexOf('a7I')+18);
+               //alert('Recid '+RecId); 
+                $Lightning.use("c:CreatePortalUserApp", function() {
+                    $Lightning.createComponent("c:CreatePortalUser",
+                      { 
+                        "recordId" : RecId
+                        },
+                      "lightning",
+                      function(cmp) {                                                   
+                          console.log("Component created!");
+                          console.log(cmp);                          
+                      });
+                });                
+            </script>
+            <script> 
+                (function(){
+                    try{
+                        var a = navigator.userAgent;
+                        if(a.indexOf('iPhone')!=-1||a.indexOf('iPad')!=-1){
+                            var s = document.createElement('style'); 
+                            s.innerHTML = "html,html body{overflow: auto;-webkit-overflow-scrolling:touch;}body{position:absolute;left:0;right:0;top:0;bottom:0;}"; 
+                            document.getElementsByTagName('head')[0].appendChild(s);
+                        }           
+                    }catch(e){}
+                    })(); 
+            </script> 
+        </head>   
+        <div id="lightning" style="min-height:600px;">
+        </div>
+    </html> 
+</apex:page>

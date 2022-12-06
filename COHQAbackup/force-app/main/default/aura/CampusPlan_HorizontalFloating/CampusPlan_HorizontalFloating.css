@@ -1,0 +1,41 @@
+.THIS .marquee {
+  background-color: deepskyblue;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.THIS .marquee span {
+  display: inline-block;
+  font-size: 20px;
+  position: relative;
+  left: 100%;
+  color: white;
+  font-weight: bold;
+  animation: marquee 20s linear infinite;
+}
+.THIS .marquee:hover span {
+  animation-play-state: paused;
+}
+
+.THIS .marquee span:nth-child(1) {
+  animation-delay: 0s;
+}
+.THIS .marquee span:nth-child(2) {
+  animation-delay: 0.8s;
+}
+.THIS .marquee span:nth-child(3) {
+  animation-delay: 1.6s;
+}
+.THIS .marquee span:nth-child(4) {
+  animation-delay: 2.4s;
+}
+.THIS .marquee span:nth-child(5) {
+  animation-delay: 3.2s;
+}
+
+
+@keyframes marquee {
+  0%   { left: 100%; }
+  100% { left: -100%; }
+}

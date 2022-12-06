@@ -1,0 +1,18 @@
+<apex:component selfClosing="true" access="global">
+    <apex:attribute name="theme" type="String" description="Theme to be used, possible values 'superhero','lumen','default','flatly','pdf'" access="global" required="false"/>
+    
+    <apex:variable var="themeName" value="{!IF(theme == 'flatly','-flatly',IF(theme == 'superhero','-superhero',IF(theme == 'lumen','-lumen',IF(theme == 'pdf','-pdf',''))))}"/>    
+    <apex:includeScript value="//code.jquery.com/jquery-1.11.2.min.js"/>
+    <apex:includeScript value="{!URLFOR($Resource.Visualstrap, 'js/bootstrap.min.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.Visualstrap, 'css/visualstrap'+themeName+'.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.Visualstrap, 'css/visualstrap-common.css')}" />
+   
+    
+    <!--<Link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css"/>-->
+    <Link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.css" rel="stylesheet"/>
+    <Link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.print.css" rel="stylesheet" media='print'/>
+    <apex:includeScript value="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.js"/>
+    <apex:includeScript value="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.js"/>
+    <!--<apex:includeScript value="//cdn.jsdelivr.net/fullcalendar/1.5.4/gcal.js"/>-->
+    
+</apex:component>

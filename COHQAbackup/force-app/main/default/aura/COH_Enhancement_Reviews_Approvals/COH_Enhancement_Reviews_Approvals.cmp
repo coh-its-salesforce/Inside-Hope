@@ -1,0 +1,80 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,lightning:isUrlAddressable" controller="COH_Get_IT_PMRecords">
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="ITPMRecs" type="IT_Portfolio_Management__c" default=""/>
+    <aura:attribute name="isEdit" type="Boolean" default="false" description="Used to handle show /hide edit form"/>
+	
+    <div class="slds-card slds-card_boundary" style="box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.16);">
+        <aura:if isTrue="{!v.isEdit == false}">
+            <div class="slds-section slds-is-open slds-m-top_none">
+                <h3 class="slds-section__title">
+                    <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                        <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                        <span class="slds-truncate" title="Section Title"> Review Details </span>   
+                    </button>
+                </h3>
+                <lightning:messages />
+                <center>
+                	<div class="slds-m-top_medium">
+                        <lightning:button disabled="{!v.ITPMRecs.Project_Status__c == 'Closed'}" label="Edit" variant="brand" name="Edit Document Details" onclick="{!c.handleEdit}"/>
+                    </div>
+                </center><br/><br/>
+                <div class="slds-p-left_medium">
+                    <div class="slds-grid">
+                        <div class="slds-col--padded slds-large-size--6-of-12">
+                            <span class="slds-text-title_bold">Stage: </span><span class="valueFont"><ui:outputTextArea value="{!v.ITPMRecs.Stages__c}" /></span>
+                        </div>
+                        <div class="slds-col--padded slds-large-size--6-of-12">
+                            <span class="slds-text-title_bold">Approvals: </span><span class="valueFont"><ui:outputTextArea value="{!v.ITPMRecs.Route_to__c}" /></span>
+                        </div>
+                    </div>
+                </div><br/><br/>
+                 <center>
+                   <div class="slds-m-top_medium">
+                        <lightning:button disabled="{!v.ITPMRecs.Project_Status__c == 'Closed'}" label="Edit" variant="brand" name="Edit Document Details" onclick="{!c.handleEdit}"/>
+                   </div>
+                </center><br/>   
+            </div>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.isEdit == true}">
+            
+            <lightning:recordEditForm
+                                      
+                                      onsuccess="{!c.handleSuccess}"
+                                      recordId="{!v.recordId}"
+                                      objectApiName="IT_Portfolio_Management__c">
+                <!-- the messages component is for error messages -->
+                <lightning:messages />
+                <h3 class="slds-section__title">
+                    <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                        <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                        <span class="slds-truncate" title="Section Title"> Review Details </span>
+                    </button>
+                </h3>
+                <center>
+                    <div class="slds-m-top_medium">
+                        <lightning:button variant="brand" type="submit" name="Save Document Details" label="Save" />
+                        <lightning:button label="Cancel" name="Cancel" onclick="{!c.handleCancel}"/>
+                    </div>
+                </center><br/><br/>
+                <div class="slds-p-left_medium">
+                    <div class="slds-grid">
+                        <div class="slds-col--padded slds-large-size--6-of-12">
+                            <!-- <span class="slds-text-title_bold"> </span> --> <lightning:inputField fieldName="Stages__c"/>
+                        </div>
+                        <div class="slds-col--padded slds-large-size--6-of-12">
+                            <!-- <span class="slds-text-title_bold">Primary Applications: </span><span class="valueFont"><ui:outputTextArea value="{!v.ITPMRecs.ITS_Intake_Request__r.ConnectHope_Sub_Apps__c}" /></span> -->
+                        	<lightning:inputField fieldName="Approvals__c"/>
+                        </div>
+                    </div>
+                </div><br/><br/>
+            	<center>
+                    <div class="slds-m-top_medium">
+                        <lightning:button variant="brand" type="submit" name="Save Document Details" label="Save" />
+                        <lightning:button label="Cancel" name="Cancel" onclick="{!c.handleCancel}"/>
+                    </div>
+                </center><br/>
+                </lightning:recordEditForm>
+        </aura:if>
+    </div>
+</aura:component>

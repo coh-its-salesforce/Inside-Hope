@@ -1,0 +1,342 @@
+<apex:page standardController="Ergonomic_Self_Assessment__c" 
+            extensions="COH_EquipmentApprovalController" >
+    <apex:sectionHeader title="{!Ergonomic_Self_Assessment__c.Name}" subtitle="Equipment Approval"/>
+    
+    <apex:form >
+        
+        <apex:pageBlock id="block">
+            <apex:pageMessages />
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Submit" action="{!doApprove}"  rendered="{!NOT(approved)}">
+                </apex:commandButton>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="2" title="User Details">
+                
+                <apex:outputField value="{!Ergonomic_Self_Assessment__c.Employee_ID__c}"/>
+                <apex:outputField value="{!Ergonomic_Self_Assessment__c.User__c}"/>
+                <apex:outputPanel />
+                <apex:outputField value="{!Ergonomic_Self_Assessment__c.Secondary_Supervisor__c}" label="Admin"/> 
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1" title="Risk Assessment">
+                <apex:outputPanel >
+                    <UL>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_8__c == 'No'}">
+                            <LI>Do you work, on average, less than 4 hours a day or 20 hours a week at a computer workstation? <b>{!Ergonomic_Self_Assessment__c.Question_8__c} </b></LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_9__c == 'No'}">
+                            <LI>Do you incorporate stretching and rest periods into your daily routine? <b>{!Ergonomic_Self_Assessment__c.Question_9__c} </b> </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Answer_9__c == 'No'}">
+                            <LI>Do you work on the phone less than 12 hours a week or roughly 30% of your workday? <b>{!Ergonomic_Self_Assessment__c.Answer_9__c}</b> </LI>
+                        </apex:outputPanel>
+                    </ul>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1" title="Questions">
+                <apex:outputPanel >
+                    
+                    <UL>
+                        
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_10__c == 'No'}">
+                            <LI>You are free of medical disabilities or issues that may cause you to need special workstation accommodations?   <b>{!Ergonomic_Self_Assessment__c.Question_10__c}</b> </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_13__c == 'No'}">
+                            <LI>Stand in front of the chair and adjust the height so the highest point of the seat becomes in alignment or horizontal with your knee cap? <b>{!Ergonomic_Self_Assessment__c.Question_13__c}</b>   </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_14__c == 'No'}">
+                            <LI>Sit on the chair and keep your feet flat on the floor, now check the clearance between the front edge of the seat and the lower part of the legs (back of the calves) fits roughly 2 to 3 finger width? <b> {!Ergonomic_Self_Assessment__c.Question_14__c}</b>  </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_15__c == 'No'}">
+                            <LI>Adjust the back rest forwards and backwards, as well as up and down, so that this fits the small curve of your lower back?   <b>{!Ergonomic_Self_Assessment__c.Question_15__c}</b> </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_16__c == 'No'}">
+                            <LI>Sit upright with your arms hanging loosely by your sides. Bend your elbows at approximately a right
+                                angle (90 degrees) and adjust the height of the armrests until they barely touch the undersides of the
+                                elbows. OR Remove armrests from the chair if this level cannot be achieved or if armrests, in their lowest
+                                adjustment, elevate your elbows even slightly.?   <b>{!Ergonomic_Self_Assessment__c.Question_16__c} </b></LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_17__c == 'No'}">
+                            <LI>Move chair so that body is close to the input surface (keyboard tray or desk top) OR remove armrests if they inhibit close proximity?   <b>{!Ergonomic_Self_Assessment__c.Question_17__c}</b></LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_18__c == 'No'}">
+                            <LI>Move all materials and equipment so that your feet can sit facing forward towards your computer and your feet can fit nicely under the desk?   <b>{!Ergonomic_Self_Assessment__c.Question_18__c}</b> </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_19__c == 'No'}">
+                            <LI>Adjust the monitor, keyboard and mouse so they are directly in alignment with you. This will eliminate twisting of the body and neck AND If using dual monitors bring them side by side?   <b>{!Ergonomic_Self_Assessment__c.Question_19__c}</b> </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_20__c == 'No'}">
+                            <LI>Adjust the chair height so your elbows are the same height as the desk top, if working on top of the desk (elbows should be resting at a 90 degree angle) OR Adjust the keyboard tray so that your elbows are the same height as the keyboard and mouse? <b>{!Ergonomic_Self_Assessment__c.Question_20__c} </b> </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_21__c == 'No'}">
+                            <LI>Feet should be resting on the floor or an adjustable footrest OR to help achieve a reclined position?  <b>{!Ergonomic_Self_Assessment__c.Question_21__c}</b></LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_22__c == 'No'}">
+                            <LI>Sit back in your chair and place your arm out in front of you, now adjust your monitor to edge of your fingertips OR if wearing glasses, adjust to where you can sit back and still comfortably see the computer screen without having adjust your neck up or down?  <b>{!Ergonomic_Self_Assessment__c.Question_22__c}</b> </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_23__c == 'No'}">
+                            <LI>Now look with your eyes straight ahead at the computer screen, your eyes should be looking at the top 1/3 of the screen. Adjust the monitor up or down depending on need OR obtain a monitor stand or use a ream of paper if needing to adjust the monitors higher? <b>{!Ergonomic_Self_Assessment__c.Question_23__c}</b> </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_24__c == 'No'}">
+                            <LI>Move your mouse and keyboard directly next to each other so that your arms can be relaxed and close to your sides? <b>{!Ergonomic_Self_Assessment__c.Question_24__c}</b></LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_25__c == 'No'}">
+                            <LI>Feel under your keyboard to adjust down the small feet/legs to adjust the keyboard to a flat, nonangled, position that will eliminate wrist flexion? <b>{!Ergonomic_Self_Assessment__c.Question_25__c}</b> </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_26__c == 'No'}">
+                            <LI>Utilize a wrist rest while working with the keyboard? <b>{!Ergonomic_Self_Assessment__c.Question_26__c}</b> </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_27__c == 'No'}">
+                            <LI>Assure head and neck are not frequently bent to the side while using the phone and typing. (Frequently is an average of 30% or more of your work day, if necessary use a headset)?  <b>{!Ergonomic_Self_Assessment__c.Question_27__c}</b> </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_28__c == 'No'}">
+                            <LI>Assure head is not frequently looking down to reference documents. (Frequently is an average of 20% or more of the work day, if necessary use a document holder)?  <b>{!Ergonomic_Self_Assessment__c.Question_28__c}</b> </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_29__c == 'No'}">
+                            <LI>All frequently used items are in close proximity to your body that eliminates a long reach, reaching behind you or down under the desk. (Frequently is an average 20 times or more daily, adjust equipment
+                                as needed)?  <b>{!Ergonomic_Self_Assessment__c.Question_29__c}</b> </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_30__c == 'No'}">
+                            <LI>You are taking proper breaks and rest periods throughout the day and have reviewed the healthy work habits document on the safety website OR you have installed RSIGuard break software, by calling ITSHelpDesk, to assist in reminding you to take proper breaks and rest periods?   <b>{!Ergonomic_Self_Assessment__c.Question_30__c}</b> </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question31__c == 'Yes'}">
+                            <LI>I am interested in a sit to stand desk?   <b>{!Ergonomic_Self_Assessment__c.Question31__c}</b> </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question32__c == 'Yes'}">
+                            <LI>I am interested in an alternative mousing device?   <b>{!Ergonomic_Self_Assessment__c.Question32__c}</b> </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question33__c == 'Yes'}">
+                            <LI>I am interested in an alternative keyboard device?   <b>{!Ergonomic_Self_Assessment__c.Question33__c}</b> </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question34__c == 'Yes'}">
+                            <LI>I am interested in a floor mat for my workstation?   <b>{!Ergonomic_Self_Assessment__c.Question34__c}</b> </LI>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!Ergonomic_Self_Assessment__c.Question_35__c == 'Yes'}">
+                            <LI>I am interested in laptop or mobile device ergonomic accessories?   <b>{!Ergonomic_Self_Assessment__c.Question_35__c}</b> </LI>
+                        </apex:outputPanel>
+                     </UL>
+                </apex:outputPanel>
+                
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1" title="Equipment Details">
+                <apex:outputPanel >
+                <table class="list" border="0" cellspacing="0" cellpadding="0">
+                    <tr class="headerRow">
+                        <Th scope="col" class=" zen-deemphasize">Equipment</Th>
+                        <Th scope="col" class=" zen-deemphasize">Specific Items</Th>
+                        <Th scope="col" class=" zen-deemphasize">Required ?</Th>
+                        <Th scope="col" class=" zen-deemphasize">
+                        Approval Status
+                        <div class="mouseOverInfoOuter" id="searchInvoiceHelper" onfocus="addMouseOver(this)" onmouseover="addMouseOver(this)" tabindex="0">
+                        <img src="/s.gif" alt="" class="infoIcon" title="" />
+                        <div class="mouseOverInfo" id="searchInvoiceHelperText" style="display: none; opacity: -0.19999999999999996; left: 1px;">
+                            <div class="body"><!--{!$ObjectType.Ergonomic_Self_Assessment__c.fields.Equipment_1_Approval__c.inlineHelpText}-->
+                                <ul>
+                                    <li>Yes = Item is approved for purchase </li> 
+                                    <li>No = Item is NOT approved for purchase. Review reasoning with employee</li>
+                                    <li>Defer = Item is not currently approved, but may be approved for purchase in the future. Review with the employee.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div> 
+                        </Th>
+                        <Th scope="col" class=" zen-deemphasize">Comment</Th>
+                    </tr>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_1__c != null) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_1__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_1__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_1_Required__c}"/></Td>
+                        <Td>
+                        <!-- Added the no equipement required logic for manager -->
+                            <apex:outputPanel rendered="{!ergObj.Equipment_1_Required__c != 'No equipment required' }">
+                            <apex:InputField value="{!ergObj.Equipment_1_Approval__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_1_Approval__c}" rendered="{!approved}"/>
+                        </apex:outputPanel>
+                        </Td>
+                        <Td>
+                            <apex:InputField value="{!ergObj.Equipment_1_comment__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_1_comment__c}" rendered="{!approved}"/>
+                        </Td>
+                         
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_2__c != null) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_2__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_2__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_2_Required__c}"/></Td>
+                        <Td>
+                            <apex:outputPanel rendered="{!ergObj.Equipment_2_Required__c != 'No equipment required' }">
+                            <apex:InputField value="{!ergObj.Equipment_2_Approval__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_2_Approval__c}" rendered="{!approved}"/>
+                            </apex:outputPanel>
+                        </Td>
+                        <Td>
+                            <apex:InputField value="{!ergObj.Equipment_2_comment__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_2_comment__c}" rendered="{!approved}"/>
+                            
+                        </Td>
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_3__c != null) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_3__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_3__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_3_Required__c}"/></Td>
+                        <Td>
+                            <apex:outputPanel rendered="{!ergObj.Equipment_3_Required__c != 'No equipment required' }">
+                            <apex:InputField value="{!ergObj.Equipment_3_Approval__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_3_Approval__c}" rendered="{!approved}"/>
+                            </apex:outputPanel>
+                        </Td>
+                        <Td>
+                            <apex:InputField value="{!ergObj.Equipment_3_comment__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_3_comment__c}" rendered="{!approved}"/>
+                        </Td>
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_4__c != null) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_4__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_4__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_4_Required__c}"/></Td>
+                        <Td>
+                            <apex:outputPanel rendered="{!ergObj.Equipment_4_Required__c != 'No equipment required' }">
+                            <apex:InputField value="{!ergObj.Equipment_4_Approval__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_4_Approval__c}" rendered="{!approved}"/>
+                            </apex:outputPanel>
+                        </Td>
+                        <Td>
+                            <apex:InputField value="{!ergObj.Equipment_4_comment__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_4_comment__c}" rendered="{!approved}"/>
+                        </Td>
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_5__c != null ) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_5__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_5__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_5_Required__c}"/></Td>
+                        <Td>
+                            <apex:outputPanel rendered="{!ergObj.Equipment_5_Required__c != 'No equipment required' }">
+                            <apex:InputField value="{!ergObj.Equipment_5_Approval__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_5_Approval__c}" rendered="{!approved}"/>
+                            </apex:outputPanel>
+                        </Td>
+                        <Td>
+                            <apex:InputField value="{!ergObj.Equipment_5_comment__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_5_comment__c}" rendered="{!approved}"/>
+                        </Td>
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_6__c != null ) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_6__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_6__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_6_Required__c}"/></Td>
+                        <Td>
+                            <apex:outputPanel rendered="{!ergObj.Equipment_6_Required__c != 'No equipment required' }">
+                            <apex:InputField value="{!ergObj.Equipment_6_Approval__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_6_Approval__c}" rendered="{!approved}"/>
+                            </apex:outputPanel>
+                        </Td>
+                        <Td>
+                            <apex:InputField value="{!ergObj.Equipment_6_comment__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_6_comment__c}" rendered="{!approved}"/>
+                        </Td>
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_7__c != null ) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_7__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_7__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_7_Required__c}"/></Td>
+                        <Td>
+                            <apex:outputPanel rendered="{!ergObj.Equipment_7_Required__c != 'No equipment required' }">
+                            <apex:InputField value="{!ergObj.Equipment_7_Approval__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_7_Approval__c}" rendered="{!approved}"/>
+                            </apex:outputPanel>
+                        </Td>
+                        <Td>
+                            <apex:InputField value="{!ergObj.Equipment_7_comment__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_7_comment__c}" rendered="{!approved}"/>
+                        </Td>
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_8__c != null ) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_8__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_8__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_8_Required__c}"/></Td>
+                        <Td>
+                            <apex:outputPanel rendered="{!ergObj.Equipment_8_Required__c != 'No equipment required' }">
+                            <apex:InputField value="{!ergObj.Equipment_8_Approval__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_8_Approval__c}" rendered="{!approved}"/>
+                            </apex:outputPanel>
+                        </Td>
+                        <Td>
+                            <apex:InputField value="{!ergObj.Equipment_8_comment__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_8_comment__c}" rendered="{!approved}"/>
+                        </Td>
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_9__c != null ) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_9__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_9__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_9_Required__c}"/></Td>
+                        <Td>
+                            <apex:outputPanel rendered="{!ergObj.Equipment_9_Required__c != 'No equipment required' }"> 
+                            <apex:InputField value="{!ergObj.Equipment_9_Approval__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_9_Approval__c}" rendered="{!approved}"/>
+                            </apex:outputPanel>
+                        </Td>
+                        <Td>
+                            <apex:InputField value="{!ergObj.Equipment_9_comment__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_9_comment__c}" rendered="{!approved}"/>
+                        </Td>
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_10__c != null ) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_10__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_10__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_10_Required__c}"/></Td>
+                        <Td>
+                            <apex:outputPanel rendered="{!ergObj.Equipment_10_Required__c != 'No equipment required' }">
+                            <apex:InputField value="{!ergObj.Equipment_10_Approval__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_10_Approval__c}" rendered="{!approved}"/>
+                            </apex:outputPanel>
+                        </Td>
+                        <Td>
+                            <apex:InputField value="{!ergObj.Equipment_10_comment__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_10_comment__c}" rendered="{!approved}"/>
+                        </Td>
+                    </tr>
+                    </apex:outputPanel>                 
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_11__c != null ) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_11__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_11__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_11_Required__c}"/></Td>
+                        <Td>
+                            <apex:outputPanel rendered="{!ergObj.Equipment_11_Required__c != 'No equipment required' }">
+                            <apex:InputField value="{!ergObj.Equipment_11_Approval__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_11_Approval__c}" rendered="{!approved}"/>
+                            </apex:outputPanel>
+                        </Td>
+                        <Td>
+                            <apex:InputField value="{!ergObj.Equipment_11_comment__c}" rendered="{!NOT(approved)}"/>
+                            <apex:outputField value="{!ergObj.Equipment_11_comment__c}" rendered="{!approved}"/>
+                        </Td>
+                    </tr>
+                    </apex:outputPanel>
+                    
+                </table>     
+                </apex:outputPanel>
+                
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+
+</apex:page>

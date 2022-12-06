@@ -1,0 +1,17 @@
+<aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes" >
+	 <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="12" padding="around-small">
+                <div class="custom-box">
+                    <a style=" color: #ffffff;" target="_blank"  href="https://www.cityofhope.org/research/research-news">COH IN THE NEWS</a>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" padding="around-small" >
+                <div class="custom-box">
+                    <a style=" color: #ffffff;" target="_blank"  href="https://cityofhope--c.na118.visual.force.com/apex/DepartmentPortal?id=a6G3o000000xWfoEAE">CITY FORUM</a></div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" padding="around-small">
+                <div class="custom-box"><a style=" color: #ffffff;" target="_blank" href="https://www.cityofhope.org">CityofHope.org</a></div>
+            </lightning:layoutItem>
+            
+        </lightning:layout>
+</aura:component>

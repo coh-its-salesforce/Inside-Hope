@@ -1,0 +1,44 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" access="global">
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="disabled" type="Boolean" default="false" />
+    <aura:attribute name="saved" type="Boolean" default="false" />
+    <aura:attribute name="showSpinner" type="Boolean" default="true" />
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner />
+    </aura:if>
+    <aura:if isTrue="{!!v.saved}">
+        <lightning:card iconName="standard:Case" title="">
+        <lightning:recordEditForm
+            aura:id="createCaseForm"
+            onload="{!c.handleLoad}"
+            onsubmit="{!c.handleSubmit}"
+            onsuccess="{!c.handleSuccess}"
+            recordId="{!v.recordId}"
+            recordTypeId="012q0000000APfIAAW"                      
+            objectApiName="Case">
+            
+            <lightning:messages/>
+                
+                
+                <lightning:inputField fieldName="Subject__c" />
+                <lightning:inputField fieldName="Question_Title__c"/>
+                <lightning:inputField fieldName="SuppliedEmail" />
+                <lightning:inputField fieldName="Status"/>
+                <lightning:inputField fieldName="Origin" />
+            	<lightning:inputField fieldName="Priority" />
+                <lightning:inputField fieldName="Page_Source__c" />
+            	
+              
+               
+            	
+                
+            <div class="slds-m-top_medium"><center>
+                <lightning:button disabled="{!v.disabled}" variant="brand" type="submit" name="save" label="Save" />
+                <lightning:button variant="Neutral" name="Cancel" label="Cancel" /></center>
+            </div>
+        </lightning:recordEditForm> </lightning:card>
+        <aura:set attribute="else">
+            <p>Saved!</p>
+        </aura:set>
+    </aura:if>
+</aura:component>

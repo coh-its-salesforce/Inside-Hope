@@ -1,0 +1,71 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" 
+           applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" controller="COH_SIP_controllerHomePage_temp">
+    
+    
+    <html lang="en">
+        <head>
+            
+            <c:Head title="My Recently Visited"></c:Head>
+            <style>
+                .right-dotted-border{
+                border-right:1px dotted gray;
+                }
+                .mini-section{
+                height:270px;
+                }
+            </style>
+            
+        </head>
+        <body>
+            <div class="Wrapper">
+                <apex:form >
+                    <!-- Header Bar---> 
+                    <c:COH_SIP_Header ></c:COH_SIP_Header> 
+                    
+                    <!--search bar-->
+                    <c:COH_SIP_Search ></c:COH_SIP_Search>
+                    <!-- page Body Content-->
+                    <!-- Container -->
+                    <div class="container" style="padding: 150px 0 0 0;height: 100%;">
+                        <div class="well">
+                            <h3>
+                                
+                                <i class="fa fa-heart"></i> My Recently Visited
+                                <apex:actionStatus id="st">
+                                    <apex:facet name="start">
+                                        <i class="fa fa-circle-o-notch fa-spin pull-right"></i>
+                                    </apex:facet>
+                                </apex:actionStatus>
+                            </h3>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                            <!--<div class="module"> -->
+                            <div class="text-center"  >              
+                                <!-- <h5 class="FourIconTit">Recently Visited</h5><!--Recently Visited-->
+                            </div>    
+                            
+                            <apex:outputPanel rendered="{!booViewed}" style="overflow:auto"  >
+                                <div class="text-center" >
+                                    <p class="FourIconTxt"></p>
+                                </div>
+                                <div>
+                                    <apex:repeat value="{!lstRecentViews}" var="viewed">
+                                        <li> <div class="MenTxtB" style="width:100%;"><apex:outputLink value="/{!viewed.id}">{!viewed.Name}</apex:outputLink></div></li>
+                                    </apex:repeat>
+                                </div>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!NOT(booViewed)}">
+                                <p><center>No Recent Activity</center></p>
+                            </apex:outputPanel>
+                        <c:COH_SIP_Favorite_Float ></c:COH_SIP_Favorite_Float>    
+                        </div><!--Container end-->
+                    </div>
+                    <c:COH_SIP_Footer ></c:COH_SIP_Footer> 
+                </apex:form>
+            </div>
+            
+        </body>    
+        
+    </html> 
+    
+</apex:page>

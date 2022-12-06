@@ -1,0 +1,23 @@
+<apex:page sidebar="false" showHeader="false">
+    <Style>
+        .headerSearchContainer {
+        display: none;
+        }
+        .ThankYou {
+        margin: 0 auto;
+        margin-top: 40Px;
+        text-decoration: none;
+        font-size: medium;
+        color: #1797C0;
+        font-weight: bold;
+        width: 600px;
+        text-align: center
+        }
+       
+    </Style>
+    <p class="ThankYou">
+        Thank you for submitting your VIA nomination. Any questions,please contact <a href="mailto:VIA@coh.org">VIA@coh.org</a>
+    </p>
+    
+    
+</apex:page>

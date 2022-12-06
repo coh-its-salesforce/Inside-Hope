@@ -1,0 +1,62 @@
+<!--
+  @description       : 
+  @author            : Sanjay
+  @group             : 
+  @last modified on  : 02-25-2021
+  @last modified by  : Sanjay
+  Modifications Log 
+  Ver   Date         Author   Modification
+  1.0   02-05-2021   Sanjay   Initial Version
+-->
+<template>
+    <td data-label="Prospecting">
+      <template if:true={readOnly}>
+          {order}
+      </template>
+      <template if:false={readOnly}>
+          <lightning-input type="number"
+                      value={order}
+                      variant="label-hidden"
+                      onkeyup={handleOrderChange} 
+                     >
+          </lightning-input>
+      </template>
+      
+      </td>
+      <td data-label="User">
+        <div class="slds-truncate" title={member.userRec.Name}>{user.userRec.Name}</div>
+      </td>
+      <td data-label="Last Assignedd">
+
+        <div class="slds-truncate" title="last Assigned">
+
+          <template if:true={member.lastAssigned}>
+            <lightning-icon icon-name="utility:check" variant="success">
+            </lightning-icon>
+          </template>
+        </div> 
+      </td>
+      <td data-label="Close Date">
+        <lightning-input type="toggle"
+                label=""
+                message-toggle-active=""
+                message-toggle-inactive=""
+                variant="label-hidden"
+                checked={associated}
+                onchange={handleChange}
+                disabled={readOnly}>
+        </lightning-input>
+      </td>
+      
+      <td data-label="Confidence">
+        <lightning-input type="toggle"
+                label=""
+                message-toggle-active=""
+                message-toggle-inactive=""
+                variant="label-hidden"
+                checked={active}
+                onchange={handleActiveChange}
+                disabled={readOnly}>
+      </lightning-input>
+      </td>
+</template>

@@ -1,0 +1,12 @@
+.THIS.c-container {
+    border: 1px solid #d8dde6;
+    margin: 10px 0 20px 0;
+}
+
+.THIS .custom-box {
+    text-align: center;
+    color:white;
+    background-color: #061037;
+    padding: 1.5rem;
+
+}

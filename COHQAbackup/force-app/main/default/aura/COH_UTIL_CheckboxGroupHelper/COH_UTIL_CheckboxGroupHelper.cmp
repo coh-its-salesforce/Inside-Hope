@@ -1,0 +1,11 @@
+<aura:component >
+    <aura:method name="jsonArrayToMultipleSelectPicklist" action="{!c.jsonArrayToMultipleSelectPicklist}">
+        <aura:attribute name="valuesArray" type="[]"/>
+    </aura:method>
+    <aura:method name="multipleSelectPicklistToJSONArray" action="{!c.multipleSelectPicklistToJSONArray}">
+        <aura:attribute name="multipleSelectPicklist" type="String" />
+    </aura:method>
+	<aura:method name="createJSONStringFromGroupboxValue" action="{!c.createJSONStringFromGroupboxValue}">
+        <aura:attribute name="valuesArray" type="[]"/>
+    </aura:method>    
+</aura:component>

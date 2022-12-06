@@ -1,0 +1,40 @@
+.THIS h1.faq-h1{
+    font-size: 1.5rem;
+    color: #333333;
+}
+.THIS .slds-accordion{
+    border: 1px solid #dddddd;
+    padding: 0;
+    margin: 15px;
+}
+.THIS .slds-accordion__section{
+    padding: 0;
+}
+.THIS .slds-accordion__summary{
+    margin: 0;
+    padding: 0.75rem 1rem;
+    background-color: #f5f5f5;   
+    color: #337ab7;
+}
+.THIS .slds-accordion__summary .slds-accordion__summary-action-icon{
+    display: none;
+}
+.THIS .slds-accordion  li{
+ 	color: #333;
+    border-color: #ddd;
+}
+.THIS .slds-accordion  li h3{
+    font-size: 18px !important;
+}
+.THIS .slds-accordion__content{
+    text-align: left;
+    padding: 1rem;
+}
+
+.THIS .slds-accordion__content p{
+    margin: 10px 0;
+    line-height: normal;
+}
+.THIS .slds-accordion  li p span{
+    font-size: 1rem;
+}

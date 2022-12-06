@@ -1,0 +1,6 @@
+<apex:page >
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>The Console is Required to create a Change request </h1>
+  Open The Console and create new Change Request.
+  <!-- End Default Content REMOVE THIS -->
+</apex:page>

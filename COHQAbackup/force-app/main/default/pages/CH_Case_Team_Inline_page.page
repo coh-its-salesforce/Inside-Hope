@@ -1,0 +1,163 @@
+<apex:page standardController="Case" id="thePage" extensions="CH_ManuallyCreateCaseTeamMembers" >
+    <apex:includeScript value="/support/console/32.0/integration.js"/>
+    <apex:form id="theform">
+        <style>
+          .locationError { color: blue; font-weight: strong;}
+           #loading {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(192, 192, 192, 0.5);
+            background-image: url("{!URLFOR($Resource.GridImages, 'GridImages/LoadingImage.gif')}");
+            background-repeat: no-repeat;
+            background-position: center;
+            }
+            #page {
+                display: none;
+             }
+        </style>
+        <script>
+        function onReady(callback) {
+           var intervalID = window.setInterval(checkReady, 10000);
+           function checkReady() {
+                 
+                if (document.getElementsByTagName('body')[0] !== undefined) {
+                   
+                    window.clearInterval(intervalID);
+                    callback.call(this);
+                 }
+               }
+            }
+
+            function show(id, value) {
+                document.getElementById(id).style.display = value ? 'block' : 'none';
+                }
+
+            onReady(function () {
+          
+                show('page', true);
+                show('loading', false);
+                });
+            
+                     
+            function loading(val) {
+                if (val) {
+                    document.getElementById('CTMList').style.display = 'block';
+                    document.getElementById('contentLoaded').style.display = 'none';
+                }
+                else {
+                    document.getElementById('CTMList').style.display = 'none';
+                    document.getElementById('contentLoaded').style.display = 'block';
+                }
+            }
+            function reload(){
+               window.location.reload( true );
+            }
+           function hidemembAdd(){
+                document.getElementById('hidediv').style.display="none";
+             }
+           function showdiv(){
+                 var e = document.getElementById('hidediv');
+                 e.style.display = 'block';
+                 return false;
+            }
+           function RefreshTab(){
+               var refreshPage = document.getElementById('{!$Component.refreshHidden}');               
+               if(refreshPage.value == 'true'){
+                   sforce.console.getFocusedPrimaryTabId(refreshPriTab);
+                }               
+           }
+                
+           var refreshPriTab = function RefreshPrimaryTab(result){                           
+               sforce.console.refreshPrimaryTabById(result.id, true);              
+            }
+            </script>
+        <apex:inputHidden id="refreshHidden" value="{!refreshPage}" />
+         <div id="page">
+        <apex:outputPanel >
+
+            <apex:pageBlock id="CTMList" >
+                <apex:pageMessages ></apex:pageMessages>
+                <apex:variable var="i" value="{!0}"/>
+                <apex:outputPanel rendered="{!ctmList.size==0}" >
+                 <b><i> There are no Case Team Members added for this Case!</i></b>
+                </apex:outputPanel>
+                 <div align="Center">
+                        <apex:actionStatus id="actStatusId1" >
+                            <apex:facet name="start" >
+                              <apex:image url="{!URLFOR($Resource.GridImages, 'GridImages/LoadingImage.gif')}" />                   
+                            </apex:facet>
+                        </apex:actionStatus> 
+                        </div> 
+                        <div align="Center">
+                        <apex:actionStatus id="actStatusId" >
+                            <apex:facet name="start" >
+                                <apex:image url="{!URLFOR($Resource.GridImages, 'GridImages/LoadingImage.gif')}" />                     
+                            </apex:facet>
+                        </apex:actionStatus>
+                        </div>
+                <apex:pageBlockTable value="{!ctmList}" rendered="{!ctmList.size!=0}" var="t">
+                    <apex:column headerValue="Action">
+                        <apex:commandLink action="{!removeMember}" value="Remove" rerender="CTMList,membAdd" status="actStatusId1" onclick="hidemembAdd()" >
+                            <apex:param name="MemberToRemove" assignTo="{!getcaseteamrecordid}" value="{!t.MemberId}"  />
+                            <apex:param name="RoWNoToRemove" assignTo="{!rowNo}" value="{!i}"  />
+                        </apex:commandLink> 
+                        
+                     <apex:variable var="i" value="{!i+1}"/>   
+                    </apex:column>
+                    <apex:column headerValue="Member Name">
+                    <apex:commandLink value="{!t.Member.name}" action="/{!t.MemberId}" target="_blank"/>
+                    </apex:column> 
+                    <apex:column headerValue="Case Role" >
+                        <apex:commandLink value="{!t.TeamRole.Name}" action="/{!t.TeamRoleId}" target="_blank"/>
+                    </apex:column>
+                 </apex:pageBlockTable>
+            </apex:pageblock>
+        </apex:outputPanel>
+        
+       <apex:outputPanel id="opp" rendered="{!$Profile.Name == 'System Administrator'||$Profile.Name == 'System Administrator'|| $Profile.Name == caseOwnerProfile || $Profile.Name == supervisor || $Profile.Name == caseOwnerServiceDeskProfile  || $Profile.Name == supervisorServiceDeskProfile}" style="align:center"> 
+         <div align="center" draggable="false" >
+         <apex:commandbutton value="Add Team members"  id="add" onclick="showdiv();return false;"/>
+         </div>
+       </apex:outputPanel>  
+       <apex:actionFunction Name="RenderTable" action="{!Null}"/>
+       <div id="hidediv" style="display: none;" >
+            <apex:pageBlock id="membAdd" title="Add Case Team Members">                 
+                <apex:pageblockSection columns="2" >
+                    <apex:pageblockSectionItem >
+                         <apex:outputLabel value="Select Team Role  " for="roleid" >
+                                  <apex:selectList multiselect="false" size="1" value="{!selectedrole}" id="roleid" required="true" onclick="showdiv();return false;">
+                                    <apex:selectOptions value="{!con}" />
+                                    <apex:actionSupport rerender="membAdd" event="onchange" action="{!AddMember}"/>
+                                </apex:selectList>
+                         </apex:outputlabel>
+                     </apex:pageblockSectionItem>   
+                    <apex:pageblockSectionItem >
+                        <apex:outputLabel value="Select User  " for="userid">
+                          <apex:selectList multiselect="false" size="1" value="{!selecteduser}" id="userid" onclick="showdiv();return false;" required="true" >
+                            <apex:selectOptions value="{!users}" />
+                            <apex:actionSupport rerender="membAdd" event="onchange" action="{!AddMember}"/>
+                          </apex:selectList>
+                        </apex:outputlabel> 
+                    </apex:pageblockSectionItem>
+                    <apex:pageblockSectionItem > 
+                    <!-- <apex:outputLabel value="Send Email  " for="SendEmailBox" /> 
+                     <apex:inputCheckbox value="{!sendEmail}" id="SendEmailBox"/>-->
+                    </apex:pageblockSectionItem>  
+                </apex:pageblockSection>   
+                <apex:pageBlockButtons > 
+                    <apex:commandButton value="Save"  action="{!AddCaseteammember}" reRender="CTMList,membAdd,refreshHidden" oncomplete="RefreshTab();" id="thesaveButton" status="actStatusId" />
+                          
+                    <apex:commandButton value="Cancel" />
+                </apex:pageBlockButtons> 
+            </apex:pageBlock>
+        </div>
+       </div>
+      <div id="loading"></div>
+
+</apex:form>
+</apex:page>

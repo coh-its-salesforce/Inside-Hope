@@ -1,0 +1,9 @@
+<design:component>
+    <design:attribute name="mURL" label="Source URL (HTTPS only)" default="https://wwww.cityofhope.org/"/>
+    <design:attribute name="mWidth" label="Width" default="100%"/>
+    <design:attribute name="mHeight" label="Height" default="500px"/>
+    <design:attribute name="mStyle" label="Style" default="border: none; overflow: scroll;"/>
+    <design:attribute name="mScrolling" label="Scrolling" datasource="auto, yes, now" default="auto"/>
+    <design:attribute name="mFrameBorder" label="Frame Border" default="0"/>
+    <design:attribute name="mSandbox" label="Frame Border" default="allow-same-origin allow-scripts allow-forms"/>
+</design:component>

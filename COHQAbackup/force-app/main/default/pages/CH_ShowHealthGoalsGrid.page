@@ -1,0 +1,477 @@
+<apex:page sidebar="false" standardController="Case" extensions="CH_ShowHealthGoalsGridController" id="healthGoalPage"> 
+    <style>     
+      .activeTab {background-color: #236FBD; color:white;
+    background-image:none}
+    .inactiveTab { background-color: lightgrey; color:black;
+    background-image:none}
+        .parentrowlog
+        {
+       background-color:#f2dede;     
+      
+        }
+        .parentrow
+        {
+        background-color:#B6DAFF;
+        }
+        .childAddRecord
+        {
+        background-color:#FFFF99;
+        }
+    </style>
+     <style>
+      
+        .progressBar{
+            background-color: #ffff99; 
+            height: 10px;
+            width: 70px;
+            border-radius:4px;
+            border-color: #000;
+            
+        }
+        .progress{
+            background-color: #5CB85C;
+            border-radius: 4px;
+            border-top-left-radius: 4px;
+            height: 100%;
+           
+            
+            line-height: 18px;
+        } 
+         
+         .SelectClass select{
+            margin-right : 5px;
+            margin-top: 4px;
+         }
+         .SelectClass input{
+            padding-top: 2px;
+         }
+    </style>
+ <script>
+ function hideButton(){
+     document.getElementById('NewButtonDiv').style.display="none";
+ }
+ function ShowNewButton(){
+     document.getElementById('NewButtonDiv').style.display="block";
+
+ }            
+             
+ </script>   
+    <apex:form id="showGrids">
+    <apex:inputHidden id="refreshHidden" value="{!refreshPage}" />
+   <apex:tabPanel switchType="client" selectedTab="name2" id="AccountTabPanel"
+        tabClass="activeTab" inactiveTabClass="inactiveTab">        
+         <apex:tab label="Case Team Tasks" name="name2" id="tabTwo">
+        <apex:actionFunction name="getUserData"  action="{!getUserData}" reRender="showGrids">
+            <apex:param name="theContactId" assignTo="{!contactId}" value="" />
+        </apex:actionFunction> 
+        
+        <apex:actionFunction name="rerenderButton" reRender="delBtn">
+            <apex:param name=" disableDelBtn" assignTo="{!disableDelBtn}" value=""/> 
+        </apex:actionFunction>
+        
+        <apex:actionStatus id="myStatus" onstart="loading(true)" onstop="loading(false)"/>
+        
+        <div id="contentLoading" style="display:none;">
+            <div style="text-align: center;">
+                <apex:image url="{!URLFOR($Resource.GridImages, 'GridImages/LoadingImage.gif')}" />
+            </div>
+        </div>
+        
+        <div id="contentLoaded">
+            
+            <apex:pageBlock title="{!headerName}" rendered="{!showGrid}" mode="mainDetail" id="thePageBlock"> 
+                <apex:pageMessages id="shwMsg"/>
+                 
+                <!----------------------------------    Adding New Parent Record Section      ------------------------------------------>
+                <apex:outputPanel id="addNewParentRecords">
+                    <apex:repeat value="{!newParentRecords}" var="gridRow">
+                        <br/>
+                        <apex:pageBlockTable value="{!gridRow.parentObj}" var="parentRec"  rowClasses="childAddRecord" rendered="true">
+                            <apex:column width="40px;" style="text-align: center;">
+                                <apex:commandButton value=" - " action="{!RemoveNewParentRow}" reRender="addNewParentRecords,NewButton,refreshHidden" onComplete="RefreshTab();return false" immediate="true"/>
+                            </apex:column>
+                            
+                            <apex:column headerValue="Checklist Name">
+                                <apex:inputField value="{!gridRow.parentObj.Name}" />
+                            
+                            </apex:column>
+                            
+                            <apex:column headerValue="Due Date">
+                               <apex:inputField value="{!gridRow.parentObj.Due_Date__c}"/>
+                                
+                            </apex:column>
+                            <!-- New Chanegs Added Here on 13.2.2015 -->
+                            <apex:column headerValue="Assign To">
+                                <apex:selectList multiselect="false" size="1" value="{!gridRow.parentObj.Assign_To__c}"  required="true">
+                                    <apex:selectOptions value="{!AssignTo}" />
+                                </apex:selectList>                            
+                            </apex:column>
+                            <!-- Changes End -->
+                            <apex:column headerValue="% Complete">
+                                <apex:inputField value="{!gridRow.parentObj.Complete__c}"/>
+                            </apex:column>
+                            <apex:column headerValue="Case">
+                                <apex:inputField value="{!gridRow.parentObj.Case__c}"/>
+                            </apex:column>
+
+                        </apex:pageBlockTable> 
+                        
+                        <br/>    
+                        <apex:panelGrid columns="2">
+                            <apex:outputLabel ><b>Tasks (0) </b></apex:outputLabel>
+                            <apex:outputpanel id="newRecordImage">
+                                <apex:image url="{!URLFOR($Resource.GridImages, 'GridImages/NewRecord.png')}" title="Add New Record" height="18px"/>
+                                <apex:actionSupport event="onclick" immediate="true" action="{!gridRow.AddNewRecord}" rerender="addNewChildRecs,newRecordImage"/> 
+                            </apex:outputpanel>
+                            
+                        </apex:panelGrid>
+                        
+                        
+                        <apex:outputPanel id="addNewChildRecs">
+                            <apex:pageBlockTable value="{!gridRow.NewChildObjs}" var="item" rendered="{!gridRow.NewListSize}" rowClasses="childAddRecord">                              
+                                <apex:column width="40px;" style="text-align: center;">
+                                    <apex:commandButton value=" - " action="{!gridRow.RemoveNewRow}" reRender="addNewChildRecs,refreshHidden"  onComplete="RefreshTab();return false" immediate="true" />
+                                </apex:column>
+                                <apex:column headerValue="Task"  >
+                                <apex:outputPanel styleClass="requiredInput" layout="block">
+                                    <apex:inputField value="{!item['Subject']}" style="width:140px;"/>
+                                </apex:outputPanel>
+                                
+                                </apex:column>
+                                <apex:column headerValue="Status">
+                                <apex:selectList multiselect="false" size="1" value="{!item['Status']}"  required="true">
+                                    <apex:selectOptions value="{!con}" />
+                                </apex:selectList>
+                                </apex:column>
+                                <apex:column headerValue="Due Date">
+                                    <apex:inputField value="{!item['ActivityDate']}" />
+                                </apex:column>
+                                
+                            </apex:pageBlockTable>
+                        </apex:outputPanel>
+                        <br/>
+                    </apex:repeat> 
+                    <br/>
+                </apex:outputPanel>
+                
+                <!-----------------------------------------Show Existing Records------------------------------------------------>    
+                <!-- ---------------------------------------New block added to show loggedin user info --------------------------------------------->
+                 <apex:repeat value="{!loggedinUserGoalRecords}" var="loggedinUsergridRow">
+                    <br/>
+                    <apex:pageBlockTable value="{!loggedinUsergridRow.parentObj}" var="parentRec"  rowClasses="parentrowlog" columnsWidth="47%,10%,10%,10%,10%,13%">
+                        <!-- <apex:column width="40px;" style="text-align: center;">
+                            <apex:inputCheckbox value="{!loggedinUsergridRow.isSelected}" onclick="enableDeleteButton(this,'{!$Component.delBtn}')"/>
+                        </apex:column>-->
+                         <apex:column headerValue="Checklist Name" >
+                            <apex:outputField style="Backgroundcolor:red;" value="{!loggedinUsergridRow.parentObj.Name}" rendered="{!IF((loggedinUsergridRow.parentObj.Abbreviated_name__c == '' || loggedinUsergridRow.parentObj.Abbreviated_name__c==null),true,false)}"/>
+                            <apex:outputField style="Backgroundcolor:red;" value="{!loggedinUsergridRow.parentObj.Abbreviated_name__c}" rendered="{!IF((loggedinUsergridRow.parentObj.Abbreviated_name__c != '' || loggedinUsergridRow.parentObj.Abbreviated_name__c!=null),true,false)}"/>
+                        </apex:column> 
+                        <apex:column headerValue="Assign To">
+                            <apex:outputField value="{!loggedinUsergridRow.parentObj.Assigned_to__c}"/>
+                        </apex:column>
+                        <apex:column headerValue="Due Date">
+                            <apex:outputField value="{!loggedinUsergridRow.parentObj.Due_Date__c}"/>
+                        </apex:column>
+                        <apex:column headerValue="% Complete">
+                            <!-- apex:inputField value="{!loggedinUsergridRow.parentObj.Complete__c}"/-->
+                            <b>{!loggedinUsergridRow.parentObj.Complete__c}%</b> 
+                            <div class="progressBar">
+                                <div class="progress" style="width: {!loggedinUsergridRow.parentObj.Complete__c}%;">
+                                </div>
+                            </div>
+                        </apex:column>
+                        <apex:column headerValue="Completed On">
+                            <apex:outputField value="{!loggedinUsergridRow.parentObj.Completed_Date__c}"/>
+                        </apex:column>
+                        <apex:column headerValue="Action">
+                                
+                                <apex:commandButton id="clickToComplete" value="Complete" action="{!ChecklistComplete}" reRender="showGrids,shwMsg,refreshHidden" status="myStatus" disabled="{!IF((loggedinUsergridRow.parentObj.Status__c == 'Completed'),true,false)}" onComplete="RefreshTab();return false">
+                                    <apex:param name="eid" value="{!loggedinUsergridRow.parentObj.Id}" assignTo="{!rId}"/>
+                                </apex:commandButton>
+                            </apex:column>
+                    </apex:pageBlockTable> 
+                    
+                    <br/>
+                    <apex:panelGrid columns="3" id="theGrid">
+                        
+                        <apex:outputpanel id="plusimage">
+                            <apex:panelGrid columns="2">
+                                <apex:image url="{!URLFOR($Resource.GridImages, 'GridImages/Plus_Image.gif')}" onclick="switchMenu('{!$Component.inlinetablesec}','{!$Component.minusimage}','{!$Component.plusimage}'); " title="Expand"/>
+                                <apex:outputLabel ><b>Tasks ({!loggedinUsergridRow.childRecords.size}) </b></apex:outputLabel>
+                            </apex:panelGrid>     
+                        </apex:outputpanel>  
+                        
+                        <apex:outputpanel id="minusimage" style="display:none;">
+                            <apex:panelGrid columns="2">
+                                <apex:image url="{!URLFOR($Resource.GridImages, 'GridImages/Minus_image.gif')}" onclick="switchMenu('{!$Component.inlinetablesec}','{!$Component.plusimage}','{!$Component.minusimage}')" title="Collapse"/>
+                                <apex:outputLabel ><b>Tasks ({!loggedinUsergridRow.childRecords.size}) </b></apex:outputLabel>
+                            </apex:panelGrid>
+                        </apex:outputpanel>
+                        
+                        <apex:outputpanel id="newRecordImage" rendered="{!IF((loggedinUsergridRow.parentObj.Status__c == 'Completed') || ($Profile.Name != 'System Administrator' && $Profile.Name != caseOwnerProfile),false,true)}">
+                            <apex:image url="{!URLFOR($Resource.GridImages, 'GridImages/NewRecord.png')}" title="Add New Record" height="18px" />
+                            <apex:actionSupport event="onclick" immediate="true" action="{!loggedinUsergridRow.AddNewRecord}" rerender="addNewRec,newRecordImage"/> 
+                        </apex:outputpanel>
+                        
+                    </apex:panelGrid>
+                    
+                    <apex:outputPanel id="inlinetablesec" style="display:none;">
+                        <apex:pageBlockTable value="{!loggedinUsergridRow.childRecords}" var="item" rendered="{!loggedinUsergridRow.childRecords.size>0}">
+                            <!-- <apex:column width="40px;" >
+                                 <div style="text-align: center;">
+                                    <apex:inputCheckbox value="{!item.isSelected}" onclick="enableDeleteButton(this,'{!$Component.delBtn}')"/>
+                                </div>
+                                </apex:column>-->
+                            <apex:column headerValue="Task Description" Style="padding-top:3px">
+                                <!--<apex:inputField value="{!item.childRecord['Subject']}" />-->
+                                <apex:outputField value="{!item.childRecord['Subject']}" />
+                            </apex:column>
+                            <apex:column headerValue="Status">
+                                <apex:inputField value="{!item.childRecord['Status']}" rendered="{!IF((((item.childRecord['OwnerId']) == loggedinUserid)|| ($Profile.Name == 'System Administrator') || ($Profile.Name == caseOwnerProfile)) && (loggedinUsergridRow.parentObj.Status__c != 'Completed'),true,false)}" />
+                                <!--<apex:outputField value="{!item.childRecord['Status']}" rendered="{!IF(((item.childRecord['OwnerId']) != loggedinUserid),true,false)}"/>-->
+                                <apex:outputField value="{!item.childRecord['Status']}" rendered="{!IF((item.childRecord['OwnerId'] != loggedinUserid) && ($Profile.Name != 'System Administrator' && $Profile.Name != caseOwnerProfile) || (loggedinUsergridRow.parentObj.Status__c == 'Completed'),true,false)}"/>                     
+                            </apex:column>
+                          <apex:column headerValue="Assigned To" colspan="2">
+                                
+                                <apex:outputField value="{!item.childRecord['OwnerId']}" styleClass="SelectClass"/>
+                            </apex:column>
+                            <apex:column headerValue="Due Date">
+                                <!--<apex:inputField value="{!item.childRecord['ActivityDate']}" />-->
+                                <apex:outputField value="{!item.childRecord['ActivityDate']}" />
+                            </apex:column>
+                            
+                        </apex:pageBlockTable> 
+                    </apex:outputPanel>
+                    
+                    <apex:outputPanel id="addNewRec">
+                        <apex:pageBlockTable value="{!loggedinUsergridRow.NewChildObjs}" var="item" rendered="{!loggedinUsergridRow.NewListSize}" rowClasses="childAddRecord">                               
+                            <apex:column width="40px;" style="text-align: center;">
+                                <apex:commandButton value=" - " action="{!loggedinUsergridRow.RemoveNewRow}" reRender="addNewRec,refreshHidden" immediate="true"/>
+                            </apex:column>
+                            
+                            <apex:column headerValue="Task Description" Style="padding-top:25px">
+                                <apex:inputField value="{!item['Subject']}" style="width:100px"/>
+                            </apex:column>
+                            <apex:column headerValue="Status">
+                                <apex:selectList multiselect="false" size="1" value="{!item['Status']}"  required="true">
+                                    <apex:selectOptions value="{!con}" />
+                                </apex:selectList>
+                                </apex:column>
+                            <apex:column headerValue="Due Date">
+                                <apex:inputField value="{!item['ActivityDate']}" />
+                            </apex:column>
+                            
+                        </apex:pageBlockTable>
+                    </apex:outputPanel>
+                    <br/>
+                </apex:repeat> 
+                <!-- ---------------------------------------block End----------------------------------------------->
+                <apex:repeat value="{!gridTable}" var="gridRow">
+                    <br/>
+                    <apex:pageBlockTable value="{!gridRow.parentObj}" var="parentRec"  rowClasses="parentrow" columnsWidth="47%,10%,10%,10%,10%,13%">
+                        <!-- <apex:column width="40px;" style="text-align: center;">
+                            <apex:inputCheckbox value="{!gridRow.isSelected}" onclick="enableDeleteButton(this,'{!$Component.delBtn}')"/>
+                        </apex:column>-->
+                         <apex:column headerValue="Checklist Name">
+                            <apex:outputField value="{!gridRow.parentObj.Name}" rendered="{!IF((gridRow.parentObj.Abbreviated_name__c == '' || gridRow.parentObj.Abbreviated_name__c==null),true,false)}"/>
+                            <apex:outputField value="{!gridRow.parentObj.Abbreviated_name__c}" rendered="{!IF((gridRow.parentObj.Abbreviated_name__c != '' || gridRow.parentObj.Abbreviated_name__c!=null),true,false)}"/>
+                        </apex:column> 
+                        <apex:column headerValue="Assign To">
+                            <apex:outputField value="{!gridRow.parentObj.Assigned_to__c}"/>
+                        </apex:column>
+                        <apex:column headerValue="Due Date">
+                            <apex:outputField value="{!gridRow.parentObj.Due_Date__c}"/>
+                        </apex:column>
+                        <apex:column headerValue="% Complete">
+                            <!-- apex:inputField value="{!gridRow.parentObj.Complete__c}"/-->
+                            <b>{!gridRow.parentObj.Complete__c}%</b> 
+                            <div class="progressBar">
+                                <div class="progress" style="width: {!gridRow.parentObj.Complete__c}%;">
+                                </div>
+                            </div>
+                        </apex:column>
+                        <apex:column headerValue="Completed On">
+                            <apex:outputField value="{!gridRow.parentObj.Completed_Date__c}"/>
+                        </apex:column>
+                        <apex:column headerValue="Action">
+                                
+                                <apex:commandButton id="clickToComplete2" value="Complete" action="{!ChecklistComplete}" reRender="showGrids,shwMsg,refreshHidden" status="myStatus" disabled="{!IF((gridRow.parentObj.Status__c == 'Completed'),true,false)}" onComplete="RefreshTab();return false">
+                                    <apex:param name="eid" value="{!gridRow.parentObj.Id}" assignTo="{!rId}"/>
+                                </apex:commandButton>
+                            </apex:column>
+                    </apex:pageBlockTable> 
+                    
+                    <br/>
+                    <apex:panelGrid columns="3" id="theGrid">
+                        
+                        <apex:outputpanel id="plusimage">
+                            <apex:panelGrid columns="2">
+                                <apex:image url="{!URLFOR($Resource.GridImages, 'GridImages/Plus_Image.gif')}" onclick="switchMenu('{!$Component.inlinetablesec}','{!$Component.minusimage}','{!$Component.plusimage}'); " title="Expand"/>
+                                <apex:outputLabel ><b>Tasks ({!gridRow.childRecords.size}) </b></apex:outputLabel>
+                            </apex:panelGrid>     
+                        </apex:outputpanel>  
+                        
+                        <apex:outputpanel id="minusimage" style="display:none;">
+                            <apex:panelGrid columns="2">
+                                <apex:image url="{!URLFOR($Resource.GridImages, 'GridImages/Minus_image.gif')}" onclick="switchMenu('{!$Component.inlinetablesec}','{!$Component.plusimage}','{!$Component.minusimage}')" title="Collapse"/>
+                                <apex:outputLabel ><b>Tasks ({!gridRow.childRecords.size}) </b></apex:outputLabel>
+                            </apex:panelGrid>
+                        </apex:outputpanel>
+                        
+                        <apex:outputpanel id="newRecordImage" rendered="{!IF((gridRow.parentObj.Status__c == 'Completed') || ($Profile.Name != 'System Administrator' && $Profile.Name != caseOwnerProfile),false,true)}">
+                            <apex:image url="{!URLFOR($Resource.GridImages, 'GridImages/NewRecord.png')}" title="Add New Record" height="18px" />
+                            <apex:actionSupport event="onclick" immediate="true" action="{!gridRow.AddNewRecord}" rerender="addNewRec,newRecordImage"/> 
+                        </apex:outputpanel>
+                        
+                    </apex:panelGrid>
+                    
+                    <apex:outputPanel id="inlinetablesec" style="display:none;">
+                        <apex:pageBlockTable value="{!gridRow.childRecords}" var="item" rendered="{!gridRow.childRecords.size>0}">
+                            <!-- <apex:column width="40px;" >
+                                 <div style="text-align: center;">
+                                    <apex:inputCheckbox value="{!item.isSelected}" onclick="enableDeleteButton(this,'{!$Component.delBtn}')"/>
+                                </div>
+                                </apex:column>-->
+                            <apex:column headerValue="Task Description" Style="padding-top:3px">
+                                <!--<apex:inputField value="{!item.childRecord['Subject']}" />-->
+                                <apex:outputField value="{!item.childRecord['Subject']}" />
+                            </apex:column>
+                            <apex:column headerValue="Status">
+                                <apex:inputField value="{!item.childRecord['Status']}" rendered="{!IF((((item.childRecord['OwnerId']) == loggedinUserid)|| ($Profile.Name == 'System Administrator') || ($Profile.Name == caseOwnerProfile)) && (gridRow.parentObj.Status__c != 'Completed'),true,false)}" />
+                                <!--<apex:outputField value="{!item.childRecord['Status']}" rendered="{!IF(((item.childRecord['OwnerId']) != loggedinUserid),true,false)}"/>-->
+                                <apex:outputField value="{!item.childRecord['Status']}" rendered="{!IF((item.childRecord['OwnerId'] != loggedinUserid) && ($Profile.Name != 'System Administrator' && $Profile.Name != caseOwnerProfile) || (gridRow.parentObj.Status__c == 'Completed'),true,false)}"/>                     
+                            </apex:column>
+                          <apex:column headerValue="Assigned To" colspan="2">
+                                
+                                <apex:outputField value="{!item.childRecord['OwnerId']}" styleClass="SelectClass"/>
+                            </apex:column>
+                            <apex:column headerValue="Due Date">
+                                <!--<apex:inputField value="{!item.childRecord['ActivityDate']}" />-->
+                                <apex:outputField value="{!item.childRecord['ActivityDate']}" />
+                            </apex:column>
+                            
+                        </apex:pageBlockTable>
+                    </apex:outputPanel>
+                    
+                    <apex:outputPanel id="addNewRec">
+                        <apex:pageBlockTable value="{!gridRow.NewChildObjs}" var="item" rendered="{!gridRow.NewListSize}" rowClasses="childAddRecord">                              
+                            <apex:column width="40px;" style="text-align: center;">
+                                <apex:commandButton value=" - " action="{!gridRow.RemoveNewRow}" reRender="addNewRec,refreshHidden" immediate="true"/>
+                            </apex:column>
+                            
+                            <apex:column headerValue="Task Description" Style="padding-top:25px">
+                                <apex:inputField value="{!item['Subject']}" style="width:100px"/>
+                            </apex:column>
+                            <apex:column headerValue="Status">
+                                <apex:selectList multiselect="false" size="1" value="{!item['Status']}"  required="true">
+                                    <apex:selectOptions value="{!con}" />
+                                </apex:selectList>
+                                </apex:column>
+                            <apex:column headerValue="Due Date">
+                                <apex:inputField value="{!item['ActivityDate']}" />
+                            </apex:column>
+                            
+                        </apex:pageBlockTable>
+                    </apex:outputPanel>
+                    <br/>
+                </apex:repeat> 
+                <br/>
+                
+                <apex:pageBlockButtons id="saveDelBtns" location="top">
+                    <table style="width:50%">
+                        <tr>
+                            <td>
+                                <div id = "NewButtonDiv" style="width:50%">
+                                    <apex:commandButton value="New Checklist" id="NewButton" action="{!AddNewParentRecord}" immediate="true" reRender="showGrids,shwMsg" style="width:85px;" rendered="{!IF(($Profile.Name == 'System Administrator' || $Profile.Name == caseOwnerProfile) && hideNewCheckListButton != true,true,false)}" onComplete="hideButton()" >
+                                    </apex:commandButton>
+                                </div>
+                            </td>
+                                <td>
+                                    
+                                <div id="saveButton" style="width:50%" >
+                                    <apex:commandButton value="Save" action="{!saveRecords}" reRender="showGrids,shwMsg,refreshHidden,newButton" status="myStatus" style="width:60px;" rendered="{!IF(hideSaveButton == true,true,false)}" onComplete="RefreshTab();return false"/>
+                                </div>
+                           </td>
+                       </tr>
+                   </table> 
+               </apex:pageBlockButtons>
+                           
+            </apex:pageBlock>
+        </div>  
+        </apex:tab>
+           </apex:tabPanel>    
+    </apex:form>
+    
+    <apex:includeScript value="/support/console/32.0/integration.js"/>
+    <script type="text/javascript">
+    window.onload = testGetFocusedPrimaryTabObjectId();
+    
+    function testGetFocusedPrimaryTabObjectId() {
+        // console.log('Inside the method ....'); 
+        sforce.console.getEnclosingPrimaryTabObjectId(showObjectId);
+        
+    }
+    
+    function showObjectId(result) {
+        //console.log('ObjectId--'+result.id);
+        //getUserData(result.id);
+        
+    }
+    
+    function RefreshTab()
+    {
+        var refreshPage = document.getElementById('{!$Component.showGrids.refreshHidden}');
+        if(refreshPage.value == 'true'){
+                sforce.console.getEnclosingPrimaryTabId(RefreshPrimaryTab);     
+            }       
+        
+    }
+    function RefreshPrimaryTab(result){
+        sforce.console.refreshPrimaryTabById(result.id, true);
+    }         
+                        
+    </script>  
+    <script>
+    function switchMenu(obj,obj1,obj2) 
+    {
+        var el = document.getElementById(obj);                                       
+        if ( el.style.display != 'none' ) {
+            el.style.display = 'none';
+        }
+        else {
+            el.style.display = '';
+        }
+        var e2 = document.getElementById(obj1);                                       
+        if ( e2.style.display != 'none' ) {
+            e2.style.display = 'none';
+        }
+        else {
+            e2.style.display = '';
+        }
+        var e3 = document.getElementById(obj2);                                       
+        if ( e2.style.display != 'none' ) {
+            e3.style.display = 'none';
+        }
+        else {
+            e3.style.display = '';
+        }
+    }
+    </script>
+    <script type="text/javascript">
+    function loading(val) {
+        if (val) {
+            document.getElementById('contentLoading').style.display = 'block';
+            document.getElementById('contentLoaded').style.display = 'none';
+        }
+        else {
+            document.getElementById('contentLoading').style.display = 'none';
+            document.getElementById('contentLoaded').style.display = 'block';
+        }
+    }
+    function enableDeleteButton(inptChkbx,btnId)
+    {
+        
+    }
+    </script>
+
+</apex:page>

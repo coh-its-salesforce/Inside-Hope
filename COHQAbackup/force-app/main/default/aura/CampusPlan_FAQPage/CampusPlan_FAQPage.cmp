@@ -1,0 +1,127 @@
+<aura:component controller="COH_CampusPlanController">
+   
+   <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+   <aura:attribute name="openFAQ" type="boolean" default="true"/>
+   <aura:attribute name="CollapseSection" type="String[]"/>
+   <aura:attribute name="FAQRecs" type="COH_CampusPlanController.ParkingFAQs"/>
+   <!-- <aura:attribute name="DuarteCampusFAQList" type="Campus_Plan_FAQ__c[]"/> -->
+   <aura:attribute name="PTFAQList" type="Campus_Plan_FAQ__c[]"/>
+   <!-- <aura:attribute name="RGFAQList" type="Campus_Plan_FAQ__c[]"/>
+   <aura:attribute name="OCFAQList" type="Campus_Plan_FAQ__c[]"/> -->
+   <aura:attribute name="OtherFAQList" type="Campus_Plan_FAQ__c[]"/>
+   <!-- <aura:attribute name="DuarteCampusHeader" type="String"/> -->
+    <aura:attribute name="sectionData" type="Object" description="Used to store section data"/>
+   <!-- <aura:attribute name="OthersectionData" type="Object" description="Used to store section data"/> -->
+   <aura:attribute name="PTHeader" type="String"/>
+   <!-- <aura:attribute name="RGHeader" type="String"/>
+   <aura:attribute name="OCHeader" type="String"/> -->
+   <aura:attribute name="OtherHeader" type="String"/>
+   <aura:if isTrue="{!v.openFAQ}">
+       <div class="banner-container">
+    	<div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12" >
+                    <div class="banner-image">
+      				<img src = "{!$Resource.CampusPlanParkingFAQ}"/> 
+      				</div>
+      		</div>
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12">
+               <div class="banner-content">
+                   <h2>Campus Plan Parking FAQs</h2>
+                   <p class="banner-p">Below are answers to frequently asked questions about future parking on Duarte campus. We will continue to update this section, so check back frequently for new information.</p>
+                       <p class="banner-p">If you have a question you would like answered, please submit it here: <a href="mailto:transportation@coh.org">transportation@coh.org</a></p>
+                       <p class="banner-p">Or, you can call (877) 264-7275 and a Parking and Transportion representative will help you.</p>
+               </div>
+      		</div>
+      	</div>            
+       </div>
+        <div class="profile-content">
+            <!-- <aura:if isTrue="{!not(empty(v.DuarteCampusFAQList))}">
+        	<h1 class="faq-h1">{!v.DuarteCampusHeader}</h1>
+            
+            	<lightning:accordion>
+                    <aura:iteration items="{!v.DuarteCampusFAQList}" var="f"  indexVar="index">
+                      <lightning:accordionSection name="{!f.Question__c}" label="{!f.Question__c}">
+                       <aura:unescapedHtml value="{!f.Answer__c}" />
+                      </lightning:accordionSection>                             
+                    </aura:iteration>
+               </lightning:accordion>
+            </aura:if> -->
+            <aura:if isTrue="{!not(empty(v.sectionData.groupList))}">
+            <h2>{!v.sectionData.sectionName}</h2>
+             <lightning:accordion>
+                <aura:iteration items="{!v.sectionData.groupList}" var="gd"  indexVar="index">
+                  <lightning:accordionSection name="{!gd.groupName}" label="{!gd.groupName}">
+                      <lightning:accordion>
+                          <aura:iteration items="{!gd.gQuestions}" var="gq"  indexVar="index">
+                              <lightning:accordionSection name="{!gq.Question__c}" label="{!gq.Question__c}">
+                               <aura:unescapedHtml value="{!gq.Answer__c}" />
+                              </lightning:accordionSection>                         
+                            </aura:iteration>
+                      </lightning:accordion>
+                  </lightning:accordionSection>                         
+                </aura:iteration>
+           	</lightning:accordion>
+                
+                
+                <!--
+            <lightning:accordion>
+                <aura:iteration items="{!v.PTFAQList}" var="f"  indexVar="index">
+                  <lightning:accordionSection name="{!f.Question__c}" label="{!f.Question__c}">
+                   <aura:unescapedHtml value="{!f.Answer__c}" />
+                  </lightning:accordionSection>                         
+                </aura:iteration>
+           	</lightning:accordion>
+			-->
+            </aura:if>
+            <!-- <aura:if isTrue="{!not(empty(v.RGFAQList))}">
+            <h1 class="faq-h1">{!v.RGHeader}</h1>
+            <lightning:accordion>
+                <aura:iteration items="{!v.RGFAQList}" var="f"  indexVar="index">
+                  <lightning:accordionSection name="{!f.Question__c}" label="{!f.Question__c}">
+                   <aura:unescapedHtml value="{!f.Answer__c}" />
+                  </lightning:accordionSection>                         
+                </aura:iteration>
+           	</lightning:accordion>
+            </aura:if>
+             <aura:if isTrue="{!not(empty(v.OCFAQList))}">
+            <h1 class="faq-h1">{!v.OCHeader}</h1>
+            <lightning:accordion>
+                <aura:iteration items="{!v.OCFAQList}" var="f"  indexVar="index">
+                  <lightning:accordionSection name="{!f.Question__c}" label="{!f.Question__c}">
+                   <aura:unescapedHtml value="{!f.Answer__c}" />
+                  </lightning:accordionSection>                         
+                </aura:iteration>
+           	</lightning:accordion>
+            </aura:if> -->
+            <!-- <aura:if isTrue="{!not(empty(v.OtherFAQList))}">
+            <h2>{!v.OtherHeader}</h2>
+            <lightning:accordion>
+                <aura:iteration items="{!v.OtherFAQList}" var="f"  indexVar="index">
+                  <lightning:accordionSection name="{!f.Question__c}" label="{!f.Question__c}">
+                   <aura:unescapedHtml value="{!f.Answer__c}" />
+                  </lightning:accordionSection>                         
+                </aura:iteration>
+           	</lightning:accordion>
+            </aura:if> --> 
+           <!-- <aura:if isTrue="{!not(empty(v.OthersectionData.groupList))}">
+            <h2>{!v.OthersectionData.sectionName}</h2>
+             <lightning:accordion>
+                <aura:iteration items="{!v.OthersectionData.groupList}" var="gd"  indexVar="index">
+                  <lightning:accordionSection name="{!gd.groupName}" label="{!gd.groupName}">
+                      <lightning:accordion>
+                          <aura:iteration items="{!gd.gQuestions}" var="gq"  indexVar="index">
+                              <lightning:accordionSection name="{!gq.Question__c}" label="{!gq.Question__c}">
+                               <aura:unescapedHtml value="{!gq.Answer__c}" />
+                              </lightning:accordionSection>                         
+                            </aura:iteration>
+                      </lightning:accordion>
+                  </lightning:accordionSection>                         
+                </aura:iteration>
+           	</lightning:accordion>
+            </aura:if> -->
+		</div>
+       
+    </aura:if>
+    
+    
+</aura:component>

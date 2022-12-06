@@ -1,0 +1,38 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" controller="COHHopeAssistController">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler event="force:refreshView" action="{!c.init}" />    
+    <aura:attribute name="mCase" type="Case" default="{}"/>
+    <aura:attribute name="mCaseLoaded" type="Boolean" default="false"/>
+    
+    <aura:if isTrue="{!v.mCaseLoaded}">    
+        <article class="slds-card">
+            <div class="slds-card__header slds-grid slds-border_bottom">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-standard-account">
+                            <!-- testing raymond tam-->
+                            <!--img src="{!$Resource.Kathys_Recommendations}"/-->
+                            <img src="{!$Resource.COHLogo}"/>
+                        </span>
+                    </div>                    
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">
+                            <a href="javascript:void(0);" class="slds-card__header-link slds-truncate" title="Card Header">
+                                <span class="parentCard slds-text-heading_small"><b>New Patient Checklist</b></span>
+                            </a>
+                        </h2>
+                    </div>
+                </header>
+            </div>
+            <div class="slds-card__body slds-card__body_inner">
+
+                
+                    <c:COH_NewPatientChecklistSteps mCase="{!v.mCase}"/>
+                              
+            </div>
+        </article>
+        <aura:set attribute="else">
+            <lightning:spinner alternativeText="Loading"/>
+        </aura:set>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,4 @@
+<design:component>
+    <design:attribute name="Announcement" label="Announcement"/>
+    <design:attribute name="Duration" label="Announcement" default="100" />
+</design:component>

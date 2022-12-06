@@ -1,0 +1,11 @@
+<aura:component controller="COHEpicLightningController" 
+                implements="lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickActionWithOutHeader"
+                access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h2>Are you sure you want to create an Epic record?</h2><br/>
+    
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<lightning:button label="Cancel" onclick="{!c.cancelRecord}"  iconPosition="center"/>
+    <lightning:button label="Create EPIC Record" 
+                      aura:id="createEpicButton"
+                      onclick="{!c.createEpicRecord}"  variant="brand" iconPosition="center"/>
+</aura:component>

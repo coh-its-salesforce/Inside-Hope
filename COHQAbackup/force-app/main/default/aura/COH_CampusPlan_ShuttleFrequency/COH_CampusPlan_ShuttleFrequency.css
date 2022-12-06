@@ -1,0 +1,49 @@
+.THIS .tmcontainer{
+    padding: 0 8.78vw 3.66vw 8.78vw;   
+    margin: 0;
+    clear: both;
+}
+.THIS .shuttle-table-area{
+    flex: 1;
+    padding-right: 4vw;
+}
+.THIS .shuttle-schedule-table{
+    clear: both;
+    border-collapse: collapse;
+    width: 98%;
+    margin: 0 auto;
+    font-size: 14px;
+}
+.THIS .shuttle-schedule-table tr th{
+    border-bottom: 2px solid #ddd;   
+    padding: 8px; 
+    text-align: left;
+}
+.THIS .shuttle-schedule-table tr td{
+    border-bottom: 1px solid #ddd;    
+    padding: 8px;
+    text-align: left;
+}
+
+.THIS .map-image img{
+    object-fit: cover;
+    object-position: left;
+}
+
+@media screen and (max-width: 992px){
+    
+    .THIS .tmcontainer{
+        padding: 0 25px 50px 25px; 
+    }
+}
+/*
+ .THIS .backbutton{
+    font-size:15px;
+    background-color: royalblue;
+    color: white;
+    padding-left: 30px;
+    margin-top: 5px;
+    cursor: pointer;
+    width: 130px;
+}
+*/

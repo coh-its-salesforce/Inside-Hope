@@ -1,0 +1,144 @@
+<apex:page standardController="Values_in_Action__c" extensions="VIA_NominationController1" showHeader="false" sidebar="false" >
+<apex:includeScript value="{!$Resource.JQuery1}"/>
+    <style>
+        .LabelClass{
+                 font-weight: bold;
+        }
+        
+        .Mandatory{
+            color: red;
+        }
+        td{
+            border:none !important;
+        }
+        
+        .hideDropdown select{
+        visibility: hidden !important;
+        display: block !important;
+        }
+    }
+   
+        .pbSubheader{
+         font-size:22px;
+}
+h3{
+font-size:22px !important;
+}
+
+    </style>
+    <script>
+        $(document).ready(function(){
+            $("div[id$='TDPanel']").css({"background":"white","border":"none"});
+            $("select[name*='mlktp']").remove();
+        });
+        $(document).click(function(){
+            $("div[id$='TDPanel']").css({"background":"white","border":"none"});
+        });
+        function backgrndclr(){
+        $("div[id$='TDPanel']").css({"background":"white","border":"none"});
+        $("select[name*='mlktp']").remove();
+        }
+        function updateValues() 
+        { modifyTD(); 
+        }
+        
+        function gcExceededEmp(){
+            var tempBoolean = $("input[id*='isAmtExceeds']").val();
+            //alert(tempBoolean);
+            if(tempBoolean == 'true'){
+                var r = confirm("Please note that the individual you have selected will exceed the $75 limit and they will be taxed accordingly at the end of the year. Please notify the employee before finalizing the order. \n Please select OK to proceed or CANCEL to make changes to your order.");
+                //alert(r);
+                if (r == true) {
+                    txt = $("input[id*='saveRec']").val(true);
+                    proceedToSave();
+                } else {
+                    //txt = $("input[id*='saveRec']").val(false);
+                }
+            }
+            
+        }
+        function navigatetoURL(){
+           window.open('/00OW0000000IAkF');
+       }
+    </script>
+  <apex:form id="gfForm">
+  <apex:actionFunction action="{!modifyTD}" name="modifyTD" reRender="NominatorInfo"  oncomplete="backgrndclr()"/>
+  <apex:actionFunction action="{!Save}" name="proceedToSave" reRender="NominatorInfo"/>
+  <apex:pagemessage Rendered="{!pageMessage}" severity="Error"></apex:pagemessage>
+  <apex:pageBlock title="Non-Cash Award Request Form" id="TDPanel" rendered="{!IF(options1.size > 0,true,false)}">
+  <apex:inputhidden value="{!empAmtExceeds}" id="isAmtExceeds"/>
+  <apex:inputhidden value="{!empAmtExceed}" id="AmtExceedEmp"/>
+  <apex:inputhidden value="{!saveRec}" id="saveRec"/>
+
+  
+  <apex:outputText value="* Required" styleClass="Mandatory"></apex:outputText>
+  <div style='text-align: center;'>
+      <apex:image value="{!$Resource.GiftCard}"/>
+  </div>
+  <apex:pageblockButtons >
+  <apex:commandButton value="Submit" action="{!Save}" reRender="empErr,cardPanel,NominatorInfo,balErr,empAmtErr,isAmtExceeds,AmtExceedEmp" oncomplete="gcExceededEmp();"/>
+  <apex:commandButton value="Cancel" action="{!cancel}"/>
+  <input type="button" value="Amount Spent" class="btn" onclick="navigatetoURL();"/>
+
+
+  </apex:pageblockButtons><br/><br/>
+  <apex:pageblockSection columns="1" title="Employee Information" id="section1">
+  <h2>Remaining balance amount for allocation : $ {!balAmt}</h2><br/>
+  <apex:outputPanel id="balErr">
+  <apex:outputLabel value="" style="color:red;" Rendered="{!balAmtExceeds}" >Error : For additional funds, please email recognition@coh.org and your manager the reason for the increased amount. Please note that additional funds will be charged to your cost center.</apex:outputLabel> 
+  </apex:outputPanel>
+  <!--<apex:outputPanel id="empAmtErr">
+  <apex:outputLabel value="" style="color:red;" Rendered="{!empAmtExceeds}" >Error : Please note that the person you have selected will reach the $75 limit for the calendar year. Please contact Brandace Ukwuije at bukwuije@coh.org for assistance. : <br/>{!empAmtExceed}</apex:outputLabel> 
+  </apex:outputPanel>-->
+  <apex:outputLabel value="Direct Report" title="Employee" styleClass="LabelClass"> <span class='Mandatory'>: *</span></apex:outputLabel>
+  <apex:outputPanel id="empErr">
+  <apex:outputLabel value="" style="color:red;" Rendered="{!usernull}" >Error : Please provide First and Last Name</apex:outputLabel> 
+  </apex:outputPanel>
+    <apex:selectList value="{!GCSelectedUser}" multiselect="true" size="3" >
+    
+          <apex:selectOptions value="{!options1}"></apex:selectOptions>
+         
+          </apex:selectList>
+     <apex:outputPanel id="cardPanel">
+       <apex:outputLabel value=" Select the type of Gift Card" styleClass="LabelClass"><span class='Mandatory'>: *</span></apex:outputLabel><br/>
+      <apex:outputLabel value="" rendered="{!giftcardtype}" style="color:red;" id="gcType">Please select type of gift card<br/></apex:outputLabel>
+      <apex:inputField value="{!Values_in_Action__c.Gift_Card_Type__c}" label="">
+        <apex:actionSupport action="{!amoutValues}" reRender="cardPanel" event="onchange"/>
+        </apex:inputField><br/><br/>
+
+          <apex:outputLabel value="Select the Amount" styleClass="LabelClass"><span class='Mandatory'>: *</span></apex:outputLabel><br/>
+      <apex:outputLabel value="" rendered="{!giftcardamount}" style="color:red;" id="gcAmt">Please select the amount<br/></apex:outputLabel>
+      <apex:selectList value="{!Values_in_Action__c.Gift_Card_Amount__c}" id="amountField" multiselect="false" size="1">
+        <apex:selectOptions value="{!getGFValues}"></apex:selectOptions>
+        </apex:selectList><br/><br/>
+    
+         
+      <!-- <apex:outputLabel value="{!$ObjectType.Values_in_Action__c.fields.Title__c.Label}" styleClass="LabelClass"><span class='Mandatory'>: *</span></apex:outputLabel>   <apex:outputText value="{!Values_in_Action__c.Title__c}" Label="" id="nTitle"/>
+       <apex:outputLabel value="{!$ObjectType.Values_in_Action__c.fields.Department__c.Label}" styleClass="LabelClass"><span class='Mandatory'>: *</span> </apex:outputLabel> <apex:outputText value="{!Values_in_Action__c.Department__c}" label="" id="nDept"/>-->
+      
+        <apex:outputLabel value="Please provide an explanation as to why this individual is being awarded" styleClass="LabelClass" ><span class='Mandatory'>: *</span><br/> </apex:outputLabel> <apex:outputLabel value="" style="color:red;" Rendered="{!nomineeDesc}" id="desc">Error : Please provide the Description<br/> </apex:outputLabel> <apex:outputLabel value="" style="color:red;" Rendered="{!errormsg}">Error : Description should be less than 255 characters<br/></apex:outputLabel>  <apex:inputTextarea value="{!Values_in_Action__c.Describe_how_nominee_goes__c}" label="" style="margin: 0px; width: 519px; height: 97px;"/>
+      </apex:outputPanel>
+      </apex:pageblockSection>
+      <apex:pageblockSection columns="1" title="Requester Information" id="NominatorInfo">
+          <apex:outputLabel value="{!$ObjectType.Values_in_Action__c.fields.First_and_Last_Name__c.Label}" styleClass="LabelClass"> <span class='Mandatory'>: *</span></apex:outputLabel><apex:outputText value="{!Values_in_Action__c.First_and_Last_Name__c}" Label=""/> 
+          <apex:outputLabel value="{!$ObjectType.Values_in_Action__c.fields.Employee_ID__c.Label}" styleClass="LabelClass"><span class='Mandatory'>: *</span> </apex:outputLabel><apex:outputText value="{!Values_in_Action__c.Employee_ID__c}" Label=""/>
+          <apex:outputLabel value="{!$ObjectType.Values_in_Action__c.fields.COH_Email_Address__c.Label}" styleClass="LabelClass"><span class='Mandatory'>: *</span> </apex:outputLabel><apex:outputText value="{!Values_in_Action__c.COH_Email_Address__c}" Label=""/>
+          <apex:outputLabel value="Title" styleClass="LabelClass"><span class='Mandatory'>: *</span> </apex:outputLabel> <apex:outputText value="{!Values_in_Action__c.Nominator_Title__c}" Label=""/>
+          <apex:outputLabel value="Department" styleClass="LabelClass"> <span class='Mandatory'>: *</span></apex:outputLabel> <apex:outputText value="{!Values_in_Action__c.Nominator_Department__c}" Label=""/>
+          <p><strong>I acknowledge that non-cash awards should be tied to performance and not be connected to birthdays, weddings, holidays, farewells, and other occasions. If the cumulative or one-time award exceeds the allowable limits of $75 per person in a calendar year, it creates a taxable event for the employee.</strong></p>
+          <apex:outputLabel value="Please acknowledge the terms and conditions" style="color:red;" rendered="{!ackError }"></apex:outputLabel>
+          <apex:outputPanel id="chkBox">
+              <apex:inputCheckbox value="{!acknowledge}"/>  I acknowledge that I have read and agree to the above. <span class='Mandatory'> *</span>
+          </apex:outputPanel>
+      </apex:pageblockSection>   
+  
+<!--</apex:pageblockSection>-->
+  </apex:pageBlock>
+  <apex:pageBlock rendered="{!IF(options1.size > 0,false,true)}">
+  <br/><br/><br/><br/>
+     <center> <h2 style="color:red;font-size: 25px;">This page is not accessible</h2></center>
+  </apex:pageBlock>
+  </apex:form>
+
+            
+</apex:page>

@@ -1,0 +1,15 @@
+.acc-container {
+    background: white !important;
+    border: 1.5px solid black !important;
+}
+
+.header-container {
+    background: whitesmoke !important;
+    border-bottom: 1px solid black;
+}
+
+.header-topbottom {
+    background: whitesmoke !important;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+}

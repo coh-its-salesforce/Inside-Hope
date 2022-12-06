@@ -1,0 +1,10 @@
+<apex:page Controller="COH_SIP_Secondary_Department_Controller" showHeader="false" sidebar="false" standardStylesheets="false" docType="html-5.0" language="en-US" applyHTMLTag="false">
+    <head>        
+        <c:Head title="Secondary Department"></c:Head>      
+    </head>
+    <body>            
+    </body>
+    <script>
+    	window.location.href = '{!strUrl}';
+    </script>  
+</apex:page>

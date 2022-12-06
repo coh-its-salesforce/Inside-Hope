@@ -1,0 +1,16 @@
+<apex:page controller="HomePageEditController" sideBar="false">
+    <apex:pageBlock title="Home Page Edit">
+    	<apex:pageBlockSection columns="1">
+    		<apex:form >
+                <apex:actionFunction name="redirectToEditPage" action="{!redirectToEditPage}" reRender="panel" />
+               	<apex:selectRadio value="{!selectedcomponent}" onchange="redirectToEditPage();">
+                	<apex:selectOptions value="{!componentNames}"/>
+                </apex:selectRadio>                
+            </apex:form>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    <apex:outputPanel id="panel">
+        <apex:include pageName="NewsAnnouncementEditPage" rendered="{!selectedcomponent == 'NA'}" />
+        <apex:include pageName="CarouselEditPage" rendered="{!selectedcomponent == 'CA'}" />
+    </apex:outputPanel>
+</apex:page>

@@ -1,0 +1,152 @@
+<apex:page contentType="text/html"  showHeader="false" sidebar="false" standardStylesheets="false" controller="COHLoginHeaderUtility" action="{!redirect}" >
+<head><title><apex:outputText value="BMC Remedyforce"/></title></head>
+    <link rel="stylesheet" type="text/css" href="{!$Resource.ExtJS}/resources/css/ext-all.css" id="ext-all-css"/>
+    <link rel="Stylesheet" type="text/css" href="{!$Resource.Styles}/BMCStyleSheet.css" />
+    
+
+    <body style="background-color: #ffffff; margin:0;">
+<table style="width:100%;height:100%;align:center;margin:0;" cellSpacing="0" cellPadding="0" border="0" ID="Table1">
+    <script type='text/javascript'
+        src='https://login.salesforce.com/jslibrary/1257456714000/XBrowser.js'></script>
+    <script type="text/javascript" language="JavaScript1.2"> 
+            function handleLogin() {
+                //if(document.login.username.value ==  '' || document.login.pw.value == '')
+                //return;
+                
+                if (document.login.username.value != '' && document.login.pw.value != '') {
+                    try {                       
+                        document.login.un.value = document.login.username.value;
+                        document.login.logoutURL.value = window.location.href;
+                        document.login.ssoStartPage.value = window.location.href;
+                        document.login.submit();
+                    }
+                    catch (error) {
+                        alert (error);
+                    }
+                } else {
+                    alert('Please enter a User name and Password');
+                }       
+                return;
+            }
+        </script>
+   <tr style="height:10%;">
+      <td style="width:2%;">&nbsp;</td>
+      <td style="width:28%;">&nbsp;</td>
+      <td style="width:70%;">&nbsp;</td>
+   </tr>
+   <tr style="height:5%;">
+        <td style="width:2%;">&nbsp;</td>
+        <td style="valign:bottom;">
+            <IMG src="{!$Resource.cohimages}/remedyforce.png"></IMG>
+        </td>
+        <td style="align:right;">
+             <table>
+                <tr>
+                    <td width="85%">&nbsp;</td>
+                    <td style="align:right;"><IMG src="{!$Resource.cohimages}/bluecoh.png" style="width:138;height:45;"></IMG></td>
+                    <td width="5%">&nbsp;</td>
+                </tr>
+            </table>
+        </td>
+   </tr>
+   <!--
+  <tr style="height:5%;" valign="top">
+    <td style="width:2%;">&nbsp;</td>
+    <td style="align:left;valign:top;font-size: 10pt; font-family:Arial Narrow, MS Sans Serif; color:#0069A5">
+        <b>Version 20.12.01</b>
+    </td>
+    <td style="align:right;">
+        &nbsp;
+    </td>
+  </tr>
+  -->
+  <tr style="height:2%;"><td colspan="3">&nbsp;</td></tr>
+   <tr style="height:192px; background-color:#296DC0;">
+      <td colspan="2" style="height:192px;"><IMG src="{!$Resource.cohimages}/whitecoh.png" style="height:148px;width:451px;"></IMG></td>
+      <td style="height:192px;">
+        <table style="height:100%;width:100%;color:#c1e1f5;" cellspacing="0" cellpadding="0" border="0" ID="TableLogin" >
+        <form id='login_form' name='login' method='POST' action='https://login.salesforce.com'>
+            <input type='hidden' name="un" value="" />
+            <input type='hidden' name="width" value="" />
+            <input type='hidden' name="height" value="" /> 
+            <input type='hidden' name="hasRememberUn" value="" /> 
+            <!--<input type='hidden' name="startURL" value="/apex/BMCServiceDesk__StdDashboardPage" />-->
+            <input type='hidden' name="startURL" value="" /> 
+            <input type='hidden' name="loginURL" value="" /> 
+            <input type='hidden' name="ssoStartPage" value="" />
+            <input type='hidden' name="logoutURL" value="/apex/COHRfLogin" />
+            <input type='hidden' name="loginType" value="" /> 
+            <input type='hidden' name="useSecure" value="true" /> 
+            <input type='hidden' name="local" value="" /> 
+            <input type='hidden' name="lt" value="standard" />
+            <input type='hidden' name="qs" value="" />
+            <input type='hidden' name="locale" value="" />
+            <input type='hidden' name="oauth_token" value="" />
+            <input type='hidden' name="oauth_callback" value="" /> 
+                <tr style="height:8px;">
+                    <td colspan="1" style="width:50px;">&nbsp;</td>
+                    <td colspan="1" style="width:100px;">&nbsp;</td>
+                    <td colspan="1" >&nbsp;</td>
+                </tr>
+                <tr style="height:25px;valign:top;">
+                    <td colspan="1" style="width:50px;">&nbsp;</td>
+                    <td colspan="1" style="width:100px;">&nbsp;</td>
+                    <td align="left" style="height:25px;valign:top;">
+                    <span class="defaultFont"><strong>Please log in</strong></span> 
+                    </td>
+                </tr>
+                <tr style="height:25px;"> 
+                    <td colspan="1" style="width:50px;">&nbsp;</td>
+                    <td class="defaultFont"><strong>User Name</strong></td>
+                    <td class="log-content" style="valign:middle">
+                    <input class='clsInputTextBox1' style="width:275px;height:20px;valign:center;padding-left:2px;padding-top:2px" type='text' id='username' size='30' name='username' /></td>
+                </tr>
+
+                <tr style="height:25px;"> 
+                    <td colspan="1" style="width:50px;">&nbsp;</td>
+                    <td class="defaultFont"><strong>Password</strong></td>
+                    <td class="log-content" style="valign:middle">
+                        <input class='clsInputTextBox1' style="width:275px;height:20px;valign:center;padding-left:2px;padding-top:2px" type='password' id='password' name="pw" length="30" size='30' /></td>
+                </tr>
+                <tr style="height:3px;">
+                    <td colspan="3" ></td>
+                </tr>
+                <tr style="height:30px;" valign="top"> 
+                    <td colspan="2">&nbsp;</td>
+                    <td valign="top" >
+                    <table style="align:left;margin:0;">
+                        <tr>
+                            <td valign="middle" style="align:left;" >
+                                <input class="bgBtnGrey" style="height:21px;width:60px;border=0;padding:0" onclick="handleLogin()" type='submit' id='Login' name='Login' value="Login" />
+                            </td>
+                            <td valign="top" style="height:27px;">
+                                
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                    </td>
+                </tr>
+                <tr style="height:10px;">
+                    <td colspan="3" >&nbsp;</td>
+                </tr>
+            </form>
+        </table>
+      </td>
+   </tr>
+   <tr style="height:45%;">
+      <td style="margin:25;padding: 25;" colspan="3">
+         <b>See below for Login Help</b><br />
+         <IMG src="{!$Resource.cohimages}/loginhelp2.jpg" style="height:420px;width:828px;"></IMG>&nbsp;
+      </td>
+   </tr>
+   <tr style="height:5%;  background-color:#ebebeb;" >
+      <td style="align:left;">&nbsp;</td>
+      <td style="align:left; valign:bottom; font-size: 8pt; font-family:Tahoma;" colspan="2">
+         <label>(c) Copyright 2010-2012, BMC Software, Inc.</label><br />
+         <label>BMC, BMC Software, the BMC logos, and other BMC marks are trademarks or registered trademarks of BMC Software, Inc. in the U.S. and/or certain other countries.</label>
+      </td>
+   </tr>
+</table>
+</body>
+</apex:page>

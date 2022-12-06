@@ -1,0 +1,12 @@
+<aura:component >
+     <aura:attribute name = "Announcements" type = "string[]" />
+	<div>
+        <p class="marquee">
+            <aura:iteration items="{!v.Announcements}" var="anc">
+        
+            <span >{!anc.Title__c}</span>
+            </aura:iteration>
+        </p>
+
+    </div>
+</aura:component>

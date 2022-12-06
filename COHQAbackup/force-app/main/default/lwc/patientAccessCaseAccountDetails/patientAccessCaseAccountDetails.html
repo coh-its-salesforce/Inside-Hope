@@ -1,0 +1,122 @@
+<template>
+    <div if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading...."></lightning-spinner>
+    </div>
+    <template if:false={showEdit}>
+        <lightning-card>
+        <h3 slot = "title">
+            <div class="slds-m-around_small">
+                <lightning-icon icon-name="standard:job_family" size="medium"></lightning-icon>
+                &nbsp; | Account Details
+            </div>
+        </h3>
+        <lightning-record-view-form record-id={AccountId} object-api-name="Account">
+            <div class="slds-box slds-theme_default">
+                <div class="sizing slds-grid slds-wrap">
+                    <div class="slds-size_1-of-2">                        
+                        <lightning-output-field field-name="Name" id="Account_Name__c"> </lightning-output-field>
+                    </div>
+                    <div class="slds-size_1-of-2">
+                        <lightning-output-field field-name="COH_MRN__c"  id="COH_MRN__c"> </lightning-output-field>
+                    </div>
+                </div>
+                <div class="sizing slds-grid slds-wrap">
+                    <div class="slds-size_1-of-2">
+                        <lightning-output-field field-name="Primary_Phone_Number__c"  id="Primary_Phone_Number__c"> </lightning-output-field>
+                    </div>
+                    <div class="slds-size_1-of-2">
+                        <lightning-output-field field-name="PersonHomePhone" id="PersonHomePhone"> </lightning-output-field>
+                    </div>
+                </div>  
+                <div class="sizing slds-grid slds-wrap">
+                    <div class="slds-size_1-of-2">                        
+                        <lightning-output-field field-name="PersonMobilePhone" id="PersonMobilePhone"> </lightning-output-field>
+                    </div>
+                    <div class="slds-size_1-of-2">
+                        <lightning-output-field field-name="PersonOtherPhone"  id="PersonOtherPhone"> </lightning-output-field>
+                    </div>
+                </div>
+                <div class="sizing slds-grid slds-wrap">
+                    <div class="slds-size_1-of-2">                        
+                        <lightning-output-field field-name="Gender__pc" id="Gender__pc"> </lightning-output-field>
+                    </div>
+                    <div class="slds-size_1-of-2">
+                        <lightning-output-field field-name="PersonEmail"  id="PersonEmail"> </lightning-output-field>
+                    </div>
+                </div>
+                <div class="sizing slds-grid slds-wrap">
+                    <div class="slds-size_1-of-2">                        
+                        <lightning-output-field field-name="PersonBirthdate" id="PersonBirthdate"> </lightning-output-field>
+                    </div>
+                    <div class="slds-size_1-of-2">
+                        <lightning-output-field field-name="Email_Video_Sent__c"  id="Email_Video_Sent__c"> </lightning-output-field>
+                    </div>
+                </div>
+                <div if:false={isLoading} class="slds-align_absolute-center">
+                    <lightning-button variant="brand" label="Edit" onclick={handleShowEdit}></lightning-button> &nbsp; &nbsp;    
+                    <lightning-button variant="brand" label="Go to Account" onclick={handleNavigatetoAccount}></lightning-button>
+                </div>
+            </div>
+
+        </lightning-record-view-form>
+        </lightning-card>
+    </template>
+    <template if:true={showEdit}>
+        <lightning-card>
+            <h3 slot = "title">
+                <div class="slds-m-around_small">
+                    <lightning-icon icon-name="standard:job_family" size="medium"></lightning-icon>
+                    &nbsp; | Account Details
+                </div>
+            </h3>
+            <lightning-record-edit-form record-id={AccountId} object-api-name="Account" onsuccess={handleSuccessAccount} onsubmit={handleSubmit}>
+                <div class="slds-box slds-theme_default">
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <lightning-input-field field-name="Name" id="NameEdit"> </lightning-input-field>
+                        </div>
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <lightning-output-field field-name="COH_MRN__c" id="COH_MRN__cEdit"> </lightning-output-field>
+                        </div>
+                    </div>
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <lightning-input-field field-name="Primary_Phone_Number__c" id="Primary_Phone_Number__cEdit"> </lightning-input-field>
+                        </div>
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <lightning-input-field field-name="PersonHomePhone" id="PersonHomePhoneEdit"> </lightning-input-field>
+                        </div>
+                    </div>  
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <lightning-input-field field-name="PersonMobilePhone" id="PersonMobilePhoneEdit"> </lightning-input-field>
+                        </div>
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <lightning-input-field field-name="PersonOtherPhone" id="PersonOtherPhoneEdit"> </lightning-input-field>
+                        </div>
+                    </div>  
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <lightning-input-field field-name="Gender__pc" id="Gender__pcEdit"> </lightning-input-field>
+                        </div>
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <lightning-input-field field-name="PersonEmail" id="PersonEmailEdit"> </lightning-input-field>
+                        </div>
+                    </div> 
+                    <div class="sizing slds-grid slds-wrap">
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <lightning-input-field field-name="PersonBirthdate" id="PersonBirthdateEdit"> </lightning-input-field>
+                        </div>
+                        <div class="slds-col--padded slds-size_1-of-2">
+                            <lightning-input-field field-name="Email_Video_Sent__c" id="Email_Video_Sent__cEdit"> </lightning-input-field>
+                        </div>
+                    </div> 
+                    <div class="slds-align_absolute-center">
+                        <lightning-button variant="brand" type="submit" label="Update" onclick={handleSubmit}></lightning-button>   &nbsp; &nbsp;
+                        <lightning-button variant="brand" label="Cancel" onclick={handleCancel}></lightning-button>            
+                    </div>
+                </div>                 
+            </lightning-record-edit-form>
+        </lightning-card>
+    </template>
+</template>

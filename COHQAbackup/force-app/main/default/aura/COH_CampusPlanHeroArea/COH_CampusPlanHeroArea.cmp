@@ -1,0 +1,79 @@
+<aura:component access="global" controller="COH_CampusPlanController">
+   	<!-- <aura:registerEvent name="ParkingAppEvent" type="c:COH_ParkingResources"/> -->
+   	<aura:handler name="init" value="{!this}" action="{!c.getArticles}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.getHomeInfo}"/>
+    <aura:registerEvent name="sampleCmpEvent" type="c:CampusPlan_ArticlesData" />
+    <aura:registerEvent name="ExternalLinkEvent" type="c:CampusPlan_ExternalLinkToOpen" />
+    <aura:registerEvent name="DuarteBuildingEvent" type="c:CampusPlan_OpenDuarteBuildingEvent" />
+    <aura:attribute name = "SingleArticleWrap" type = "COH_CampusPlanController.SingleArticle[]" />
+    <aura:attribute name = "Article" type = "Campus_Plan_Article__c" />
+    <aura:attribute name = "Articles" type = "Campus_Plan_Article__c[]" />
+	<aura:attribute name = "HomeData" type = "Campus_Plan_Home_Page_Info__c[]" />    
+    <aura:attribute name = "imageURLs" type = "string[]" />
+    <aura:attribute name = "ArticleData" type = "Map" />
+    <aura:attribute name = "arecId" type = "string" />
+    
+    <aura:attribute name = "isOpen" type = "boolean" default="false" />
+    <aura:attribute name = "OpenHeroArea" type = "boolean" default="true" />
+    <div>
+        <div class="banner-container">  
+            <div class="slds-grid slds-wrap">
+        	<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_2-of-12">
+
+              
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_8-of-12">
+                <div class="banner-content home-banner-content">
+                     <!-- <div class="home-banner-content-image">
+                        <img src="{!$Resource.ExpandingHopeLogo}"/>
+                      </div> -->
+                   <h1>Expanding Hope</h1>
+                    <p class="banner-p">
+                       <!-- This is an unprecedented time. We are beginning a $1 billion+ Campus Plan transformation 
+                        that will add several new buildings to the Duarte campus and significantly expand our presence 
+                        in Orange County. This site features current news and information about upcoming changes. 
+                        Check back often for updates! -->
+                        <ui:outputTextArea value="{!v.HomeData[0].Home_Page_Text__c}" />
+                    </p>
+                  <button class="hero-button-text" onclick="{!c.openSingleRecord}" id="Parking and Transportation">
+                    <img src="/resource/1593285355000/ExpandingHope_Closure" alt="notification" class="caution"></img>
+                      &nbsp;Duarte Parking
+                  </button>
+                </div>
+            </div>
+    <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_2-of-12">
+        <!-- <div class="home-banner-nav-area">
+           <ul class="home-banner-ul">
+              <aura:iteration items="{!v.Articles}" var="article" >
+                 <aura:if isTrue="{!article.Hide_Landing_Page__c == false}">
+                    <li onclick="{!c.openSingleRecord}" id="{!article.Designative_Type__c}">
+                        <ui:outputText value="{!article.Menu_Name__c}" />
+                    </li>
+                 </aura:if>
+              </aura:iteration>
+                    <li onclick="{!c.openSingleRecord}" id="Parking and Transportation">
+                       <ui:outputText value="{!v.Articles[0].Menu_Name__c}" />
+                    </li>
+                    <li onclick="{!c.openSingleRecord}" id="Duarte Building">
+                        <ui:outputText value="{!v.Articles[1].Menu_Name__c}" />
+                    </li> -->
+                   <!-- <li onclick="{!c.openvfDuarteBuildingPage}" id="Duarte Buildings">
+                        Duarte Campus
+                        <img src="{!$Resource.RightArrow}"/>
+                    </li> -->
+                    <!-- <aura:if isTrue="{!not(v.Articles.Hide_Landing_Page__c)}"> -->
+                    <!-- <li onclick="{!c.openSingleRecord}" id="Rivergrade Article">
+                        <ui:outputText value="{!v.Articles[2].Menu_Name__c}" />
+                    </li> -->
+                    <!-- </aura:if> -->
+                    <!-- <li onclick="{!c.openSingleRecord}" id="Orange County">
+                        <ui:outputText value="{!v.Articles[3].Menu_Name__c}" />
+                    </li> 
+            </ul>
+        </div>
+        -->
+     </div>
+   </div>      
+  </div>        
+  </div>
+</aura:component>

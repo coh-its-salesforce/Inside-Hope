@@ -1,0 +1,5 @@
+<aura:component >
+    
+    <ltng:require scripts="{!$Resource.GoogleAnalytics}" afterScriptsLoaded="{!c.doInit}"/>
+	
+</aura:component>

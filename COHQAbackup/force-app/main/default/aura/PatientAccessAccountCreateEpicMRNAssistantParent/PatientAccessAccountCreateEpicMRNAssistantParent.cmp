@@ -1,0 +1,7 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId">
+    <aura:handler event="force:refreshView" action="{!c.refreshView}"/>
+    <aura:attribute name="showFlow" type="Boolean" default="true"/>
+    <aura:if isTrue="{!v.showFlow}">
+        <c:PatientAccessAccountCreateEpicMRNAssistant recordId="{!v.recordId}"/>
+    </aura:if>
+</aura:component>

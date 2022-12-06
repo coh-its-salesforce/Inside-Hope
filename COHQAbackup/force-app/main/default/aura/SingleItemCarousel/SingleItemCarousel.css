@@ -1,0 +1,64 @@
+.THIS #owl-demo{
+   /*height:705px;*/
+   cursor: pointer;
+}
+.THIS .cimg {
+    max-width: 100%;
+    width: 100%;
+    /*height: 705px;*/
+    
+}
+
+.THIS .owl-carousel{
+  position: relative;
+  
+}
+
+.THIS .owl-controls{
+  position: absolute;
+  top:340px;
+  left:25%;
+  right: 5px;
+  color: white;
+  background-color: gold;
+  width: max-content;
+  margin-left: 381px;
+ 
+}
+.THIS .owl-dots{
+    color: white;
+}
+.THIS .cTitle {
+  position: absolute;
+  bottom: 10px;
+  left: 50px;
+  color: white;
+  font-weight: bold;
+  
+}
+
+.THIS .uiOutputRichText{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.THIS .uiOutputRichText p:nth-child(1) b{  
+    color: #0075bc;
+    line-height: normal;
+    font-size: 1.2rem;
+    font-weight: 900;	    
+}
+/*
+@media only screen and (min-width: 1880px) {
+    .THIS #owl-demo{
+   height:400px;
+   width:800px;
+   cursor: pointer;
+}
+.THIS .cimg {
+    max-width: 100%;
+    width: 1000px;
+    height: 400px;
+    
+}
+}
+*/

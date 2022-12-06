@@ -1,0 +1,89 @@
+<template>
+    <h1 style="font-size: 22px; font-weight: bold;"><u>Reason for Visit Screening</u></h1>
+    <lightning-layout>
+        <lightning-layout-item size="4" padding="horizontal-small">
+            <template if:true={departmentoptions}>
+                <lightning-combobox
+                    name="Department"
+                    label="Department"
+                    value={departmentvalue}
+                    placeholder="Select Department"
+                    options={departmentoptions}
+                    onchange={handleChangeDepartment} 
+                    ></lightning-combobox>
+            </template>
+        </lightning-layout-item>
+        <lightning-layout-item size="4" padding="horizontal-small">
+            <template if:true={servicelineoptions}>
+                <lightning-combobox
+                    name="ServiceLine"
+                    label="Service Line"
+                    value={servicelinevalue}
+                    placeholder="Select Service Line"
+                    options={servicelineoptions}
+                    onchange={handleChangeServiceLine}
+                    ></lightning-combobox>
+            </template>
+        </lightning-layout-item>
+        <lightning-layout-item size="4" padding="horizontal-small">
+            <!--<template if:true={specialtyoptions}>
+                    <lightning-combobox
+                        name="Specialty"
+                        label="Specialty"
+                        value={specialtyvalue}
+                        placeholder="Select Specialty"
+                        options={specialtyoptions}
+                        onchange={handleChangeSpecialty}
+                        required></lightning-combobox>
+            </template>-->
+            <template if:true={specialtyoptions}>
+                <label>Diagnostic /Procedure Categories</label>
+                <c-reusable-custom-pick-list-with-search options={specialtyoptions} placeholder="Select Specialty" value={specialtyvalue} label={specialtyvalue}  onchange={handleChangeSpecialty}> 
+                </c-reusable-custom-pick-list-with-search>
+            </template>
+        </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item size="4" padding="horizontal-small">
+            <template if:true={locationoptions}>
+                <lightning-combobox
+                name="Location"
+                label="Location"
+                value={locationvalue}
+                placeholder="Select Location"
+                options={locationoptions}
+                onchange={handleChangeLocation}
+                ></lightning-combobox>
+            </template>
+        </lightning-layout-item>
+        <lightning-layout-item size="4" padding="horizontal-small">
+            <!--<template if:true={physicianoptions}>
+                    <lightning-combobox
+                        name="Physician"
+                        label="Physician"
+                        value={physicianvalue}
+                        placeholder="Select Physician"
+                        options={physicianoptions}
+                        onchange={handleChangePhysician}
+                        required></lightning-combobox>
+            </template>-->
+            <template if:true={physicianoptions}>
+                <label>Physician</label>
+                <c-reusable-custom-pick-list-with-search options={physicianoptions} placeholder="Select Physician" value={physicianvalue} label={physicianvalue}  onchange={handleChangePhysician}> 
+                </c-reusable-custom-pick-list-with-search>
+            </template>
+        </lightning-layout-item>
+        <lightning-layout-item size="4" padding="around-medium">
+            <div style="text-align:right">
+                <lightning-button variant="brand" onclick={resetPicklistValues} label="Reset Physician Picklist Values" class="slds-m-left_x-small"></lightning-button>
+            </div>
+        </lightning-layout-item>
+        <!--START: CHANGES BY SANJAY 05/23/2022 -->
+        <lightning-layout-item size="8" padding="around-medium"></lightning-layout-item><lightning-layout-item size="4" padding="around-medium">
+            <lightning-input type="checkbox" checked={diagnosisNotListed}
+            name="Diagnosis Not Listed" label="Diagnosis Not Listed" onchange={handleDiagnosisListedChange} class="slds-m-left_x-small"></lightning-input>
+        </lightning-layout-item>
+        <!--END: CHANGES BY SANJAY 05/23/2022 -->
+    </lightning-layout>  
+
+</template>

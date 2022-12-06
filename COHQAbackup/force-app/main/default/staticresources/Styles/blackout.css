@@ -1,0 +1,64 @@
+.clsBlackoutInputTextArea {
+	border-color:#6A7378 #BAC3C8 #BAC3C8 #6A7378;
+	border-style:solid;
+	border-width:1px;
+	color:#000000;
+	font-family:Tahoma,Ms Sans Serif;
+	font-size:11px;
+	width:60%;
+	height:70px;
+	overflow:auto;
+	margin-left:10px;
+}
+
+.clsBlackoutInputLabelTD, .BRclsInputLabelTD {
+	color:RED;
+	font-family:Tahoma,MS Sans Serif;
+	font-size:11px;
+	white-space:nowrap;
+	font-weight:bold;
+	padding-left: 10px;
+}
+.checkBlackOutLabel{
+ color:#000000;
+ font-family:Tahoma,MS Sans Serif;
+ font-size:11px;
+ vertical-align:40%;
+ *vertical-align:10%;
+ padding-left :3px;
+ *padding-left :0px;
+
+}
+.clsInputCheckBoxBlackoutTD {
+   padding-left: 10px;
+   *padding-left: 6px;
+
+}
+ .clsIdInputTextBox{
+    *height:13px !important;
+}
+.clsInputTextBox{
+*height:13px !important;
+}
+.TD15pxHeightCls {
+  height:15px;
+  *height:0px;
+}
+.clsPanelReadOnlyInputTextbox {
+     border: 1px solid grey;
+    vertical-align: top;
+    width: 130px;
+    height: 19px;
+    color: #000000;
+    font-family: Tahoma, MS Sans Serif;
+    font-size: 11px;
+    border: 1px solid;
+    border-top-color: #6a7378;
+    border-left-color: #6a7378;
+    border-right-color: #bac3c8;
+    border-bottom-color: #bac3c8;
+    padding-left: 5px;
+    background-color: #D4D0C8;
+    vertical-align:middle;
+    
+}

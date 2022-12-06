@@ -1,0 +1,1042 @@
+<aura:component controller="COH_UIR_IntakeRequestFormController">
+    <c:COH_UTIL_ValidateStandardComponent aura:id="validateStandardComponent"/>
+    <c:COH_UTIL_CheckboxGroupHelper aura:id="checkboxGroupHelper"/>    
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:method name="validateFields" action="{!c.validateFields}"/>
+    <aura:attribute name="mIntakeRequest" type="COH_UniversalIntakeRequest__c"/>    
+    <aura:attribute name="mPicklists" type="Map" />
+    <aura:attribute name="mSelectedDepartments" type="Map" default="{}"/>
+    <aura:attribute name="mCheckboxGroupValues" type="Map" default="{}"/>
+    
+    <div class="slds-form-horizontal">        
+        <!-- Are resources impacted? -->
+        <div class="slds-grid slds-wrap">        
+            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                <div class="slds-form-element__control">
+                    <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_OtherDeptsResourcesImpacted__c}" 
+                                      label="Are resources from other departments impacted?"
+                                      name="COH_UIR_SHR_OtherDeptsResourcesImpacted__c"
+                                      aura:id="intakeRequestForm"
+                                      required="true"
+                                      title="Consider upstream AND downstream impacts. If departments are impacted please select from the drop down list and provide details of how they are impacted.">
+                        <option value="">--Select--</option>
+                        <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_OtherDeptsResourcesImpacted__c}" var="currentPicklistOption">
+                            <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_OtherDeptsResourcesImpacted__c}">{!currentPicklistOption.label}</option>                        
+                        </aura:iteration>
+                    </lightning:select>                
+                </div>         
+            </div>
+        </div>
+        <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_OtherDeptsResourcesImpacted__c == 'Yes'}">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                    <div class="slds-form-element__control">
+                        <lightning:checkboxGroup name="COH_UIR_IRC_WhichDeptsResourcesImpacted__c"
+                                                 label="Request Type?"
+                                                 options="{!v.mPicklists.COH_UIR_IRC_WhichDeptsResourcesImpacted__c}"
+                                                 value="{!v.mCheckboxGroupValues.COH_UIR_IRC_WhichDeptsResourcesImpacted__c}"
+                                                 aura:id="intakeRequestForm"
+                                                 required="true"
+                                                 onchange="{!c.onChange}"
+                                                 title="Please provide details of which areas are impacted"/>
+                    </div>         
+                </div> 
+            </div>
+        </aura:if>
+        
+        <!-- Involvement Rating: Access -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.AccessSchedulingCallCentersNPS}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvAccess__c}" 
+                                          label="Please select your estimated resource involvement for Access (Scheduling, Call Centers, NPS)"
+                                          name="COH_UIR_SHR_InvAccess__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvAccess__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvAccess__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvAccessDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvAccessDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvAccess__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvAccessDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvAccessDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>
+                </aura:if>
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: Business Development -->        
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.BusinessDevelopment}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvBusinessDevelopment__c}" 
+                                          label="Please select your estimated resource involvement for Business Development"
+                                          name="COH_UIR_SHR_InvBusinessDevelopment__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvBusinessDevelopment__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvBusinessDevelopment__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvBusinessDevelopmentDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvBusinessDevelopmentDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvBusinessDevelopment__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvBusinessDevelopmentDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvBusinessDevelopmentDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: Clinical Physicians -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.ClinicalPhysicians}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvClinicalPhysicians__c}" 
+                                          label="Please select your estimated resource involvement for Clinical Physicians"
+                                          name="COH_UIR_SHR_InvClinicalPhysicians__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvClinicalPhysicians__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvClinicalPhysicians__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvClinicalPhysiciansDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvClinicalPhysiciansDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvClinicalPhysicians__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvClinicalPhysiciansDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvClinicalPhysiciansDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: DSS -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.DSSInformaticsBI}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvDSS__c}" 
+                                          label="Please select your estimated resource involvement for DSS (Informatics, BI)"
+                                          name="COH_UIR_SHR_InvDSS__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvDSS__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvDSS__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvDSSDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvDSSDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvDSS__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvDSSDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvDSSDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: Facilities -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.Facilities}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvFacilities__c}" 
+                                          label="Please select your estimated resource involvement for Facilities"
+                                          name="COH_UIR_SHR_InvFacilities__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvFacilities__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvFacilities__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvFacilitiesDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvFacilitiesDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvFacilities__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvFacilitiesDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvFacilitiesDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: Finance -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.Finance}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvFinance__c}" 
+                                          label="Please select your estimated resource involvement for Finance"
+                                          name="COH_UIR_SHR_InvFinance__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvFinance__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvFinance__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvFinanceDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvFinanceDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvFinance__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvFinanceDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvFinanceDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: Finance-Rev Cycle -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.FinanceRevCycle}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvFinanceRevCycle__c}" 
+                                          label="Please select your estimated resource involvement for Finance-Rev Cycle"
+                                          name="COH_UIR_SHR_InvFinanceRevCycle__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvFinanceRevCycle__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvFinanceRevCycle__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvFinanceRevCycleDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvFinanceRevCycleDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvFinanceRevCycle__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvFinanceRevCycleDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvFinanceRevCycleDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: Finance- Supply Chain -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.FinanceSupplyChain}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvFinanceSupplyChain__c}" 
+                                          label="Please select your estimated resource involvement for Finance- Supply Chain"
+                                          name="COH_UIR_SHR_InvFinanceSupplyChain__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvFinanceSupplyChain__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvFinanceSupplyChain__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvFinanceSupplyChainDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvFinanceSupplyChainDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvFinanceSupplyChain__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvFinanceSupplyChainDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvFinanceSupplyChainDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: Foundation Operations -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.FoundationOperations}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvFoundationOps__c}" 
+                                          label="Please select your estimated resource involvement for Foundation Operations"
+                                          name="COH_UIR_SHR_InvFoundationOps__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvFoundationOps__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvFoundationOps__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvFoundationOpsDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvFoundationOpsDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvFoundationOps__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvFoundationOpsDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvFoundationOpsDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: Foundation Finance -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.FoundationFinance}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvFoundationFinance__c}" 
+                                          label="Please select your estimated resource involvement for Foundation- Finance"
+                                          name="COH_UIR_SHR_InvFoundationFinance__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvFoundationFinance__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvFoundationFinance__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvFoundationFinanceDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvFoundationFinanceDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvFoundationFinance__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvFoundationFinanceDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvFoundationFinanceDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: AcHospital Operationscess -->        
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.HospitalOperations}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvHospitalOps__c}" 
+                                          label="Please select your estimated resource involvement for Hospital Operations"
+                                          name="COH_UIR_SHR_InvHospitalOps__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvHospitalOps__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvHospitalOps__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvHospitalOpDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvHospitalOpDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvHospitalOps__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvHospitalOpDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvHospitalOpDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: HR -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.HR}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvHR__c}" 
+                                          label="Please select your estimated resource involvement for HR"
+                                          name="COH_UIR_SHR_InvHR__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvHR__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvHR__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvHRDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvHRDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvHR__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvHRDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvHRDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: International -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.International}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvInternational__c}" 
+                                          label="Please select your estimated resource involvement for International"
+                                          name="COH_UIR_SHR_InvInternational__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvInternational__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvInternational__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvInternationalDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvInternationalDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvInternational__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvInternationalDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvInternationalDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: IT Clinical Applications -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.ITClinicalApplications}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvITClinicalApps__c}" 
+                                          label="Please select your estimated resource involvement for IT Clinical Applications"
+                                          name="COH_UIR_SHR_InvITClinicalApps__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvITClinicalApps__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvITClinicalApps__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvITClinicalAppsDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvITClinicalAppsDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvITClinicalApps__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvITClinicalAppsDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvITClinicalAppsDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: IT Infrastructure -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.ITInfrastructure}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvITInfrastructure__c}" 
+                                          label="Please select your estimated resource involvement for IT Infrastructure"
+                                          name="COH_UIR_SHR_InvITInfrastructure__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvITInfrastructure__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvITInfrastructure__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvITInfrastructureDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvITInfrastructureDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvITInfrastructure__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvITInfrastructureDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvITInfrastructureDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: Legal -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.Legal}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvLegal__c}" 
+                                          label="Please select your estimated resource involvement for Legal"
+                                          name="COH_UIR_SHR_InvLegal__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvLegal__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvLegal__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvLegalDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvLegalDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvLegal__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvLegalDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvLegalDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: Managed Care -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.ManagedCare}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvManagedCare__c}" 
+                                          label="Please select your estimated resource involvement for Managed Care"
+                                          name="COH_UIR_SHR_InvManagedCare__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvManagedCare__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvManagedCare__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvManagedCareDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvManagedCareDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvManagedCare__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvManagedCareDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvManagedCareDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: Marketing Communications -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.MarketingCommunications}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvMarketingAndComms__c}" 
+                                          label="Please select your estimated resource involvement for Marketing &amp; Communications"
+                                          name="COH_UIR_SHR_InvMarketingAndComms__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvMarketingAndComms__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvMarketingAndComms__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvMarketingAndCommsDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvMarketingAndCommsDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvMarketingAndComms__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvMarketingAndCommsDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvMarketingAndCommsDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: Nursing -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.Nursing}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvNursing__c}" 
+                                          label="Please select your estimated resource involvement for Nursing"
+                                          name="COH_UIR_SHR_InvNursing__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvNursing__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvNursing__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvNursingDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvNursingDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvNursing__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvNursingDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvNursingDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: Philanthropy -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.Philanthropy}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvPhilanthropy__c}" 
+                                          label="Please select your estimated resource involvement for Philanthropy"
+                                          name="COH_UIR_SHR_InvPhilanthropy__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvPhilanthropy__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvPhilanthropy__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvPhilanthropyDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvPhilanthropyDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvPhilanthropy__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvPhilanthropyDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvPhilanthropyDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: Research Operations -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.ResearchOperations}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvResearchOps__c}" 
+                                          label="Please select your estimated resource involvement for Research Operations"
+                                          name="COH_UIR_SHR_InvResearchOps__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvResearchOps__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvResearchOps__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvResearchOpsDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvResearchOpsDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvResearchOps__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvResearchOpsDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvResearchOpsDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: Scientific Faculty -->        
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.ScientificFaculty}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvScientificFaculty__c}" 
+                                          label="Please select your estimated resource involvement for Scientific Faculty"
+                                          name="COH_UIR_SHR_InvScientificFaculty__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvScientificFaculty__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvScientificFaculty__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvScientificFacultyDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvScientificFacultyDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvScientificFaculty__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvScientificFacultyDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvScientificFacultyDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: Supportive Care -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.SupportiveCare}">
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvSupportiveCare__c}" 
+                                          label="Please select your estimated resource involvement for Supportive Care"
+                                          name="COH_UIR_SHR_InvSupportiveCare__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvSupportiveCare__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvSupportiveCare__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvSupportiveCareDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvSupportiveCareDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvSupportiveCare__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvSupportiveCareDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvSupportiveCareDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>
+        
+        <!-- Involvement Rating: Other -->
+        <aura:if isTrue="{!v.mSelectedDepartments.COH_UIR_IRC_WhichDeptsResourcesImpacted__c.Other}">
+            <div class="slds-grid slds-wrap">  
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:input value="{!v.mIntakeRequest.COH_UIR_SHR_OtherDeptResourceInvolvement__c}"
+                                         label="Please enter the name of the other department"
+                                         name="COH_UIR_SHR_OtherDeptResourceInvolvement__c"
+                                         aura:id="intakeRequestForm"
+                                         required="true"/>                
+                    </div>         
+                </div>         
+            </div>
+            <div class="slds-grid slds-wrap">        
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                    <div class="slds-form-element__control">
+                        <lightning:select value="{!v.mIntakeRequest.COH_UIR_SHR_InvOther__c}" 
+                                          label="Please select your estimated resource involvement for Other"
+                                          name="COH_UIR_SHR_InvOther__c"
+                                          aura:id="intakeRequestForm"
+                                          required="true">
+                            <option value="">--Select--</option>
+                            <aura:iteration items="{!v.mPicklists.COH_UIR_SHR_InvAccess__c}" var="currentPicklistOption">
+                                <option value="{!currentPicklistOption.value}" selected="{!currentPicklistOption.value==v.mIntakeRequest.COH_UIR_SHR_InvOther__c}">{!currentPicklistOption.label}</option>                        
+                            </aura:iteration>
+                        </lightning:select>                
+                    </div>         
+                </div>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvOther__c == '(3) Medium = Some involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvOtherDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvOtherDetail__c"
+                                                aura:id="intakeRequestForm"/>                
+                        </div>         
+                    </div>            
+                </aura:if>
+                <aura:if isTrue="{!v.mIntakeRequest.COH_UIR_SHR_InvOther__c == '(5) High = Significant involvement'}">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea value="{!v.mIntakeRequest.COH_UIR_SHR_InvOtherDetail__c}"
+                                                label="Provide details about how the Functional Area is involved."
+                                                name="COH_UIR_SHR_InvOtherDetail__c"
+                                                aura:id="intakeRequestForm"
+                                                required="true"/>                
+                        </div>         
+                    </div>            
+                </aura:if>                
+            </div>  
+        </aura:if>            
+    </div>
+</aura:component>

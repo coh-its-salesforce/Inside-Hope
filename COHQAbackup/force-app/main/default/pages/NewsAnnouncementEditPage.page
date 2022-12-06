@@ -1,0 +1,49 @@
+<apex:page controller="NewsAnnouncementEditController" sideBar="false">
+    <script type = "text/javascript">
+        
+        function deleteConfirmation() {
+            var r = confirm("Please click OK to remove the selected Section.");
+            return r;
+        }
+         
+    </script>
+    <apex:form id="formId">
+        <apex:pageBlock title="News & Announcement" id="pbId">
+            <apex:pageMessages />
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!customSave}" />
+                <apex:commandButton value="Delete" action="{!customDelete}" onClick="return deleteConfirmation();" />
+                <apex:commandButton value="Add" action="{!addNewsAnnouncement}" />
+                <apex:commandButton value="Cancel" action="{!cancel}" />                
+            </apex:pageBlockButtons>
+            <apex:pageBlockTable value="{!lstNewsAnnouncementWrapper}" var="na" id="thePageBlockTable">
+                <apex:column >
+                   <apex:inputCheckbox value="{!na.isSelected}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">Title</apex:facet>
+                    <apex:inputField value="{!na.newsAnnouncement.Title__c}" /> 
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">Description</apex:facet>
+                    <apex:inputField value="{!na.newsAnnouncement.Description__c}" style="height: 60px; width: 400px;" />
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">Image</apex:facet>
+                    <apex:outputPanel >
+                        <apex:inputText value="{!na.imageName}" id="img1" disabled="true" />
+                        <apex:inputFile value="{!na.imageContent}" filename="{!na.imageName}" id="filePath"/>
+                    </apex:outputPanel>
+                </apex:column>
+                <apex:column rendered="{!IF(isHomePage, true, false)}">
+                    <apex:facet name="header">Org Wide</apex:facet>
+                    <apex:inputField value="{!na.newsAnnouncement.Org_Wide__c}" /> 
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">Display</apex:facet>
+                    <apex:inputField value="{!na.newsAnnouncement.Display__c}" />
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

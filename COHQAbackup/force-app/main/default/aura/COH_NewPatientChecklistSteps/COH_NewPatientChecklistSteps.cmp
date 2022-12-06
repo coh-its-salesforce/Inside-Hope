@@ -1,0 +1,35 @@
+<aura:component >
+    <aura:attribute name="mCase" type="Case" default=""/>
+    
+    <article class="slds-card slds-card_boundary">    
+        <aura:if isTrue="{!not(empty(v.mCase))}">
+            <div class="slds-card__header slds-grid">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">
+                            <div class="slds-card__header-link">
+                                <!--<span class="nestedCard slds-text-heading_small" style="font-weight:400;">New Patient Checklist:</span>-->
+                            </div>
+                        </h2>
+                    </div>
+                </header>
+            </div>
+            <div class="slds-card__body slds-card__body_inner">
+                <c:COHCaseStep mComplete="{!not(empty(v.mCase.COH_MRN__c))}" mCompleteText="Registration Completed" mIncompleteText="Registration Incomplete"/>
+                <c:COHCaseStep mComplete="{!and(not(empty(v.mCase.Appointment_Location__c)),not(empty(v.mCase.Appt_Date_Time__c)))}" mCompleteText="Appointment Scheduled" mIncompleteText="Appointment Not Scheduled"/>
+                <c:COHCaseStep mComplete="{!v.mCase.Clinical_Process_Complete__c}" mCompleteText="Clinical Intake Completed" mIncompleteText="Clinical Intake Incomplete"/>
+                <c:COHCaseStep mComplete="{!v.mCase.PHI_StatusNew__c == 'Completed'}" mCompleteText="PHI Completed" mIncompleteText="PHI Incomplete"/>
+                <c:COHCaseStep mComplete="{!or(v.mCase.Procurement_Process_Completed__c,v.mCase.Records_No_Longer_Needed__c)}" mCompleteText="Records Procurement Completed" mIncompleteText="Records Procurement Incomplete"/>
+                <c:COHCaseStep mComplete="{!or(and(v.mCase.Consenting_Status__c  == 'Completed',v.mCase.Consenting_Type__c   == 'Virtual'),and(v.mCase.Consenting_Status__c  == 'Scheduled',v.mCase.Consenting_Type__c   == 'In-Person'))}" mCompleteText="New Patient Consenting Completed" mIncompleteText="New Patient Consenting Incompleted"/>
+                <c:COHCaseStep mComplete="{!not(empty(v.mCase.Confirmation_Call_Completed__c))}" mCompleteText="Confirmation Call Completed" mIncompleteText="Confirmation Call Incompleted"/>
+                
+                
+            </div>
+            <aura:set attribute="else">
+                <div style="height:5rem;">
+                    <lightning:spinner alternativeText="Loading"/>
+                </div>
+            </aura:set>
+        </aura:if>
+    </article>
+</aura:component>

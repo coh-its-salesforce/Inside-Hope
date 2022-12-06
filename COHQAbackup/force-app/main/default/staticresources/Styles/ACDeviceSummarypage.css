@@ -1,0 +1,66 @@
+ul.x-tab-strip-top {
+	background-color:#FFFFFF;
+	background-image:none;
+   
+}
+.x-tab-panel-header {
+	background-color:transparent;
+	border:none;
+}
+.centralTabPanelCls  .x-tab-strip .x-tab-strip-text{
+  margin-left:0px;
+}
+
+.centralTabPanelCls .x-tab-strip-top .x-tab-right, .x-tab-strip-top .x-tab-left, .x-tab-strip-top .x-tab-strip-inner {
+   background-image: url(SDEFimages/tabs-sprite_selected_no_bg.png);
+}
+.bannerlabelCLs {
+	width:20%;
+	vertical-align:left;
+	font-family: Tahoma, MS Sans Serif;
+	font-size: 11px;
+} 
+.bannervalCLs {
+	width:80%;
+	vertical-align:left;
+	font-family: Tahoma, MS Sans Serif;
+	font-size: 11px;
+}
+
+/*Overriden style of SkywalkerStyleSheet */ 
+.x-toolbar{
+	background-color: #DEE0E0;
+	padding-left: 0px;
+}
+.x-tab-panel-body {
+	background-color: #FFFFFF;
+	border-color:#808080;
+}
+.x-panel-body {
+	background-color: #FFFFFF;
+	border-color: #FFFFFF;
+}
+.formStyle{
+	border-color: #ADB9C0 #ADB9C0 -moz-use-text-color;
+	border-style: none solid none;
+	border-width: 1px 1px 0;
+}
+.x-border-layout-ct {
+	background-color:#FFFFFF;
+}
+#Software .x-toolbar-left{
+	text-align:center;
+	padding-left:38%;
+}
+.x-grid3-hd-inner, .x-grid3-header, td.x-grid3-hd-over .x-grid3-hd-inner, td.x-grid3-hd-menu-open .x-grid3-hd-inner, td.sort-asc .x-grid3-hd-inner, td.sort-desc .x-grid3-hd-inner {
+	background: #2E7DB3; 
+}
+.x-grid3-hd-row td, .x-grid3-row td, .x-grid3-summary-row td {
+    font-family: Tahoma,MS Sans Serif;
+    font-size: 11px;
+	font-size-adjust: none;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    line-height: normal;
+}

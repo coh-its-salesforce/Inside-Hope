@@ -1,0 +1,49 @@
+<aura:component >
+    <aura:attribute name="openMedicalBuildings" type="boolean" default="false"/>
+    <aura:attribute name="RadiologyImagingCenter" type="boolean" default="false"/>
+   <aura:attribute name="aboutRICImpact" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.aboutRICImpact}">
+       <div>
+    <div class="banner-container">
+    	<div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+      			<div class="banner-image">
+      				<img src = "{!$Resource.TheRICImpact}"/> 
+      			</div>
+      		</div>
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12" >
+               <div class="banner-content">
+                    <h4 class="label-header"><label class=" blue-bg">Duarte</label></h4>
+                    <h2>Imaging Equipment in the RIC </h2>                  
+               </div>            
+                   <div class="banner-content" >
+                <p>The RIC facility will house several new pieces of imaging equipment, including:
+                       <ul style="list-style-type:disc !important;padding-left: 40px;">
+                           <li>two computed tomography scanners (CT)</li>
+                           <li>two ultrasound scanners</li>
+                           <li>one magnetic resonance imaging (MRI) scanner</li>
+                           <li>one positron emission tomography (PET) scanner</li>
+                           <li>our first-ever PET/MRI scanner</li>
+                    </ul><br/>
+                </p>
+                <p>Note: A PET/MRI is a hybrid test that harness the strengths of a PET and MRI to produce the most highly detailed pictures of the body. In addition, it requires only a quarter of the radiation dose that comes with a conventional PET/CT scan, reducing our patients exposure to radiation.</p>
+                   </div>	
+
+            
+            	</div>
+      		</div>
+      	</div>
+           <div class="profile-content" >
+        <p>Nearly all City of Hope patients undergo multiple imaging tests before, during and after their cancer treatment, visiting our Department of Diagnostic Radiology an average of at least five times a year. Over the past eight years, the number of exams performed by the department has nearly tripled, from approximately 45 thousand in 2011 to approximately 125 thousand in 2019. Diagnostic imaging also play a crirical role in scientific research by measuring and tracking the effectiveness of the many novel therapies being studied in clinical trials at City of Hope.</p>
+        <p>Currently, our Department of Diagnostic Radiology located primarily in Helford Hospital is operating at max capacity. Before the addition of two mobile imaging units, patients were waiting for weeks to get scanned, which can prolong treatment decisions and increases patient anxiety. Despite more than doubling the radiology staff, it has been difficult to keep up with our rapid patient growth due to limited imaging equipment and a limited space footprint. To address this, City of Hope is moving forward with building an outpatient Radiology Imaging Center (RIC) on the Duarte Campus that will nearly double our fleet of imaging technologies.</p>
+        <p>In order to compress schedule and limit disruption on campus, the RIC will be a prefabricated building comprised of transportable modules that will be construced off-site and then transported to campus and positioned on foundations. Much of the equipment in the RIC will eventually be relocated to the Duarte Outpatient Clinic, our multi-story ambulatory care buildings scheduled to open in 2024.</p>
+        <p>"The Radiology Imaging Center was designed to speed access to our advanced imaging tests," explained Joel Helmke, senior vice president of operations. "Instead of waiting almost five years for the Duarte Outpatient Clinic to be built, the RIC will give physicians and researchers access to the additional state-of-the-art equipment as early as next year. This building is yet another example of how City of Hope is investing and expanding our campus to help bring tommorrow's discoveries to patients who need them today.</p>
+           </div>	
+          <div class="backbutton" onclick="{!c.goBackToRICProfilePage}" ><lightning:icon iconName="utility:back" size="x-small" variant="inverse" />Back  
+    </div>
+       </div><br/></aura:if>
+    <aura:if isTrue="{!v.RadiologyImagingCenter}">
+             <c:COH_CampusPlan_RadiologyImagingCenterProfile/>
+        </aura:if>
+    
+</aura:component>

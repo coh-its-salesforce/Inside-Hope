@@ -1,0 +1,15 @@
+<design:component label="Two Region Custom App Page Template">
+    <flexipage:template>
+        <flexipage:region name="left" label="Left Region" defaultWidth="MEDIUM">
+            <flexipage:formfactor type="MEDIUM" Width="MEDIUM"/>
+        </flexipage:region>
+        <flexipage:region name="right" label="Right Region" defaultWidth="MEDIUM">
+        </flexipage:region>
+        <flexipage:region name="bottom" label="Bottom Region" defaultWidth="Large" />
+        <flexipage:region name="header" label="Header Region" defaultWidth="Large" />
+        <flexipage:region name="footer" label="Footer Region" defaultWidth="Large" />
+    </flexipage:template>
+    <design:supportedFormFactors>
+        <design:supportedFormFactor type="Large"/>
+    </design:supportedFormFactors>
+</design:component>

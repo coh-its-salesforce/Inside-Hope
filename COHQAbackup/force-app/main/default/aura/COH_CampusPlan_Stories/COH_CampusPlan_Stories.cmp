@@ -1,0 +1,38 @@
+<aura:component >
+    <!-- <aura:registerEvent name="OpenOrangeCounty" type="c:CampusPlan_OrangeCountyEvent" /> -->
+   <aura:attribute name="OCStories" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.OCStories}">
+     <div>
+         <div class="banner-container">
+             <div class="slds-grid slds-wrap">
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+                     <div class="banner-image">
+                         <img src = "{!$Resource.CampusPlanStoriesCommunity}"/> 
+                     </div>
+                 </div>
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12">
+                     <div class="banner-content">
+                        <h4 class="label-header"><label class="orange-bg">Orange County</label></h4>
+                        <h2> Community Voices </h2>
+						<p class="banner-p">Our patients and supporters are calling us to bring our world-class care closer to home.</p>
+			
+                     </div>
+                 </div>
+             </div>            
+         </div>
+        <!-- <div class="profile-content">
+            <p><strong>Patient Stories</strong><br/></p>
+            <p><a href="https://www.cityofhope.org/breakthroughs/city-of-hope-expansion-to-orange-county-personal-for-survivor">City of Hope’s expansion to Orange County is personal for this cancer survivor</a></p>
+
+			<p><a href="https://cityofhope-my.sharepoint.com/:b:/g/personal/nlammers_coh_org/EbR40fC0D5pJvik9w1GmhTkB7_5VbxwdoL7DzxWUFNPVlg?e=ZLzbYg">Two-time cancer survivor understands the importance of bringing City of Hope to Orange County</a></p>
+
+			
+
+            <p><strong>News Coverage</strong><br/>
+                <a href="https://www.ocregister.com/2019/06/25/city-of-hope-to-invest-1-billion-for-cancer-treatment-and-research-near-irvines-great-park/">City of Hope to invest $1 billion for cancer treatment and research near Irvine’s Great Park – The Orange County Register (June 25, 2019)</a></p>
+
+			<p><a href="https://www.latimes.com/business/la-fi-city-of-hope-orange-county-20190625-story.html">City of Hope to develop $1 billion in new cancer hospital –Los Angeles Times (June 25, 2019)</a></p>		
+		</div> -->
+       </div>
+       </aura:if>
+</aura:component>

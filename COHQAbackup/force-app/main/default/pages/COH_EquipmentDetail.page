@@ -1,0 +1,121 @@
+<apex:page standardController="Ergonomic_Self_Assessment__c" 
+            extensions="COH_EquipmentApprovalController" >
+    <apex:sectionHeader title="{!Ergonomic_Self_Assessment__c.Name}" subtitle="Equipment Approval"/>
+    
+    <apex:form >
+        
+        <apex:pageBlock id="block">
+            <apex:pageMessages />
+            
+            <apex:pageBlockSection columns="2" title="User Details">
+                
+                <apex:outputField value="{!Ergonomic_Self_Assessment__c.Employee_ID__c}"/>
+                <apex:outputField value="{!Ergonomic_Self_Assessment__c.User__c}"/>
+                <apex:outputPanel />
+                <apex:outputField value="{!Ergonomic_Self_Assessment__c.Secondary_Supervisor__c}" label="Admin"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1" title="Equipment Details">
+                <apex:outputPanel >
+                <table class="list" border="0" cellspacing="0" cellpadding="0">
+                    <tr class="headerRow">
+                        <Th scope="col" class=" zen-deemphasize">Equipment</Th>
+                        <Th scope="col" class=" zen-deemphasize">Specific Items</Th>
+                        <Th scope="col" class=" zen-deemphasize">Required ?</Th>
+                        <Th scope="col" class=" zen-deemphasize">Approved</Th>
+                    </tr>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_1__c != null) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_1__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_1__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_1_Required__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_1_Approval__c}"/></Td>
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_2__c != null) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_2__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_2__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_2_Required__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_2_Approval__c}"/></Td>
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_3__c != null) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_3__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_3__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_3_Required__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_3_Approval__c}"/></Td>
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_4__c != null) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_4__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_4__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_4_Required__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_4_Approval__c}"/></Td>
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_5__c != null ) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_5__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_5__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_5_Required__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_5_Approval__c}"/></Td>
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_6__c != null ) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_6__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_6__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_6_Required__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_6_Approval__c}"/></Td>
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_7__c != null ) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_7__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_7__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_7_Required__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_7_Approval__c}"/></Td>
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_8__c != null ) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_8__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_8__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_8_Required__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_8_Approval__c}"/></Td>
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_9__c != null ) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_9__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_9__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_9_Required__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_9_Approval__c}"/></Td>
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_10__c != null ) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_10__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_10__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_10_Required__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_10_Approval__c}"/></Td>
+                    </tr>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!OR(ergObj.Equipment_11__c != null ) }">  
+                    <tr class="dataRow">
+                        <Td><apex:outputField value="{!ergObj.Equipment_11__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Identify_Specific_Item_11__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_11_Required__c}"/></Td>
+                        <Td><apex:outputField value="{!ergObj.Equipment_11_Approval__c}"/></Td>
+                    </tr>
+                    </apex:outputPanel>
+                </table>     
+                </apex:outputPanel>
+                
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+
+</apex:page>

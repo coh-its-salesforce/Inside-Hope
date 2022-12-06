@@ -1,0 +1,388 @@
+<apex:page controller="controllerHomePage_temp" showHeader="false" sidebar="false" standardStylesheets="false" docType="html-5.0" language="en-US" applyHTMLTag="false" cache="false" expires="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />    
+    <head>        
+        <c:Head title="iHope - City Of Hope Intranet"></c:Head>
+    </head>
+    <!-- Added by Sanjay Singh -->   
+    <script>
+    function SearchRecord(componentID){
+        
+        var val = document.getElementById(componentID).value;
+        alert(val);
+        if(val != ''){
+            
+            top.location.href="{!$Page.Search}?keyword="+val;
+        }else{
+            alert('Please enter keyword.');
+        }
+    }
+    </script>    
+    <apex:form >
+        <apex:actionFunction action="{!loadDefaultLinks}" name="loadDefaultLinksJS" rerender="MyFavorites"/>
+        <body>        
+            <div class="Wrapper"> 
+                <c:COH_SIP_Header ></c:COH_SIP_Header>
+                <div id="container" class="BannerSlider">
+                    <div id="myCarousel1" class="carousel slide carousel-fade" data-ride="carousel" data-interval="10000">
+                        <!-- Indicators -->
+                        <div class="carousel-indicators-container">
+                            <ol class="carousel-indicators">
+                                <apex:variable value="{!0}" var="rowNum"/>
+                                <apex:variable value="{!'active'}" var="rowClass"/>
+                                <apex:repeat value="{!lstCarousel}" var="Recordslider" >
+                                    <li data-target="#myCarousel1" data-slide-to="{!FLOOR(rowNum)}" class="{!rowClass}"></li>
+                                    <apex:variable var="rowNum" value="{!rowNum + 1}"/>
+                                    <apex:variable value="{!'normal'}" var="rowClass"/>
+                                </apex:repeat>
+                            </ol>                            
+                        </div>
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner Top-Banner" role="listbox">
+                            <apex:repeat value="{!lstCarousel}" var="Recordslider" >
+                                
+                                <div class="item {!IF(Recordslider.PageLoadImage__c , 'active', '')}">
+                                    <div align="right">
+                                        <!--   <apex:outputLink value="/apex/SIRP_CarouselEditPage?id={!Recordslider.Id}"  rendered="{!$ObjectType.Carousel__c.Deletable}">Edit Link</apex:outputLink> -->
+                                    </div>
+                                    <div class="image-wrapper">
+                                        <a href="{!Recordslider.ImageURL__c}"><apex:image rendered="{!dealIdIattachId[Recordslider.Id] != 'NoImage'}" url="{!URLFOR($Action.Attachment.Download, dealIdIattachId[Recordslider.Id])}" />
+                                            <apex:image url="{!$Resource.Carouselimg}" rendered="{!IF(dealIdIattachId[Recordslider.Id] == 'NoImage', "true", "false")}" /></a>
+                                            <apex:outputpanel rendered="{!if(Recordslider.CarouselTitle__c != null && Recordslider.CarouselTitle__c != '', true, false)}">              
+                                        <div> 
+                                            <font size="4" color="black"> {!Recordslider.CarouselTitle__c} </font> <br/> <b> {!Recordslider.CarouselDescription__c} </b>                  
+                                            <a href="{!Recordslider.ImageURL__c}" class="greenButtonRound">Learn More</a>
+                                        </div>
+                                        </apex:outputpanel>
+                                    </div>   
+                                </div>       
+                            </apex:repeat>
+                        </div>    
+                        <div class="SerchBox">
+                            <apex:inputText value="{!txtSearch}" html-placeholder="Search people, depts., documents and news" styleClass="SerInpT" />
+                            <apex:commandButton value="GO" action="{!Search}" styleClass="GoButS" />  
+                             
+                              
+                        </div>
+                    </div>
+                </div>
+                <c:NewsAndAnnouncement pageName="Home Page"/>         
+                <div class="container-fluid">
+                    <!--Second section of the Home Page -->             
+                    <div id="outerSecondSection" class="row clearnone">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 cont-with-border">                            
+                            <div id="recentlyVisited">
+                                <div class="secondSectiondiv">
+                                    <img src="{!$Resource.clock}"/>        
+                                </div>
+                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                    <!--<div class="module"> -->
+                                    <div class="text-center">               
+                                        <h5 class="FourIconTit">Recently Visited</h5><!--Recently Visited--> 
+                                    </div>                  
+                                    <apex:outputPanel rendered="{!booViewed}">
+                                        <div class="text-center">
+                                            <p class="FourIconTxt"></p>
+                                        </div>
+                                        <div class="MedicalB">
+                                            <apex:repeat value="{!lstRecentViews}" var="viewed">
+                                                <div class="MenTxtB"><apex:outputLink value="/{!viewed.id}">{!viewed.Name}</apex:outputLink></div>
+                                            </apex:repeat>
+                                        </div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!!(booViewed)}">
+                                        <div class="FavSecB" style="height:200px;"><center>No Recent Activity</center></div>
+                                    </apex:outputPanel>
+                                    
+                                </div><!--</div>-->
+                                <div class="col-md-12 col-xs-12 col-sm-12 align-cntr"><div class="ViewMore"><apex:outputLink value="{!$Page.COH_SIP_Recently_Visited}" rendered="{!booViewed}" styleclass="viewAll">View All</apex:outputLink></div></div>  
+                                
+                            </div>  
+                        </div>  
+                        <!--SFIP-122 --> 
+                        <!--<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 cont-with-border">
+                            <div id="chatterGroup" class="mod">                                
+                                <div class="secondSectiondiv">
+                                    <img src="{!$Resource.smiley}"/>        
+                                </div>
+                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                    <div class="text-center">               
+                                        <h5 class="FourIconTit">My Chatter Groups</h5>
+                                    </div>                  
+                                    <apex:outputPanel rendered="{!booChatter}">
+                                        <div class="text-center">
+                                            <p class="FourIconTxt">You are part of all the groups shown below.
+                                            <br/>
+                                                <a href="{!$Resource.SocialMediaGuidelines}">Social Media Guidelines</a></p>                                            
+                                        </div>
+                                        <div class="MedicalB">
+                                            <apex:repeat value="{!lstCollaborationGroups}" var="group">
+                                                <div class="MyChaBox">                                                            
+                                                    <img src="{!group.FullPhotoUrl}"/>
+                                                    <p><apex:outputLink value="/{!group.id}">{!group.Name}</apex:outputLink></p>
+                                                </div>
+                                            </apex:repeat>
+                                        </div> 
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!!(booChatter)}">
+                                        <div class="FavSecB" style="height:200px;"><center>You are not a part of any group</center></div>
+                                    </apex:outputPanel>                                    
+                                </div>
+                                <div class="col-md-12 col-xs-12 col-sm-12 align-cntr"><div class="ViewMore"><apex:outputLink value="/_ui/core/chatter/ui/ChatterPage?deepLinkType=listView&deepLinkInfo=groups" rendered="{!booViewed}" styleclass="viewAll">View All</apex:outputLink></div></div>  
+                                
+                            </div> 
+                        </div>--> 
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 cont-with-border">                            
+                            <div id="Entities">
+                                <div class="secondSectiondiv">
+                                    <img src="{!$Resource.Entities}"/>        
+                                </div>
+                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                    <!--<div class="module"> -->
+                                    <div class="text-center">               
+                                        <h5 class="FourIconTit">Entities</h5>
+                                    </div>                  
+                                    <div class="text-center">
+                                        <p class="FourIconTxt"></p>
+                                    </div>
+                                    <div class="MedicalB">
+                                        <div class="MenTxtB"><a href="/apex/DepartmentPortal?id=a6Gd0000000L4cNEAS">Beckman Research Institute (BRI)</a></div>
+                                        <div class="MenTxtB"><a href="/apex/DepartmentPortal?id=a6Gd0000000L4R6EAK">Comprehensive Cancer Center</a></div>
+                                        <div class="MenTxtB"><a href="/apex/DepartmentPortal?id=a6Gd0000000L4XYEA0">Education</a></div>
+                                        <div class="MenTxtB"><a href="/apex/DepartmentPortal?id=a6Gd0000000L4cmEAC">Medical Center</a></div>
+                                        <div class="MenTxtB"><a href="/apex/DepartmentPortal?id=a6Gd0000000L4WaEAK">Medical Foundation</a></div>
+                                        <div class="MenTxtB"><a href="/apex/DepartmentPortal?id=a6Gd0000000L4o2EAC">Philanthropy</a></div>
+                                    </div>                                    
+                                </div>    
+                            </div>  
+                        </div>  
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 cont-with-border">
+                            <div id="events" class="mod">
+                                <div class="secondSectiondiv">
+                                    <img src="{!$Resource.calender}"/>        
+                                </div>  
+                                <div class="col-md-12 col-xs-12 col-sm-12">  
+                                    <div class="text-center">          
+                                        <h5 class="FourIconTit">Master Calendar <a href="{!$Page.COH_SIP_Calendar_Add_Event}" ><apex:image value="{!$Resource.pensilI}" style="margin:-5px 0 0 10px;" /></a></h5><!--Upcoming Events-->  
+                                    </div>
+                                    <div style="overflow: auto;height: 220px;">       
+                                        <script type="text/javascript" src="https://www.trumba.com/scripts/spuds.js"></script>
+                                        <script type="text/javascript">
+                                            $Trumba.addSpud({
+                                                webName: "city-of-hope-master-calendar",
+                                                spudType : "upcoming" ,
+                                                spudConfig : "SpudConfig2",
+                                                teaserBase : "https://www.trumba.com/calendars/city-of-hope-master-calendar" });
+                                        </script>
+                                    </div>    
+                                </div>
+                                <div class="col-md-12 col-xs-12 col-sm-12 align-cntr">
+                                    <div class="ViewMore">
+                                        <apex:outputLink value="https://www.trumba.com/calendars/city-of-hope-master-calendar" rendered="{!NOT(booEvent)}" styleclass="viewAll">View All</apex:outputLink>
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>    
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 cont-with-border">
+                            
+                            <div id="favourite" class="mod">
+                                <div class="secondSectiondiv">
+                                    <img src="{!$Resource.favourite}"/>        
+                                </div>  
+                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                    <div class="module">
+                                        <div class="text-center">               
+                                            <h5 class="FourIconTit">Favorites <a href="{!$Page.Favourite}?editmode=1" ><apex:image value="{!$Resource.pensilI}" style="margin:-5px 0 0 10px;" /></a></h5>  <!--Favourites-->  
+                                        </div> 
+                                        <!-- changes Made here By Sanjay---->
+                                        <!-- Added Component -->
+                                       
+                                        <apex:outputPanel id="MyFavorites">
+                                            <c:COH_SIP_Favorite ></c:COH_SIP_Favorite>
+                                        </apex:outputPanel>
+                                        
+                                        
+                                    </div></div> 
+                                
+                                <div class="col-md-12 col-xs-12 col-sm-12 align-cntr"><div class="ViewMore"><apex:outputLink value="{!$Page.Favourite}"  styleclass="viewAll">View All</apex:outputLink></div></div>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 cont-without-border top-margin">
+                            <apex:outputPanel rendered="{!booVideo}"> 
+                                <div>          
+                                    <div class="thirdSectionOuterDiv bottom-module-border">
+                                        <div class="VideoSpoTit bottom-module">
+                                            {!tileSpotlight.Name}
+                                        </div>
+                                        <div class="thirdSectionInnerDiv">
+                                            <div class="text-center mrgn-top">
+                                                <a href="{!tileSpotlight.Hyperlink__c}" class="{!IF(tileSpotlight.Video_Tile__c == true, 'mfp-iframe video-link ', '')}">
+                                                    <apex:image value="{!IF(spotLightPicture!=null, URLFOR($Action.Attachment.Download, spotLightPicture), $Resource.Tile_Default_Image)}" width="250px"/>
+                                                </a>
+                                            </div>                                    
+                                            <div class="text-center mrgn-top-min div-text">
+                                                <div class="bottom-widget-text">
+                                                    <apex:outputField value="{!tileSpotlight.Brief_Description__c}"/>
+                                                </div>
+                                            </div>                                    
+                                            <div id="thirdSectionLinkVideo" class="ViewButFot">
+                                                <b class="text-center">
+                                                    <a href="{!tileSpotlight.Hyperlink__c}" class="{!IF(tileSpotlight.Video_Tile__c == true, 'mfp-iframe video-link ', '')}"><apex:outputField value="{!tileSpotlight.View_More_text__c}"/></a></b>
+                                            </div>                                    
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 cont-without-border top-margin">
+                           <apex:outputPanel rendered="{!booFood}" > 
+                                <div>          
+                                    <div class="thirdSectionOuterDiv bottom-module-border">
+                                        <div class="sectionThird bottom-module">
+                                            My Links<a href="{!$Page.COH_SIRP_Favorite_News}?editmode=1"><span class="glyphicon glyphicon-pencil " style="color:#fff;font-size: 16px;margin-left:5px;"></span></a>
+                                        </div>
+                                       <br/>
+                                        <div class="thirdSectionInnerDiv" style="overflow:auto;height:200px">                                            
+                                            <div class="col-md-12 col-xs-12 col-sm-12 mrgn-top-min DuarteTxt" >
+                                                <apex:outputPanel > 
+                                                    <c:COH_SIP_MyNewsComponent ></c:COH_SIP_MyNewsComponent>
+                                                </apex:outputPanel>     
+                                            </div>
+                                            <div id="thirdSectionLinkFood" class="ViewButFot">
+                                                <b class="text-center"><apex:outputLink value="{!$Page.COH_SIRP_Favorite_News}" styleclass="viewAll"> View All</apex:outputLink></b>                     
+                                            </div>                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+                          <!--<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 cont-without-border top-margin">
+                           <apex:outputPanel rendered="{!booFood}" > 
+                                <div>          
+                                    <div class="thirdSectionOuterDiv bottom-module-border">
+                                        <div class="sectionThird bottom-module">
+                                            Org Favorites and Links<a href="{!$Page.COH_SIRP_Favorite_News}?editmode=1"><span class="glyphicon glyphicon-pencil " style="color:#fff;font-size: 16px;margin-left:5px;"></span></a>
+                                        </div>
+                                       <br/>
+                                        <div class="thirdSectionInnerDiv" style="overflow:auto;height:200px">                                            
+                                            <div class="col-md-12 col-xs-12 col-sm-12 mrgn-top-min DuarteTxt" >
+                                                <apex:outputPanel > 
+                                                    <c:COH_SIP_MyNewsComponent ></c:COH_SIP_MyNewsComponent>
+                                                </apex:outputPanel>     
+                                            </div>
+                                            <div id="thirdSectionLinkFood" class="ViewButFot">
+                                                <b class="text-center"><apex:outputLink value="{!$Page.COH_SIRP_Favorite_News}" styleclass="viewAll"> View All</apex:outputLink></b>                     
+                                            </div>                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </div>-->
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 cont-without-border top-margin">
+                            <apex:outputPanel rendered="{!booClassified}">
+                                <div>
+                                    <div class="thirdSectionOuterDiv bottom-module-border">
+                                        <div class="sectionThird bottom-module">
+                                            {!tileBreakThroughBlog.Name}
+                                        </div>              
+                                        <div class="thirdSectionInnerDiv">
+                                            <div class="div-text">
+                                                <div class="text-center mrgn-top">
+                                                    <a href="{!tileBreakThroughBlog.Hyperlink__c}" class="{!IF(tileBreakThroughBlog.Video_Tile__c == true, 'mfp-iframe video-link ', '')}">
+                                                        <apex:image value="{!IF(breakThroughPicture!=null, URLFOR($Action.Attachment.Download, breakThroughPicture), $Resource.Tile_Default_Image)}" width="250px"/>
+                                                     </a>
+                                                </div>   
+                                            </div>                                                                              
+                                            <div class="text-center mrgn-top-min div-text">                                                
+                                                <div class="bottom-widget-text">
+                                                    <apex:outputField value="{!tileBreakThroughBlog.Brief_Description__c}"/>
+                                                </div>                                                
+                                            </div> 
+                                            <div id="thirdSectionClassified" class="ViewButFot" >
+                                                <b class="text-center">
+                                                        <a href="{!tileBreakThroughBlog.Hyperlink__c}" class="{!IF(tileBreakThroughBlog.Video_Tile__c == true, 'mfp-iframe video-link ', '')}"><apex:outputField value="{!tileBreakThroughBlog.View_More_text__c}"/></a></b>                   
+                                            </div>                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 cont-without-border top-margin">
+                            <apex:outputPanel rendered="{!researchPersona}">  
+                                <div>          
+                                    <div class="thirdSectionOuterDiv bottom-module-border">
+                                        <div class="sectionThird bottom-module">
+                                            Research Funding, Seminars
+                                        </div>              
+                                        <div class="thirdSectionInnerDiv">
+                                            
+                                            <div class="mrgn-top-min DuarteTxt">
+                                                <li><apex:outputLink target="_blank" value="http://archive.coh.org/office-new-research">Intramural Funding</apex:outputLink></li>
+                                                <li><apex:outputLink target="_blank" onclick="return false;" value="javascript:void(0)">Extramural Funding</apex:outputLink>
+                                                    <ul>
+                                                        <li><apex:outputLink target="_blank" value="/apex/DepartmentPortal?id=a6Gd0000000blZMEAY">Find Funding</apex:outputLink></li>
+                                                        <li><apex:outputLink target="_blank" value="http://sharepoint.coh.org/grantops">Open Grant Opportunities</apex:outputLink></li>                                                        
+                                                    </ul>
+                                                </li>
+                                                <li><apex:outputLink target="_blank" value="/apex/COH_SIP_Research_Meetings">Research Seminars</apex:outputLink></li>
+                                                <li><apex:outputLink target="_blank" value="http://www.cityofhope.org/education/continuing-medical-education/cme-events-calendar">CME Calendar</apex:outputLink></li>
+                                                <li><apex:outputLink target="_blank" value="http://www.trumba.com/calendars/hematology-disease-team">Hematology Disease Team Meetings</apex:outputLink></li>
+                                                <li><apex:outputLink target="_blank" value="/apex/COH_SIP_Solid_Tumor_Meetings">Solid Tumor Disease Team Meetings</apex:outputLink></li>
+                                            </div>                      
+                                        </div>
+                                        <!--<div id="thirdSectionClassified" class="ViewButFot">
+                                            <b class="text-center"><apex:outputLink target="_blank" value="http://www.google.com">View More</apex:outputLink></b>                      
+                                        </div>-->
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!notResearchPersona}">  
+                                <div>          
+                                    <div class="thirdSectionOuterDiv bottom-module-border">
+                                        <div class="sectionThird bottom-module">
+                                            Cityofhope.org
+                                        </div>              
+                                        <div class="thirdSectionInnerDiv">
+                                            <div class="text-center mrgn-top">
+                                                <a href = "http://www.cityofhope.org/"><apex:image value="{!$Resource.cohIntranet}" width="250px"/>
+                                                </a>
+                                            </div>                                    
+                                            <div class="text-center mrgn-top-min div-text">
+                                                <p class="bottom-widget-text"></p>
+                                            </div>                       
+                                        </div>
+                                        <div id="thirdSectionClassified" class="ViewButFot">
+                                            <b class="text-center"><apex:outputLink target="_blank" value="http://www.cityofhope.org/">View More</apex:outputLink></b>                      
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+                    </div>
+                </div>                
+                <div class="seperator"></div>
+                <c:COH_SIP_Footer ></c:COH_SIP_Footer>                    
+                <script>      
+                var JQ = jQuery.noConflict();                    
+                JQ(function(){
+                    var toggles = JQ('.toggle a'),
+                        codes = JQ('.code');                        
+                    toggles.on("click", function(event){
+                        event.preventDefault();
+                        var JQthis = JQ(this);                        
+                        if (!JQthis.hasClass("active")) {
+                            toggles.removeClass("active");
+                            JQthis.addClass("active");
+                            codes.hide().filter(this.hash).show();
+                        }
+                    });
+                    toggles.first().click();
+                    JQ('.video-link').magnificPopup();
+                });     
+                </script>                     
+            </div>
+        </body>                
+    </apex:form>
+    <script>loadDefaultLinksJS();</script>
+</apex:page>

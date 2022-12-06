@@ -1,0 +1,25 @@
+<aura:component  access="global" controller="COH_CampusPlanController" >
+	<ltng:require styles="{!join(',',$Resource.OwlCarouselFile+'/OwlCarousel/owl.carousel.css',$Resource.OwlCarouselFile+'/OwlCarousel/owl.theme.css')}"   
+                  scripts="{!join(',',$Resource.JqueryLib,
+                           $Resource.OwlCarouselFile+'/OwlCarousel/owl.carousel.js')}" afterScriptsLoaded="{!c.doInit}" />
+    
+    <aura:registerEvent name="sampleCmpEvent3" type="c:CampusPlan_ArticleStory" />
+    <aura:registerEvent name="ExternalLinkEvent2" type="c:CampusPlan_ExternalLinkToOpen" />
+    <aura:attribute name = "arecId" type = "String" />
+    <aura:attribute name = "ImageUrls" type = "Map" />
+    <aura:attribute name = "articleRec" type = "Campus_Plan_Article__c" />
+    <aura:attribute name = "articleRecord" type = "Campus_Plan_Article__c" />
+    <aura:attribute name = "ArticlesWrap" type = "COH_CampusPlanController.SingleArticle[]" />
+    <div id="owl-demo" class="owl-carousel owl-theme">
+      <aura:if isTrue="{!not(empty(v.ArticlesWrap))}">
+           <aura:iteration items="{!v.ArticlesWrap}" var="aw">
+          <div class="item">
+           <img src="{!aw.articleImage}" id="{!aw.article.Id}" class="cimg" />
+              <!-- onclick="{!c.imageOnClick}" -->
+           <div class="cTitle"><span>{!aw.article.Title__c}</span></div>
+           <ui:outputRichText value="{!aw.article.Image__c}"/>
+          </div>
+          </aura:iteration>
+        </aura:if>       
+    </div>
+</aura:component>

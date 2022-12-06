@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <availableInTouch>true</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>Using S-Docs for MassMailMerge capabilities. For Follow Up Assessment
+Follow_up_Assessment__c</description>
+    <label>SDAddToMassMergeFollowUpAssessment</label>
+</ApexPage>

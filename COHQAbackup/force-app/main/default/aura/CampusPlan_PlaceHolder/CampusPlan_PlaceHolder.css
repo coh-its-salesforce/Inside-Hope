@@ -1,0 +1,128 @@
+.THIS .boxes-wrap{    
+    width:100%;
+    padding: 15px;
+    clear: both;
+}
+.THIS .box{    
+    margin: 0 10px 15px 10px;
+    height: 300px;
+    box-sizing: border-box;
+    background-color: rgb(221, 241, 248);
+	border-radius: 3px;
+    box-shadow: 0 0 2px #b7b7b7;
+}
+.THIS .box-bg2{
+    background-color: rgb(244, 255, 255);
+}
+.THIS .image-title-area{
+    height: 114px;
+    clear: both;
+}
+.THIS .image-div{
+    height: 70px;
+    width: 100%;
+    clear: both;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 6px;
+}
+.THIS .image-div img{
+    width:70px;
+    height:70px;    
+    border-radius: 5px;
+    box-shadow: 0 0 2px #cccccc;
+}
+.THIS .image-title-div{
+    padding: 10px;
+    margin: 0;
+}
+.THIS .image-title-div h3{
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    color: #007489;
+}
+.THIS .box-content{
+    padding: 5px 15px;
+    margin: 0;
+    clear: both;
+    height: calc(300px - 115px);
+    overflow-y: auto;
+}
+.THIS .box-content p{
+    padding: 5px;
+    color:#007489;
+    text-align: left;
+}
+.THIS .box-content .parking-notice-info{
+    padding: 2px 5px;
+    color:#007489;
+	display: flex;
+	justify-content: space-between;    
+}
+.THIS .box-ul{
+    margin: 0 0 5px 0;
+    padding: 0 0 0 10px;
+}
+.THIS .box-ul li{
+    text-align: left;
+    padding: 4px 0;
+    margin: 0;
+    color:#007489;   
+}
+.THIS .box-ul li a{
+    color:#007489;
+}
+.THIS .parking-logo-img{
+    width:80px;
+}  
+/*
+@media screen and (max-width: 1200px){
+           .THIS .box{
+                width:40%;
+            }
+}
+@media screen and (max-width: 600px){
+          .THIS  .box{
+                width:90%;
+            }
+}*/
+/*
+@media only screen 
+and (min-device-width : 375px) 
+    and (max-device-width : 667px) {
+    
+    .THIS .container{
+    
+            width:110%;
+            padding-left: 70px;
+}
+.THIS #box2, .THIS #box4{
+   
+    margin-left:0px;
+    height: 250px;
+    margin-top: 10px;
+}
+.THIS #FrogLogo{
+  margin-left: 60px;
+}
+.THIS #FrogHeader{
+   margin:5px -10px 20px 50px;
+}
+.THIS #FrogHeader2{
+   margin:-17px 0px 0px 21px;
+}
+
+.THIS #parkingLogo{
+       margin-left: 56px;
+} 
+.THIS #parkingHeader{
+   margin:5px -10px 20px 50px;
+}
+ .THIS #COHLogo{
+  margin-left: 68px;
+}   
+}
+*/

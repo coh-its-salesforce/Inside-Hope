@@ -1,0 +1,35 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" 
+           applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">   
+    <html lang="en">
+        <head>            
+            <c:Head title="Add Calendar Event"></c:Head>            
+        </head>
+        <body>
+            <div class="Wrapper">
+                <apex:form >
+                    <!-- Header Bar---> 
+                    <c:COH_SIP_Header ></c:COH_SIP_Header>                     
+                    <!--search bar-->
+                    <c:COH_SIP_Search ></c:COH_SIP_Search>
+                    <!-- page Body Content-->
+                    <!-- Container -->
+                    <div class="container" style="padding: 150px 0 0 0;height: 100%;">
+                        Fill out the necessary fields relevant to your event/announcements. Please note: you do not need to complete entire form. <br />
+                        <br />
+                        <br />
+                        <div>
+                            <script id="trumbaSubmitEventJS" type="text/javascript" src="https://www.trumba.com/ea/scripts/submitevent.js"></script>
+                            <script type="text/javascript">trumbaInsertSubmitEventForm({
+                                code: "wk5rzbzee6cj4pvvyx2z0b08vn",
+                                width: 385,
+                                height: 775,
+                                backgroundColor: "white" });
+                            </script>
+                        </div> 
+                    </div>
+                    <c:COH_SIP_Footer ></c:COH_SIP_Footer> 
+                </apex:form>
+            </div>            
+        </body>            
+    </html>     
+</apex:page>

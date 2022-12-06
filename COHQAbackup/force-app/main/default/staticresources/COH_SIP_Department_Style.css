@@ -1,0 +1,227 @@
+#devSlide .slideContainer {
+    position: absolute;
+    right: -2px;
+    top: 0px;
+    width: 210px;
+    background-color: #226B86;
+    border: 4px solid #FFF;
+    padding: 3px 6px 6px;
+    margin: 0px; 
+    box-shadow: 0px 0px 2px #A0A6AB;
+    z-index: 9;
+}
+#devSlide .handle {
+    position: absolute;
+    width: 100px;
+    top: 200px;
+    left: -100px;
+    background-color: #0000FF;
+    border-width: 4px;
+    border-style: solid none solid solid;
+    border-color: #FFF;
+    padding: 7px 2px 7px 0px;
+    text-align: left;
+    color: #FFF;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    box-shadow: -2px 0px 2px #A0A6AB;
+    z-index: 10;
+    transform: rotate(270deg);
+    transform-origin: left top 0;
+}
+
+/*NEW CSSS START HERE*/
+
+.MiddleCon{margin:0 auto; padding:0px; width:1280px;}
+
+.DeparmentB{margin:0px; padding:50px 0 0 0; float:left;
+    padding-left: 5px;
+    box-sizing: content-box;}
+.DeparmentBLeft{margin:0px; padding:0px; float:left; width:879px;}
+
+.DepxyxBox{margin:0px; padding:0px; float:left; width:100%;}
+.DepBreadC{margin:0px; padding:0px; font-size:11px;}
+.DepBreadC a{margin:0px; padding:0 12px 0 0; color:#4f4f4f; text-decoration:underline; font-weight:bold;}
+.DepBreadC a:hover{margin:0px; padding:0 12px 0 0; color:#2670ce; text-decoration:none; font-weight:bold;}
+.DepxyxBox h1 {
+    color: #4f4f4f;
+    float: left;
+    font-size: 24px;
+    font-weight: normal;
+    margin: 0;
+    padding: 20px 0 0;
+    width: 100%;
+}
+
+.DepxyxBox h4 {
+    color: #096acb;
+    float: left;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: 600;
+    margin: 0;
+    padding: 7px 0 17px;
+    width: 100%;
+}
+
+.DepxyxBox img{float:left; padding-right:15px;}
+.DepxyxBox > p{line-height:24px;}
+
+.AccorSec .apexp .bPageBlock.apexDefaultPageBlock .pbBody {
+    margin:0px;
+    border:1px solid #a8a8a8 !important;
+}
+
+.AccorSec .pbSubsection {
+    border-bottom:1px solid #4f4f4f !important;
+}
+
+.AccorSec .pbBody .pbSubheader img {
+    margin-right: 10px !important;
+    float:left;
+}
+
+.AccorSec h3 {font-size:20px;}
+.AccorSec .detailList td{padding-top:5px; padding-bottom:5px; padding-left:10px;}
+
+.DeparmentBRight{padding-left:10px; float:left; width:371px;}
+
+.bPageBlock {
+    background-color: #fff !important;
+    background-image: none !important;
+    background-position: left bottom;
+    background-repeat: no-repeat;
+    border: medium none !important;
+    clear: both;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.AnnouBox{margin:0px; 
+    padding:0 0 15px; 
+    float:left; 
+    border:1px solid #fdbf75; 
+    border-radius:10px;    
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;}
+.BoxTitM{margin:0 0 0 15px; padding:15px 0 10px; border-bottom:1px solid #fda800; float:left;width: 100%;
+    height: 50px;}
+.BoxTitM h1{margin:0px; padding:0px; font-size:19px; color:#4f4f4f;width: 295px;
+    float: left;}
+.BoxTitM span {
+    width: 50px;
+    float: left;
+}
+.BoxTitM a{padding:5px 9px; color:#0271be; border:1px solid #fda600; font-size:12px; font-weight:bold; text-decoration:none; border-radius:3px;}
+.BoxTitM a:hover{text-decoration:none; color:#000; border:1px solid #000;}
+
+.AnnTxtB{margin:10px 0 0 0; padding:0px; float:left; width:338px;margin-left: 10px;}
+.AnnTxtB h1{
+    color: #196ce1;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+.ISecTwo{margin:5px 0 0 0; padding:0px; float:left; width:338px;}
+.ISecTwoL{margin:0px; padding:0px; float:left; width:66px;}
+.ISecTwoR{margin:0 0 0 10px; padding:0px; float:left; width:262px;}
+.ISecTwoR p{margin:0px; padding:0px; font-size:10px;}
+.ISecTwoR a{color: #fda800; display: block; font-size: 11px; font-weight: bold; padding-top:3px;}
+.ISecTwoR a:hover{color:#000000; font-size:11px; font-weight: bold; text-decoration:none;}
+
+.PhyRBox{margin:15px 0 0 0; padding:0 0 10px; float:left; border:1px solid #fdbf75; border-radius:10px;}
+.PhyRBoxM{margin:0 0 10px 15px; padding:15px 0 10px; width:338px; border-bottom:1px solid #fda800; float:left;}
+.PhyRBoxM h1{margin:0px; padding:0px; font-size:19px; color:#4f4f4f;}
+.PhyRBoxM a{margin:0px; padding:5px 9px; color:#0271be; border:1px solid #fda600; font-size:12px; font-weight:bold; float:right; text-decoration:none; border-radius:3px;}
+.PhyRBoxM a:hover{text-decoration:none; color:#000; border:1px solid #000;}
+
+.PhyConT{margin:0px; padding:0px; float:left; text-align:center;} 
+.PhyConT ul{margin:0px; padding:0px; float:left;}
+.PhyConT ul li{margin:10px 0 0 16px; padding:0px; float:left; list-style-type:none;}
+.PhyConT ul li img{margin:0px; padding:0px; border:1px solid #000;}
+.PhyConT ul li span{margin:0px; padding:5px 0 0 0; float:left; text-align:center; font-size:11px; color:#4f4f4f;}
+ 
+.SpotlightB{margin:0px; padding:0px; float:left; width:100%; padding-top: 20px;}
+.SpotLTit {
+    border-bottom: 1px solid #fda800;
+    color: #4f4f4f;
+    float: left;
+    font-size: 24px;
+    margin:0px;
+    padding: 0 0 10px;
+    width:100%;
+}
+    
+div.spacing {
+    line-height: 145%;
+}
+
+.Depboxs{margin:47px 0 0 28px; padding:0 15px 15px 15px; width:370px; float:left; border:1px solid #c9c9c9; background:#fdfdfe; position:relative;}
+
+font-size:16px; font-weight: bold; line-height:50px;}
+.DuisB{margin:0px; padding:40px 0 0 0; float:left; width:368px;}
+.DuisBL{margin:0px; padding:0px; float:left; width:131px;}
+.DuisBL img{border:1px solid #000;}
+.DuisBR{
+    color: #066dc0;
+    font-size: 13px;
+    font-style: italic;
+    font-weight: normal;
+    line-height: 20px;
+    margin: 0;
+    padding:15px 0 0 13px !important;
+    width:221px;
+    float:left;
+}
+.Depboxs p{color: #656669; float: left; font-size:11px; font-weight:bold; line-height:20px; margin:0; padding:12px 0 0 0;}
+
+.GetButD {
+    float: left;
+    left: 137px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    top: 21px;
+}
+.GetButD a{margin:0px; padding:5px 7px; border:1px solid #fda600; border-radius:3px; color: #0271be; font-size:12px; font-weight:bold; text-decoration:none; background:#FFFFFF;}
+.GetButD a:hover {
+    padding:5px 7px;
+    border: 1px solid #000;
+    color: #000;
+    text-decoration: none;
+}
+.department-owner
+{
+    font-weight:bold;
+    padding-top:10px;
+}
+.htmlDetailElementTable
+{
+    clear:both;
+}
+
+@media (max-width: 1275px) { 
+    .MiddleCon
+    {
+        width:100%;
+    }    
+    .DeparmentBRight {
+        width:40%;
+    }    
+	.DeparmentBLeft{width:60%;}
+}
+
+@media (max-width: 1000px) { 
+    .MiddleCon
+    {
+        width:100%;
+    }    
+    .DeparmentBRight {
+        display: none;
+    }    
+	.DeparmentBLeft{margin:0px auto; width:100%;}
+}

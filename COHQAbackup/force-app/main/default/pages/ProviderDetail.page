@@ -1,0 +1,521 @@
+<apex:page standardController="Contact"  sidebar="false" extensions="ProviderDetailController" id="page">
+    <head>
+    <title>Provider Detail</title>
+   
+    </head> 
+    <body>    
+    <apex:outputPanel id="innerpage">
+    
+    
+   
+    <apex:form >
+        <c:ImportResource id="resource"/>
+        <c:VisualstrapBlock id="container">
+        <style>
+            .tableLabel{
+                width:30%
+            }
+            
+            .image {
+                  height: 200px !important;
+                   width: 160px !important;
+            }
+            
+            .btn{
+                margin: 0px 10px 10px 10px !important;
+            }
+        </style>
+        
+        
+        
+        <apex:actionFunction name="switchToEditMode" action="{!doEdit}" /> 
+        
+        <div class="container" >
+            <apex:actionstatus id="processSt" starttext="Please Wait.."></apex:actionstatus>
+            <div class="well" >
+                <div style="text-align:center"> <h2>Helpscreen-Scheduling Guidelines</h2></div>
+            </div>
+           <!-- <nav class="navbar navbar-default">
+              
+                <div class="container-fluid">
+                    <div style="text-align:center"> <h2>Helpscreen-Scheduling Guidelines</h2></div>
+                    
+                </div>
+             </nav>   --> 
+        
+        <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+            
+            <div class="row">
+                <center>
+                <apex:commandButton value="Edit Detail" action="{!doEdit}" styleclass="btn btn-primary" rerender="innerpage" rendered="{!Not(editMode)}" status="processSt"/><!--rerender="innerpage"-->
+                <apex:commandButton value="Save Detail" action="{!doSave}" styleclass="btn btn-success" rerender="innerpage"  rendered="{!editMode}" status="processSt"/>
+                <apex:commandButton value="Cancel" action="{!doCancel}" styleclass="btn btn-default" rerender="innerpage"  rendered="{!editMode}" status="processSt"/>
+                </center>
+                <apex:pageMessages id="msgs"></apex:pageMessages>
+            </div>
+            <div class="row">
+                <div class="col-lg-8">
+                    <table class="table table-condensed">
+                        <tr>
+                            <th scope="row" class="tableLabel">Provider Name</th>
+                            <td>{!Contact.FirstName} &nbsp; {!Contact.LastName}</td>
+                        </tr> 
+                        <tr >
+                            <th scope="row" class="tableLabel">Pager</th>
+                            <td>{!ProviderPager}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="tableLabel">Community Site Location</th>
+                            <td><apex:outputPanel id="loclist">
+                                    <apex:selectList value="{!selectedLocation}" size="1" multiselect="false" id="selList">
+                                        <apex:selectOptions value="{!availLocations}"></apex:selectOptions>
+                                        
+                                        <apex:actionSupport event="onchange" status="st" action="{!onchaneLocationPopulateDetails}" rerender="innerpage"/>
+                                    </apex:selectList>
+                                    <apex:outputPanel rendered="{!filteredLocation}"> &nbsp;
+                                        <apex:commandLink value="Show All Location"  reRender="loclist" status="st" action="{!showAllLocation}"/>
+                                        &nbsp;
+                                    </apex:outputPanel>
+                                    <apex:actionStatus startText="Please Wait.." id="st"></apex:actionStatus>
+                                </apex:outputPanel>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="tableLabel">Phone Number</th>
+                            <td>{!contact.Phone}</td>
+                        </tr>  
+                         <tr>
+                            <th scope="row" class="tableLabel">Email</th>
+                            <td>{!contact.Email}</td>
+                        </tr>  
+                         <tr>
+                            <th scope="row" class="tableLabel">Language Spoken</th>
+                            <td>{!Contact.Preferred_Language__c}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="tableLabel">Additional Language</th>
+                            <td>
+                                <apex:outputText value="{!Contact.Additional_Language__c}" rendered="{!NOT(editMode)}"></apex:outputText>
+                				<apex:inputField value="{!tempCon.Additional_Language__c}" rendered="{!editMode}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="tableLabel">Division</th>
+                            <td> {!contact.Division__c}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="tableLabel">Speciality</th>
+                            <td>{!contact.Specialty__c}</td>
+                        </tr>  
+                    </table>
+                </div>
+                <div class="col-lg-4">
+                        <div>
+                        <div>
+                        <img src="{!IF(NOT(ISNULL(contact.Image_URL__c)), '/servlet/servlet.FileDownload?file='+contact.Image_URL__c, $Resource.NoPhotoImage)}" alt="" class="img-thumbnail image" />
+                        </div>
+                        <div>
+                            <a href="#" 
+                               data-toggle="modal"
+                               data-target="#fileModal">Change Picture</a>
+                           <!-- <a href="#" onClick="window.open('/apex/UploadPicture?pid={!Contact.id}','myWindow','width=500,height=500,left=230,top=150,toolbar=0,status=0,');"> Change Photo</a>-->
+                        </div>
+                        </div>
+                </div>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">GENERAL INFORMATION 
+                    </h3>
+                    
+                </div>
+               
+               <div class="panel-body"> 
+                   
+                   
+                   <div class="panel panel-info">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">NP / PA Details</h4>
+                      </div>
+                      <apex:outputPanel id="nppadetail" rendered="{!NOT(editMode)}">
+                          <table class="table">
+                               <tr>
+                                  
+                                  <th>NP / PA </th> 
+                                  <th>Email</th>
+                                  <th>Phone</th>
+                                  <th>Pager</th>
+                                  <th>Extn.</th>
+                               </tr>
+                               
+                               <apex:repeat value="{!nppaWrapper}" var="nppa">
+                                   <tr>
+                                       
+                                       <td>{!nppa.nppaObj.COH_SC_NP_PA__r.FirstName + ' '+ nppa.nppaObj.COH_SC_NP_PA__r.LastName}</td>
+                                       <td>{!nppa.Email}</td>
+                                       <td>{!nppa.Phone}</td>
+                                       <td>{!nppa.pager}</td>
+                                       <td>{!nppa.nppaObj.COH_SC_Extn__c}</td>
+                                   </tr>
+                                 
+                                
+                              </apex:repeat>
+                           </table>
+                       </apex:outputPanel>
+                       <apex:outputPanel id="nppaEdit" rendered="{!editMode}">
+                           <table class="table">
+                               <tr>
+                                  <th>Action</th>
+                                  <th>NP / PA </th> 
+                                  <th>Email</th>
+                                  <th>Phone</th>
+                                  <th>Pager</th>
+                                  <th>Extn.</th>
+                               </tr>
+                               
+                               <apex:repeat value="{!nppaWrapper}" var="nppa">
+                                   <tr>
+                                       <td>
+                                           <apex:actionStatus id="delnppa">
+                                               <apex:facet name="start">
+                                                   <apex:outputPanel >
+                                                       <img src="/img/loading.gif" />
+                                                   </apex:outputPanel>
+                                               </apex:facet>
+                                               <apex:facet name="stop">
+                                                   <apex:outputPanel >
+                                                       <apex:commandlink value="Del" action="{!delNppaRow}" rerender="nppaEdit" status="delnppa">
+                                                           <apex:param value="{!nppa.order}" assignTo="{!nppaRow}"  name="order"/>
+                                                       </apex:commandLink>
+                                                   </apex:outputPanel>
+                                               </apex:facet>
+                                           </apex:actionStatus>
+                                       
+                                       </td>
+                                       <td><apex:inputField value="{!nppa.nppaObj.COH_SC_NP_PA__c}" ><!--onchange="populatenppvalue('{!nppa.order}')"-->
+                                               <apex:actionSupport action="{!populateValuesOnselectNPPA}" event="onchange" rerender="nppaEdit"  status="delnppa">
+                                                   <apex:param value="{!nppa.order}" assignTo="{!nppaRow}"  name="order"/>
+                                               </apex:actionSupport>
+                                           </apex:inputField>
+                                       </td>
+                                       <td><apex:outputtext value="{!nppa.Email}" /> </td>
+                                       <td><apex:outputtext value="{!nppa.phone}" /> </td>
+                                       <td><apex:outputtext value="{!nppa.pager}"/></td>
+                                       <td><apex:inputField value="{!nppa.nppaObj.COH_SC_Extn__c}" /></td>
+                                   </tr>
+                                 
+                                
+                              </apex:repeat>
+                           </table>
+                           <apex:actionStatus id="addnppst">
+                               <apex:facet name="start">
+                                   Please wait...
+                               </apex:facet>
+                               <apex:facet name="stop">
+                                   <apex:commandLink value="Add Row" action="{!addNPPARow}" rerender="nppaEdit" status="addnppst"/>
+                               </apex:facet>
+                           </apex:actionStatus>
+                       </apex:outputPanel>
+                   </DIV>
+                   
+                   <div class="panel panel-info">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">Administrative Support</h4>
+                      </div>
+                      <apex:outputPanel id="adminDetail" rendered="{!NOT(editMode)}">
+                          <table class="table">
+                               <tr>
+                                  <th>Administrator Support </th> 
+                                  <th>Email</th>
+                                  <th>Phone</th>
+                                  <th>Fax</th> <!--Changes by Sanjay on 16th July 2021-->
+                                  <th>Pager</th>
+                                  <th>Extn.</th>
+
+                               </tr>
+                               
+                               <apex:repeat value="{!adminSupportList}" var="admin">
+                                   <tr>
+                                       <td>{!admin.adminSupport.COH_SC_Admin__r.FirstName + ' '+ admin.adminSupport.COH_SC_Admin__r.LastName}</td>
+                                       <td>{!admin.Email}</td>
+                                       <td>{!admin.Phone}</td>
+                                       <td>{!admin.Fax}</td> <!--Changes by Sanjay 16th July 2021-->
+                                       <td>{!admin.pager}</td>
+                                       <td>{!admin.adminSupport.COH_SC_Ext__c}</td>
+                                   </tr>
+                              </apex:repeat>
+                           </table>
+                       </apex:outputPanel>
+                       <apex:outputPanel id="adminEdit" rendered="{!editMode}">
+                          <table class="table">
+                               <tr>
+                                  <th>Action</th> 
+                                  <th>Administrator Support </th> 
+                                  <th>Email</th>
+                                  <th>Phone</th>
+                                  <th>Fax</th> <!--Changes by Sanjay Singh on 16th June 2021-->
+                                  <th>Pager</th>
+                                  <th>Extn</th>
+                               </tr>
+                               
+                               <apex:repeat value="{!adminSupportList}" var="admin">
+                                   <tr>
+                                       <td>
+                                           <apex:actionStatus id="deladmin">
+                                               <apex:facet name="start">
+                                                   <apex:outputPanel >
+                                                       <img src="/img/loading.gif" />
+                                                   </apex:outputPanel>
+                                               </apex:facet>
+                                               <apex:facet name="stop">
+                                                   <apex:outputPanel >
+                                                       <apex:commandlink value="Del" action="{!delAdminSupportRow}" rerender="adminEdit" status="deladmin">
+                                                           <apex:param value="{!admin.order}" assignTo="{!adminRow}"  name="order"/>
+                                                       </apex:commandLink>
+                                                   </apex:outputPanel>
+                                               </apex:facet>
+                                           </apex:actionStatus>
+                                       </td>
+                                       <td><apex:inputField value="{!admin.adminsupport.COH_SC_Admin__c}">
+                                               <apex:actionSupport action="{!populateValuesOnselectadminSupport}" event="onchange" rerender="adminEdit" status="deladmin">
+                                                   <apex:param value="{!admin.order}" assignTo="{!adminRow}"  name="order"/>
+                                               </apex:actionSupport>
+                                           </apex:inputField>
+                                       </td>
+                                       <td><apex:outputtext value="{!admin.Email}"/></td>
+                                       <td><apex:outputtext value="{!admin.Phone}"/></td>
+                                       <td><apex:outputtext value="{!admin.Fax}"/></td> <!--Changes by Sanjay Singh on 16th July 2021-->
+                                       <td><apex:outputtext value="{!admin.pager}"/></td>
+                                       <td><apex:inputField value="{!admin.adminSupport.COH_SC_Ext__c}"/></td>
+                                   </tr>
+                              </apex:repeat>
+                           </table>
+                           <apex:actionStatus id="addasSt">
+                               <apex:facet name="start">
+                                   Please wait...
+                               </apex:facet>
+                               <apex:facet name="stop">
+                                   <apex:commandLink value="Add Row" action="{!addAdminRowRow}" rerender="adminEdit" status="addasSt"/>
+                               </apex:facet>
+                           </apex:actionStatus>
+                           
+                       </apex:outputPanel>
+                   </DIV>
+                   
+                   <div class="panel panel-danger">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">Availability Detail</h4>
+                      </div>
+                       <apex:outputPanel id="avdPanel" rendered="{!NOT(editMode)}">
+                           <table class="table">
+                               <tr>
+                                  <th>Clinic Days</th> 
+                                  <th>Clinic Week</th>
+                                  <th>Clinic Time AM</th>
+                                  <th>Clinic Time PM</th>
+                                  <th>Clinic Locations</th>
+                                  <th>Extn.</th>
+                               </tr>
+                               
+                               <apex:repeat value="{!availList}" var="avd">
+                                   <tr>
+                                       <td>{!avd.availDetailObj.COH_SC_Day__c} </td>
+                                       <td>{!avd.availDetailObj.COH_SC_Clinic_Week__c}</td>
+                                       <td>{!avd.availDetailObj.COH_SC_Start_Time_AM__c} - {!avd.availDetailObj.COH_SC_End_Time_AM__c}</td>
+                                       <td>{!avd.availDetailObj.COH_SC_Start_Time_PM__c} - {!avd.availDetailObj.COH_SC_End_Time_PM__c}</td>
+                                       <td>{!avd.availDetailObj.COH_SC_Locations__c}</td>
+                                       <td>{!avd.availDetailObj.COH_SC_Ext__c}</td>
+                                   </tr>
+                                 
+                                
+                              </apex:repeat>
+                           </table>
+                       </apex:outputPanel>
+                       <apex:outputPanel id="avdEditPanel" rendered="{!editMode}">
+                           <table class="table">
+                               <tr>
+                                  <th>Action</th>
+                                  <th>Clinic Days</th> 
+                                  <th>Clinic Week</th>
+                                  <th>Clinic Time AM</th>
+                                  <th>Clinic Time PM</th>
+                                  <th>Clinic Locations</th>
+                                  <th>Extn.</th>
+                               </tr>
+                               
+                               <apex:repeat value="{!availList}" var="avd">
+                                   <tr>
+                                       <td>
+                                           <apex:actionStatus id="delavd">
+                                               <apex:facet name="start">
+                                                   <apex:outputPanel >
+                                                       <img src="/img/loading.gif" />
+                                                   </apex:outputPanel>
+                                               </apex:facet>
+                                               <apex:facet name="stop">
+                                                   <apex:outputPanel >
+                                                       <apex:commandlink value="Del" action="{!delAvailRow}" rerender="avdEditPanel" status="delavd">
+                                                           <apex:param value="{!avd.order}" assignTo="{!availDetRow}"  name="order"/>
+                                                       </apex:commandLink>
+                                                   </apex:outputPanel>
+                                               </apex:facet>
+                                           </apex:actionStatus>
+                                       </td>
+                                       <td><apex:inputField value="{!avd.availDetailObj.COH_SC_Day__c}"/> </td>
+                                       <td><apex:inputField value="{!avd.availDetailObj.COH_SC_Clinic_Week__c}"/></td>
+                                       <td><apex:inputField value="{!avd.availDetailObj.COH_SC_Start_Time_AM__c}"/>-<apex:inputField value="{!avd.availDetailObj.COH_SC_End_Time_AM__c}"/></td>
+                                       <td><apex:inputField value="{!avd.availDetailObj.COH_SC_Start_Time_PM__c}"/>-<apex:inputField value="{!avd.availDetailObj.COH_SC_End_Time_PM__c}"/></td>
+                                       <td><apex:inputField value="{!avd.availDetailObj.COH_SC_Locations__c}"/></td>
+                                       <td><apex:inputField value="{!avd.availDetailObj.COH_SC_Ext__c}"/></td>
+                                   </tr>
+                                 
+                                
+                              </apex:repeat>
+                           </table>
+                           <apex:actionStatus id="addAvailSt">
+                               <apex:facet name="start">
+                                   Please wait...
+                               </apex:facet>
+                               <apex:facet name="stop">
+                                   <apex:commandLink value="Add Row" action="{!addAvailDetailRow}" reRender="avdEditPanel" status="addAvailSt"/>
+                               </apex:facet>
+                           </apex:actionStatus>
+                           
+                       </apex:outputPanel>
+                      
+                   </DIV>
+               </div>
+               
+               <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">SPECIAL INSTRUCTIONS</h4>
+                    </div>
+                    <apex:outputPanel id="instructionPanelnoEdit" rendered="{!NOT(editMode)}">
+                           <table class="table">
+                               <tr>
+                                  <th>Event</th> 
+                                  <th>Duration</th>
+                                  <th>Notes</th>
+                               </tr>
+                               
+                               <apex:repeat value="{!pDetailList}" var="pvd">
+                                   <tr>
+                                       <td>{!pvd.pDetail.COH_SC_Event__c} </td>
+                                       <td>{!pvd.pDetail.COH_SC_Duration_From__c} - {!pvd.pDetail.COH_SC_Duration_To__c}</td>
+                                       <td>{!pvd.pDetail.COH_SC_Note__c}</td>
+                                   </tr>
+                              </apex:repeat>
+                           </table>
+                       </apex:outputPanel>
+                       <apex:outputPanel id="instructionPanelEdit" rendered="{!editMode}">
+                           <table class="table">
+                               <tr>
+                                  <th>Action</th>
+                                  <th>Event</th> 
+                                  <th>Duration</th>
+                                  <th>Notes</th>
+                               </tr>
+                               
+                               <apex:repeat value="{!pDetailList}" var="pvd">
+                                   <tr>
+                                       <td>
+                                           <apex:actionStatus id="instructST">
+                                               <apex:facet name="start">
+                                                   <apex:outputPanel >
+                                                       <img src="/img/loading.gif" />
+                                                   </apex:outputPanel>
+                                               </apex:facet>
+                                               <apex:facet name="stop">
+                                                   <apex:outputPanel >
+                                                       <apex:commandlink value="Del" action="{!delProviderInstructionRow}" rerender="instructionPanelEdit" status="instructST">
+                                                           <apex:param value="{!pvd.order}" assignTo="{!instructionOrder}"  name="order"/>
+                                                       </apex:commandLink>
+                                                   </apex:outputPanel>
+                                               </apex:facet>
+                                           </apex:actionStatus>
+                                       </td>
+                                       <td><apex:inputField value="{!pvd.pDetail.COH_SC_Event__c}"/> </td>
+                                       <td><apex:inputField value="{!pvd.pDetail.COH_SC_Duration_From__c}"/>-<apex:inputField value="{!pvd.pDetail.COH_SC_Duration_To__c}"/></td>
+                                       <td><apex:inputField value="{!pvd.pDetail.COH_SC_Note__c}"/></td>
+                                   </tr>
+                                 
+                                
+                              </apex:repeat>
+                           </table>
+                           <apex:actionStatus id="addinstrn">
+                               <apex:facet name="start">
+                                   Please wait...
+                               </apex:facet>
+                               <apex:facet name="stop">
+                                   <apex:commandLink value="Add Row" action="{!addNewProviderInstructions}" reRender="instructionPanelEdit" status="addinstrn"/>
+                               </apex:facet>
+                           </apex:actionStatus>
+                      </apex:outputPanel>
+                 </div>  
+                                  
+            </div>
+            <div class="alert alert-danger" role="alert" >
+                <h2 style="text-align:center;" ><apex:outputtext value="{!gNote.COH_SC_Note__c}" rendered="{!NOT(editmode)}"/></h2>
+                <apex:outputPanel rendered="{!editmode}">
+                    <label>  Note  &nbsp; </label> <apex:inputField value="{!gNote.COH_SC_Note__c}" style="width:300px"/>
+                </apex:outputPanel>
+            </div>
+            
+            <div class="row">
+                <center>
+                <apex:commandButton value="Edit Detail" action="{!doEdit}" styleclass="btn btn-primary" rerender="innerpage" rendered="{!Not(editMode)}" status="processSt"/><!--rerender="innerpage"-->
+                <apex:commandButton value="Save Detail" action="{!doSave}" styleclass="btn btn-success" rerender="innerpage"  rendered="{!editMode}" status="processSt"/>
+                <apex:commandButton value="Cancel" action="{!doCancel}" styleclass="btn btn-default" rerender="innerpage"  rendered="{!editMode}" status="processSt"/>
+                 </center>
+            </div>
+        </div>
+        
+        <!--Modal for uploading file -->
+        <div class="modal fade" id="fileModal" data-backdrop="static">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Upload Picture</h4>
+              </div>
+              <div class="modal-body">
+                    <c:FileUpload objectId="{!Contact.id}" attachmentID="{!Contact.Image_URL__c}"/>
+              </div>
+              <div class="modal-footer">
+                  <p style="float:left">Note: Please refresh page to reflect the image changes. </p>
+               <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="uploadFile()">Upload</button>-->
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        
+        
+        
+       
+         <!-- Modal -->
+<div class="modal fade" id="processModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+         
+    </c:VisualstrapBlock>
+    </apex:form>
+    </apex:outputPanel>
+      
+    </body>    
+</apex:page>

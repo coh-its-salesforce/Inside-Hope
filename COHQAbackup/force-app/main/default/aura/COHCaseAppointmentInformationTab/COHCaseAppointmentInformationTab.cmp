@@ -1,0 +1,456 @@
+<aura:component controller="COHCaseInsuranceTabController" implements="flexipage:availableForAllPageTypes,lightning:availableForFlowScreens,force:hasRecordId">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:attribute name="mLoading" type="Boolean" default="true"/>
+    <aura:attribute name="mCase" type="Case" default="{}"/>
+    <aura:attribute name="mPatientAppointmentNotOfferedReasons" type="List" default=""/>
+    <aura:attribute name="mReachedOutToMDToReschedule" type="List" default=""/>
+    <aura:attribute name="mPatientRegisteredVal" type="Boolean" default="false"/>
+    <aura:attribute name="mPatientScheduledFirstCallVal" type="Boolean" default="false"/>
+    <aura:attribute name="mPatientOfferedAppointmentVal" type="String" default=""/>
+    <aura:attribute name="mPatientAppointmentNotOfferedReasonsVal" type="String" default=""/>
+    <aura:attribute name="mReachedOutToMDToRescheduleVal" type="String" default=""/>
+    <aura:attribute name="mPatientStatusVal" type="String" default=""/>
+    <aura:attribute name="mPatientStatus" type="List" default=""/>
+    <aura:attribute name="mClinicallyCompletedDeniedReasonVal" type="String" default=""/>
+    <aura:attribute name="mCompletedClinicallyDeniedReasons" type="List" default=""/>
+    <aura:attribute name="mCurrentCaseOwnerVal" type="String" default=""/>
+    <aura:attribute name="mClinicalTeamMembers" type="List" default=""/>
+    <aura:attribute name="mMDDeclinedToMoveUpApptVal" type="String" default=""/>
+    <aura:attribute name="mMDDeclinedToMoveUpAppt" type="List" default=""/>
+    <aura:attribute name="mPatientNeedAuthLOAVal" type="String" default=""/>
+    <aura:attribute name="mDisableDisplayPatientRequestSpecificMD" type="Boolean" default="true"/>
+    <aura:attribute name="mDisableDisplayPatientOfferedAppointment" type="Boolean" default="true"/>
+    <aura:attribute name="mDisableDisplayReasonAppointmentNotOffered" type="Boolean" default="true"/>
+    <aura:attribute name="mDisableDisplayReachedOutToMDToReschedule" type="Boolean" default="true"/>
+    <aura:attribute name="mPatientRequestSpecificMDVal" type="String" default=""/>
+    <aura:attribute name="mLocations" type="List"/><!--Changes Start: Added by Sanjay on 09/16/2021-->
+    <aura:attribute name="willingToDoVisits" type="String" default=""/>
+    <aura:attribute name="patientEmailAddress" type="String" default=""/>
+    <aura:attribute name="haveVideoChatAccess" type="String" default=""/>
+    <aura:attribute name="isEligible" type="String" default="Not Eligible"/>
+    <aura:attribute name="consentingStatus" type="String" default=""/>
+    <aura:attribute name="updateTime" type="Boolean" default="false"/>
+    <aura:attribute name="nullTime" type="Boolean" default="false"/>
+    <aura:attribute name="diffAppt" type="Boolean" default="false"/>
+
+    
+    <aura:attribute name="consentingType" type="String" default=""/>
+    <aura:attribute name="consentingAppt" type="DateTime" />
+    <aura:attribute name="visitTypePreference" type="String" default=""/>
+    <aura:attribute name="requestedMD" type="String" default=""/>
+    <aura:attribute name="howmanyDays" type="String" default=""/>
+    <aura:attribute name="isSoonerAppt" type="String" default=""/>
+    <aura:attribute name="options" type="List" default="[
+        { label: 'Auth/LOA Pending', value: 'Auth/LOA Pending' },
+        { label: 'Tele-Health/OOS Approval Needed', value: 'Tele-Health/OOS Approval Needed' },
+        { label: 'Clinical Review Required', value: 'Clinical Review Required' },
+        { label: '1x Visit: Records Needed', value: '1x Visit: Records Needed' }]"/>
+    <aura:attribute name="selectedSchedullingBarrier" type="List" default="[]"/>
+    
+    
+    <aura:attribute name="locationVal" type="String" default=""/><!--Changes Start: Added by Sanjay on 08/20/2021-->
+    <!--**** Changes made by sanjay- date : 04-07-2020 ***Start***-->
+    <aura:attribute name="videoEmailSent" type="String" default="false"/>
+    <!--**** Changes made by sanjay- date : 04-07-2020 ***End***-->
+    
+    <div class="slds-card slds-card_boundary" style="box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.16);">
+        <div class="slds-section slds-is-open slds-m-top_none">
+            <div class="slds-form">
+                <aura:if isTrue="{!not(v.mLoading)}">
+                    <h3 class="slds-section__title">
+                        <button aria-controls="expando-unique-id" aria-expanded="true" class="slds-button slds-section__title-action">
+                            <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                            <span class="slds-truncate" title="Section Title">Patient Appointment Info</span>
+                        </button>
+                    </h3>
+                    
+                    <div aria-hidden="false" class="slds-section__content" id="expando-unique-id">                                                          
+                        <div class="slds-m-around_small">      
+                            <h1 class="slds-section__title"><b>Current Appointment</b></h1>                                    
+                            <div class="slds-grid slds-wrap slds-p-around--medium" style="background:#eee; border:1px #ddd solid;">
+                                <div class="slds-col slds-size_1-of-4 slds-p-horizontal_medium slds-p-vertical_xx-small" style="font-size:14px">
+                                    <label class="slds-form-element__label"> 
+                                        <span style="font-size:14px"><b>Provider Name:</b></span></label>
+                                    <ui:outputText value="{!v.mCase.Provider_Name__c}"/>
+                                </div>  
+                                <div class="slds-col slds-size_1-of-4 slds-p-horizontal_medium slds-p-vertical_xx-small" style="font-size:14px">
+                                    <label class="slds-form-element__label"> 
+                                        <span style="font-size:14px"><b>Location:</b></span></label>
+                                    
+                                    <ui:outputText value="{!v.mCase.Appointment_Location__c}"/>	
+                                </div>
+                                <div class="slds-col slds-size_1-of-4 slds-p-horizontal_medium slds-p-vertical_xx-small" style="font-size:14px">
+                                    <label class="slds-form-element__label"> 
+                                        <span style="font-size:14px"><b>Distance:</b></span></label>
+                                    <ui:outputText value="{!v.mCase.Distance_between_Patient_and_Appt_Loc__c}"/>
+                                </div>         
+                                <div class="slds-col slds-size_1-of-4 slds-p-horizontal_medium slds-p-vertical_xx-small" style="font-size:14px">
+                                    <label class="slds-form-element__label"> 
+                                        <span style="font-size:14px"><b>Appt Status:</b></span></label>
+                                    <ui:outputText value="{!v.mCase.Appt_Status__c}"/>
+                                </div>         
+                            </div>
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                    <lightning:input disabled = "true" type="datetime" name="Appt_Date_Time__c" label="Appt. Date and Time" value="{!v.mCase.Appt_Date_Time__c}"/>
+                                </div>
+                                <aura:if isTrue="{!v.diffAppt}">
+                                    <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                        <lightning:input disabled = "true" type="datetime" name="Appt_Date_Time__c" label="Original Appt. Date and Time:" value="{!v.mCase.Original_Appointment__r.Appointment_Date_Time__c}"/>
+                                    </div>
+                                    
+                                </aura:if>
+                                <!--Changes Start: Added by Sanjay on 8/20/2021-->
+                                <!--Changes END: Added by Sanjay on 8/20/2021-->
+                            </div>    
+                        </div>
+                    
+
+                     <!--   <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="mPatientRegistered" name="mPatientRegistered" label="Patient Registered?"  required="false" value = "{!v.mPatientRegisteredVal}">
+                                    <option value="false" selected="{!not(v.mCase.Patient_Registered__c)}">No</option>
+                                    <option value="true" selected="{!v.mCase.Patient_Registered__c}">Yes</option>
+                                </lightning:select>
+                            </div>   
+                           
+                            <div class="slds-col slds-size_2-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:input name="If_Not_Registered_Explain__c" label="If Not Registered, Explain" value="{!v.mCase.If_Not_Registered_Explain__c}"/>
+                            </div>                            
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="mPatientScheduledFirstCall" name="mPatientScheduledFirstCall" label="Pt. Scheduled @ 1st Call" required="false" value = "{!v.mPatientScheduledFirstCallVal}">
+                                    <option value="false" selected="{!not(v.mCase.Pt_scheduled_1st_Call__c)}">No</option>
+                                    <option value="true" selected="{!v.mCase.Pt_scheduled_1st_Call__c}">Yes</option>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_2-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:input name="If_Pt_Not_Scheduled_1st_Call_Explain__c" label="If Pt. Not Scheduled @ 1st Call, Explain" value="{!v.mCase.If_Pt_Not_Scheduled_1st_Call_Explain__c}"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="mPatientNeedAuthLOA" name="mPatientNeedAuthLOA" label="Does Patient Need Auth/LOA?" required="false" onchange="{!c.onPatientNeedAuthLOAChange}" value="{!v.mPatientNeedAuthLOAVal}">
+                                    <option text="-Select Yes or No-" value="" selected="{!v.mPatientNeedAuthLOAVal == ''}"/>
+                                    <option value="No" selected="{!v.mPatientNeedAuthLOAVal == 'No'}">No</option>
+                                    <option value="Yes" selected="{!v.mPatientNeedAuthLOAVal == 'Yes'}">Yes</option>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="mPatientRequestSpecificMD" name="mPatientRequestSpecificMD" label="Is Pt. Requesting A Specific MD?" required="false" disabled="{!v.mDisableDisplayPatientRequestSpecificMD}" value="{!v.mPatientRequestSpecificMDVal }">
+                                    <option text="-Select Yes or No-" value="" selected="{!v.mPatientRequestSpecificMDVal == ''}"/>
+                                    <option value="No" selected="{!v.mPatientRequestSpecificMDVal == 'No'}">No</option>
+                                    <option value="Yes" selected="{!v.mPatientRequestSpecificMDVal == 'Yes'}">Yes</option>
+                                </lightning:select>
+                            </div>
+                        </div>
+                        
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="mPatientOfferedAppointment" name="mPatientOfferedAppointment" title="Must have sent request in EPIC using smart phrase" label="Patient Scheduled In 7 days?" required="false" disabled="{!v.mDisableDisplayPatientOfferedAppointment}" onchange="{!c.onApptNotOfferedChange}" value="{!v.mPatientOfferedAppointmentVal}">
+                                    <option text="-Not Applicable-" value="" selected="{!v.mPatientOfferedAppointmentVal == ''}"/>
+                                    <option value="No" selected="{!v.mPatientOfferedAppointmentVal == 'No'}">No</option>
+                                    <option value="Yes" selected="{!v.mPatientOfferedAppointmentVal == 'Yes'}">Yes</option>
+                                    <option value="Non-FCR" selected="{!v.mPatientOfferedAppointmentVal == 'Non-FCR'}">Non-FCR</option>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="mPatientAppointmentNotOfferedReasonsList" name="mPatientAppointmentNotOfferedReasonsList" required="false" disabled="{!v.mDisableDisplayReasonAppointmentNotOffered}" label="Reason MD Is Unable To See Patient In 7 Days" onchange="{!c.onReasonApptNotOfferedChange}" value="{!v.mPatientAppointmentNotOfferedReasonsVal}" >
+                                    <option text="-None-" value="" selected="{!v.mPatientAppointmentNotOfferedReasonsVal == null}"/>
+                                    <aura:iteration items="{!v.mPatientAppointmentNotOfferedReasons}" var="i">
+                                        <option text="{#i.label}" value="{#i.value}" selected="{#v.mCase.Reason_Not_Offered_Appt_Within_2_Days__c == i.value}"/>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                        </div>                        
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="mReachedOutToMDToReschedule" name="mReachedOutToMDToReschedule" label="Reached out to MD to move up appointment? " disabled="{!v.mDisableDisplayReachedOutToMDToReschedule}" value="{!v.mReachedOutToMDToRescheduleVal}" >
+                                    <option text="-Not Applicable-" value="" selected="{!v.mReachedOutToMDToRescheduleVal == ''}"/>
+                                    <option value="No" selected="{!v.mReachedOutToMDToRescheduleVal == 'No'}">No</option>
+                                    <option value="Yes" selected="{!v.mReachedOutToMDToRescheduleVal == 'Yes'}">Yes</option>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="mMDDeclinedToMoveUpAppt" name="mMDDeclinedToMoveUpAppt" label="Did MD decline to move up appointment?"  value="{!v.mMDDeclinedToMoveUpApptVal}" >
+                                    <option text="-None-" value="" selected="{!v.mMDDeclinedToMoveUpApptVal == ''}"/>
+                                    <aura:iteration items="{!v.mMDDeclinedToMoveUpAppt}" var="i">
+                                        <option text="{#i.label}" value="{#i.value}" selected="{#v.mCase.Decline_to_move_up_appt__c == i.value}"/>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                        </div>
+                        
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="mClinicalTeamMembersList" name="mClinicalTeamMembersList" label="Clinical Team Assignment" onchange="{!c.onClinicalTeamMemberAssignedChange}" value="{!v.mCurrentCaseOwnerVal}">
+                                    <option text="-None-" value="" selected="{!v.mCurrentCaseOwnerVal == null}"/>
+                                    <aura:iteration items="{!v.mClinicalTeamMembers}" var="i">
+                                        <option text="{#i.label}" value="{#i.value}" selected="{!v.mCurrentCaseOwnerVal == i.value}"/>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:input type="datetime" name="Date_Nurse_is_assigned__c" label="Date Nurse Is Assigned" readonly="true" value="{!v.mCase.Date_Nurse_is_assigned__c}"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="mPatientStatusList" name="mPatientStatusList" label="Patient Status" onchange="{!c.onPatientStatusChange}"  value="{!v.mPatientStatusVal}" >
+                                    <option text="-None-" value="" selected="{!v.mPatientStatusVal == null}"/>
+                                    <aura:iteration items="{!v.mPatientStatus}" var="i">
+                                        <option text="{#i.label}" value="{#i.value}" selected="{!v.mPatientStatusVal == i.value}"/>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="mCompletedClinicallyDeniedList" name="mCompletedClinicallyDeniedList" label="Completed/Clinically Denied Reason" value="{!v.mCase.Completed_Clinically_Denied_Reason__c}">
+                                    <option text="-None-" value="" selected="{!v.mClinicallyCompletedDeniedReasonVal == null}"/>
+                                    <aura:iteration items="{!v.mCompletedClinicallyDeniedReasons}" var="i">
+                                        <option text="{#i.label}" value="{#i.value}" selected="{!v.mClinicallyCompletedDeniedReasonVal == i.value}"/>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                        </div>
+                        
+                        <aura:if isTrue="{!v.mCase.RecordType.DeveloperName == 'Enterprise_Access_New_Patient'}">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                    <lightning:input type="text" name="Denied_By__c" label="Denied By" value="{!v.mCase.Denied_By__c}"/>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                    <lightning:input type="text" name="Referred_To_Other__c" label="Referred To" value="{!v.mCase.Referred_To_Other__c}"/>
+                                </div>
+                            </div>
+                        </aura:if>    
+                        
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:input type="datetime" name="Clinical_Intake_Complete__c" label="Clinical Intake Complete" value="{!v.mCase.Clinical_Intake_Complete__c}"/>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:input type="checkbox" aura:id="mClinicalProcessComplete" name="mClinicalProcessComplete"
+                                                 checked = "{!v.mCase.Clinical_Process_Complete__c}" label="Clinical Process Complete"
+                                                 onchange="{!c.onClinicalProcessCompleteChange}"/>
+                            </div>
+                        </div>
+                       
+                        <aura:if isTrue="{!v.mCase.RecordType.DeveloperName != 'Enterprise_Access_New_Patient'}">
+                            <div class="slds-grid slds-wrap">
+                                
+                                <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                    <lightning:input type="datetime" name="Date_Email_Sent_to_MD__c" label="Date Email Sent To MD" 
+                                                     value="{!v.mCase.Date_Email_Sent_to_MD__c}"/>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                    <lightning:input type="datetime" name="Date_MD_Response__c" label="MD Response Date" value="{!v.mCase.Date_MD_Response__c}"/>
+                                </div>
+                                
+                            </div>
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                    <lightning:input type="datetime" name="Date_MD_Decision__c" label="MD Decision Date" value="{!v.mCase.Date_MD_Decision__c}"/>
+                                </div>
+                            </div>
+                        </aura:if>-->
+                                            
+                    </div>
+                    
+                    <h3 class="slds-section__title">
+                        <button aria-controls="expando-unique-id1" aria-expanded="true" class="slds-button slds-section__title-action">
+                            <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                            <span class="slds-truncate" title="Section Title">Telehealth Screening</span>
+                        </button>
+                    </h3>
+                    <div aria-hidden="false" class="slds-section__content" id="expando-unique-id1">
+                        <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:select aura:id="visits" name="visits" 
+                                              label="Is Patient willing to do visits? " value="{!v.willingToDoVisits}" onchange="{!c.telehealthScreeningChange}">
+                                <option text="--Not Applicable--" value="" />
+                                <option value="No" >No</option>
+                                <option value="Yes">Yes</option>
+                            </lightning:select>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:select aura:id="haveEmailAddress" name="Email Address" 
+                                              label="Does the patient have an e-mail address? " value="{!v.patientEmailAddress}" onchange="{!c.telehealthScreeningChange}">
+                                <option text="--Not Applicable--" value="" />
+                                <option value="No" >No</option>
+                                <option value="Yes">Yes</option>
+                            </lightning:select>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:select aura:id="haveVideoChat" name="Video Chat" 
+                                              label="Does patient have access to Video Chat? " value="{!v.haveVideoChatAccess}" onchange="{!c.telehealthScreeningChange}">
+                                <option text="--Not Applicable--" value="" />
+                                <option value="No" >No</option>
+                                <option value="Yes">Yes</option>
+                            </lightning:select>
+                        </div>
+                        
+                        
+                    </div>
+                    <h3 class="slds-section__title">
+                        <button aria-controls="expando-unique-id2" aria-expanded="true" class="slds-button slds-section__title-action">
+                            <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                            <span class="slds-truncate" title="Section Title">Consenting</span>
+                        </button>
+                    </h3>
+                    <div aria-hidden="false" class="slds-section__content" id="expando-unique-id2">
+                        <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:select aura:id="isEligible" name="Is Eligible"  disabled="true"
+                                              label="Virtual Consenting Eligibility " value="{!v.isEligible}"
+                                             >
+                               <option value="Not Eligible">Not Eligible</option>
+                                <option value="Eligible" >Eligible</option>
+                                
+                            </lightning:select>
+                        </div>
+                         <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:select aura:id="consentingType" name="Consenting Type" 
+                                              label="Consenting Type " value="{!v.consentingType}"
+                                              required="true">
+                                <option text="--Not Applicable--" value="" />
+                                <option value="In-Person" >In-Person</option>
+                                <option value="Virtual">Virtual</option>
+                            </lightning:select>
+                        </div>  
+                        <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:select aura:id="consentingStatus" name="Consenting Status" 
+                                              label="Consenting Status " value="{!v.consentingStatus}"
+                                              required="true">
+                                <option text="--Not Applicable--" value="" />
+                                <option value="Scheduled" >Scheduled</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Canceled">Canceled</option>
+                                <option value="Pending Patient Call Back">Pending Patient Call Back</option>
+                                <option value="Assigned to Outbound">Assigned to Outbound</option>
+                                <option value="Front Office to Complete">Front Office to Complete</option>
+                            </lightning:select>
+                        </div>
+                       
+                        <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                            <lightning:input type="datetime" name="Consenting Appt" label="Consenting Appt. Date &amp; Time" value="{!v.consentingAppt}"/>
+                        </div>
+                    </div>
+                    <h3 class="slds-section__title">
+                        <button aria-controls="expando-unique-id3" aria-expanded="true" class="slds-button slds-section__title-action">
+                            <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                            <span class="slds-truncate" title="Section Title">Patient Appointment Preferences</span>
+                        </button>
+                    </h3>
+                    <div aria-hidden="false" class="slds-section__content" id="expando-unique-id3">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="visitPreference" name="Visit Type" 
+                                                  label="Visit Type Preference? " value="{!v.visitTypePreference}"  required="true">
+                                    <option text="--Not Applicable--" value="" />
+                                    <option value="In Person" >In Person</option>
+                                    <option value="Tele-Health">Tele-Health</option>
+                                    <option value="In Person or Tele-Health" >In Person or Tele-Health</option>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="requestingSpecificMD" name="Specific MD" 
+                                                  label="Is Pt. Requesting a Specific MD? " value="{!v.requestedMD}" required="true">
+                                    <option text="--Not Applicable--" value="" />
+                                    <option value="No" >No</option>
+                                    <option value="Yes">Yes</option>
+                                </lightning:select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 class="slds-section__title">
+                        <button aria-controls="expando-unique-id4" aria-expanded="true" class="slds-button slds-section__title-action">
+                            <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                            <span class="slds-truncate" title="Section Title">Appointment Availability</span>
+                        </button>
+                    </h3>
+                    <div aria-hidden="false" class="slds-section__content" id="expando-unique-id4">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="numberOfDays" name="Number Days" 
+                                                  label="Pt Appt is Scheduled in how many days? " onchange="{!c.resetData}" value="{!v.howmanyDays}"  disabled = "true">
+                                    <option text="--Not Applicable--" value="" />
+                                    <option value="Next 48 Hours" >Next 48 Hours</option>
+                                    <option value="3-7 Days">3-7 Days</option>
+                                    <option value="8+ Days" >8+ Days</option>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="sonnerApt" name="Sooner aapt" 
+                                                  label="Does Pt want a sooner appt? " onchange="{!c.resetScheduleBarrier}" 
+                                                  disabled="{!if(v.howmanyDays == '8+ Days',false,true)}"  value="{!v.isSoonerAppt}" >
+                                    <option text="--Not Applicable--" value="" />
+                                    <option value="No: Patient Date/Time Preferences" >No: Patient Date/Time Preferences</option>
+                                    <option value="Yes: No New Pt Slot Available*">Yes: No New Pt Slot Available*</option>
+                                    <option value="Scheduling Barrier">Scheduling Barrier</option>
+                                </lightning:select>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:dualListbox aura:id="selectGenre"
+                                                       name="Genre"
+                                                       label="Type of Scheduling Barriers"
+                                                       sourceLabel="Available Scheduling Barriers"
+                                                       selectedLabel="Selected Scheduling Barriers"
+                                                       options="{!v.options}"
+                                                       disabled="{!if(v.isSoonerAppt == 'Scheduling Barrier',false,true)}"
+                                                       value="{!v.selectedSchedullingBarrier}"
+                                                       onchange="{!c.handleScheduleBarrier}"/>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                     <h3 class="slds-section__title">
+                        <button aria-controls="expando-unique-id4" aria-expanded="true" class="slds-button slds-section__title-action">
+                            <lightning:icon iconName="utility:chevrondown" alternativeText="Open" size="xx-small" class="slds-p-right_x-small"/>
+                            <span class="slds-truncate" title="Section Title">Clinical Intake / Sooner Appointment Request</span>
+                        </button>
+                    </h3>
+                    <div aria-hidden="false" class="slds-section__content" id="expando-unique-id4">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:input type="checkbox" aura:id="clinicalIntake" name="Clinical Intake" checked = "{!v.mCase.Delay_in_Clinical_Intake__c}" 
+                                                 label="Delay in clinical Intake"/>
+                            
+                            </div>
+                            <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:input type="checkbox" aura:id="smartPhaseSent" name="Smartphase Sent"  
+                                                 label="SmartPhase Sent? " onchange="{!c.resetOutreachPicklist}" checked = "{!v.mCase.SmartPhrase_Sent__c}"/><!--Removed Attribute : disabled="{!v.isSoonerAppt == 'Yes: No New Pt Slot Available*'}" -->
+                                <lightning:input disabled="true" type="datetime" name="Date SmartPhase" label="Date Smartphase Sent" value="{!v.mCase.Date_SmartPhrase_Sent_auto_time_stamp__c}"/>
+                                
+                                
+                            </div>
+                            <div class="slds-col slds-size_1-of-3 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                <lightning:select aura:id="outReachResult" name="outReach Result" 
+                                                  label="SmartPhrase Outreach Result "
+                                                  value="{!v.mCase.SmartPhrase_Outreach_Result__c }"
+                                                  disabled="{!!v.mCase.SmartPhrase_Sent__c}">
+                                    <option text="--Not Applicable--" value="" />
+                                    <option value="Approved to Move Up Appt" >Approved to Move Up Appt</option>
+                                    <option value="Decline to Move Up Appt">Decline to Move Up Appt</option>
+                                    <option value="No Response">No Response</option>
+                                    <option value="Reassigned to Another MD">Reassigned to Another MD</option>
+                                    
+                                </lightning:select>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <aura:set attribute="else">
+                        <div style="height: 5rem;">
+                            <lightning:spinner/>
+                        </div>
+                    </aura:set>
+                </aura:if>
+            </div>
+            <div class="slds-text-align_center">
+                <lightning:button aura:id="Save" label="Save Appointment Info" onclick="{!c.saveApptInfoClick}" variant="brand"/>
+            </div>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,9 @@
+<aura:component controller="COH_CarouselController" implements="forceCommunity:availableForAllPageTypes" access="global">
+    <aura:attribute name="article" type="object"/>
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+<div style="padding:45px;">
+<aura:unescapedHtml value="{!v.article.overview__c }"/>
+    
+    <aura:unescapedHtml value="{!v.article.Article__c}"/>
+    </div>
+</aura:component>

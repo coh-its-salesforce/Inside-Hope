@@ -1,0 +1,43 @@
+<aura:component >
+    <aura:attribute name="openMedicalBuildings" type="boolean" default="false"/>
+    <aura:attribute name="MedicalOffice" type="boolean" default="false"/>
+   <aura:attribute name="aboutMOB" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.aboutMOB}">
+    <div class="banner-container">
+    	<div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12">
+      			<div class="banner-image">
+      				<img src = "{!$Resource.CampusPlanMOB}"/> 
+      			</div>
+      		</div>
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12" >
+      	   		<div class="banner-content">
+                    <h2>MOB Opening June 1st</h2>
+                    <h3>Construction of our New Medical office Building is Well Underway, With Staff Scheduled to Begin Moving in This June</h3>
+               </div>
+      		</div>
+      	</div>
+      </div>
+        <div class="profile-content">
+        <p>When complete, the four-story facility will house many of our physicians and leaders. It will be comprised of approximately 160 new offices and 310 workstations, a micro-market food service outlet, and a 200-seat auditorium for meetings and reserch presentations.</p>
+        <p>The building will be physically connected by a bridge to the michael Amini Transfusion Medicine Center and eventually the Duarte Outpatient Clinic set to open 2024. This is the first of many changes to our Duarte, California, Campus as we transform it into the "Cancer Campus of the Future."</p>
+        <p>"We are investing more than $1 billion over the next several years to create a more advanced, attractive and cohesive campus environment," said Jeff Walker, M.B.A., chief operating officer. "our campus plan is allowing us to expand hope, with the ultimate goal of treating more patients and saving more lives." The full build out will result in a net increase of approximately 1 million gross square feet.</p>
+        <p>Our transformation is based on several guiding principles:</p>
+            <ul class="content-ul">
+            	<li>Improving our patient/visitor and staff experience</li>
+                <li>Simplifying and enhancing our campus circulation, with emphasis on improving vehicle and pedestrian flow.</li>
+                <li>Moderanizing buildings and creating a common architectural look and feel.</li>
+                <li>Protecting and enhancing our strong relationship with nature, including preserving our historic gardens and iconic gateway to the campus.</li>
+                <li>Leading in sustainability and being environmentally friendly by reducing our energy, water, fossil fuel and greenhouse gas emissions.</li>
+            </ul>
+        <p>"A sincere thanks to everyone for our ongoing support and contributions as we continue our expansion journey and work to build our incredible future together," Walker added.</p>
+         </div>		
+  			
+          <div class="backbutton" onclick="{!c.goBackToMOBProfilePage}" ><lightning:icon iconName="utility:back" size="x-small" variant="inverse" />&nbsp;&nbsp;&nbsp;&nbsp;Back  
+    </div>
+    </aura:if>
+    <aura:if isTrue="{!v.MedicalOffice}">
+            <c:COH_CampusPlan_MedicalOfficeProfile/>
+        </aura:if>
+    
+</aura:component>

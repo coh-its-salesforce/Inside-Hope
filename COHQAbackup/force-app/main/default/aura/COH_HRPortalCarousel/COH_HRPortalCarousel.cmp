@@ -1,0 +1,28 @@
+<aura:component controller="COH_HRPortalCarouselController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    
+    <aura:attribute type="List" name="carouselList" default="[]"/>
+    <!-- Start Sanjay Singh 06/02/2021 Added code to hide the start nad stop of carousel button  -->
+    <aura:html tag="style">
+        .slds-carousel__autoplay{
+       display: none !important;
+        }
+    </aura:html>
+    
+    <!-- End Sanjay Singh 06/02/2021 Added code to hide the start nad stop of carousel button -->
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <div class="slds-box">
+       
+        <lightning:carousel disableAutoScroll="false" disableAutoRefresh="false"  scrollDuration="15">
+            <aura:iteration items="{!v.carouselList}" var="carousel">
+                
+                <lightning:carouselImage src = "{!carousel.Image_URL__c}" 
+                    href = "{!carousel.Redirect_URL__c}" onclick="{!c.onClick}" id="{!carousel.Redirect_URL__c}">                     
+                </lightning:carouselImage>
+            </aura:iteration>
+            <!-- Sanjay --> 
+        </lightning:carousel>   
+       
+    </div>
+</aura:component>

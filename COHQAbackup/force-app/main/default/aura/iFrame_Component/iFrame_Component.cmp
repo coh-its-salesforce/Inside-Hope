@@ -1,0 +1,18 @@
+<aura:component implements="flexiPage:availableForAllPageTypes">
+    <aura:attribute name="mURL" type="String"/>
+    <aura:attribute name="mWidth" type="String"/>
+    <aura:attribute name="mHeight" type="String"/>
+    <aura:attribute name="mStyle" type="String"/>
+    <aura:attribute name="mScrolling" type="String"/>
+    <aura:attribute name="mFrameBorder" type="String"/>
+    <aura:attribute name="mSandbox" type="String"/>
+    
+    <iframe height="{!v.mHeight}"
+            frameBorder="{!v.mFrameBorder}"
+            sandbox="{!v.mSandbox}"
+            scrolling="{!v.mScrolling}"
+            src="{!v.mURL}"
+            style="{!v.mStyle}"
+            width="{!v.mWidth}" />
+    
+</aura:component>

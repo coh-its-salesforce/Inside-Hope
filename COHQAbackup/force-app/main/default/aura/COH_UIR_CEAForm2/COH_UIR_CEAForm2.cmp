@@ -1,0 +1,1628 @@
+<aura:component implements="lightning:actionOverride,flexipage:availableForAllPageTypes,force:hasRecordId" access="global" controller="COH_UIR_CEAFormController">
+    <c:COH_UTIL_ValidateStandardComponent aura:id="validateStandardComponent"/>
+    <c:COH_UTIL_CheckboxGroupHelper aura:id="checkboxGroupHelper"/>
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler event="force:refreshView" action="{!c.init}" />
+    <aura:attribute name="mCEAForm" type="COH_CEAForm__c" default="{}"/>
+    <aura:attribute name="mCheckboxGroupValues" type="Map" default="{}"/>
+    <aura:attribute name="mPicklists" type="Map" default="{}"/>
+    <aura:attribute name="mSelectedCheckboxGroupValues" type="Map" default="{}"/>
+    <aura:attribute name="mRecordLoaded" type="Boolean" default="false"/>
+    <aura:attribute name="mTotalUnitCost" type="Integer" default="0"/>
+    <aura:attribute name="mTotalInitialCost" type="Integer" default="0"/>
+    <aura:attribute name="mGrandTotalCost" type="Integer" default="0"/>
+    <aura:attribute name="mTotalOperatingExpenses" type="Integer" default="0"/>
+    <aura:attribute name="mButtonLabel" type="String" default="Save CEA Form"/>
+    <aura:attribute name="mContactInformation" type="String" default="For assistance please contact the Service Desk x8HELP"/>
+    
+    <div class="slds-form-horizontal slds-theme_default slds-p-around_small slds-card" aura:id="projectInformation">
+        <aura:if isTrue="{!v.mRecordLoaded}">
+                <div aura:id="project_information_header">
+                    <h3 class="slds-section__title slds-theme_shade slds-p-horizontal_small">
+                        City of Hope Capital Expenditure Authorization (CEA) Form
+                    </h3>
+                </div>                
+                
+                <div class="slds-box slds-m-vertical_small slds-box_no-padding">
+                    <div class="slds-p-horizontal_medium slds-p-top_small">
+                        <div class="slds-border_bottom">                
+                            <h3 class="slds-section__title">
+                                Corporate Accounting Use Only 
+                            </h3>
+                        </div>
+                    </div>                
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="CEA	Number"
+                                                 name="COH_CEA_CEANumber__c"
+                                                 value="{!v.mCEAForm.COH_CEA_CEANumber__c}"/>
+                            </div>         
+                        </div>   
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Project Number"
+                                                 name="COH_CEA_ProjectNumber__c"
+                                                 value="{!v.mCEAForm.COH_CEA_ProjectNumber__c}"/>
+                            </div>         
+                        </div>                   
+                    </div>
+                </div>
+                
+                <!-- Item Requested, Project Description -->
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea aura:id="intakeRequestForm"
+                                                label="Item Requested"
+                                                name="COH_CEA_ItemRequested__c" 
+                                                value="{!v.mCEAForm.COH_CEA_ItemRequested__c}"/>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea aura:id="intakeRequestForm"
+                                                label="Project Description (Overall Objective)"
+                                                name="COH_CEA_ProjectDescription__c"
+                                                value="{!v.mCEAForm.COH_CEA_ProjectDescription__c}"/>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Start/End Date -->
+                <aura:if isTrue="{!(v.mSelectedCheckboxGroupValues.COH_UIR_SHR_ProjectEquipmentOPEXLabor__c.Project == 'true' &amp;&amp; v.mCEAForm.COH_UIR_SHR_MultiYearProject__c == 'No') || (v.mSelectedCheckboxGroupValues.COH_UIR_SHR_ProjectEquipmentOPEXLabor__c.Equipment == 'true' &amp;&amp; v.mSelectedCheckboxGroupValues.COH_UIR_SHR_ProjectEquipmentOPEXLabor__c.Project != 'true')}">
+                    <div class="slds-grid slds-wrap">        
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 disabled="true"
+                                                 label="Start Date"
+                                                 name="COH_UIR_SHR_EstimatedStartDate__c"
+                                                 value="{!v.mCEAForm.COH_UIR_SHR_EstimatedStartDate__c}"/>                
+                            </div>         
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 disabled="true"
+                                                 label="End Date"
+                                                 name="COH_UIR_SHR_EstimatedCompletionDate__c"
+                                                 value="{!v.mCEAForm.COH_UIR_SHR_EstimatedCompletionDate__c}"/>
+                            </div>         
+                        </div>
+                    </div>
+                </aura:if>
+                
+                <!-- Start/End Year -->
+                <aura:if isTrue="{!v.mCEAForm.COH_UIR_SHR_MultiYearProject__c == 'Yes'}">
+                    <div class="slds-grid slds-wrap">    
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 disabled="true"
+                                                 label="Start Year"
+                                                 name="COH_UIR_SHR_StartYear__c"
+                                                 value="{!v.mCEAForm.COH_UIR_SHR_StartYear__c}"/>
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 disabled="true"
+                                                 label="End Year"
+                                                 name="COH_UIR_SHR_EndYear__c"
+                                                 value="{!v.mCEAForm.COH_UIR_SHR_EndYear__c}"/>                                
+                            </div>
+                        </div>
+                    </div>
+                </aura:if>
+                
+                <!-- Reviewed By Legal, Coordinated with ITS -->
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:select aura:id="intakeRequestForm"
+                                              label="Has this request been reviewed by Legal/Finance?" 
+                                              name="COH_CEA_ReviewedByLegalFinance__c" 
+                                              value="{!v.mCEAForm.COH_CEA_ReviewedByLegalFinance__c}">
+                                <option value="">--Select--</option>
+                                <aura:iteration items="{!v.mPicklists.COH_CEA_ReviewedByLegalFinance__c}" var="currentPicklistOption">
+                                    <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                </aura:iteration>
+                            </lightning:select>                                
+                        </div>
+                    </div>
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:select aura:id="intakeRequestForm"
+                                              label="Has this request been coordinated with ITS/Facilities?" 
+                                              name="COH_CEA_CoordinatedWithITSFacilities__c" 
+                                              value="{!v.mCEAForm.COH_CEA_CoordinatedWithITSFacilities__c}">
+                                <option value="">--Select--</option>
+                                <aura:iteration items="{!v.mPicklists.COH_CEA_CoordinatedWithITSFacilities__c}" var="currentPicklistOption">
+                                    <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                </aura:iteration>
+                            </lightning:select>                                
+                        </div>
+                    </div>                
+                </div>
+                
+                <!-- Asset Classification -->
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:select aura:id="intakeRequestForm"
+                                              label="Asset Classification" 
+                                              name="COH_CEA_AssetClassification__c" 
+                                              value="{!v.mCEAForm.COH_CEA_AssetClassification__c}">
+                                <option value="">--Select--</option>
+                                <aura:iteration items="{!v.mPicklists.COH_CEA_AssetClassification__c}" var="currentPicklistOption">
+                                    <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                </aura:iteration>
+                            </lightning:select>                                
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Building Number, Room Number -->
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:input aura:id="intakeRequestForm"
+                                             label="Equipment Building Number (Required)"
+                                             name="COH_CEA_EquipmentBuildingNumber__c"
+                                             value="{!v.mCEAForm.COH_CEA_EquipmentBuildingNumber__c}"/>
+                        </div>         
+                    </div>   
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:input aura:id="intakeRequestForm"
+                                             label="Equipment Room Number (Required)"
+                                             name="COH_CEA_EquipmentRoomNumber__c"
+                                             value="{!v.mCEAForm.COH_CEA_EquipmentRoomNumber__c}"/>
+                        </div>         
+                    </div>  
+                </div>
+                
+                <!-- Entity Number -->
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:input aura:id="intakeRequestForm"
+                                             label="Requesting Entity"
+                                             name="COH_CEA_RequestingEntity__c"
+                                             value="{!v.mCEAForm.COH_CEA_RequestingEntity__c}"/>
+                        </div>         
+                    </div>  
+                </div>
+                
+                <!-- Department Name, Department Number -->
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:input aura:id="intakeRequestForm"
+                                             label="Requesting Department Name"
+                                             name="COH_CEA_RequestingDepartmentName__c"
+                                             value="{!v.mCEAForm.COH_CEA_RequestingDepartmentName__c}"/>
+                        </div>         
+                    </div>   
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:input aura:id="intakeRequestForm"
+                                             label="Requesting Department Number"
+                                             name="COH_CEA_DepartmentNumber__c"
+                                             value="{!v.mCEAForm.COH_CEA_DepartmentNumber__c}"/>
+                        </div>         
+                    </div>       
+                </div>
+                
+                <aura:if isTrue="{!v.mCEAForm.COH_CEA_DepartmentNumber__c == '8610070' || v.mCEAForm.COH_CEA_DepartmentNumber__c == '8610071' || v.mCEAForm.COH_CEA_DepartmentNumber__c == '8610160'}">
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Primary Facilities Project Manager Employee Id"
+                                                 maxlength="10"
+                                                 name="COH_CEA_PrimaryFacilitiesPMEmployeeId__c"
+                                                 pattern="^[0-9]*"
+                                                 messageWhenPatternMismatch="Employee Id can only consist of numbers"
+                                                 value="{!v.mCEAForm.COH_CEA_PrimaryFacilitiesPMEmployeeId__c}"/>
+                            </div>         
+                        </div>   
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Primary Facilities Project Manager Name"
+                                                 maxlength="50"
+                                                 name="COH_CEA_PrimaryFacilitiesPMName__c"
+                                                 value="{!v.mCEAForm.COH_CEA_PrimaryFacilitiesPMName__c}"/>
+                            </div>         
+                        </div>       
+                    </div>
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Backup Facilities Project Manager Employee Id"
+                                                 maxlength="10"
+                                                 name="COH_CEA_BackupFacilitiesPMEmployeeId__c"
+                                                 pattern="^[0-9]*"
+                                                 messageWhenPatternMismatch="Employee Id can only consist of numbers"
+                                                 value="{!v.mCEAForm.COH_CEA_BackupFacilitiesPMEmployeeId__c}"/>
+                            </div>         
+                        </div>   
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Backup Facilities Project Manager Name"
+                                                 maxlength="50"
+                                                 name="COH_CEA_BackupFacilitiesPMName__c"
+                                                 value="{!v.mCEAForm.COH_CEA_BackupFacilitiesPMName__c}"/>
+                            </div>         
+                        </div>       
+                    </div>                     
+                </aura:if>        
+                
+                <!-- Funding Type -->
+                <div class="slds-size_1-of-1">
+                    <div class="slds-box slds-m-vertical_small slds-box_no-padding ">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                                <div class="slds-form-element__control">
+                                    <lightning:checkboxGroup aura:id="intakeRequestFormCheckboxGroup"
+                                                             label="Funding"
+                                                             name="COH_CEA_Funding__c"
+                                                             onchange="{!c.onCheckboxGroupChange}"
+                                                             options="{!v.mPicklists.COH_CEA_Funding__c}"
+                                                             value="{!v.mCheckboxGroupValues.COH_CEA_Funding__c}"/>                                 
+                                </div>         
+                            </div>                    
+                        </div>
+                        
+                        <!-- If COH_CEA_Funding Contains Grant -->
+                        <!-- Grant Entity, Grant Cost Center Number -->
+                        <aura:if isTrue="{!or(v.mSelectedCheckboxGroupValues.COH_CEA_Funding__c.Grant, v.mSelectedCheckboxGroupValues.COH_CEA_Funding__c.Discretionary)}">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:input aura:id="intakeRequestForm"
+                                                         label="Grant Discretionary Entity"
+                                                         name="COH_CEA_GrantEntity__c"
+                                                         value="{!v.mCEAForm.COH_CEA_GrantEntity__c}"/>
+                                    </div>         
+                                </div>   
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:input aura:id="intakeRequestForm"
+                                                         label="Grant Department Number"
+                                                         name="COH_CEA_GrantCostCenterNumber__c"
+                                                         value="{!v.mCEAForm.COH_CEA_GrantCostCenterNumber__c}"/>
+                                    </div>         
+                                </div>                       
+                            </div>
+                            
+                            <!-- PCBU, Grant Project Id -->
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:input aura:id="intakeRequestForm"
+                                                         label="PCBU"
+                                                         name="COH_CEA_PCBU__c"
+                                                         value="{!v.mCEAForm.COH_CEA_PCBU__c}"/>
+                                    </div>         
+                                </div>   
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:input aura:id="intakeRequestForm"
+                                                         label="Grant Project Id"
+                                                         name="COH_CEA_GrantProjectId__c"
+                                                         value="{!v.mCEAForm.COH_CEA_GrantProjectId__c}"/>
+                                    </div>         
+                                </div>                       
+                            </div>                            
+                            
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select aura:id="intakeRequestForm"
+                                                          label="If Grant, what is the category?" 
+                                                          name="COH_CEA_GrantCategory__c"
+                                                          value="{!v.mCEAForm.COH_CEA_GrantCategory__c}">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_CEA_GrantCategory__c}" var="currentPicklistOption">
+                                                <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>                                
+                                    </div>
+                                </div>
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:input aura:id="intakeRequestForm"
+                                                         label="Chart String"
+                                                         name="COH_CEA_GrantChartString__c"
+                                                         value="{!v.mCEAForm.COH_CEA_GrantChartString__c}"/>
+                                    </div>         
+                                </div>
+                            </div>
+                        </aura:if>
+                    </div>
+                </div>
+                
+                <!-- Electronic Tracking Tag -->
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:select aura:id="intakeRequestForm"
+                                              label="Need Electronic Tracking Tag?"
+                                              name="COH_CEA_NeedElectronicTrackingTag__c"
+                                              value="{!v.mCEAForm.COH_CEA_NeedElectronicTrackingTag__c}">
+                                <option value="">--Select--</option>
+                                <aura:iteration items="{!v.mPicklists.COH_CEA_NeedElectronicTrackingTag__c}" var="currentPicklistOption">
+                                    <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                </aura:iteration>
+                            </lightning:select>                                
+                        </div>
+                    </div>    
+                </div>
+                
+                <!-- Capital Costs -->
+                <div class="slds-box slds-m-vertical_small slds-box_no-padding">
+                    <div class="slds-p-horizontal_medium slds-p-top_small">
+                        <div class="slds-border_bottom">                
+                            <h3 class="slds-section__title">
+                                Capital Costs
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    <!-- Unit Cost, Quantity -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 formatter="currency"
+                                                 label="Unit Cost"
+                                                 min="0"
+                                                 name="COH_CEA_UnitCost__c"
+                                                 onchange="{!c.unitCostChange}"
+                                                 step="0.01"
+                                                 type="number"
+                                                 value="{!v.mCEAForm.COH_CEA_UnitCost__c}"/>
+                            </div>         
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Quantity"
+                                                 min="0"
+                                                 name="COH_CEA_Quantity__c"
+                                                 onchange="{!c.unitCostChange}"
+                                                 type="number"
+                                                 value="{!v.mCEAForm.COH_CEA_Quantity__c}"/>
+                            </div>         
+                        </div>       
+                    </div>
+                    
+                    <!-- Total Unit Cost -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input disabled="true"
+                                                 formatter="currency"
+                                                 label="Total Unit Cost"
+                                                 name="mTotalUnitCost"
+                                                 step="0.01"
+                                                 type="number"
+                                                 value="{!v.mTotalUnitCost}"/>
+                            </div>         
+                        </div>
+                    </div>
+                    
+                    <!-- Freight, Sales Tax -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 formatter="currency"
+                                                 label="Freight"
+                                                 min="0"
+                                                 name="COH_CEA_Freight__c"
+                                                 onchange="{!c.totalCostChange}"
+                                                 step="0.01"
+                                                 type="number"
+                                                 value="{!v.mCEAForm.COH_CEA_Freight__c}"/>
+                            </div>         
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 formatter="currency"
+                                                 label="Sales tax"
+                                                 min="0"
+                                                 name="COH_CEA_SalesTax__c"
+                                                 onchange="{!c.totalCostChange}"
+                                                 step="0.01"
+                                                 type="number"
+                                                 value="{!v.mCEAForm.COH_CEA_SalesTax__c}"/>
+                            </div>         
+                        </div>       
+                    </div>
+                    
+                    <!-- Installation, De-Installation -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 formatter="currency"
+                                                 label="Installation, renovation, &amp; additional space"
+                                                 min="0"
+                                                 name="COH_CEA_Installation__c"
+                                                 onchange="{!c.totalCostChange}"
+                                                 step="0.01"
+                                                 type="number"
+                                                 value="{!v.mCEAForm.COH_CEA_Installation__c}"/>
+                            </div>         
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 formatter="currency"
+                                                 label="De-installation (Attach copy of estimate)"
+                                                 min="0"
+                                                 name="COH_CEA_DeInstallation__c"
+                                                 onchange="{!c.totalCostChange}"
+                                                 step="0.01"
+                                                 type="number"
+                                                 value="{!v.mCEAForm.COH_CEA_DeInstallation__c}"/>
+                            </div>         
+                        </div>       
+                    </div>
+                    
+                    <!-- Other Cost -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 formatter="currency"
+                                                 label="Other Cost"
+                                                 min="0"
+                                                 name="COH_CEA_OtherCost__c"
+                                                 onchange="{!c.totalCostChange}"
+                                                 step="0.01"
+                                                 type="number"
+                                                 value="{!v.mCEAForm.COH_CEA_OtherCost__c}"/>
+                            </div>         
+                        </div>       
+                    </div>            
+                    
+                    <!-- Discounts, Freight -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 formatter="currency"
+                                                 label="Less: Discounts"
+                                                 min="0"
+                                                 name="COH_CEA_Discounts__c"
+                                                 onchange="{!c.totalCostChange}"
+                                                 step="0.01"
+                                                 type="number"
+                                                 value="{!v.mCEAForm.COH_CEA_Discounts__c}"/>
+                            </div>         
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 formatter="currency"
+                                                 label="Less: Disposal / Trade-in Value"
+                                                 min="0"
+                                                 name="COH_CEA_DisposalTradeInValue__c"
+                                                 onchange="{!c.totalCostChange}"
+                                                 step="0.01"
+                                                 type="number"
+                                                 value="{!v.mCEAForm.COH_CEA_DisposalTradeInValue__c}"/>
+                            </div>         
+                        </div>       
+                    </div>
+                    
+                    <!-- Total Capital Expense, Grand Total Expense -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input disabled="true"
+                                                 formatter="currency"
+                                                 label="Total Initial Cost"
+                                                 name="mTotalInitialCost"
+                                                 step="0.01"
+                                                 type="number"
+                                                 value="{!v.mTotalInitialCost}"/>
+                            </div>         
+                        </div>
+                    </div>                    
+                </div>
+                
+                <!-- Additional Information -->
+                <div class="slds-box slds-m-vertical_small slds-box_no-padding">
+                    <div class="slds-p-horizontal_medium slds-p-top_small">
+                        <div class="slds-border_bottom">                
+                            <h3 class="slds-section__title">
+                                Additional Information
+                            </h3>
+                        </div>
+                    </div>
+                    <!-- Useful life of item -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Expected useful life of item (numbers only)"
+                                                 min="0"
+                                                 name="COH_CEA_UsefulLifeOfItem__c"
+                                                 type="number"
+                                                 value="{!v.mCEAForm.COH_CEA_UsefulLifeOfItem__c}"/>
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">              
+                            <div class="slds-form-element__control">
+                                <lightning:select aura:id="intakeRequestForm"
+                                                  label="What is the funding source?" 
+                                                  name="COH_CEA_FundingSource__c" 
+                                                  value="{!v.mCEAForm.COH_CEA_FundingSource__c}">
+                                    <option value="">--Select--</option>
+                                    <aura:iteration items="{!v.mPicklists.COH_CEA_FundingSource__c}" var="currentPicklistOption">
+                                        <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                    </aura:iteration>                       
+                                </lightning:select>  
+                            </div>
+                        </div>                          
+                    </div>
+                    
+                    <!-- Rendered Obsolete, Details -->
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-box slds-m-around_small slds-box_x-small">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select aura:id="intakeRequestForm"
+                                                          label="Do you expect technological advances to render the item obsolete before the useful life expires?" 
+                                                          name="COH_CEA_RenderedObsolete__c" 
+                                                          value="{!v.mCEAForm.COH_CEA_RenderedObsolete__c}">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_CEA_RenderedObsolete__c}" var="currentPicklistOption">
+                                                <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>                                
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Detail -->
+                            <aura:if isTrue="{!v.mCEAForm.COH_CEA_RenderedObsolete__c == 'Yes'}">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:textarea aura:id="intakeRequestForm"
+                                                                label="If so, please explain"
+                                                                name="COH_CEA_RenderedObsoleteDetail__c" 
+                                                                value="{!v.mCEAForm.COH_CEA_RenderedObsoleteDetail__c}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aura:if>
+                        </div>
+                    </div>
+                    
+                    <!-- Cannot be leased, details -->
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-box slds-m-around_small slds-box_x-small">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select aura:id="intakeRequestForm"
+                                                          label="Is there any reason why this equipment cannot be leased?" 
+                                                          name="COH_CEA_CannotBeLeased__c" 
+                                                          value="{!v.mCEAForm.COH_CEA_CannotBeLeased__c}">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_CEA_CannotBeLeased__c}" var="currentPicklistOption">
+                                                <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>                                
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Detail -->
+                            <aura:if isTrue="{!v.mCEAForm.COH_CEA_CannotBeLeased__c == 'Yes'}">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:textarea aura:id="intakeRequestForm"
+                                                                label="If so, please explain"
+                                                                name="COH_CEA_CannotBeLeasedDetail__c" 
+                                                                value="{!v.mCEAForm.COH_CEA_CannotBeLeasedDetail__c}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aura:if>
+                        </div>
+                    </div>
+                    
+                    <!-- Approved & dependent fields -->
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-box slds-m-around_small slds-box_x-small">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select aura:id="intakeRequestForm"
+                                                          label="Was this expenditure approved during the annual budget process?" 
+                                                          name="COH_CEA_ApprovedInBudgetProcess__c" 
+                                                          value="{!v.mCEAForm.COH_CEA_ApprovedInBudgetProcess__c}">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_CEA_ApprovedInBudgetProcess__c}" var="currentPicklistOption">
+                                                <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>                                
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Budget id, Amount, Source if Approved == true -->
+                            <aura:if isTrue="{!v.mCEAForm.COH_CEA_ApprovedInBudgetProcess__c == 'Yes'}">
+                                <!-- Budget Id, Budget Amount -->
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input aura:id="intakeRequestForm"
+                                                             label="Budget ID"
+                                                             name="COH_CEA_BudgetId__c"
+                                                             value="{!v.mCEAForm.COH_CEA_BudgetId__c}"/>
+                                        </div>         
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input aura:id="intakeRequestForm"
+                                                             formatter="currency"
+                                                             label="Budget Amount"
+                                                             min="0"
+                                                             name="COH_CEA_BudgetAmount__c"
+                                                             step="0.01"
+                                                             type="number"
+                                                             value="{!v.mCEAForm.COH_CEA_BudgetAmount__c}"/>
+                                        </div>         
+                                    </div>                        
+                                </div>
+                                
+                                <!-- Budget Source -->
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input aura:id="intakeRequestForm"
+                                                             label="Budget Source"
+                                                             name="COH_CEA_BudgetSource__c"
+                                                             value="{!v.mCEAForm.COH_CEA_BudgetSource__c}"/>
+                                        </div>         
+                                    </div>
+                                </div>
+                            </aura:if>
+                        </div>
+                    </div>
+                    
+                    <!-- Replacing approved item, details -->
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-box slds-m-around_small slds-box_x-small">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select aura:id="intakeRequestForm"
+                                                          label="If no or if it is over budget, is it replacing an approved item?" 
+                                                          name="COH_CEA_ReplacingApprovedItem__c"
+                                                          value="{!v.mCEAForm.COH_CEA_ReplacingApprovedItem__c}">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_CEA_ReplacingApprovedItem__c}" var="currentPicklistOption">
+                                                <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>                                
+                                    </div>
+                                </div>    
+                            </div>
+                            
+                            <!-- Which one, Replaced amount -->
+                            <aura:if isTrue="{!v.mCEAForm.COH_CEA_ReplacingApprovedItem__c == 'Yes'}">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input aura:id="intakeRequestForm"
+                                                             label="If so, which one?"
+                                                             name="COH_CEA_ReplacedApprovedItem__c"
+                                                             value="{!v.mCEAForm.COH_CEA_ReplacedApprovedItem__c}"/>
+                                        </div>         
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input aura:id="intakeRequestForm"
+                                                             formatter="currency"
+                                                             label="Item Amount"
+                                                             min="0"
+                                                             name="COH_CEA_ReplacedApprovedItemAmount__c"
+                                                             step="0.01"
+                                                             type="number"
+                                                             value="{!v.mCEAForm.COH_CEA_ReplacedApprovedItemAmount__c}"/>
+                                        </div>         
+                                    </div>                            
+                                </div>
+                            </aura:if>
+                        </div>
+                    </div>
+                    
+                    <!-- Urgent Rush Request, Details -->
+                    <div class="slds-size_1-of-1">
+                        <div class="slds-box slds-m-around_small slds-box_x-small">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select aura:id="intakeRequestForm"
+                                                          label="Is this an urgent rush request?" 
+                                                          name="COH_CEA_UrgetRushRequest__c" 
+                                                          value="{!v.mCEAForm.COH_CEA_UrgetRushRequest__c}">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_CEA_UrgetRushRequest__c}" var="currentPicklistOption">
+                                                <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>                                
+                                    </div>
+                                </div>						  
+                            </div>
+                            
+                            <!-- Quote Issue, Quote Expiration, Justification for urgency -->
+                            <aura:if isTrue="{!v.mCEAForm.COH_CEA_UrgetRushRequest__c == 'Yes'}">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input aura:id="intakeRequestForm"
+                                                             label="Contact/Quote Issue Date"
+                                                             name="COH_CEA_ContractQuoteIssueDate__c"
+                                                             type="date"
+                                                             value="{!v.mCEAForm.COH_CEA_ContractQuoteIssueDate__c}"/>
+                                        </div>         
+                                    </div>
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input aura:id="intakeRequestForm"
+                                                             label="Contact/Quote Expiration Date"
+                                                             name="COH_CEA_ContractQuoteExpirationDate__c"
+                                                             type="date"
+                                                             value="{!v.mCEAForm.COH_CEA_ContractQuoteExpirationDate__c}"/>
+                                        </div>         
+                                    </div>                            
+                                </div>
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:textarea aura:id="intakeRequestForm"
+                                                                label="Justification for urgency/tardiness"
+                                                                name="COH_CEA_JustificationForUrgency__c"
+                                                                value="{!v.mCEAForm.COH_CEA_JustificationForUrgency__c}"/>
+                                        </div>
+                                    </div>                            
+                                </div>
+                            </aura:if>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Operating Expenses -->
+                <div class="slds-box slds-m-vertical_small slds-box_no-padding">
+                    <div class="slds-p-horizontal_medium slds-p-top_small">
+                        <div class="slds-border_bottom">                
+                            <h3 class="slds-section__title">
+                                Operating Expenses
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    <!-- Maintenance Contract, Additional Salaries -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 formatter="currency"
+                                                 label="Maintenance Contract (Per Year)"
+                                                 min="0"
+                                                 name="COH_CEA_MaintenanceContract__c"
+                                                 onchange="{!c.opexCostChange}"
+                                                 step="0.01"
+                                                 type="number"
+                                                 value="{!v.mCEAForm.COH_CEA_MaintenanceContract__c}"/>
+                            </div>         
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 formatter="currency"
+                                                 label="Additional Salaries"
+                                                 min="0"
+                                                 name="COH_CEA_AdditionalSalaries__c"
+                                                 onchange="{!c.opexCostChange}"
+                                                 step="0.01"
+                                                 type="number"
+                                                 value="{!v.mCEAForm.COH_CEA_AdditionalSalaries__c}"/>
+                            </div>         
+                        </div>    
+                    </div>
+                    
+                    <!-- Additional Supplies, Operating Savings -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 formatter="currency"
+                                                 label="Additional Supplies"
+                                                 min="0"
+                                                 name="COH_CEA_AdditionalSupplies__c"
+                                                 onchange="{!c.opexCostChange}"
+                                                 step="0.01"
+                                                 type="number"
+                                                 value="{!v.mCEAForm.COH_CEA_AdditionalSupplies__c}"/>
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 formatter="currency"
+                                                 label="Training Cost"
+                                                 min="0"
+                                                 name="COH_CEA_TrainingCost__c"
+                                                 onchange="{!c.opexCostChange}"
+                                                 step="0.01"
+                                                 type="number"
+                                                 value="{!v.mCEAForm.COH_CEA_TrainingCost__c}"/>
+                            </div>         
+                        </div>
+                    </div>
+                    
+                    <!-- Operating Savings, Expected Revenue -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 formatter="currency"
+                                                 label="Less: Operating Savings"
+                                                 min="0"
+                                                 name="COH_CEA_OperatingSavings__c"
+                                                 onchange="{!c.opexCostChange}"
+                                                 step="0.01"
+                                                 type="number"
+                                                 value="{!v.mCEAForm.COH_CEA_OperatingSavings__c}"/>
+                            </div>
+                        </div>                        
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 formatter="currency"
+                                                 label="Less: Expected Revenue (for requests greater than $100k)"
+                                                 min="0"
+                                                 name="COH_CEA_ExpectedRevenue__c"
+                                                 onchange="{!c.opexCostChange}"
+                                                 step="0.01"
+                                                 type="number"
+                                                 value="{!v.mCEAForm.COH_CEA_ExpectedRevenue__c}"/>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Expected ROI -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 formatter="currency"
+                                                 label="Less: Expected ROI (for requests greater than $100k)"
+                                                 min="0"
+                                                 name="COH_CEA_ExpectedROI__c"
+                                                 onchange="{!c.opexCostChange}"
+                                                 step="0.01"
+                                                 type="number"
+                                                 value="{!v.mCEAForm.COH_CEA_ExpectedROI__c}"/>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Total Operating Expenses -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 disabled="true"
+                                                 formatter="currency"
+                                                 label="Total Operating Expenses"
+                                                 name="mTotalOperatingExpenses"
+                                                 step="0.01"
+                                                 type="number"
+                                                 value="{!v.mTotalOperatingExpenses}"/>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- In-hourse Maintenance, Op-Ex Comments -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:select aura:id="intakeRequestForm"
+                                                  label="In-house maintenance"
+                                                  name="COH_CEA_InHouseMaintenance__c"
+                                                  value="{!v.mCEAForm.COH_CEA_InHouseMaintenance__c}">
+                                    <option value="">--Select--</option>
+                                    <aura:iteration items="{!v.mPicklists.COH_CEA_InHouseMaintenance__c}" var="currentPicklistOption">
+                                        <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:textarea aura:id="intakeRequestForm"
+                                                    label="Comments"
+                                                    name="COH_CEA_OpExComments__c"
+                                                    value="{!v.mCEAForm.COH_CEA_OpExComments__c}"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Category & Dependent Questions -->
+                <div class="slds-size_1-of-1">
+                    <div class="slds-box slds-m-vertical_small slds-box_no-padding ">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                <div class="slds-form-element__control">
+                                    <lightning:checkboxGroup aura:id="intakeRequestFormCheckboxGroup"
+                                                             label="Project Category (Identify the percent of use in each category - total usage to equal 100%)"
+                                                             name="COH_CEA_ProjectCategory__c"
+                                                             onchange="{!c.onCheckboxGroupChange}"
+                                                             options="{!v.mPicklists.COH_CEA_ProjectCategory__c}"
+                                                             value="{!v.mCheckboxGroupValues.COH_CEA_ProjectCategory__c}"/>
+                                </div>
+                            </div>
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_CEA_ProjectCategory__c.Administrative}">
+                                    <div class="slds-form-element__control">
+                                        <lightning:input aura:id="intakeRequestForm"
+                                                         formatter="percent-fixed"
+                                                         label="Administrative Percent"
+                                                         min="0"
+                                                         name="COH_CEA_AdministrativePercent__c"
+                                                         step=".01"
+                                                         type="number"
+                                                         value="{!v.mCEAForm.COH_CEA_AdministrativePercent__c}"/>
+                                    </div>   
+                                </aura:if>
+                                
+                                <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_CEA_ProjectCategory__c.DirectPatientCare}">
+                                    <div class="slds-form-element__control">
+                                        <lightning:input aura:id="intakeRequestForm"
+                                                         formatter="percent-fixed"
+                                                         label="Direct Patient Care Percent"
+                                                         min="0"
+                                                         name="COH_CEA_DirectPatientCarePercent__c"
+                                                         step=".01"
+                                                         type="number"
+                                                         value="{!v.mCEAForm.COH_CEA_DirectPatientCarePercent__c}"/>
+                                    </div>   
+                                </aura:if>
+                                
+                                <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_CEA_ProjectCategory__c.Education}">
+                                    <div class="slds-form-element__control">
+                                        <lightning:input aura:id="intakeRequestForm"
+                                                         formatter="percent-fixed"
+                                                         label="Education Percent"
+                                                         min="0"
+                                                         name="COH_CEA_EducationPercent__c"
+                                                         step=".01"
+                                                         type="number"
+                                                         value="{!v.mCEAForm.COH_CEA_EducationPercent__c}"/>
+                                    </div>   
+                                </aura:if>
+                                
+                                <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_CEA_ProjectCategory__c.Research}">
+                                    <div class="slds-form-element__control">
+                                        <lightning:input aura:id="intakeRequestForm"
+                                                         formatter="percent-fixed"
+                                                         label="Research Percent"
+                                                         min="0"
+                                                         name="COH_CEA_ResearchPercent__c"
+                                                         step=".01"
+                                                         type="number"
+                                                         value="{!v.mCEAForm.COH_CEA_ResearchPercent__c}"/>
+                                    </div>   
+                                </aura:if>
+                                
+                                <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_CEA_ProjectCategory__c.Other}">
+                                    <div class="slds-form-element__control">
+                                        <lightning:input aura:id="intakeRequestForm"
+                                                         formatter="percent-fixed"
+                                                         label="Other Percent"
+                                                         min="0"
+                                                         name="COH_CEA_ProjectCategoryOtherPercent__c"
+                                                         step=".01"
+                                                         type="number"
+                                                         value="{!v.mCEAForm.COH_CEA_ProjectCategoryOtherPercent__c}"/>
+                                    </div>   
+                                </aura:if>                    
+                            </div>
+                        </div>
+                        
+                        <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_CEA_ProjectCategory__c.Other}">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <lightning:textarea aura:id="intakeRequestForm"
+                                                        label="If other, please explain"
+                                                        name="COH_CEA_ProjectCategoryOtherDetails__c"
+                                                        value="{!v.mCEAForm.COH_CEA_ProjectCategoryOtherDetails__c}"/>                                
+                                </div>
+                            </div>
+                        </aura:if>
+                    </div>
+                </div>
+                
+                <!-- Project Classification & Dependent Questions -->
+                <div class="slds-size_1-of-1">
+                    <div class="slds-box slds-m-vertical_small slds-box_no-padding ">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                <div class="slds-form-element__control">
+                                    <lightning:checkboxGroup aura:id="intakeRequestFormCheckboxGroup"
+                                                             label="Project Classification"
+                                                             name="COH_CEA_ProjectClassification__c"
+                                                             onchange="{!c.onCheckboxGroupChange}"
+                                                             options="{!v.mPicklists.COH_CEA_ProjectClassification__c}"
+                                                             value="{!v.mCheckboxGroupValues.COH_CEA_ProjectClassification__c}"/>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Replacement/Trade-in Fields -->
+                        <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_CEA_ProjectClassification__c.ReplacementTradein}">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:select aura:id="intakeRequestForm"
+                                                          label="Transfer to new department?" 
+                                                          name="COH_CEA_TransferDepartment__c" 
+                                                          value="{!v.mCEAForm.COH_CEA_TransferDepartment__c}">
+                                            <option value="">--Select--</option>
+                                            <aura:iteration items="{!v.mPicklists.COH_CEA_TransferDepartment__c}" var="currentPicklistOption">
+                                                <option value="{#currentPicklistOption.value}" >{#currentPicklistOption.label}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <aura:if isTrue="{!v.mCEAForm.COH_CEA_TransferDepartment__c == 'Yes'}">
+                                <!-- Replacement Entity -->
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input aura:id="intakeRequestForm"
+                                                             disabled="true"
+                                                             label="Start Date"
+                                                             name="COH_UIR_SHR_EstimatedStartDate__c"
+                                                             value="{!v.mCEAForm.COH_UIR_SHR_EstimatedStartDate__c}"/>
+                                        </div>
+                                    </div>
+                                    <!-- Replacement Cost Center number -->
+                                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                        <div class="slds-form-element__control">
+                                            <lightning:input aura:id="intakeRequestForm"
+                                                             disabled="true"
+                                                             label="Start Date"
+                                                             name="COH_UIR_SHR_EstimatedStartDate__c"
+                                                             value="{!v.mCEAForm.COH_UIR_SHR_EstimatedStartDate__c}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aura:if>
+                            
+                            <!-- Old/New Tag Numbers -->
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:input aura:id="intakeRequestForm"
+                                                         label="Old COH Blue Tag/BRI Green Tag #"
+                                                         name="COH_CEA_OldTagNumber__c"
+                                                         value="{!v.mCEAForm.COH_CEA_OldTagNumber__c}"/>
+                                    </div>
+                                </div>
+                                <!-- Replacement Cost Center number -->
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:input aura:id="intakeRequestForm"
+                                                         label="New COH Blue Tag/BRI Green Tag #"
+                                                         name="COH_CEA_NewTagNumber__c"
+                                                         value="{!v.mCEAForm.COH_CEA_NewTagNumber__c}"/>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Reason -->
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:checkboxGroup aura:id="intakeRequestFormCheckboxGroup"
+                                                                 label="Reason"
+                                                                 name="COH_CEA_DispositionReason__c"
+                                                                 onchange="{!c.onCheckboxGroupChange}"
+                                                                 options="{!v.mPicklists.COH_CEA_DispositionReason__c}"
+                                                                 value="{!v.mCheckboxGroupValues.COH_CEA_DispositionReason__c}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <!-- Upgrades/Accessories Details -->
+                        <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_CEA_ProjectClassification__c.UpgradesAccessories}">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:checkboxGroup aura:id="intakeRequestFormCheckboxGroup"
+                                                                 label="Update/Accessory Details"
+                                                                 name="COH_CEA_OtherClassificationUpgrades__c"
+                                                                 onchange="{!c.onCheckboxGroupChange}"
+                                                                 options="{!v.mPicklists.COH_CEA_OtherClassificationUpgrades__c}"
+                                                                 value="{!v.mCheckboxGroupValues.COH_CEA_OtherClassificationUpgrades__c}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                        
+                        <!-- Other Details -->
+                        <aura:if isTrue="{!v.mSelectedCheckboxGroupValues.COH_CEA_ProjectClassification__c.Other}">
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                    <div class="slds-form-element__control">
+                                        <lightning:textarea aura:id="intakeRequestForm"
+                                                            label="Other Classification Details"
+                                                            name="COH_CEA_OtherClassificationUpgrades__c"
+                                                            value="{!v.mCEAForm.COH_CEA_OtherClassificationUpgrades__c}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </aura:if>
+                    </div>
+                </div>
+                
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea aura:id="intakeRequestForm"
+                                                label="Suggested Vendor: Name/ Address"
+                                                name="COH_CEA_SuggestedVendor__c"
+                                                value="{!v.mCEAForm.COH_CEA_SuggestedVendor__c}"/>
+                        </div>
+                    </div>
+                    <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                        <div class="slds-form-element__control">
+                            <lightning:textarea aura:id="intakeRequestForm"
+                                                label="Justification: Please provide written justification for this purchase, below. Include sole-source justification if one is required."
+                                                name="COH_CEA_Justification__c"
+                                                value="{!v.mCEAForm.COH_CEA_Justification__c}"/>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slds-box slds-m-vertical_small slds-box_no-padding">
+                    <div class="slds-p-horizontal_medium slds-p-top_small">
+                        <div class="slds-border_bottom">                
+                            <h3 class="slds-section__title">
+                                Department and VP Approval
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-wrap slds-p-vertical_small">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium">*Manager/Investigator or Director/Chair: I accept responsibility for this CEA item, and if it is an equipment asset, I will ensure that it gets an asset tag by contacting BIS. I will disclose the item's location and status upon request, and I will report any status changes by submitting a Property Control Request Form.</div>
+                    </div>                
+                    <!-- Manager/Investigator and Director/Chair -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                                        mSelectedRecord="{!v.mCEAForm.COH_CEA_ManagerInvestigator__c}" 
+                                                        mLabel="Manager/Investigator"
+                                                        mPrimaryFieldAPIName="Name"
+                                                        mSecondaryFieldAPIName="Title"
+                                                        mAdditionalSelectFields="IsActive"
+                                                        mAdditionalSearchConditions="AND IsActive = true"
+                                                        aura:id="childComponent"/>                            
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                                        mSelectedRecord="{!v.mCEAForm.COH_CEA_DirectorChair__c}" 
+                                                        mLabel="Director/Chair"
+                                                        mPrimaryFieldAPIName="Name"
+                                                        mSecondaryFieldAPIName="Title"
+                                                        mAdditionalSelectFields="IsActive"
+                                                        mAdditionalSearchConditions="AND IsActive = true"
+                                                        aura:id="childComponent"/>                            
+                            </div>
+                        </div>                    
+                    </div>
+                    <!-- Vice President -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                                        mSelectedRecord="{!v.mCEAForm.COH_CEA_VicePresident__c}" 
+                                                        mLabel="Vice President"
+                                                        mPrimaryFieldAPIName="Name"
+                                                        mSecondaryFieldAPIName="Title"
+                                                        mAdditionalSelectFields="IsActive"
+                                                        mAdditionalSearchConditions="AND IsActive = true"
+                                                        aura:id="childComponent"/>                            
+                            </div>
+                        </div>                 
+                    </div>                
+                </div>
+                
+                <div class="slds-box slds-m-vertical_small slds-box_no-padding">
+                    <div class="slds-p-horizontal_medium slds-p-top_small">
+                        <div class="slds-border_bottom">                
+                            <h3 class="slds-section__title">
+                                Conditional Approvals - Leave blank if not required
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    <!-- Explanation text -->
+                    <div class="slds-grid slds-wrap slds-p-vertical_small">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium">(1) Must approve all ITS related requests. (all application hardware and software)</div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium">(2) Must approve all Facility related requests &amp; equipment with Facility component.</div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium">(3) Must approve all Development related requests.</div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium">(4) Must approve all Research related requests.</div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium">(5) Must approve all Medical Center Operations related requests.</div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium">(6) Must approve all requests that are unbudgeted, over budget, or part of Contingency or Strategic Planning pool.</div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium">(7) CEO or CFO must approve all Foundation related requests.</div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium">(8) Must approve all requests over $500,000.</div>
+                    </div>
+                    
+                    <!-- Approval 1 and 2 -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                                        mSelectedRecord="{!v.mCEAForm.COH_CEA_ConditionalApprover1__c}" 
+                                                        mLabel="(1) Chief Information Officer or Other"
+                                                        mPrimaryFieldAPIName="Name"
+                                                        mSecondaryFieldAPIName="Title"
+                                                        mAdditionalSelectFields="IsActive"
+                                                        mAdditionalSearchConditions="AND IsActive = true"
+                                                        aura:id="childComponent"/>                                                        
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                                        mSelectedRecord="{!v.mCEAForm.COH_CEA_ConditionalApprover2__c}" 
+                                                        mLabel="(2) VP, Facilities or Other"
+                                                        mPrimaryFieldAPIName="Name"
+                                                        mSecondaryFieldAPIName="Title"
+                                                        mAdditionalSelectFields="IsActive"
+                                                        mAdditionalSearchConditions="AND IsActive = true"
+                                                        aura:id="childComponent"/>                            
+                            </div>
+                        </div>                    
+                    </div>
+                    
+                    <!-- Approval 3 and 4 -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                                        mSelectedRecord="{!v.mCEAForm.COH_CEA_ConditionalApprover3__c}" 
+                                                        mLabel="(3) EVPDEA, Admin. VP, DEA or Other"
+                                                        mPrimaryFieldAPIName="Name"
+                                                        mSecondaryFieldAPIName="Title"
+                                                        mAdditionalSelectFields="IsActive"
+                                                        mAdditionalSearchConditions="AND IsActive = true"
+                                                        aura:id="childComponent"/>                            
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                                        mSelectedRecord="{!v.mCEAForm.COH_CEA_ConditionalApprover4__c}" 
+                                                        mLabel="(4) Cancer Center Director, BRI Director or Other"
+                                                        mPrimaryFieldAPIName="Name"
+                                                        mSecondaryFieldAPIName="Title"
+                                                        mAdditionalSelectFields="IsActive"
+                                                        mAdditionalSearchConditions="AND IsActive = true"
+                                                        aura:id="childComponent"/>                            
+                            </div>
+                        </div>                    
+                    </div>
+                    
+                    <!-- Approval 5 -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                                        mSelectedRecord="{!v.mCEAForm.COH_CEA_ConditionalApprover5__c}" 
+                                                        mLabel="(5) Chief Medical Officer, NMC Executive Officer or Other"
+                                                        mPrimaryFieldAPIName="Name"
+                                                        mSecondaryFieldAPIName="Title"
+                                                        mAdditionalSelectFields="IsActive"
+                                                        mAdditionalSearchConditions="AND IsActive = true"
+                                                        aura:id="childComponent"/>                            
+                            </div>
+                        </div>                   
+                    </div>
+                    
+                    <!-- Approval 6 -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                                        mSelectedRecord="{!v.mCEAForm.COH_CEA_ConditionalApprover6__c}" 
+                                                        mLabel="(6) Chief Operating Officer or Other"
+                                                        mPrimaryFieldAPIName="Name"
+                                                        mSecondaryFieldAPIName="Title"
+                                                        mAdditionalSelectFields="IsActive"
+                                                        mAdditionalSearchConditions="AND IsActive = true"
+                                                        aura:id="childComponent"/>                            
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                                        mSelectedRecord="{!v.mCEAForm.COH_CEA_ConditionalApprover7__c}" 
+                                                        mLabel="(6) Chief Financial Officer"
+                                                        mPrimaryFieldAPIName="Name"
+                                                        mSecondaryFieldAPIName="Title"
+                                                        mAdditionalSelectFields="IsActive"
+                                                        mAdditionalSearchConditions="AND IsActive = true"
+                                                        aura:id="childComponent"/>                            
+                            </div>
+                        </div>                    
+                    </div>
+                    
+                    <!-- Approval 7 and 8 -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                                        mSelectedRecord="{!v.mCEAForm.COH_CEA_ConditionalApprover8__c}" 
+                                                        mLabel="(7) CEO/CFO Foundation or Other"
+                                                        mPrimaryFieldAPIName="Name"
+                                                        mSecondaryFieldAPIName="Title"
+                                                        mAdditionalSelectFields="IsActive"
+                                                        mAdditionalSearchConditions="AND IsActive = true"
+                                                        aura:id="childComponent"/>                            
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <c:COH_UTIL_LookupField mSObjectAPIName="User" 
+                                                        mSelectedRecord="{!v.mCEAForm.COH_CEA_ConditionalApprover9__c}" 
+                                                        mLabel="(8) President &amp; CEO - COH or Other"
+                                                        mPrimaryFieldAPIName="Name"
+                                                        mSecondaryFieldAPIName="Title"
+                                                        mAdditionalSelectFields="IsActive"
+                                                        mAdditionalSearchConditions="AND IsActive = true"
+                                                        aura:id="childComponent"/>                            
+                            </div>
+                        </div>                    
+                    </div>
+                </div>
+                
+                <div class="slds-box slds-m-vertical_small slds-box_no-padding">
+                    <div class="slds-p-horizontal_medium slds-p-top_small">
+                        <div class="slds-border_bottom">                
+                            <h3 class="slds-section__title">
+                                Fiscal Hierarchy Setup - Please enter the names of employees authorized to approve transactions in ERP for this CEA
+                            </h3>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-grid slds-wrap slds-p-vertical_small">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium">Level 1 - Non Manager (Up to $1,000)</div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium">Level 2 - First Line Manager (Up to $5,000)</div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium">Level 3 - Mid Level Manager (Up to $10,000)</div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium">Level 4 - Director/Sr. Manager (Up to $50,000)</div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium">Level 5 - Sr. Director/ Exec. Director (Up to $100K)</div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium">Level 6 - V.P./ Sr. V.P. (Up to $250K)</div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-p-horizontal_medium">Level 7 - Sr. Executive Officer (Up to $1.5M)</div>
+                    </div>                    
+                    
+                    <!-- Level 1 -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Level 1 - Employee Id"
+                                                 maxlength="10"
+                                                 name="COH_CEA_HierachyApprovalLevel1EmployeeId__c"
+                                                 pattern="^[0-9]*"
+                                                 messageWhenPatternMismatch="Employee Id can only consist of numbers"
+                                                 value="{!v.mCEAForm.COH_CEA_HierachyApprovalLevel1EmployeeId__c}"/>                      
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Level 1 - Employee Name"
+                                                 name="COH_CEA_HierachyApprovalLevel1Name__c"
+                                                 value="{!v.mCEAForm.COH_CEA_HierachyApprovalLevel1Name__c}"/>                        
+                            </div>
+                        </div>                    
+                    </div>
+                    <!-- Level 2 -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 maxlength="10"
+                                                 label="Level 2 - Employee Id"
+                                                 name="COH_CEA_HierachyApprovalLevel2EmployeeId__c"
+                                                 pattern="^[0-9]*"
+                                                 messageWhenPatternMismatch="Employee Id can only consist of numbers"                                                 
+                                                 value="{!v.mCEAForm.COH_CEA_HierachyApprovalLevel2EmployeeId__c}"/>                      
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Level 2 - Employee Name"
+                                                 name="COH_CEA_HierachyApprovalLevel2Name__c"
+                                                 value="{!v.mCEAForm.COH_CEA_HierachyApprovalLevel2Name__c}"/>                        
+                            </div>
+                        </div>                    
+                    </div>
+                    <!-- Level 3 -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Level 3 - Employee Id"
+                                                 maxlength="10"                                                 
+                                                 name="COH_CEA_HierachyApprovalLevel3EmployeeId__c"
+                                                 pattern="^[0-9]*"
+                                                 messageWhenPatternMismatch="Employee Id can only consist of numbers"                                                 
+                                                 value="{!v.mCEAForm.COH_CEA_HierachyApprovalLevel3EmployeeId__c}"/>                      
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Level 3 - Employee Name"
+                                                 name="COH_CEA_HierachyApprovalLevel3Name__c"
+                                                 value="{!v.mCEAForm.COH_CEA_HierachyApprovalLevel3Name__c}"/>                        
+                            </div>
+                        </div>                    
+                    </div>
+                    <!-- Level 4 -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Level 4 - Employee Id"
+                                                 maxlength="10"
+                                                 name="COH_CEA_HierachyApprovalLevel4EmployeeId__c"
+                                                 pattern="^[0-9]*"
+                                                 messageWhenPatternMismatch="Employee Id can only consist of numbers"                                                 
+                                                 value="{!v.mCEAForm.COH_CEA_HierachyApprovalLevel4EmployeeId__c}"/>                      
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Level 4 - Employee Name"
+                                                 name="COH_CEA_HierachyApprovalLevel4Name__c"
+                                                 value="{!v.mCEAForm.COH_CEA_HierachyApprovalLevel4Name__c}"/>                        
+                            </div>
+                        </div>                    
+                    </div>
+                    <!-- Level 5 -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Level 5 - Employee Id"
+                                                 maxlength="10"
+                                                 name="COH_CEA_HierachyApprovalLevel5EmployeeId__c"
+                                                 pattern="^[0-9]*"
+                                                 messageWhenPatternMismatch="Employee Id can only consist of numbers"                                                 
+                                                 value="{!v.mCEAForm.COH_CEA_HierachyApprovalLevel5EmployeeId__c}"/>                      
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Level 5 - Employee Name"
+                                                 name="COH_CEA_HierachyApprovalLevel5Name__c"
+                                                 value="{!v.mCEAForm.COH_CEA_HierachyApprovalLevel5Name__c}"/>                        
+                            </div>
+                        </div>                    
+                    </div>
+                    <!-- Level 6 -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Level 6 - Employee Id"
+                                                 maxlength="10"
+                                                 name="COH_CEA_HierachyApprovalLevel6EmployeeId__c"
+                                                 pattern="^[0-9]*"
+                                                 messageWhenPatternMismatch="Employee Id can only consist of numbers"
+                                                 value="{!v.mCEAForm.COH_CEA_HierachyApprovalLevel6EmployeeId__c}"/>                      
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Level 6 - Employee Name"
+                                                 name="COH_CEA_HierachyApprovalLevel6Name__c"
+                                                 value="{!v.mCEAForm.COH_CEA_HierachyApprovalLevel6Name__c}"/>                        
+                            </div>
+                        </div>                    
+                    </div>
+                    <!-- Level 7 -->
+                    <div class="slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Level 7 - Employee Id"
+                                                 maxlength="10"
+                                                 name="COH_CEA_HierachyApprovalLevel7EmployeeId__c"
+                                                 pattern="^[0-9]*"
+                                                 messageWhenPatternMismatch="Employee Id can only consist of numbers"
+                                                 value="{!v.mCEAForm.COH_CEA_HierachyApprovalLevel7EmployeeId__c}"/>                      
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                <lightning:input aura:id="intakeRequestForm"
+                                                 label="Level 7 - Employee Name"
+                                                 name="COH_CEA_HierachyApprovalLevel7Name__c"
+                                                 value="{!v.mCEAForm.COH_CEA_HierachyApprovalLevel7Name__c}"/>                        
+                            </div>
+                        </div>                    
+                    </div>                                                                                                                        
+                </div>
+
+                <lightning:recordViewForm recordId="{!v.recordId}" objectApiName="COH_CEAForm__c">
+                    <div class="slds-grid slds-wrap slds-grid-reverse">
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                            <div class="slds-form-element__control">
+                                    <lightning:outputField fieldName="LastModifiedById" />
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-1 slds-medium-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_small">
+                                <div class="slds-form-element__control">
+                                    <lightning:outputField fieldName="LastModifiedDate" />
+                            </div>
+                        </div>
+                    </div>
+                </lightning:recordViewForm>
+            
+                <div class="slds-align_absolute-center slds-p-top_medium"><b>{!v.mContactInformation}</b></div>
+                <div class="slds-grid slds-p-top_xx-small">
+                    <lightning:button class="slds-size_1-of-3 slds-align_absolute-center"
+                                      label="{!v.mButtonLabel}"
+                                      onclick="{!c.saveCEAFormClick}"
+                                      variant="brand"/>
+                </div>
+            
+            <aura:set attribute="else">
+                <div class="slds-form-horizontal slds-theme_default slds-p-vertical_large ">
+                    <div>
+                        <lightning:spinner variant="brand" size="large"/>
+                    </div>
+                </div>        	
+            </aura:set>
+        </aura:if>
+    </div>	
+</aura:component>

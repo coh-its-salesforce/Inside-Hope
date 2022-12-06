@@ -1,0 +1,81 @@
+<apex:page showHeader="false" standardStylesheets="true" id="page">
+    <apex:outputPanel id="header" layout="block">
+        <!-- This is a Header block. Paste your APEX or HTML code here. -->
+
+        <!-- APEX image COH LOGO: -->
+
+        <apex:image url="{!$Resource.COHLogoPrireg2ccmykr}" style="display: block; margin: 0 auto; margin-bottom: 0px; height:150px !important; width: 300px !important;"/>  
+
+        <br/>
+
+        <style type="text/css">
+            .header {
+            margin: auto;
+            background-color: lightyellow;
+            text-align: center;
+            color: black;
+            font-size: 20px;
+            height: 60px;
+            width: 500px;
+            border-style: solid;
+            }
+            .headertext {
+                line-height: 60px;
+            }
+        </style>
+        <apex:outputPanel layout="block" styleClass="header">
+            <apex:outputText value="Success! The action was successful!" styleClass="headertext"/>
+        </apex:outputPanel>
+        <br/>
+    </apex:outputPanel>
+
+
+    <apex:outputPanel id="footer" layout="block">
+        <!-- This is a Footer block. Paste your APEX or HTML code here. -->
+
+        <!-- You may use <style> tag for your styles. -->
+        <!-- CSS style example: -->
+
+        <style type="text/css">
+            .footer {
+                background-color: whitesmoke;
+                text-align: center;
+                color: black;
+                font-size: 14px;
+                height: 130px;
+                /*margin-top: 20px;*/
+                position: absolute;
+                bottom:0;
+                width: 100%;
+                border-top: 1px solid lightgray;
+            }
+            .footertext {
+                line-height: 50px;
+            }
+
+            .maillink, .maillink:hover {
+                color: red;
+                text-decoration: none;
+            }
+            .band {
+                height: 80px;
+                background-color: gray;
+            }
+        </style>
+
+        <apex:outputPanel layout="block" styleClass="footer">
+            <apex:outputText value="City of Hope  | 1500 Duarte Road  |  Duarte, CA 91010  |  USA  |  " styleClass="footertext"/>
+            <apex:outputLink value="https://www.cityofhope.org/homepage" >Home Page </apex:outputLink>
+            <apex:outputText value="  |  " styleClass="footertext"/>
+            <apex:outputPanel layout="block" styleClass="band" />
+        </apex:outputPanel>
+
+
+        <!-- Simple APEX footer example: -->
+        <!--
+        <apex:outputPanel layout="block" styleClass="footer">
+            <apex:outputText value="Simple Footer" styleClass="footertext"/>
+        </apex:outputPanel>
+         -->
+    </apex:outputPanel>
+</apex:page>

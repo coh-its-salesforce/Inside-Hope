@@ -1,0 +1,150 @@
+.THIS .timeline-container{
+    background-color: #f1faff;
+    overflow: initial;
+    /*border: 1px solid rgb(226, 224, 224);*/
+    border-radius: 5px;
+   /* box-shadow: 0 0 5px #ccc;*/
+}
+
+
+.THIS .timeline-wrapper ul li.active div.year {
+    top: -59px;
+}
+.THIS .timeline-wrapper ul li.active div.dot {
+    top: -18px;
+}
+.THIS .timeline-wrapper ul li div.dot {
+    top: 0px;
+}
+.THIS .timeline-wrapper ul li div.year {
+    top: 0px;
+}
+.THIS .timeline-wrapper ul{
+    overflow: visible;
+}
+.THIS .timeline-wrapper ul li ul li .description {
+    padding: 0px;
+}
+.THIS .timeline-wrapper ul li ul li:nth-child(even) div.description {
+    bottom: -76px;
+}
+.THIS ul li a{
+    color: rgb(0, 109, 204) !important;
+    text-decoration: underline !important;
+}
+.THIS .timeline-ul li, .THIS .timeline-wrapper ul li ul li,  .THIS .timeline-wrapper ul li.active ul li{
+    border-radius: 3px solid #cccccc;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    max-width: 320px;
+    background: #fafafa;
+    padding: 5px;
+    margin: 0 0 20px 0;
+    border: 1px solid #cacaca;
+    overflow: initial;
+}
+.THIS .timeline-ul li .timeline-image{
+    flex: 1;
+    height: 100%;
+    padding: 4px;
+}
+.THIS .timeline-ul li .timeline-image p{
+    height: 100%;
+}
+.THIS .timeline-ul li .timeline-image *{
+    margin: 0;
+    padding: 0;
+    line-height: normal;
+}
+.THIS .timeline-ul li .timeline-image img{
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 108px;
+    object-fit: cover;
+    object-position: left;
+}
+.THIS .timeline-ul li .timeline-content{
+    flex: 2;
+    height: 100%;
+    padding: 2px;
+}
+.THIS .timeline-ul li .timeline-content *{
+    padding: 0;
+    margin: 0;
+    line-height: normal;
+    font-size: 11pt;
+}
+.THIS .timeline-ul li .timeline-content h3{
+    font-weight: bold;
+} 
+.THIS .timeline-ul li .timeline-description{
+    min-height: 80px;
+    overflow-y: auto;
+}
+
+.THIS a.readmore-a{
+  	position: relative;
+	display: inline-block;
+    padding: 2px;
+    height: 20px;
+}
+.THIS a.readmore-a .cust-tooltip{
+    visibility: hidden;
+    position: absolute;
+    bottom: 125%;
+    left: 24%;
+    margin-left: -60px;
+    background: #fafafa;
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border: 1px solid #cccccc;
+    text-align: left;
+    width: fit-content;
+    /*max-width: 250px;
+    max-height: 120px;*/
+    max-width: 230px;
+}
+.THIS a.readmore-a .cust-tooltip p{
+    margin: 5px 0;    
+    width: 100%;
+    /*max-height: 120px;*/
+    max-height: 13vh;
+    padding: 5px 15px;
+    overflow-y: auto;
+}
+.THIS a.readmore-a .cust-tooltip::after {
+  	content: "";
+    position: absolute;
+    bottom: -15px;
+    left: 75%;
+    margin-left: -5px;
+    border-width: 7px;
+    border-style: solid;
+  border-color: #cccccc transparent transparent transparent;
+}
+
+.THIS a.readmore-a:hover .cust-tooltip{
+    visibility: visible;
+  	opacity: 1;
+}
+
+
+.THIS .timeline-wrapper ul li ul li h3 {
+    margin-top: 0;
+}
+.THIS .orange-timeline ~ .timeline-wrapper ul{
+    background-color: #f9d5a8;
+}
+.THIS .orange-timeline ~ .timeline-wrapper ul li div.dot{
+    background-color: #f9a11d;
+}
+.THIS .orange-timeline ~ .timeline-wrapper ul li ul{
+    background-color: #f9a11d;    
+}
+.THIS .orange-timeline ~ .timeline-wrapper ul li.active div.dot{
+    border-color: #f9a11d;
+    background-color: #ffffff;
+}

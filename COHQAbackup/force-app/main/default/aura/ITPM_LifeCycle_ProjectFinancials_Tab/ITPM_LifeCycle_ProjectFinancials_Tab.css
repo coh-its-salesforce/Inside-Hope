@@ -1,0 +1,45 @@
+.THIS .text {
+    font-style: italic;
+}
+.THIS .center{
+    position: absolute;
+    top: 10px;
+    left: 325px;
+    padding: 10px;
+}
+.THIS .slds-box.slds-box_xx-small{
+    margin: 10px;
+    border: 2px solid #555;
+    border-radius: 7px;
+}
+.THIS .slds-is-open>.slds-accordion__summary, .THIS .slds-accordion__summary{
+	background: #f3f2f2;
+    padding: 6px;
+}
+.THIS .slds-accordion__summary .slds-truncate{
+    color: #333;
+}
+.THIS .tooltip-btm .slds-button_icon{
+    top : -3px;
+}
+.THIS .box-left-p0{
+    padding-left : 0 !important;
+}
+.THIS .year-left{
+    padding-left : 15px !important;
+}
+.THIS .fld-left-p0{
+    padding-left: 0 !important;
+}
+.THIS .fld-right-p{
+    padding-left: 20px !important;
+}
+.THIS .fld-value-p{
+    padding-left: 22px !important;
+}
+.THIS .box-fld-value-p{
+    padding-left: 35px !important;
+}
+.THIS .yr-fld-value-p{
+    padding-left: 32px !important;
+}

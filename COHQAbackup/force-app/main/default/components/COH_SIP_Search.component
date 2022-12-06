@@ -1,0 +1,10 @@
+<apex:component controller="COH_SIP_Search_Controller">
+    <div class="SearchBox">
+        <div class="SerMidWrp">
+            <div class="SerchBoxSecondary">
+                <apex:inputText value="{!txtSearch}" html-placeholder="Search people, depts., documents and news" styleClass="SerInpT" />
+                <apex:commandButton value="GO" action="{!Search}" styleClass="GoButS" />    
+            </div>
+        </div>
+    </div>
+</apex:component>

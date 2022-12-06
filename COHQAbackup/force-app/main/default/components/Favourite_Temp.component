@@ -1,0 +1,16 @@
+<apex:component access="global" controller="FavouriteCompController">
+    <div class="text-center">
+        <p class="FourIconTxt">Click on your favorite links</p>
+    </div> 
+    <div class="FavSecB">
+        <div class="MenTxtB">
+            <apex:repeat value="{!MyFavlinks}" var="fl">
+                <li> <a href="https://{!fl.linkURL}" target="_blank">{!fl.label}</a></li>
+            </apex:repeat>
+        </div> 
+        <apex:outputPanel rendered="{!OR(ISNULL(MyFavlinks), MyFavlinks.size==0)}">
+            <p><center>You do not have any Favorite Links</center></p>
+        </apex:outputPanel>
+    </div>
+   
+</apex:component>

@@ -1,0 +1,73 @@
+<template>
+    <h1 class="insurance-title"><u>Physician</u></h1>
+            <lightning-layout>
+                <lightning-layout-item size="4" padding="horizontal-small">
+                    <template if:true={locationoptions}>
+                        <lightning-combobox
+                        name="Location"
+                        label="Location"
+                        value={locationvalue}
+                        placeholder="Select Location"
+                        options={locationoptions}
+                        onchange={handleChangeLocation}
+                    ></lightning-combobox>
+                    </template>
+                </lightning-layout-item>
+                <lightning-layout-item size="4" padding="horizontal-small">
+                    <template if:true={departmentoptions}>
+                        <lightning-combobox
+                            name="Department"
+                            label="Department"
+                            value={departmentvalue}
+                            placeholder="Select Department"
+                            options={departmentoptions}
+                            onchange={handleChangeDepartment} 
+                        ></lightning-combobox>
+                    </template>
+                </lightning-layout-item>
+                <lightning-layout-item size="4" padding="horizontal-small">
+                    <template if:true={servicelineoptions}>
+                        <lightning-combobox
+                            name="ServiceLine"
+                            label="Service Line"
+                            value={servicelinevalue}
+                            placeholder="Select Service Line"
+                            options={servicelineoptions}
+                            onchange={handleChangeServiceLine}
+                        ></lightning-combobox>
+                    </template>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout>
+                <lightning-layout-item size="4" padding="horizontal-small">
+                    <template if:true={specialtyoptions}>
+                            <lightning-combobox
+                                name="Specialty"
+                                label="Specialty"
+                                value={specialtyvalue}
+                                placeholder="Select Specialty"
+                                options={specialtyoptions}
+                                onchange={handleChangeSpecialty}
+                            ></lightning-combobox>
+                    </template> 
+                </lightning-layout-item>
+                <lightning-layout-item size="4" padding="horizontal-small">
+                    <template if:true={physicianoptions}>
+                            <lightning-combobox
+                                name="Physician"
+                                label="Physician"
+                                value={physicianvalue}
+                                placeholder="Select Physician"
+                                options={physicianoptions}
+                                onchange={handleChangePhysician}
+                            ></lightning-combobox>
+                    </template>
+                </lightning-layout-item>
+                <lightning-layout-item size="4" padding="around-medium">
+                    <div>
+                        <lightning-button variant="brand" onclick={resetPicklistValues} label="Reset Physician Picklist Values" class="slds-m-left_x-small"></lightning-button>
+                    </div>    
+                </lightning-layout-item>
+            </lightning-layout>  
+              
+</template>

@@ -1,0 +1,52 @@
+<aura:component >
+    <aura:attribute name="MedicalOffice" type="boolean" default="false"/>
+    <aura:registerEvent name="OpenOrangeCounty" type="c:CampusPlan_OrangeCountyEvent" />
+   <aura:attribute name="Transformation" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.Transformation}">
+       <div>
+           <div class="banner-container">
+    	<div class="slds-grid slds-wrap">
+      		<div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+                    <div class="banner-image">
+      				<img src = "{!$Resource.TimeofTransformation}"/> 
+      				</div>
+      		</div>
+           <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12">
+               <div class="banner-content">
+                   <h4 class="label-header"><label class="orange-bg">Orange County</label></h4>
+                   <h2> A Time Of Transformation </h2>
+				   <p class="banner-p">
+					  City of Hope has always been innovative, and we live our value of Intellectual Curiosity by continuously searching for new breakthroughs. Orange County presents City of Hope with an open greenfield to test new opportunities--from care delivery enhancements to new partnerships, services and technology--that will change health care for the better.
+				   </p>
+               </div>
+      		</div>
+      	</div>            
+       </div>
+        <div class="profile-content">
+			<p>
+            Health care across our nation and the globe is experiencing a time of transformation. This spirit of forward-thinking has been woven into City of Hope’s culture since our founding. As one of our early leaders, Samuel H. Golter, once wrote in his historical account of City of Hope, we should continue to "embrace the trends of the future.’’
+            </p>
+            <p>
+            City of Hope is a leading voice during this transformative era. We are re-thinking how we deliver on bringing tomorrow's discoveries to the people who need them today. City of Hope Orange County builds on this momentum by continuing to piloting new value-based care initiatives and processes that will benefit all our patients.
+            </p>
+            <p>
+            We are relying on our unique abilities, our highly specialized treatments and lifesaving innovations, and our culture of outstanding compassionate care to transform care for our patients and their families.
+            </p>
+            <strong>Transformation Underway</strong>
+            <p>
+            City of Hope is acting with speed and focus to continue to innovate. One transformative program is already underway at City of Hope Newport Beach, the first phase of our Orange County expansion. We've launched an innovative precision prevention and early detection program to inform individuals of their risk factors based on state-of-the-art techniques such as genetic risk assessments, biomarker panels, and environmental exposure surveys. We do this because the best way to fight cancer is to prevent it in the first place.
+            </p>
+            <p>
+            The future of health care is in our hands.
+            </p>
+		</div>
+       </div>
+       
+          <!--<div class="backbutton" onclick="{!c.goBackToOrangeCounty}" ><lightning:icon iconName="utility:back" size="x-small" variant="inverse" />&nbsp;&nbsp;&nbsp;&nbsp;Back  
+    </div>-->
+       </aura:if>
+   <!-- <aura:if isTrue="{!v.MedicalOffice}">
+            <c:COH_CampusPlan_MedicalOfficeProfile/>
+        </aura:if> -->
+    
+</aura:component>

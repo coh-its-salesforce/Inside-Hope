@@ -1,0 +1,39 @@
+<!-- MassEditIncident VF Page -->
+
+<apex:page standardController="BMCServiceDesk__Incident__c" recordSetVar="unused" extensions="MassEditExtension"  action="{!retrieveIncidents}" sidebar="false">
+<apex:includeScript value="{!$Resource.UtilJS}" />
+<apex:form >
+<apex:pageBlock >
+<apex:pageMessages />
+<apex:pageBlock >
+Note: All modifications made on the page will be lost if Return button is clicked without clicking the Save button first. 
+</apex:pageBlock>
+<apex:pageBlockSection columns="1">
+    <apex:pageBlockSectionItem >
+        <apex:outputLabel value="Select the Closure Category: " />
+        <apex:selectList value="{!selectedClosureCat}" size="1">
+            <apex:selectOptions value="{!selCloseCat}" />
+        </apex:selectList>
+    </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem >
+        <apex:outputLabel value="Please enter the Resolution: " />
+        <apex:inputTextarea value="{!resolution}" rows="4" style="width:50%;"/>
+    </apex:pageBlockSectionItem>
+    
+</apex:pageBlockSection>
+
+<apex:pageBlockButtons >
+<apex:commandButton value="Save" action="{!updateIncidents}"/>
+<apex:commandButton value="Return" action="{!cancel}"/>
+</apex:pageBlockButtons>
+<apex:pageBlockTable value="{!selected}" var="a" id="table">
+<apex:column headerValue="Incident #" style="width:10%;">
+<apex:inputField value="{!a.name}"/>
+</apex:column>
+<apex:column headerValue="Description" style="width:40%;">
+<apex:outputField value="{!a.BMCServiceDesk__incidentDescription__c}"/>
+</apex:column>
+</apex:pageBlockTable>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

@@ -1,0 +1,331 @@
+<apex:component controller="COH_SIP_Header_Controller">
+    <div class="container-fluid Header">
+        <div class="row Top">
+            <div class="col-xs-3 Left">
+                <a href="/apex/COH_SIRP_HOME_PAGE"><apex:image value="{!$Resource.headerLogoMobile}" 
+                                                               style="margin-top:0px;" styleClass="visible-xs hidden-sm"/>
+                    <apex:image value="{!$Resource.headerLogoDesktop}" style="margin-top:0px;width:325px;" 
+                                styleClass="hidden-xs visible-sm visible-md visible-lg"/></a>
+            </div> 
+            <div class="col-xs-9 Right">
+                <ul class="pull-right">
+                    
+                   <!-- START:Changes by Sanjay 06/14/2022-->
+                    <li style="margin-right:10px">
+                        <apex:commandLink action="https://coh:COH123@www.cohtransformation.org/" target="_blank" 
+                                          title="Driving the next century of progress with an optimized organizational structure that unites us all as one City of Hope in common purpose."
+                                          style="color: rgb(255, 255, 255);
+                                                 background: rgb(135, 206, 235);
+                                                 font-size: 1rem;
+                                                 font-weight: 600;
+                                                 font-family: Catamaran, Arial, Verdana, -apple-system, BlinkMacSystemFont, sans-serif;
+                                                 padding: 4px 8px;
+                                                 text-shadow: rgba(0, 0, 0, 0.66) 0px 1px 4px;
+                                                 ">
+                            Transforming for the Future
+                        </apex:commandLink>
+                    </li>
+                    <!-- END: Changes by Sanjay 06/14/2022-->
+              
+                     <!-- START:Changes by Sanjay 01/26/2022-->
+                    <li style="margin-right:10px">
+                        <apex:commandLink action="http://www.cohandctca.org/" target="_blank" 
+                                          title="City of Hope and Cancer Treatment Centers of America are joining forces in the fight against cancer."
+                                          style="color: rgb(255, 255, 255);
+                                                 background: rgb(52, 168, 235);
+                                                 font-size: 1rem;
+                                                 font-weight: 600;
+                                                 font-family: Catamaran, Arial, Verdana, -apple-system, BlinkMacSystemFont, sans-serif;
+                                                 padding: 4px 8px;
+                                                 text-shadow: rgba(0, 0, 0, 0.66) 0px 1px 4px;
+                                                 ">
+                            Joining Forces
+                        </apex:commandLink>
+                    </li>
+                    <!-- END: Changes by Sanjay 01/26/2022-->
+                                  
+                    <!-- START:Changes by Sanjay 10/29/2021-->
+                    <li style="margin-right:10px">
+                        <apex:commandLink action="https://sso-c8c18ca3.sso.duosecurity.com/saml2/sp/DIKNEM3NRQJ8SQZLIURU/sso" target="_blank" 
+                                          title="Hope Works - Resources and best practices for our City of Hope workforce community to succeed in a hybrid/remote environment."
+                                          style="color: rgb(255, 255, 255);
+                                                 background: #4396ba;
+                                                 font-size: 1rem;
+                                                 font-weight: 600;
+                                                 font-family: Catamaran, Arial, Verdana, -apple-system, BlinkMacSystemFont, sans-serif;
+                                                 padding: 4px 8px;
+                                                 text-shadow: rgba(0, 0, 0, 0.66) 0px 1px 4px;
+                                                 ">
+                            Hope Works
+                        </apex:commandLink>
+                    </li>
+                    <!-- END: Changes by Sanjay 10/29/2021-->
+                    <li>
+                        <apex:commandLink action="/apex/COH_CampusPlanHeroAreaVFPage" target="_blank" 
+                                          title="Expanding Hope - City of Hope is undertaking an ambitious expansion. Our transformation will add several new facilities to the Duarte campus, and a network in Orange County, allowing us to reach more patients than ever before. This site features the latest news and progress."
+                                          style="color: rgb(255, 255, 255);
+                                                 background: rgb(0, 103, 186);
+                                                 font-size: 1rem;
+                                                 font-weight: 600;
+                                                 font-family: Catamaran, Arial, Verdana, -apple-system, BlinkMacSystemFont, sans-serif;
+                                                 padding: 4px 8px;
+                                                 text-shadow: rgba(0, 0, 0, 0.66) 0px 1px 4px;">Expanding Hope
+                        </apex:commandLink>
+                    </li>
+                    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<apex:image value="{!$Resource.homeicon}" style="margin-top:0px;" />&nbsp;<apex:outputText value="Welcome"/>:&nbsp;<apex:outputLink value="{!$Page.UserProfile}?uid={!$User.Id}">{!$User.Displayname__c}</apex:outputLink></li> 
+                    <li><span>|</span></li>
+                    <li><apex:outputLink value="{!$Site.Prefix}/secur/logout.jsp" styleClass="nav0-link" > Logout</apex:outputLink></li>
+                    <li class="hidden-xs"><span>|</span></li>
+                    <li class="hidden-xs"><a href="/home/home.jsp">Salesforce Home</a></li>
+                    <!-- Sanjay 07/07/2016 to hide previous intranet site <li class="hidden-xs"><span>|</span></li> -->
+                    <!-- Sanjay 07/07/2016 to hide previous intranet site <li class="hidden-xs"><a href="http://archive.coh.org">Previous Intranet Site</a></li> -->
+                    <!-- Changes Made by Pavani-->
+                    <!-- Sanjay 07/07/2016 to hide previous intranet site <li class="hidden-xs"><span>|</span></li> -->
+                    <!-- <li class="hidden-xs"><a href="/a6b/e?retURL=%2Fa6b%3Ffcf%3D00Bd0000005qHY2" target="_blank">Report Bugs</a></li>-->    
+                    <!-- End of changes by Pavani-->             
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="pull-right" style="padding-right: 15px;padding-below: 5px;text-align: right;">
+                <span class="FourIconTxt" style="font-size: 12px;text-transform: uppercase;color: green">Change Shortcut Menu <span class="glyphicon glyphicon-arrow-right"></span> </span>
+                <apex:selectList value="{!userPersona}" multiselect="false" size="1">
+                    <apex:actionSupport event="onchange" action="{!SwitchUserPersona}" reRender="shortCutMenuByPersona"/>
+                    <apex:selectOptions value="{!userPersonaList}"/>
+                </apex:selectList>  
+            </div>
+        </div>
+        <div class="row"> 
+            <nav id='cssmenu'>
+                <div id="head-mobile"></div>
+                <div class="button"></div>
+                <ul>
+                    <apex:repeat value="{!menuheaderList}" var="menheader" >
+                        <li><a href="{!IF(menheader.Menu_URL__c != null, menheader.Menu_URL__c, '#')}">
+                            <span class="hidden-xs hidden-sm hidden-md visible-lg">{!menheader.Desktop_Label__c} <span class="{!IF(menheader.Sub_Menu__c, 'caret hidden-sm hidden-xs', 'hidden')}"></span></span>
+                            <span class="hidden-lg visible-md visible-xs visible-sm">{!menheader.Mobile_Label__c} <span class="{!IF(menheader.Sub_Menu__c, 'caret hidden-sm hidden-xs', 'hidden')}"></span></span>
+                            </a>
+                            <ul>
+                                <apex:repeat value="{!mapMenuWrapper[menheader.Name]}" var="menu" rendered="{!IF(CONTAINS(menuContains, menheader.Name),true,false)}" >
+                                    <li>
+                                        <a href="{!IF(menu.url != null && menu.url != '', menu.url, '#')}">
+                                            <span class="hidden-xs hidden-sm hidden-md visible-lg">{!menu.Desktop_Label}</span>
+                                            <span class="hidden-lg visible-md visible-xs visible-sm">{!menu.Mobile_Label}</span>
+                                        </a>
+                                    </li>
+                                </apex:repeat>
+                            </ul>
+                        </li>
+                    </apex:repeat>
+                    
+                    <!-- <li><a href='#'>ABOUT US <span class="caret hidden-sm hidden-xs"></span></a>
+<ul>
+<apex:repeat value="{!mapMenuWrapper['ABOUT US']}" var="dep" rendered="{!IF(CONTAINS(menuContains,'ABOUT US'),true,false)}" >
+<li><a href='{!dep.url}'>{!dep.Name}</a></li>
+</apex:repeat>
+</ul>
+</li>
+<li><a href='#'>HR &amp; WORK LIFE <span class="caret hidden-sm hidden-xs"></span></a>
+<ul>
+<apex:repeat value="{!mapMenuWrapper['HR & WORK LIFE']}" var="dep" rendered="{!IF(CONTAINS(menuContains,'HR & WORK LIFE'),true,false)}" >
+<li><a href='{!dep.url}'>{!dep.Name}</a></li>
+</apex:repeat>
+</ul>
+</li>                    
+<li><a href='#'>POLICIES &amp; PROCEDURES <span class="caret hidden-sm hidden-xs"/></a>
+<ul>
+<apex:repeat value="{!mapMenuWrapper['POLICIES & PROCEDURES']}" var="dep" rendered="{!IF(CONTAINS(menuContains,'POLICIES & PROCEDURES'),true,false)}" >
+<li><a href='{!dep.url}'>{!dep.Name}</a></li>
+</apex:repeat>
+</ul>   
+</li> -->
+                    <!-- SFIP-122
+<li><a href='#'>ENTITIES <span class="caret hidden-sm hidden-xs"></span></a>
+<ul>
+<apex:repeat value="{!mapMenuWrapper['ENTITIES']}" var="dep" rendered="{!IF(CONTAINS(menuContains,'ENTITIES'),true,false)}" >
+<li><a href='{!dep.url}'>{!dep.Name}</a></li>
+</apex:repeat>
+</ul>
+</li>--> 
+                    <!--   <li><a href='#'>DEPARTMENTS <span class="caret hidden-sm hidden-xs"></span></a>
+<ul>
+<apex:repeat value="{!mapMenuWrapper['DEPARTMENTS']}" var="dep" rendered="{!IF(CONTAINS(menuContains,'DEPARTMENTS'),true,false)}" >
+<li><a href='{!dep.url}'>{!dep.Name}</a></li>
+</apex:repeat>
+</ul>
+</li>
+<li><a href='#'>RESOURCES &amp; TOOLS <span class="caret hidden-sm hidden-xs"></span></a>
+<ul>
+<apex:repeat value="{!mapMenuWrapper['RESOURCES & TOOLS']}" var="dep" rendered="{!IF(CONTAINS(menuContains,'RESOURCES & TOOLS'),true,false)}" >
+<li><a href='{!dep.url}'>{!dep.Name}</a></li>
+</apex:repeat>
+</ul>
+</li> 
+<li><a href="/_ui/core/chatter/groups/GroupListPage">CHATTER</a></li> -->
+                    <li class="initiator"><a href='#'>SHORTCUTS <span class="caret hidden-sm hidden-xs"></span></a>
+                        <!-- <ul class="hidden-md hidden-lg open">
+<apex:repeat value="{!Mobile_Link_Group}" var="LinkGroup" >
+<li class="{!if(LinkGroup.Group_Name__c == userPersona,'openPersonaMenu', '')}">
+<a href='javascript:void(0)' >{!LinkGroup.Group_Name__c}</a>
+<ul>
+<apex:repeat value="{!Mobile_Links}" var="Link">
+<li style="display: {!if(LinkGroup.id == Link.Group__c,'','none')}">
+<a href='{!Link.Link_Url__c}'>{!Link.Name}</a></li>
+</apex:repeat>                             
+</ul>
+</li>
+</apex:repeat> 
+</ul> -->                      
+                        <ul>
+                            <apex:OutputPanel id="shortCutMenuByPersona">  
+                                <apex:repeat value="{!Links}" var="Link">
+                                    <li>
+                                        <a href='{!Link.Link_Url__c}'>{!Link.Name}</a>
+                                    </li>
+                                </apex:repeat> 
+                            </apex:OutputPanel>
+                        </ul>                     
+                    </li>
+                </ul>            
+            </nav>    
+        </div>        
+        <!--  <div class="dvShortcuts hidden-xs hidden-sm visible-md-up visible-lg-up">
+<div class="personaSubs">
+<apex:variable value="{!0}" var="personaContentCount"/>
+<apex:repeat value="{!Link_Group}" var="LinkGroup" >
+<div class="persona{!personaContentCount} personaSubLinks">
+<div class="column1">
+<apex:variable value="{!0}" var="column1Count"/>
+<apex:repeat value="{!Links}" var="Link">
+<span style="display: {!if(column1Count < 18 && LinkGroup.id == Link.Group__c,'','none')}">                                    
+<a href='{!Link.Link_Url__c}'>{!Link.Name}</a></span>                            
+<apex:variable var="column1Count" value="{!if(LinkGroup.id == Link.Group__c,column1Count + 1, column1Count)}"/>
+</apex:repeat>  
+</div>  
+<div class="column2">
+<apex:variable value="{!0}" var="column2Count"/>
+<apex:repeat value="{!Links}" var="Link">
+<span style="display: {!if(column2Count > 17 && LinkGroup.id == Link.Group__c,'','none')}"> 
+<a href='{!Link.Link_Url__c}'>{!Link.Name}</a></span>                            
+<apex:variable var="column2Count" value="{!if(LinkGroup.id == Link.Group__c, column2Count + 1, column2Count)}"/>
+</apex:repeat> 
+</div>                                         
+</div>  
+<apex:variable var="personaContentCount" value="{!personaContentCount + 1}"/>
+</apex:repeat>
+</div>
+<div class="personas">
+<apex:variable value="{!0}" var="personaGroupCount"/>
+<apex:repeat value="{!Link_Group}" var="LinkGroup" >
+<span id="persona{!personaGroupCount}" class="{!if(LinkGroup.Group_Name__c == userPersona,'openPersonaMenu', '')}">                                
+<a href='javascript:void(0)' >{!LinkGroup.Group_Name__c}</a>
+</span>
+<apex:variable var="personaGroupCount" value="{!personaGroupCount + 1}"/>
+</apex:repeat>
+</div>
+</div>  -->
+        <div id="my_popup" class="well" style="max-width:44em;">
+            
+            Your session has expired. Click <a href="http://www.coh.org">here</a> to refresh            
+            <!-- Add an optional button to close the popup
+<button class="my_popup_close">Refresh</button> -->
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+    var jHeader$ = jQuery.noConflict();
+    jHeader$(function(){
+        //jHeader$(document).ready(function(){     
+        var mediasize = 1000;
+        if (jHeader$( window ).width() > mediasize) {                
+            jHeader$('.initiator').on('mouseenter', function(e){
+                jHeader$('.dvShortcuts').show();
+                jHeader$('.initiator').addClass('active');
+                jHeader$('.openPersonaMenu').each(function(index) {
+                    if (jHeader$(this) != null)
+                    {
+                        jHeader$('.' + jHeader$(this).attr('id')).show();
+                        jHeader$(this).addClass('active');
+                    }
+                });
+            })
+            
+            jHeader$('.dvShortcuts').on('mouseenter', function(e){
+                jHeader$('.dvShortcuts').show();
+                jHeader$('.initiator').addClass('active');
+                jHeader$('.openPersonaMenu').each(function(index) {
+                    if (jHeader$(this) != null)
+                    {
+                        jHeader$('.' + jHeader$(this).attr('id')).show();
+                        jHeader$(this).addClass('active');
+                    }
+                });
+            })
+            
+            jHeader$('.initiator').on('mouseleave', function(e){
+                jHeader$('.dvShortcuts').hide();
+                jHeader$('.initiator').removeClass('active');
+                jHeader$('.personaSubLinks').hide();
+                jHeader$('.personas > span').removeClass('active');
+            })
+            
+            jHeader$('.dvShortcuts').on('mouseleave', function(e){
+                jHeader$('.dvShortcuts').hide();
+                jHeader$('.initiator').removeClass('active');
+                jHeader$('.personaSubLinks').hide();
+                jHeader$('.personas > span').removeClass('active');
+            })
+            
+            jHeader$('.personas > span').on('mouseenter', function(e){
+                jHeader$('.personaSubLinks').hide();
+                jHeader$('.personas > span').removeClass('active');
+                jHeader$('.' + jHeader$(this).attr('id')).show();
+                jHeader$(this).addClass('active');
+            })
+        }
+    });
+    
+    var counter = 1740;
+    //var counter = 60;
+    //setTimeout(countdown, 1000);
+    function countdown() {
+        if (counter > 0)
+        {
+            counter = counter - 1;
+            setTimeout(countdown, 1000);
+        }
+    };
+  
+    //setTimeout(checkTimeout, 1740000);
+    //setTimeout(checkTimeout, 60000);
+    
+    jHeader$(document).click(function(e) { 
+        if (counter > 0)
+        {
+            counter = 1740;
+            //counter = 60;
+        }
+        else
+        {
+            if(e.target.id != '#btnTimeOut')
+            {
+                //jHeader$('#btnTimeOut').click(); 
+                jHeader$('#my_popup').popup('show');
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        }        
+    });
+    
+    // Initialize pop up plugin
+    jHeader$('#my_popup').popup();
+    
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+    ga('create', 'UA-3289688-3', 'auto');//Update actual analytics code here
+    ga('send', 'pageview');
+    </script>
+</apex:component>

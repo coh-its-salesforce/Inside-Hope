@@ -1,0 +1,65 @@
+<aura:component >
+   <aura:attribute name="Milestone" type="boolean" default="false"/>
+   <aura:attribute name="milestonepage4" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.milestonepage4}">
+     <div>
+         <div class="banner-container">
+             <div class="slds-grid slds-wrap">
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+                     <div class="banner-image">
+                         <img src = "{!$Resource.CampusPlanJan2020}"/> 
+                     </div>
+                 </div>
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12">
+                     <div class="banner-content">
+                         <h4 class="label-header"><label class="orange-bg">Orange County</label></h4>
+                         <h2> January 2020 </h2>
+                         <p class="banner-p"> City of Hope Opens Its First Orange County Location, Ushering in New Era of Cancer Care. </p>
+                         <p class="banner-p"> The day has come – City of Hope opens the first phase of its expansion, opening a new market for highly specialized cancer care in Orange County. </p>
+                     </div>
+                 </div>
+             </div>            
+         </div>
+        <div class="profile-content">
+            <p> City of Hope’s Newport Beach location opens, as a crowd of more than 400 patients, supporters and community members gather outside its doors. City of Hope’s first location in Orange County is designed to be a patient-centric, LEED-certified facility with stand-out features, including a calming environment, comfortable treatment bays for infusion, and a patient resource center. For those undergoing cancer treatment, the facility provides many services not previously available in the area, including highly specialized medical and surgical oncology expertise, as well as patient and family education and supportive care and survivorship programs. An innovation precision prevention and early detection program is also available. </p>
+            <p>
+            	<strong>LATEST NEWS</strong>
+            </p>
+            <p>
+            	<strong>INTERNAL UPDATES</strong>
+                <ul class="content-ul">					
+                    <li>
+                        <a target = '_blank' href= 'https://cityofhope--c.na118.visual.force.com/apex/NewsAnnouncementDetailPage?id=a6E3o000001chmZEAQ'>
+                            City of Hope Newport Beach Now Open 
+                        </a>
+                    </li>
+                </ul>
+                <br/>
+            	<strong>NEWS HIGHLIGHTS</strong>
+                <ul class="content-ul">
+                	<li>
+                    	 <a target = '_blank' href= 'https://www.ocregister.com/2020/01/21/city-of-hope-previews-its-first-cancer-center-in-orange-county/'> 
+                             City of Hope previews its first cancer center in Orange County 
+                        </a> – The Orange County Register 
+                    </li>
+                    <li>
+                    	<a target = '_blank' href= 'https://www.latimes.com/socal/daily-pilot/news/story/2020-01-21/city-of-hope-plants-its-flag-in-newport-beach-with-new-outpatient-cancer-clinic'>
+                           
+                            City of Hope plants its flag in Newport Beach with new outpatient cancer clinic 
+                        </a> – Daily Pilot   
+                    </li>
+                </ul>
+            
+            </p>
+                   
+         </div>
+         <div class="backbutton" onclick="{!c.goBackToMilestone}" >
+             <lightning:icon iconName="utility:back" size="x-small" variant="inverse" />
+             Back  
+         </div>
+       </div>
+       </aura:if>
+    <aura:if isTrue="{!v.Milestone}">
+        <c:COH_CampusPlan_Milestone/>
+    </aura:if>
+</aura:component>

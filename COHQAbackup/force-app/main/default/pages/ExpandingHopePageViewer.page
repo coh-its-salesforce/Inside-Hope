@@ -1,0 +1,539 @@
+<apex:page Controller="ExpandingHopePageViewerController" showHeader="false" sidebar="false" >
+     <html>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+
+      </head>
+         <apex:stylesheet value="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+ <!--   <apex:page docType="html-5.0" sidebar="false" showHeader="false"  standardStylesheets="false" cache="true" controller="ExpandingHopePageViewerController" >
+-->
+    <!--This styling block is for the Expanding Hope Page Viewer Functionality -->
+    
+    <apex:includeScript value="{!$Resource.GoogleTagManager}"/>
+<!-- Google Tag Manager (noscript) -->
+<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NZTLMPZ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe>
+<!-- End Google Tag Manager (noscript) -->
+    
+    <style>
+        html, body{
+        	font-size: 1rem !important;
+        	color: #333333 !important;
+        }
+        *{
+        	box-sizing: border-box;
+        	font-size: 12pt;
+        	font-family: calibri,sans-serif;
+        	color: #333333;
+         }
+        p, span{        	
+        	color: #333333 !important;
+        }
+         input, button, textarea, select{
+        	outline: none;
+         }
+          .main-container{
+        	height: 100%;
+            position: relative;
+            width: 100vw;
+        	max-width: 100%;
+            min-height: 100vh;
+        	padding: 75px 0;
+        }
+  
+	.main-header-area{
+        position: absolute;
+        top: 0;
+        z-index: 999;
+        width: 100%;
+        height: 75px;
+    }
+ .banner-body-content-area{
+    width: 100%;
+    overflow-y: auto;
+    min-height: calc(100vh - 152px);
+}
+ .main-header {
+        height: 75px;
+    	background: #d2eefa url('/resource/ExpandingHope_HeaderBG') center center no-repeat;
+        background-size: cover;
+    	width: 100%;
+    	clear: both;
+    	position: relative;
+        display: flex;
+        align-items: center;    	
+    }
+ .logo-image{
+     background: url(/resource/ExpandingHopeLogoMain) center center no-repeat;
+    background-size: cover;
+    display: block;
+    cursor:pointer;   
+    height: 100px;
+    width: 100%;
+}
+ .header-search-area {
+     height: 50px;
+    width: 50px;
+	position: absolute;
+	right: 20px;
+	top: 1rem;    
+}
+ .header-search-area a{    
+     background: url(/resource/SearchIcon) right center no-repeat;
+    width: 50px;
+    height: 50px;
+    display: block;
+    cursor:pointer; 
+}
+ .main-header > .slds-grid{
+    height: 75px;
+    align-items: center;
+}
+ .logo-image-wrap{
+    padding: 0 0 0 15px;
+    max-width: 100%;
+    cursor: pointer;    
+}
+ .logo-image-wrap img{
+    max-width: 320px;
+}    
+        
+ .footer{
+    height: 75px;
+    background-color: #2d73bb;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        position: absolute;
+        bottom: 0;
+}
+ .fooImage{
+    height: 60px;
+    width: 120px;
+    margin-left: 2rem;
+}
+        .banner-container {
+            margin: 0;
+            background-color: #f1faff;
+            position: relative;
+            width: 100%;
+        	clear: both;
+        	display: flex;        	
+        }
+        .banner-image {
+            position: relative;
+        	flex: 0.6;
+        }
+        .banner-image p{
+        	padding: 0;
+        	margin: 0;
+        }
+        .banner-image img {
+            width: 100%;
+            max-width: 100%;
+            border-style: groove;
+            cursor: pointer;
+            object-position: left;
+        }
+        .banner-content {
+            padding: 20px 2rem !important;
+        	flex: 0.4;
+        }
+        .banner-content h2{
+        	color: #0075bc;
+            line-height: normal;
+            margin-bottom: 15px;
+            font-size: 1.5rem !important;
+            font-weight: 900;
+            display: block;
+        	font-family: Calibri;
+        }
+        .banner-content h2 span{
+        	color: #0075bc;
+            font-size: 1.5rem;
+        	font-weight: normal;
+        }
+        .banner-content p span{
+        	color: #333333 !important;
+        	font-size: 12pt !important;
+       }
+        .content-area{
+        	clear: both;
+        	padding: 20px;
+        	width: 85vw;
+        	margin: 0 auto;
+        }
+        .content-area p{
+        	margin: 0;
+        	padding: 5px 0 0 0;
+        	line-height: normal;
+        }
+        .content-area p span{   
+        	font-size: 12pt !important;
+        	background: none !important;
+        }
+        
+        
+            .search-container .bPageBlock *, *{
+                box-sizing: border-box;
+                font-size: 12pt !important;
+                font-family: calibri, sans-serif;
+                color: #333333;
+            }
+            .search-container{
+                padding: 15px 2rem;
+                width: 100%;
+                clear: both;
+            }
+            .search-bar-area{
+                display: flex;
+                height: 40px;       	
+            }
+            .search-bar-area input[type='text']{
+                max-width: 200px;
+                height: 35px;
+                padding: 2px;
+                border: 1px solid #cacaca;
+                border-radius: 5px;
+            }
+            .search-bar-area .btn{
+                height: 35px;
+                padding: 2px 10px;
+                border: 1px solid transparent;
+                border-radius: 5px;
+                background: linear-gradient(90deg, rgba(0,117,188,1) 35%, rgba(80,119,143,1) 100%);
+                color: #ffffff;
+                margin-left: 2px;
+                font-weight: 400;
+            }
+            .search-bar-area .btn:hover, .search-bar-area .btn:focus{
+                background: linear-gradient(90deg, rgba(0,117,188,1) 35%, rgba(80,119,143,1) 100%) !important;
+                color: #ffffff;        		
+        	}
+            .search-section .bPageBlock{
+                border: 1px solid #cccccc !important;
+                background: none !important;
+                border-radius: 5px;
+                margin: 15px 0;
+                clear: both;
+            }
+            .search-section .bPageBlock .pbHeader{
+                background: #b3d2e4;
+            }
+            .search-section .bPageBlock .pbHeader h2{
+                font-size: 1rem;
+                color: #333333;
+            }
+            .search-section .bPageBlock .pbHeader tr td.pbTitle{
+        		width: 90vw;
+        	}
+        	.search-section .bPageBlock .pbBody {
+                overflow: auto;
+                max-height: 65vh;
+            }
+        	.search-section .bPageBlock .pbBody table.list{
+        		min-width: 1200px;   
+        		width: 100%;
+        		border-collapse: collapse;
+        	}
+        	.search-section .bPageBlock .pbBody table.list tr:nth-child(even){
+        		background: #f2f3ea;
+        	}
+        	.search-section .bPageBlock .pbBody table.list tr td{
+        		padding: 10px;
+        		border: 1px solid #e0e3e5;
+        		vertical-align: top;
+        	}
+        	.search-section .bPageBlock .pbBody table.list tr td table td{
+        		border: none;
+        		padding: initial;
+        	}
+        	.search-section .bPageBlock .pbBody table.list tr td:nth-child(1){
+        		width: 200px;
+        	}
+        	.search-section .bPageBlock .pbBody table.list tr td:nth-child(2){
+        		width: 100px;
+        	}
+        	.search-section .bPageBlock .pbBody table.list tr td:nth-child(3){
+        		width: 200px;
+        	}
+        	.search-section .bPageBlock .pbBody table.list tr td:nth-child(4){
+        		min-width: 700px;
+        		max-width: 100%;
+        	}
+        	.crow{
+        		display: flex;
+        	}
+        	.ccol-1{
+        		flex: 0.5;
+        	}
+        	.ccol-2{
+        		flex: 0.7;
+        	}
+        	.ccol-full{
+        		flex: 1;
+       		}
+        
+        
+        @media only screen and (max-device-width: 768px) {  
+                  
+        	.banner-container{
+        		flex-direction: column;
+        	}
+            .banner-image {
+                position: relative;
+                flex: 1;
+            }
+            .banner-content {
+                padding: 20px 2rem;
+                flex: 1;
+            }
+        
+        	.crow{
+        		display: flex;
+        		flex-direction: column;
+        	}
+        	.ccol-1{
+        		flex: 1;
+        	}
+        	.ccol-2{
+        		flex: 1;
+        	}
+        	.ccol-full{
+        		flex: 1;
+       		}
+            .search-bar-area{
+                height: auto;     
+        		flex-direction: column;        		
+            }
+            .search-bar-area input[type='text']{
+                max-width: 100%;
+        		width: 100%;
+        		margin-bottom: 5px;
+            }
+            .search-bar-area .btn{
+            }
+        	.search-container .bPageBlock *{
+        		font-size: 15pt;
+        	}
+        	
+        	
+        }
+        .padding-right-0{
+        	padding-right: 0 !important;
+        }
+        .padding-left-0{
+        	padding-left: 0 !important;
+        }
+        	
+    </style>
+    
+    
+	<apex:outputpanel rendered="{!sObjName == 'Campus_Plan_News__c'}">
+        <div class="main-container">
+           	<div class="main-header-area">
+                <div class="main-header"> 
+                            <div class="logo-image-wrap">
+                                <a href="/apex/COH_CampusPlanHeroAreaVFPage">
+                           			<apex:image url="{!$Resource.ExpandingHopeLogoMain}" title="Click to search all stories" />
+                                </a>
+                            </div>
+                            <div class="header-search-area">
+                                <a href="apex/ExpandingHopePageViewer"></a>
+                            </div>
+                </div>                   
+            </div>
+            <div class="banner-body-content-area">
+                <div class="banner-container">
+                    <div class="row">
+                       <div class="col-md-5 padding-right-0">                
+                            <div class="banner-image">
+                                <apex:outputText value="{!RichTextImage}" escape="false"></apex:outputText>
+                            </div>
+                        </div>
+                        <div class="col-md-7 padding-left-0">                    	
+                    		<div class="banner-content">
+                                <h2>
+                                    <apex:outputText value="{!TextTitle}"/>     
+                                </h2>
+                                <p>
+                                    <apex:outputText value="{!TextSubTitle}"/>     
+                                </p>                
+                                <p>                
+                                    <apex:outputText value="{!RichTextNextToImage}" escape="false"></apex:outputText>
+                                </p>
+                    		</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-area">
+                    <p>
+                        <apex:outputText value="{!RichTextOutput}" escape="false"/>     
+                    </p>
+                </div> <!-- end of content-area -->
+       		</div>
+     		<div class="footer"><img src="{!$Resource.ExpandingHopeSiteFooter}" class="fooImage"/></div>  
+        </div>
+   
+            
+        </apex:outputpanel>
+
+	<apex:outputpanel rendered="{!sObjName == 'Campus_Plan_Timeline__c'}">
+        <div class="main-container">
+           	<div class="main-header-area">
+                <div class="main-header"> 
+                            <div class="logo-image-wrap">
+                                <a href="/apex/COH_CampusPlanHeroAreaVFPage">
+                           			<apex:image url="{!$Resource.ExpandingHopeLogoMain}" title="Click to search all stories" />
+                                </a>
+                            </div>
+                            <div class="header-search-area">
+                                <a href="apex/ExpandingHopePageViewer"></a>
+                            </div>
+                </div>                   
+            </div>
+            <div class="banner-body-content-area">
+                <div class="banner-container">
+                    <div class="row">
+                       <div class="col-md-5 padding-right-0">      
+                            <div class="banner-image">
+                                <apex:outputText value="{!RichTextImage}" escape="false"></apex:outputText>
+                            </div>
+                        </div>
+                       <div class="col-md-7 padding-left-0">   
+                            <div class="banner-content">
+                                <h2>
+                                    <apex:outputText value="{!TextTitle}"/>     
+                                </h2>
+                                <p>
+                                    <apex:outputText value="{!DateText}"/>     
+                                </p>                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-area">
+                    <p>
+                        <apex:outputText value="{!RichTextOutput}" escape="false"/>                
+                    </p>
+                </div> <!-- end of content-area -->
+            </div>
+     		<div class="footer"><img src="{!$Resource.ExpandingHopeSiteFooter}" class="fooImage"/></div>  
+        </div>
+    </apex:outputpanel>
+
+	<apex:outputpanel rendered="{!sObjName == 'Campus_Plan_FAQ__c'}">
+        <div class="main-container">
+           	<div class="main-header-area">
+                <div class="main-header"> 
+                            <div class="logo-image-wrap">
+                                <a href="/apex/COH_CampusPlanHeroAreaVFPage">
+                           			<apex:image url="{!$Resource.ExpandingHopeLogoMain}" title="Click to search all stories" />
+                                </a>
+                            </div>
+                            <div class="header-search-area">
+                                <a href="apex/ExpandingHopePageViewer"></a>
+                            </div>
+                </div>                   
+            </div>
+            <div class="banner-body-content-area">
+                <div class="banner-container">
+                    <div class="row">
+                       <div class="col-md-12">   
+                            <div class="banner-content">
+                                <h2>
+                                    <apex:outputText value="{!Question}"/>     
+                                </h2>
+                                <p>
+                                    <apex:outputText value="{!Answer}" escape="false"/>     
+                                </p>                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+     		<div class="footer"><img src="{!$Resource.ExpandingHopeSiteFooter}" class="fooImage"/></div>  
+        </div>
+    </apex:outputpanel>
+
+
+    
+    <!--This styling block is for the Expanding Hope Search Functionality -->
+	<apex:outputpanel rendered="{!sObjName == ''}">
+        <div class="main-container">
+           	<div class="main-header-area">
+                <div class="main-header"> 
+                            <div class="logo-image-wrap">
+                                <a href="/apex/COH_CampusPlanHeroAreaVFPage">
+                           			<apex:image url="{!$Resource.ExpandingHopeLogoMain}" title="Click to search all stories" />
+                                </a>
+                            </div>
+                            <div class="header-search-area">
+                                <a href="apex/ExpandingHopePageViewer"></a>
+                            </div>
+                </div>                   
+            </div>
+            <div class="banner-body-content-area">
+                <div class="search-container">
+                    <div class="search-bar-area">
+                        <apex:form >
+                          <apex:inputText value="{!searchStr}"/>
+                              <apex:commandButton value="Search in News, Timelines, FAQs" action="{!soslLookup_method}" reRender="timeline,error,NewsItem,FAQs" status="actStatusId"/>
+                            <apex:actionStatus id="actStatusId">
+                                        <apex:facet name="start" >
+                                            <img src="/img/loading.gif"/>                    
+                                        </apex:facet>
+                            </apex:actionStatus>
+                          </apex:form>
+                    </div>
+                    <section class="search-section">
+                        <apex:pageBlock title="Campus Plan News" id="NewsItem">
+                            <apex:pageblockTable value="{!newsList}" var="news">
+                                <apex:column >
+                                    <a href="apex/ExpandingHopePageViewer?id={!news.Id}">{!news.Title__c} </a>
+                                </apex:column>
+                                <apex:column value="{!news.name}"/>
+                                <apex:column value="{!news.Title__c}"/>
+                                <apex:column value="{!news.News_Content_Next_to_Image__c}"/>
+                            </apex:pageblockTable>
+                             <!-- <apex:outputLink value="{!newsItem.Id}" >{!newsItem.Title__c}</apex:outputLink> -->
+                         </apex:pageBlock>
+                    </section>
+                    <section class="search-section">
+                        <apex:pageBlock title="Timeline" id="timeline">
+                            <apex:pageblockTable value="{!timelineList }" var="time">
+                                <apex:column >
+                                    <a href="apex/ExpandingHopePageViewer?id={!time.Id}">{!time.Title__c} </a>
+                                </apex:column>
+                                <apex:column value="{!time.name}"/>
+                                <apex:column value="{!time.Title__c}"/>
+                                <apex:column value="{!time.Description__c}"/>
+                            </apex:pageblockTable>
+                        </apex:pageBlock>
+                     </section>
+                    <section class="search-section">
+                        <apex:pageBlock title="FAQs" id="FAQs">
+                            <apex:pageblockTable value="{!faqList}" var="faq">
+                                <apex:column >
+                                    <a href="apex/ExpandingHopePageViewer?id={!faq.Id}">{!faq.Question__c} </a>
+                                </apex:column>
+                                <apex:column value="{!faq.name}"/>
+                                <apex:column value="{!faq.Question__c}"/>
+                                <apex:column value="{!faq.Answer__c}"/>
+                            </apex:pageblockTable>
+                         </apex:pageBlock>
+                    </section>
+                </div> <!-- end of search-container -->
+                 <apex:outputPanel title="" id="error">
+               	 	<apex:pageMessages ></apex:pageMessages>
+                 </apex:outputPanel>
+            </div>            
+     		<div class="footer"><img src="{!$Resource.ExpandingHopeSiteFooter}" class="fooImage"/></div>  
+        </div>
+       
+    </apex:outputpanel>
+    
+    
+    </html>
+</apex:page>

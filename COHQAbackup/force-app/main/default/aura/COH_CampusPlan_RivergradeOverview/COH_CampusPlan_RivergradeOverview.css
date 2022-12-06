@@ -1,0 +1,68 @@
+.THIS .backbutton{
+    font-size:15px;
+    background-color: royalblue;
+    color: white;
+    padding-left: 30px;
+    margin-top: 5px;
+    cursor: pointer;
+    width: 130px;
+}
+.THIS .banner-container{
+    margin-top: 184px;
+    min-height: 705px;
+    background-color: #f1faff;
+}
+
+.THIS .banner-image {
+  position: relative;
+}
+.THIS .banner-image img{    
+    height:705px;
+    width: 100%;
+    border-style: groove;
+    cursor: pointer;
+    object-fit: cover;
+    object-position: left;
+}
+.THIS .banner-content{
+   padding: 120px 60px 0 60px;
+}
+.THIS .banner-content h1{    
+    color: #0075bc;
+    font-size: 40px;
+    font-weight: 400;
+    margin-bottom: 150px;
+}
+.THIS .banner-content h2{
+    color: #0075bc;
+    font-size: 32px;
+    font-weight: bold;
+}
+.THIS .profile-content{
+    padding: 50px 120px;
+    clear: both;
+}
+.THIS .profile-content h2{ 
+    color: #0075bc;
+    font-size: 30px;
+}
+.THIS .profile-content p{
+    font-size: 20px;
+    line-height: 30px;
+    margin-bottom: 50px;
+    color: #333333;
+}
+.THIS .label-header{
+    margin: 0 0 20px 0;
+    padding: 0;
+    clear: both;
+    text-transform: uppercase;
+}
+.THIS .label-header label{    
+    display: inline-block;
+    padding: 6px 20px;
+    color: #ffffff;
+}
+.THIS .blue-bg{
+    background-color: #4682b4;
+}

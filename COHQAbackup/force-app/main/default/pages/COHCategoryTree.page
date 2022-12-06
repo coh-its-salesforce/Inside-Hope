@@ -1,0 +1,43 @@
+<apex:page showHeader="false">
+    <script>
+    	var recordId = '{!JSENCODE($CurrentPage.parameters.recordId)}';
+    </script>
+<table width="100%">
+<tr>
+<td width="90%">
+    <c:COHTreeComponent />
+</td>
+</tr>
+</table>
+
+<script>
+function parentClickCall(parentnodeid,parentid){
+    //$("#id").html(parentnodeid);
+    //$("#parent").html(parentid);
+}
+function childClickCall(childnodeid,parentid,childname,parentname){
+    var winMain = window.opener;
+    if (null == winMain){
+    	winMain = window.parent.opener;    
+    }
+    var returnCategory = childname;
+    var parent = winMain.document.getElementById('{!$CurrentPage.parameters.parentField}');
+    parent.value = parentid;
+    var child = winMain.document.getElementById('{!$CurrentPage.parameters.childField}');
+    child.value = childnodeid;
+    var category = winMain.document.getElementById('{!$CurrentPage.parameters.catName}');
+    category.value = returnCategory;
+    window.close();
+    //CloseWindow();
+    //$("#id").html(childnodeid);
+    //$("#parent").html(parentid);
+}
+function CloseWindow(){
+	var winMain = window.opener;
+	if (null == winMain){
+    	window.parent.opener;   
+    }
+    winMain.closeLookupPopup;
+}
+</script>
+</apex:page>

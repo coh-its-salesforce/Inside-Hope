@@ -1,0 +1,126 @@
+<apex:component controller="HeaderComponentController">
+    <apex:attribute name="activeTab" type="string" default="0" description="Active Tab Number"/>
+    <apex:attribute name="IsLoginPage" assignTO="{!LoginPage}" type="boolean" default="true" description="Is Login Page?"/>
+    <script>
+        function loginUser(){
+            var userName = document.getElementById('uEmail').value; 
+            var password = document.getElementById('uPassword').value;  
+            
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.HeaderComponentController.loginUser}', 
+                userName,password, 
+                function(result, event){
+                    if (event.status) {
+                        console.log(result);
+                        var decoded = result.replace('amp;', '').replace('amp;', '').replace('amp;', '').replace('amp;', '').replace('amp;', '').replace('amp;', '').replace('amp;', '').replace('amp;', '');                                    
+                        //_gaq.push(['_link', decoded]);
+                        window.location = decoded;
+                        //document.getElementById("emsg").innerHTML = result;
+                    } else if (event.type === 'exception') {
+                        document.getElementById("emsg").innerHTML = event.message;
+                    } else {
+                        document.getElementById("emsg").innerHTML = event.message;
+                    }
+                }, 
+                {escape: true}
+            );
+        }
+    </script>
+    
+    <header>
+        
+        <!-- Begin Top Bar -->
+        <div class="top-bar">
+            <div class="container container-header">
+                <div class="row top-bar-row">
+                    
+                    <!-- Social Buttons -->
+                    <div class="col-sm-5 text-right topmenu-holder pull-right">
+                        <apex:outputPanel rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}">
+                            <ul class="topbar-list list-inline">
+                                <li><span class="glyphicon glyphicon-home top-bar-icon" aria-hidden="true" ></span>&nbsp;Welcome : &nbsp;<a href="{!$page.UserProfile}?uid={!$USer.id}" class="top-bar-link">{!$User.FirstName} &nbsp; {!$User.LastName}</a> </li>
+                                <li><span class="glyphicon glyphicon-glyphicon glyphicon-envelope top-bar-icon" aria-hidden="true"></span>&nbsp;<a href="{!$page.UserProfile}?uid={!$USer.id}" class="top-bar-link">{!$User.UserName}</a></li>
+                                <li><apex:outputLink value="{!$Site.Prefix}/secur/logout.jsp" styleClass="top-bar-link" rendered="{!NOT(ISPICKVAL($User.UserType,'Guest'))}">{!$Label.site.logout}</apex:outputLink> </li>
+                            </ul>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!ISPICKVAL($User.UserType,'Guest')}">
+                            <ul class="topbar-list list-inline">
+                                <li><span class="glyphicon glyphicon-user" aria-hidden="true"></span><a data-toggle="modal" data-target="#login">Login</a></li>
+                             </ul>
+                        </apex:outputPanel>
+                    </div>
+                </div><!--/row --> 
+            </div><!--/container header -->   
+        </div><!--/top bar -->   
+        <!-- End Top Bar -->
+
+        <!-- Login -->
+        <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="loginLabel">Login</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="emsg">
+                            
+                        </div>
+                        <form role="form">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control" id="uEmail" placeholder="Enter email"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" class="form-control" id="uPassword" placeholder="Password"/>
+                            </div>
+                            
+                        </form><!-- /form -->
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-rw btn-primary" onclick="loginUser();">Login</button>
+                    </div>
+                </div><!-- /modal content -->
+            </div><!-- /modal dialog -->
+        </div><!-- /modal holder -->
+        <!-- End Login -->
+
+        <!-- Begin Navigation -->
+        <nav class="navbar navbar-default mainnav">
+          <div class="container">
+              <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="#">
+                      <img src="{!URLFOR($Resource.COHImage,'TheHub.png')}"  alt="COH" width="125"/>
+                  </a>
+                </div>
+        
+                <!-- Collect the nav links, forms, and other content for toggling -->
+               
+                
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    
+                    <ul class="nav navbar-nav navbar-right">
+                        <apex:repeat value="{!TabList}" var="tab">
+                        <li class="{!IF(activeTab == tab, 'active', '')}">
+                            <a href="#" data-close-others="true"><apex:outputlabel value="{!tab}"/></a>
+                        </li>
+                    </apex:repeat>
+                  </ul>
+                </div><!-- /.navbar-collapse -->
+              </div><!-- /.container-fluid -->
+          </div><!-- /.containder -->
+        </nav>
+        <!-- End Navigation -->
+
+    </header><!-- /header -->
+</apex:component>

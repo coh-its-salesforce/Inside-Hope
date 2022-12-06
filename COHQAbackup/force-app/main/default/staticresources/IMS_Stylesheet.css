@@ -1,0 +1,30 @@
+h1 {
+    color : black;
+}
+
+#myClass {
+    color : blue;
+}
+
+.boldText {
+    color : black;
+	font-weight: bold;    
+    font-size: 91%;
+}
+
+.columnLinkWithPopup {
+    color : blue;
+	font-weight: bold;    
+    font-size: 91%;
+    text-decoration: underline;
+}
+
+.commandLink {
+    color : blue;
+    font-size: 91%;
+}
+
+.fullWidthColumn {
+    width : 500px;
+}	
+

@@ -1,0 +1,68 @@
+<apex:page standardController="BMCServiceDesk__Incident__c" extensions="ResolveIncidentController" sidebar="false" showheader="false">
+	<html> 
+   <head></head>
+<body onload="checkStatus();"></body>
+</html>
+	
+	<script language='JAVASCRIPT'>
+		saveIncident();
+		window.close();
+	</script>
+	<apex:pageMessages />
+    <apex:form id="resolutionForm">
+    <apex:inputHidden id="stat" value="{!sStatus}" />
+        <apex:pageBlock title="Resolve Incident {!incident.Name}">
+            <apex:outputLabel value="Resolution:" style="color:red;"/><br/> <apex:inputTextArea id="resolution" cols="120" rows="6" value="{!incident.BMCServiceDesk__incidentResolution__c}" required="true" />
+            <apex:outputLabel value="Closure Category" style="color:red;" />
+                <apex:selectList size="1" value="{!selectedCategory}" required="true" id="category" >
+                    
+                    <apex:selectOptions value="{!categoryOptions}" />
+                    
+                </apex:selectList> 
+                <apex:outputLabel value="First Call Resolution"/>
+                <apex:inputField value="{!incident.BMCServiceDesk__firstCallResolution__c}"/> 
+            <br/>
+            	<apex:outputPanel id="buttons">
+    			  <apex:commandButton value="Save" action="{!save}" />
+    			<apex:commandButton value="Cancel" onclick="window.close()"/>
+    			
+  			</apex:outputPanel>
+        </apex:pageBlock>
+        
+
+		<script>
+			var sts = document.getElementById("{!$Component.resolutionForm.stat}");
+     	</script>
+    </apex:form>
+ 
+ 	<script type="text/javascript">
+    	function checkStatus(){
+     		if(sts.value == 'saved'){
+     		
+            	window.close();
+            } 
+        }
+        
+      </script>
+    <style type="text/css">
+       .customPopup{
+            background-color: white;
+            border-style: solid;
+            border-width: 2px;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            z-index: 9999;
+            /* These are the 3 css properties you will need to tweak so the pop 
+            up displays in the center of the screen. First set the width. Then set 
+            margin-left to negative half of what the width is. You can also add 
+            the height property for a fixed size pop up.*/
+            width: 500px;
+            margin-left: -250px;
+            top:100px;
+        }
+        .required{
+        	color: red;
+        }
+    </style>
+</apex:page>

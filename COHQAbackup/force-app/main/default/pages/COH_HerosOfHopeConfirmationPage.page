@@ -1,0 +1,25 @@
+<apex:page sidebar="false" showHeader="false">
+    <Style>
+        
+        .ThankYou {
+        margin: 0 auto;
+        margin-top: 40Px;
+        text-decoration: none;
+        font-size: medium;
+        color: #1797C0;
+        font-weight: bold;
+        width: 600px;
+        text-align: center
+        }
+       
+    </Style>
+    <div class="header">
+        <apex:image url="{!$Resource.HeroesOfHope}" width="100%" />
+        
+    </div>
+    <p class="ThankYou">
+        Thank you for submitting your Hero recognition. Any questions,please contact <a href="mailto:recognition@coh.org">recognition@coh.org</a>
+    </p>
+    
+    
+</apex:page>

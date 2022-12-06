@@ -1,0 +1,7 @@
+.THIS .slds-dueling-list__column_responsive{
+    flex: auto;
+    width:50%;
+}
+.THIS .slds-dueling-list__column_responsive .slds-dueling-list__options {
+    max-width: none;
+}

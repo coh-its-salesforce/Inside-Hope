@@ -1,0 +1,7 @@
+<design:component>
+	<design:attribute name="desktopWidth" label="Desktop Width" default="965" description=""/>
+    <design:attribute name="desktopHeight" label="Desktop Height" default="553"  description=""/>
+    <design:attribute name="mobileWidth" label="Mobile Width" default="300"  description=""/>
+    <design:attribute name="mobileHeight" label="Mobile Height" default="553"  description=""/>
+    <design:attribute name="videourl" label="Video URL" default="https://www.youtube.com/embed/AaCZXsZWhHo"  description=""/>
+</design:component>

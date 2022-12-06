@@ -1,0 +1,34 @@
+<aura:component controller="COH_UTIL_DependentPicklistController">
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    <aura:handler name="change" value="{!v.mControllingPicklistValue}" action="{!c.updateControllingPicklistValue}"/>
+    <aura:method name="validateFields" action="{!c.validateFields}"/>
+    
+    <!-- Required -->    
+    <aura:attribute name="mControllingPicklistValue" type="String"/>
+    <aura:attribute name="mSObjectAPIName" type="String"/>
+    <aura:attribute name="mControllingFieldAPIName" type="String"/>
+    <aura:attribute name="mDependentFieldAPIName" type="String"/>
+    <aura:attribute name="mDependentPicklistValue" type="SObject"/>
+    <aura:attribute name="mDependentPicklistLabel" type="String"/>
+    <aura:attribute name="mDependentPicklistName" type="String"/>
+    
+    <!-- Optional -->
+    <aura:attribute name="mRequired" type="Boolean" default="false"/>
+    <aura:attribute name="mNullValue" type="String" default="--Select--"/>    
+    
+    <!-- "Private" -->
+    <aura:attribute name="mDependentPicklistOptions" type="List" default="[]"/>
+    <aura:attribute name="mControllingAndDependentOptionsMap" type="Map" />
+    <aura:attribute name="mPreviousControllingPicklistValue" type="String" default="" />
+    
+    <lightning:select value="{!v.mDependentPicklistValue}" 
+                      label="{!v.mDependentPicklistLabel}"
+                      name="{!v.mDependentPicklistName}"
+                      aura:id="dependentPicklist"
+                      required="{!v.mRequired}">
+        <option value="">{!v.mNullValue}</option>
+        <aura:iteration items="{!v.mDependentPicklistOptions}" var="currentPicklistOption">
+            <option value="{!currentPicklistOption}" selected="{!currentPicklistOption==v.mDependentPicklistValue}">{!currentPicklistOption}</option>                        
+        </aura:iteration>
+    </lightning:select>
+</aura:component>

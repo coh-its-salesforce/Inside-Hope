@@ -1,0 +1,5 @@
+.THIS .slds-form-element > .slds-form-element__label, 
+.THIS .slds-section__title,
+.THIS .is-required .slds-form-element__label{
+    font-weight: bold;
+}

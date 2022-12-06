@@ -1,0 +1,41 @@
+<aura:component >
+   <aura:attribute name="Milestone" type="boolean" default="false"/>
+   <aura:attribute name="milestonepage5" type="boolean" default="true"/>
+    <aura:attribute name="VideoLink" type="String" />
+   <aura:if isTrue="{!v.milestonepage5}">
+     <div>
+         <div class="banner-container">
+             <div class="slds-grid slds-wrap">
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+                     <div class="banner-image">
+                         <img src = "{!$Resource.CampusPlanMockDesign}"/> 
+                     </div>
+                 </div>
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12">
+                     <div class="banner-content">
+                         <h4 class="label-header"><label class="orange-bg">Orange County</label></h4>
+                         <h2> February 2020 </h2>
+                         <p class="banner-p"> Placing the Design of the Orange County Campus into the Hands of Patients, Faculty and Staff </p>
+                         <p class="banner-p"> As City of Hope Orange County selects its construction and design team, project leaders invite our staff and the public to help design a cancer campus this patient-centric with compassionate care woven into every corner. </p>
+                     </div>
+                 </div>
+             </div>            
+         </div>
+        <div class="profile-content">
+            <p> In an innovative feedback gathering session, City of Hope invites its patients, community leaders, faculty and staff to walk through life-size mock-ups of the proposed Irvine cancer complex design. Putting themselves in the shoes of patients and staff, participants provide feedback on the workflows, comfort, cultural appropriateness (including feng shui), and overall experience. This exercise is all part of building a center for Orange County by Orange County. </p>
+            <strong> LATEST NEWS </strong><br/>
+            <a target = '_blank' href= 'https://players.brightcove.net/5069692884001/default_default/index.html?videoId=6139950598001'> Inside Hope </a><br/><br/>
+            <c:ExpandingHopeLightningEmbeddedVideo VideoLink="https://players.brightcove.net/5069692884001/default_default/index.html?videoId=6139950598001"/><br/>
+
+            <strong>INTERNAL UPDATES</strong><br/>
+            <a target = '_blank' href= 'http://insidehope.coh.org/designing-hope/'> Designing Hope: City of Hope puts the design of our $1 billion OC cancer campus in the hands of patients, faculty and staff </a><br/>
+            
+         </div>
+       </div>
+       <div class="backbutton" onclick="{!c.goBackToMilestone}" ><lightning:icon iconName="utility:back" size="x-small" variant="inverse" />&nbsp;&nbsp;&nbsp;&nbsp;Back  
+    </div>
+       </aura:if>
+    <aura:if isTrue="{!v.Milestone}">
+        <c:COH_CampusPlan_Milestone/>
+    </aura:if>
+</aura:component>

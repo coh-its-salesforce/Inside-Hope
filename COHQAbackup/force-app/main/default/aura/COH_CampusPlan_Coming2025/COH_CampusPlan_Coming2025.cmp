@@ -1,0 +1,35 @@
+<aura:component >
+   <aura:attribute name="Milestone" type="boolean" default="false"/>
+   <aura:attribute name="milestonepage8" type="boolean" default="true"/>
+   <aura:if isTrue="{!v.milestonepage8}">
+     <div>
+         <div class="banner-container">
+             <div class="slds-grid slds-wrap">
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_7-of-12" >
+                     <div class="banner-image">
+                         <img src = "{!$Resource.CampusPlanPhysicianHands}"/> 
+                     </div>
+                 </div>
+                 <div class="slds-col slds-size_1-of-1 slds-medium-size_12-of-12 slds-large-size_5-of-12">
+                     <div class="banner-content">
+                         <h4 class="label-header"><label class="orange-bg">Orange County</label></h4>
+                         <h2> Coming 2025 </h2>
+                         <p class="banner-p"> Coming 2025 – OC’s First Specialty Hospital for Cancer Opens in Irvine. </p>
+                         <p class="banner-p"> Orange County’s only specialty hospital focused exclusively on treating and curing cancer will open in 2025.</p>
+                     </div>
+                 </div>
+             </div>            
+         </div>
+        <div class="profile-content">
+            <p> This addition will fulfill the Orange County vision, transforming the comprehensive cancer center into a hybrid model of acute and ambulatory care under one roof. This bold endeavor, which started with the simple idea that more communities deserve advanced cancer care, will be a promise fulfilled.</p>
+         </div>
+       <div class="backbutton" onclick="{!c.goBackToMilestone}" >
+           <lightning:icon iconName="utility:back" size="x-small" variant="inverse" />
+           Back  
+    	</div>
+       </div>
+       </aura:if>
+    <aura:if isTrue="{!v.Milestone}">
+        <c:COH_CampusPlan_Milestone/>
+    </aura:if>
+</aura:component>
