@@ -449,15 +449,6 @@ System.assertEquals(null, mrn);*/
                            Patient_Postal_Code__c='sample',Relationship_to_Patient__c='Brother',
                            COH_Account_PatientAccess_Marital_Status__c='Single ',
                            COH_PA_Country__c='United States of America',Id=mAccountObjectID1);
-        PurchaserPlan pp1 = new PurchaserPlan(
-        Name='BC ACA GENERIC EPO',
-        PlanType='EPO',
-        PlanStatus='Active');
-        INSERT pp1;
-        Account Insurance_Payer_1 = new Account(Name='Insurance_Payer_1 Sample',
-                                               RecordTypeId=[SELECT Id,Name FROM RECORDTYPE WHERE 
-                                                            SobjectType='Account' AND DeveloperName='IndustriesPayer'].Id);
-        INSERT Insurance_Payer_1;
         INSERT new Epic_Account_Data__c(Account__c=mAccountObjectID1,
                                         Authorization_number_1__c='54646',
                                         //Patient_Relationship_to_Subscriber_1__c='Self',
@@ -480,31 +471,7 @@ System.assertEquals(null, mrn);*/
                                         //Guarantor1_State__c   = 'California',            
                                         Guarantor1_City__c  = 'Duarte',    
                                         //Guarantor1_Country__c = 'United States of America',
-                                        Guarantor1_PostalCode__c  = '20001',
-                                       Insurance_Purchaser_Plan_1__c=pp1.Id,
-                                       Insurance_Payer_1__c=Insurance_Payer_1.Id,
-                                        Insurance_Payor_Name_1__c='sample one name',
-                                        Insurance_Payor_Name_2__c='sample two name',
-                                        Insurance_Payor_Name_3__c='sample three name',
-                                       Insurance_Plan_Name_1__c='SouthPasadena Blue Cross Generic',
-                                       Insurance_Payer_Street_1__c='California',
-                                       Insurance_Payer_City_1__c='Arcadia',
-                                       Insurance_Payer_PostalCode_1__c='91006',
-                                       Insurance_Payer_Country_1__c='United States of America',
-                                       Insurance_Purchaser_Plan_2__c=pp1.Id,
-                                       Insurance_Payer_2__c=Insurance_Payer_1.Id,
-                                       Insurance_Plan_Name_2__c='SouthPasadena Blue Cross Generic',
-                                       Insurance_Payer_Street_2__c='California',
-                                       Insurance_Payer_City_2__c='Arcadia',
-                                       Insurance_Payer_PostalCode_2__c='91006',
-                                       Insurance_Payer_Country_2__c='United States of America',
-                                       Insurance_Purchaser_Plan_3__c=pp1.Id,
-                                       Insurance_Payer_3__c=Insurance_Payer_1.Id,
-                                       Insurance_Plan_Name_3__c='SouthPasadena Blue Cross Generic',
-                                       Insurance_Payer_Street_3__c='California',
-                                       Insurance_Payer_City_3__c='Arcadia',
-                                       Insurance_Payer_PostalCode_3__c='91006',
-                                       Insurance_Payer_Country_3__c='United States of America');
+                                        Guarantor1_PostalCode__c  = '20001');
         COHEpicLightningController.verifyCreateEpicMRNButton(mCaseObjectID1);
         Test.stopTest();
     }

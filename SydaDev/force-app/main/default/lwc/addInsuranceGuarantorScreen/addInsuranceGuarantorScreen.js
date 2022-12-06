@@ -95,7 +95,14 @@ showErrorMessage = '';
     { label: 'Group', fieldName: 'Group' } 
      
 ];
+guarantorColumns = [
+    { label: 'Sequence', fieldName: 'Sequence' },
+    { label: 'Type', fieldName: 'Type' },
+    { label: 'Name', fieldName: 'Name' },
+     
+];
 insuranceData = [];
+guarantorList = [];
 
 
     // getting the object info
@@ -170,20 +177,20 @@ insuranceData = [];
                 this.epicAccountRecord = result;
                 if(this.epicAccountRecord){
                     this.epicRecordId=this.epicAccountRecord.Id;
-                        var insuranceList = [];
-                        this.getFirstInsurance();
-                        if(this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c!==''){
-                            this.primaryInsuranceAdded=true;
-                            let primary = new Object();
-                            primary['Sequence'] = 'Primary';
-                            primary['RelationShip'] = this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c;
-                            primary['Name'] = this.epicAccountRecord.Insurance_Subscriber_First_Name_1__c +' '
-                                            this.epicAccountRecord.Insurance_Subscriber_Middle_Name_1__c +  ' '
-                                            this.epicAccountRecord.Insurance_Subscriber_Last_Name_1__c ;
-                            primary['Group'] = this.epicAccountRecord.Group_Number_1_c__c;
-                            primary['Subscriber'] = this.epicAccountRecord.Subscriber_ID_1__c;
-                            insuranceList.push(primary);
-                        }
+                    var insuranceList = [];
+                    this.getFirstInsurance();
+                    if(this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c!==''){
+                        this.primaryInsuranceAdded=true;
+                        let primary = new Object();
+                        primary['Sequence'] = 'Primary';
+                        primary['RelationShip'] = this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c;
+                        primary['Name'] = this.epicAccountRecord.Insurance_Subscriber_First_Name_1__c +' '
+                                        this.epicAccountRecord.Insurance_Subscriber_Middle_Name_1__c +  ' '
+                                        this.epicAccountRecord.Insurance_Subscriber_Last_Name_1__c ;
+                        primary['Group'] = this.epicAccountRecord.Group_Number_1_c__c;
+                        primary['Subscriber'] = this.epicAccountRecord.Subscriber_ID_1__c;
+                        insuranceList.push(primary);
+                    }
                     if(result.hasOwnProperty('Patient_Relationship_to_Subscriber_2__c')){
                         this.disableNextButton=false;
                         this.secondaryInsuranceAdded=true;
@@ -193,9 +200,10 @@ insuranceData = [];
                         secondary['Name'] = this.epicAccountRecord.Insurance_Subscriber_First_Name_2__c +' '
                                               this.epicAccountRecord.Insurance_Subscriber_Middle_Name_2__c + ' ' 
                                               this.epicAccountRecord.Insurance_Subscriber_Last_Name_2__c ;
-                                              insuranceList.push(secondary);
+                                              
                         secondary['Group'] = this.epicAccountRecord.Group_Number_2_c__c;
                         secondary['Subscriber'] = this.epicAccountRecord.Subscriber_ID_2__c;
+                        insuranceList.push(secondary);
                     }else{
                             this.isDisabledInsuranceButton=false;
                     }
@@ -207,14 +215,27 @@ insuranceData = [];
                         tertiary['Name'] = this.epicAccountRecord.Insurance_Subscriber_First_Name_3__c +' '
                                               this.epicAccountRecord.Insurance_Subscriber_Middle_Name_3__c +  ' '
                                               this.epicAccountRecord.Insurance_Subscriber_Last_Name_3__c ;
-                                              insuranceList.push(tertiary);
+                                              
                         tertiary['Group'] = this.epicAccountRecord.Group_Number_3_c__c;
                         tertiary['Subscriber'] = this.epicAccountRecord.Subscriber_ID_3__c;
+                        insuranceList.push(tertiary);
                     }
 
                     console.log('insuranceList',insuranceList)
 
                     this.insuranceData = insuranceList;
+
+                    if(result.hasOwnProperty('Patient_Relationship_to_Subscriber_3__c')){
+                        let guarantorArr = [];
+                        let guarantor = new Object();
+                        guarantor['Sequence'] = 'Primary';
+                        guarantor['Type'] =  this.epicAccountRecord.Guarantor1_Type__c;
+                        guarantor['Name'] = this.epicAccountRecord.Guarantor1_FirstName__c +' '
+                                              this.epicAccountRecord.Guarantor1_MiddleName__c +  ' '
+                                              this.epicAccountRecord.Guarantor1_LastName__c ;
+                                              guarantorArr.push(guarantor);
+                                              this.guarantorList = guarantorArr;
+                    }
 
                     this.disableUpdateButton = false;
                     this.patientRelationshipToGuarantor = result.Guarantor1_Patient_Relationship_to__c;
@@ -294,6 +315,17 @@ insuranceData = [];
                                               insuranceList.push(tertiary);
                         tertiary['Group'] = result.Group_Number_3_c__c;
                         tertiary['Subscriber'] = result.Subscriber_ID_3__c;
+                    }
+                    if(result.hasOwnProperty('Patient_Relationship_to_Subscriber_3__c')){
+                        let guarantorArr = [];
+                        let guarantor = new Object();
+                        guarantor['Sequence'] = 'Primary';
+                        guarantor['Type'] =  result.Guarantor1_Type__c;
+                        guarantor['Name'] = result.Guarantor1_FirstName__c +' '
+                                              result.Guarantor1_MiddleName__c +  ' '
+                                              result.Guarantor1_LastName__c ;
+                                              guarantorArr.push(guarantor);
+                                              this.guarantorList = guarantorArr;
                     }
 
                     console.log('insuranceList',insuranceList)

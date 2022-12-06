@@ -8,12 +8,12 @@
  * in any form (written, electronic, or otherwise) without the prior
  * written consent from the City of Hope.
  **** Frank Salinas Modified 04/01/2021
- * Description:     Raymond developed the createEpicRecordViaURL method some time before 2019 but it was never implemented because of Epic legal matters with APIs. The legal matters have been resolved
- *                  Added Epic Client ID to the HTTP call to Epic and enabled the Custom Metadata to use the new createEpicRecordViaURL method.
- * This Class:      Added EPIC_CLIENT_ID to HTTP Header values
+ * Description: 	Raymond developed the createEpicRecordViaURL method some time before 2019 but it was never implemented because of Epic legal matters with APIs. The legal matters have been resolved
+ *  				Added Epic Client ID to the HTTP call to Epic and enabled the Custom Metadata to use the new createEpicRecordViaURL method.
+ * This Class: 		Added EPIC_CLIENT_ID to HTTP Header values
  * Custom Metadata: Added Epic Client ID to COH_Configuration MDT. 
- * Modification:    20210401 Frank Salinas 
- *                  Added new Epic search method for looking up Epic Patients before the EpicCreatePatient method is called
+ * Modification: 	20210401 Frank Salinas 
+ * 					Added new Epic search method for looking up Epic Patients before the EpicCreatePatient method is called
  */
 public class COHEpicLightningController {
     
@@ -41,19 +41,19 @@ public class COHEpicLightningController {
     private static final String EPIC_PASSWORD_KEY = 'Epic_Password';
     private static final String EPIC_CLIENT_ID = 'Epic_Client_ID';//FS 20210401
     private static final String EPIC_LOOKUP_URL_KEY = 'Epic_Lookup_Patient_Endpoint_URL';//FS 20210401 New for Epic Patient Lookup
-    private static final String DEFAULT_DEPT_ID_KEY = 'DEFAULT_DEPT_ID';//FS 20210401
+	private static final String DEFAULT_DEPT_ID_KEY = 'DEFAULT_DEPT_ID';//FS 20210401
     
     private static final String DEFAULT_DEPT_ID = '105000015';//'COHCC';//FS per Amir
     private static final String DEFAULT_DEPT_TYPE = 'External';// 'DEPID';<-- DEPID was previous value
-    private static final String DEFAULT_USER_ID_TYPE = 'External';
-    private static final String PATIENT_TYPE = 'MR';
+	private static final String DEFAULT_USER_ID_TYPE = 'External';
+	private static final String PATIENT_TYPE = 'MR';
     private static final String TYPE_STR = '"Type"';
-    private static final String TYPE_Z_STR = '"Type_z"';
+	private static final String TYPE_Z_STR = '"Type_z"';
              
-    private static final String BASIC_AUTHORIZATION = 'Basic ';
+	private static final String BASIC_AUTHORIZATION = 'Basic ';
 
     private static String mEpicCreateURL;
-    private static String mEpicUpdateURL;
+	private static String mEpicUpdateURL;
     private static String mEpicUserName;
     private static String mEpicPassword;
     private static String mEpicClientID;
@@ -78,10 +78,10 @@ public class COHEpicLightningController {
      * types records.  After Epic retrieves the record, it will create the record.  This is due to a legal problem
      * with using the URL.  
      * 
-     * @param caseID        ID of the case object.
-     * @return              If the URL was provided, the MRN if the newly-created object is returned. 
-     *                      If the URL was not provided, 'true' is returned if the Account.IsRead__c
-     *                      was set the true, 'false' otherwise.
+     * @param caseID		ID of the case object.
+     * @return				If the URL was provided, the MRN if the newly-created object is returned. 
+     * 						If the URL was not provided, 'true' is returned if the Account.IsRead__c
+     * 						was set the true, 'false' otherwise.
      * 
      */
     @AuraEnabled
@@ -105,7 +105,7 @@ public class COHEpicLightningController {
      * types records.  After Epic retrieves the record, it will create the record.  This is due to a legal problem
      * with using the URL.  
      * 
-     * @param caseID        ID of the case object.
+     * @param caseID		ID of the case object.
      * 
      */
     @AuraEnabled
@@ -121,8 +121,8 @@ public class COHEpicLightningController {
      * Modifies the Account.IsRead__c field is set to false so that Epic can poll for these
      * types records to be created.  A Chatter post is created if the modification is successful.
      * 
-     * @param caseID        ID of the case object.
-     * @return              True if the operation completed successfully, false otherwise.
+     * @param caseID		ID of the case object.
+     * @return				True if the operation completed successfully, false otherwise.
      * 
      */
     @AuraEnabled
@@ -147,7 +147,7 @@ public class COHEpicLightningController {
                         throw new AuraHandledException(errMesg);
                     }
                     
-                    if (String.isEmpty(objAccount.COH_MRN__c)) {        // Ensure that legacy records aren't sent to Epic for creation because they already have MRNs but PatientCreatedInEPIC__c is false;
+                    if (String.isEmpty(objAccount.COH_MRN__c)) {		// Ensure that legacy records aren't sent to Epic for creation because they already have MRNs but PatientCreatedInEPIC__c is false;
                         objAccount.IsRead__c = False;
                         objAccount.PatientCreatedInEPIC__c = True;
                         update objAccount;                     
@@ -190,8 +190,8 @@ public class COHEpicLightningController {
      * Modifies the Account.IsRead__c field is set to false so that Epic can poll for these
      * types records to be updated.  A Chatter post is created if the modification is successful.
      * 
-     * @param caseID        ID of the case object.
-     * @return              True if the operation completed successfully, false otherwise.
+     * @param caseID		ID of the case object.
+     * @return				True if the operation completed successfully, false otherwise.
      * 
      */
     @AuraEnabled
@@ -200,10 +200,10 @@ public class COHEpicLightningController {
         Boolean bSuccess = false;
         if (String.isNotEmpty(accountID)) {
             List<Account> accountList = [SELECT Id, IsRead__c, COH_MRN__c FROM Account WHERE Id = :accountID];
-            if (COHUtil.isValidList(accountList)) {
-                Account objAccount = accountList.get(0);
+			if (COHUtil.isValidList(accountList)) {
+				Account objAccount = accountList.get(0);
                 if (String.isEmpty(objAccount.COH_MRN__c)) {
-                    throw new AuraHandledException('Error: COHEpicLightningController.modifyDoNotSendFlagForUpdate(): MRN is empty. Send the record to Epic before updating it.');
+					throw new AuraHandledException('Error: COHEpicLightningController.modifyDoNotSendFlagForUpdate(): MRN is empty. Send the record to Epic before updating it.');
                 }
                 objAccount.IsRead__c = false;
                 update objAccount;                        
@@ -211,18 +211,18 @@ public class COHEpicLightningController {
                     simpleTextPost(accountID, 'Patient updated in Epic.');
                 } 
                 bSuccess = true; 
-            } else {
-                throw new AuraHandledException('Error: COHEpicLightningController.modifyDoNotSendFlagForUpdate(): account record not found');
-            }
-        }
+        	} else {
+				throw new AuraHandledException('Error: COHEpicLightningController.modifyDoNotSendFlagForUpdate(): account record not found');
+    	    }
+		}
         return bSuccess;
     }
 
     /*
      * Create a record for EPIC via an URL. A Chatter post is created if the update is successful.
      * 
-     * @param caseID    ID of the Case record.
-     * @return                  New MRN.
+     * @param caseID	ID of the Case record.
+     * @return					New MRN.
      *
      *
      */
@@ -238,15 +238,15 @@ public class COHEpicLightningController {
                     if (COHUtil.isValidList(accountList)) {
                         Account accountObj = accountList.get(0);
                         if (String.isEmpty(accountObj.FirstName)) {
-                            throw new AuraHandledException('Error: COHEpicLightningController.createNewEpicRecord(): the First Name field in the Account record cannot be empty');
+							throw new AuraHandledException('Error: COHEpicLightningController.createNewEpicRecord(): the First Name field in the Account record cannot be empty');
                         }
                         //FS 20210401 This will not be needed in new API verion
                         //if (accountObj.PatientCreatedInEPIC__c == True) {
-                        //  throw new AuraHandledException('Error: COHEpicLightningController.createNewEpicRecord(): Patient has already been created in EPIC');
+						//	throw new AuraHandledException('Error: COHEpicLightningController.createNewEpicRecord(): Patient has already been created in EPIC');
                         //}
                         //FS 20210401 This is code that was later on down the road but needs to be moved up
                         if (String.isNotEmpty(accountObj.COH_MRN__c)) {
-                            throw new AuraHandledException('Error: COHEpicLightningController.createNewEpicRecord(): Patient has already has an MRN ('+accountObj.COH_MRN__c+')');
+							throw new AuraHandledException('Error: COHEpicLightningController.createNewEpicRecord(): Patient has already has an MRN ('+accountObj.COH_MRN__c+')');
                         }
                         
                         String errMesg = checkRequiredFieldsForCreate(accountObj);
@@ -269,7 +269,7 @@ public class COHEpicLightningController {
                            String FirstName = accountObj.FirstName;
                            String LastName = accountObj.LastName;
                            Date PersonBirthDate = accountObj.PersonBirthdate; 
-                           String errMsg = 'Patient ' + FirstName + ' ' + LastName + ', Birthdate ' + PersonBirthdate + ' was found in Epic with the MRN ' + mSearchMRN;
+	                       String errMsg = 'Patient ' + FirstName + ' ' + LastName + ', Birthdate ' + PersonBirthdate + ' was found in Epic with the MRN ' + mSearchMRN;
                            throw new AuraHandledException(errMsg);
                         }
                         //////////////////////////// LookupEpicRecord STOP ////////////////////////////
@@ -284,7 +284,7 @@ public class COHEpicLightningController {
                             
                             // JSON.serialize
                             String jsonStr = JSON.serialize(JSONFinalMap);
-                            System.debug('JSON.serialize(JSONFinalMap) jsonStr='+jsonStr);//FS 20210318                                       
+							System.debug('JSON.serialize(JSONFinalMap) jsonStr='+jsonStr);//FS 20210318                                       
 
                             Http httpObj = new Http();                    
                             HttpRequest httpRequestObj = new HttpRequest();
@@ -293,7 +293,7 @@ public class COHEpicLightningController {
                             system.debug('headValue preview='+mEpicUserName + ':' + mEpicPassword);
                             Blob headerValue = Blob.valueOf(mEpicUserName + ':' + mEpicPassword);
                             String authorizationHeader = BASIC_AUTHORIZATION + EncodingUtil.base64Encode(headerValue);
-                            system.debug('authorizationHeader='+authorizationHeader);
+							system.debug('authorizationHeader='+authorizationHeader);
                             httpRequestObj.setHeader(AUTHORIZATION_KEY, authorizationHeader);
                             httpRequestObj.setHeader(CONTENT_TYPE_KEY, CONTENT_TYPE_VALUE);
                             httpRequestObj.setHeader(ACCEPT_KEY, ACCEPT_VALUE);
@@ -321,15 +321,14 @@ public class COHEpicLightningController {
                                         accountObj.COH_MRN__c = patientMRN;
                                         //Updating accountObj.isRead__c so that Corepoint can retrieve additional demographic information from Epic and send it to Salesforce record. LK 02/25/2022
                                         accountObj.isRead__c = false;
-                                        system.debug('isRead__c = ' + accountObj.isRead__c);
                                         try {
                                             update accountObj;
                                         } catch (Exception e) {
                                             throw new AuraHandledException('Error: COHEpicLightningController.createNewEpicRecord() failed to create the account record for MRN: ' + patientMRN + ': ' + e.getMessage());
                                         }
                                         try {
-                                            if (!Test.isRunningTest()) {
-                                                simpleTextPost(caseID, 'Record created in EPIC. MRN: '+ patientMRN);
+							                if (!Test.isRunningTest()) {
+                            	                simpleTextPost(caseID, 'Record created in EPIC. MRN: '+ patientMRN);
                                             }
                                         } catch (Exception e) {
                                             throw new AuraHandledException('Error: COHEpicLightningController.createNewEpicRecord() failed to create a Chatter post for MRN: ' + patientMRN + ': ' + e.getMessage());
@@ -337,23 +336,23 @@ public class COHEpicLightningController {
                                     }
                                 } else {
                                     String errMsg = 'Error: COHEpicLightningController.createNewEpicRecord() failed to create a record. Status Code: ' + resultStatusCode + ', Status: ' + httpResponseObj.getStatus();
-                                    if (!Test.isRunningTest()) {
+					                if (!Test.isRunningTest()) {
                                         system.debug('errMsg: '+ errMsg);
-                                        simpleTextPost(caseID, errMsg);
+                    	                simpleTextPost(caseID, errMsg);
                                     }
                                     throw new AuraHandledException(errMsg);
                                 }
                             }
                         } else {
-                            throw new AuraHandledException('Error: COHEpicLightningController.createNewEpicRecord(): MRN (' + accountObj.COH_MRN__c + ' ) has already been assigned an Account ID:  ' + accountId);
+							throw new AuraHandledException('Error: COHEpicLightningController.createNewEpicRecord(): MRN (' + accountObj.COH_MRN__c + ' ) has already been assigned an Account ID:  ' + accountId);
                         }
                     } else {
                         throw new AuraHandledException('Error: COHEpicLightningController.createNewEpicRecord(): Unable to retrieve the Account record for Account ID:  ' + accountId);
                     }
                 }  else {
 
-                    throw new AuraHandledException('Error: COHEpicLightningController.createNewEpicRecord(): Unable to retrieve the Case record for Case ID:  ' + caseID);
-                }
+                	throw new AuraHandledException('Error: COHEpicLightningController.createNewEpicRecord(): Unable to retrieve the Case record for Case ID:  ' + caseID);
+            	}
         } else {
             throw new AuraHandledException('Error: COHEpicLightningController.createNewEpicRecord(): The Case ID cannot be null');
         }
@@ -364,13 +363,13 @@ public class COHEpicLightningController {
     /*
      * Lookup an existing Epic record via an Lookup URL. 
      *
-     * param  @accountObj       From CreateEpicRecord method 
-     * return @retStrVal        Semi-Colon separated string
+     * param  @accountObj		From CreateEpicRecord method 
+     * return @retStrVal		Semi-Colon separated string
      * 
      */
     //@AuraEnabled
     public static string LookupEpicRecord(Account accountObj) {
-        String mEpicPatientLookupURL_WithParams = mEpicPatientLookupURL + SetLookupCriteria(accountObj);
+    	String mEpicPatientLookupURL_WithParams = mEpicPatientLookupURL + SetLookupCriteria(accountObj);
         system.debug('COHEpicLightningController.LookupEpicRecord mEpicPatientLookupURL_WithParams :='+mEpicPatientLookupURL_WithParams);
         Http httpObj = new Http();                    
         HttpRequest httpRequestObj = new HttpRequest();
@@ -401,8 +400,8 @@ public class COHEpicLightningController {
 
         String jsonString = httpResponseObj.getBody();
 
-        Integer recCount = 0; String MRN = '';
-        // Parsing of string
+		Integer recCount = 0; String MRN = '';
+		// Parsing of string
         while(parser.nextToken()!= null) {
             if(parser.getCurrentToken() == JSONToken.FIELD_NAME) {
                 parser.nextValue();
@@ -415,10 +414,10 @@ public class COHEpicLightningController {
                     system.debug(parser.getText());
                     while(parser.nextToken()!= JSONToken.END_ARRAY) {
                         if(parser.getCurrentToken() == JSONToken.FIELD_NAME) {
-                            parser.nextValue();
+                			parser.nextValue();
                             if(parser.getCurrentName() == 'value') {
                                 while(parser.nextToken()!= JSONToken.END_ARRAY) {
-                                    system.debug('parser.getCurrentName()='+ parser.getCurrentName() + ':' + parser.getText());
+			                    	system.debug('parser.getCurrentName()='+ parser.getCurrentName() + ':' + parser.getText());
                                     if (parser.getCurrentName() == 'value') {
                                         MRN = parser.getText();
                                     }
@@ -438,7 +437,7 @@ public class COHEpicLightningController {
         }
         String retValStr = Integer.valueOf(recCount) + ';' + MRN ; 
         system.debug('retValStr='+retValStr);
-        return retValStr;
+		return retValStr;
     }
     
     //Create the search parameters for the Patient Lookup URL
@@ -454,7 +453,7 @@ public class COHEpicLightningController {
         return retVal;
     }
 
-    //FormatEpicDate - Epic needs this format YYYY-MM-DD    
+	//FormatEpicDate - Epic needs this format YYYY-MM-DD    
     private static string FormatEpicDate(Date d) {
         String retVal = '';
         String yr = d.year().format();
@@ -466,7 +465,7 @@ public class COHEpicLightningController {
         retVal = yr + '-' + mo + '-' + dy;
         return retVal;
     }
-    @TestVisible
+	@TestVisible
     private static LIST<String> SplitArray(String input) {
         LIST<String> ListStrArr = new LIST<String>();
         String[] StrArr = input.split(';');
@@ -479,7 +478,7 @@ public class COHEpicLightningController {
     /*
      * Update an existing Epic record via an URL. A Chatter post is created if the update is successful.
      * 
-     * @param accountID     Account object ID.
+     * @param accountID		Account object ID.
      * 
      */
     @AuraEnabled
@@ -506,7 +505,7 @@ public class COHEpicLightningController {
                     JSONFinalMap.put('ContactInformation', buildUpdateContactSection(accountObj));
                     JSONFinalMap.put('Language', buildUpdateLanguageSection());
                     JSONFinalMap.put('NameComponents', buildUpdateNameSection(accountObj));
-                    JSONFinalMap.put('PermanentComments', buildUpdatePermanentCommentsSection());
+					JSONFinalMap.put('PermanentComments', buildUpdatePermanentCommentsSection());
             
                     String jsonStr = JSON.serialize(JSONFinalMap);
             
@@ -542,7 +541,7 @@ public class COHEpicLightningController {
             
                         Integer resultStatusCOde = httpResponseObj.getStatusCode();
                         if (resultStatusCode == OK_STATUS_CODE) {    
-                            if (!Test.isRunningTest()) {
+							if (!Test.isRunningTest()) {
                                 try {
                                     simpleTextPost(accountObj.Id, 'Record updated in EPIC. MRN: '+ accountObj.COH_MRN__c);
                                 } catch (Exception e) {
@@ -631,24 +630,24 @@ public class COHEpicLightningController {
         }
         /*End Sanjay Singh 02/10/2022*/
         else if (
-            recCase.account.Primary_Phone_Number__c                     == null ||
-            recCase.account.FirstName                                   == null || 
-            recCase.account.LastName                                    == null || 
-            recCase.account.PersonBirthdate                             == null || 
-            recCase.account.Gender__pc                                  == null || 
-            recCase.account.COH_Account_PatientAccess_SSN__c            == null ||
-            //recCase.account.PersonEmail                               == null ||
-            recCase.account.Patient_Street1__c                          == null ||
-            recCase.account.Patient_City__c                             == null || 
-            recCase.account.COH_PA_State__c                             == null ||
-            recCase.account.Patient_Postal_Code__c                      == null ||
-            recCase.account.COH_PA_Country__c                           == null ||
-            recCase.account.Relationship_to_Patient__c                  == null ||
+            recCase.account.Primary_Phone_Number__c						== null ||
+            recCase.account.FirstName 									== null || 
+            recCase.account.LastName			 						== null || 
+            recCase.account.PersonBirthdate 							== null || 
+            recCase.account.Gender__pc									== null || 
+            recCase.account.COH_Account_PatientAccess_SSN__c			== null ||
+            //recCase.account.PersonEmail 								== null ||
+            recCase.account.Patient_Street1__c 							== null ||
+            recCase.account.Patient_City__c 							== null || 
+            recCase.account.COH_PA_State__c 							== null ||
+            recCase.account.Patient_Postal_Code__c 						== null ||
+            recCase.account.COH_PA_Country__c 							== null ||
+            recCase.account.Relationship_to_Patient__c					== null ||
             //recCase.account.COH_Account_PatientAccess_Marital_Status__c == null ||
             (
-                (recCase.account.Primary_Phone_Number__c == 'Home' && recCase.account.PersonHomePhone           == null)|| 
-                (recCase.account.Primary_Phone_Number__c == 'Mobile' && recCase.account.PersonMobilePhone       == null)||
-                (recCase.account.Primary_Phone_Number__c == 'Other' && recCase.account.PersonOtherPhone         == null)
+                (recCase.account.Primary_Phone_Number__c == 'Home' && recCase.account.PersonHomePhone		 	== null)|| 
+                (recCase.account.Primary_Phone_Number__c == 'Mobile' && recCase.account.PersonMobilePhone 		== null)||
+                (recCase.account.Primary_Phone_Number__c == 'Other' && recCase.account.PersonOtherPhone 		== null)
             )
         ){ 
             return true;                    
@@ -657,7 +656,7 @@ public class COHEpicLightningController {
         /* Commented out until Insurance/Guarantor/Provider is resolved with Epic
         if(recEpicAccountDatas.isEmpty()) return true;
          Epic_Account_Data__c recEpicAccountData = recEpicAccountDatas[0];
-        */
+		*/
         /*End Sanjay Singh 02/10/2022*/
         /*Start below code by Sanjay on 02/10/2022*/
         //else if (recEpicAccountData == null){
@@ -667,176 +666,44 @@ public class COHEpicLightningController {
         /*End Sanjay on 02/10/2022*/    
         /* Commented out until Insurance/Guarantor/Provider is resolved with Epic
         if (                
-            recEpicAccountData.Authorization_number_1__c                == null ||
-            recEpicAccountData.Patient_Relationship_to_Subscriber_1__c  == null ||
-            recEpicAccountData.Subscriber_ID_1__c                       == null ||
-            recEpicAccountData.Insurance_Street_1__c                    == null ||
-            recEpicAccountData.Subscriber_Name_1__c                     == null ||
-            recEpicAccountData.Insurance_City_1__c                      == null ||
-            recEpicAccountData.Group_Number_1_c__c                      == null ||
-            recEpicAccountData.Insurance_State_1__c                     == null ||
-            recEpicAccountData.Insurance_Country_1__c                   == null ||
-            recEpicAccountData.Insurance_SSN_1__c                       == null ||
-            recEpicAccountData.Insurance_PostalCode_1__c                == null ||
-            recEpicAccountData.Insurance_Gender_1__c                    == null ||
-            recEpicAccountData.Insurance_Birth_Date_1__c                == null ||
-            recEpicAccountData.Guarantor1_FirstName__c                  == null ||
-            recEpicAccountData.Guarantor1_LastName__c                   == null ||
-            recEpicAccountData.Guarantor1_SSN__c                        == null ||            
-            recEpicAccountData.Guarantor1_Street__c                     == null ||
-            recEpicAccountData.Guarantor1_State__c                      == null ||            
-            recEpicAccountData.Guarantor1_City__c                       == null ||            
-            recEpicAccountData.Guarantor1_PostalCode__c                 == null ||            
+            recEpicAccountData.Authorization_number_1__c 				== null ||
+            recEpicAccountData.Patient_Relationship_to_Subscriber_1__c 	== null ||
+            recEpicAccountData.Subscriber_ID_1__c 						== null ||
+            recEpicAccountData.Insurance_Street_1__c					== null ||
+            recEpicAccountData.Subscriber_Name_1__c						== null ||
+            recEpicAccountData.Insurance_City_1__c						== null ||
+            recEpicAccountData.Group_Number_1_c__c						== null ||
+            recEpicAccountData.Insurance_State_1__c						== null ||
+            recEpicAccountData.Insurance_Country_1__c					== null ||
+            recEpicAccountData.Insurance_SSN_1__c						== null ||
+            recEpicAccountData.Insurance_PostalCode_1__c				== null ||
+            recEpicAccountData.Insurance_Gender_1__c					== null ||
+            recEpicAccountData.Insurance_Birth_Date_1__c				== null ||
+            recEpicAccountData.Guarantor1_FirstName__c					== null ||
+            recEpicAccountData.Guarantor1_LastName__c					== null ||
+            recEpicAccountData.Guarantor1_SSN__c						== null ||            
+            recEpicAccountData.Guarantor1_Street__c						== null ||
+            recEpicAccountData.Guarantor1_State__c						== null ||            
+            recEpicAccountData.Guarantor1_City__c						== null ||            
+            recEpicAccountData.Guarantor1_PostalCode__c					== null ||            
             (
                 recEpicAccountData.Guarantor1_Home_Phone__c == null && recEpicAccountData.Guarantor1_Mobile_Phone__c == null)             
         ){
             return true;
         }
-        */
+		*/
         else { 
-            /*START: Health cloud records check changes by Sanjay on 05/12/2022*/
-            /**START: Changes by Sanjay 06/07/2022*/
-            //return false;
-            return !isHealthDataValid(recCase.accountId);
-            /**END: Changes by Sanjay 06/07/2022*/
-            /*END: Health cloud records check changes by Sanjay on 05/12/2022*/
+            return false;
         }
     }
     
-    /*START: Health cloud records check changes by Sanjay on 05/12/2022*/
-    //Start for Create Epic MRN for Guarantor, Insurance Subscriber , Referring Providers by Sanjay 06/16/2022
-    static boolean isHealthDataValid(string accountId){
-        Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
-        Map<String, Schema.SObjectField> fieldMap = schemaMap.get('Epic_Account_Data__c').getDescribe().fields.getMap();
-        
-        List<Epic_Account_Data__c> lst = Database.query('SELECT Insurance_Purchaser_Plan_1__r.Name,'+
-                                                        'Insurance_Purchaser_Plan_2__r.Name,'+
-                                                        'Insurance_Purchaser_Plan_3__r.Name,'+
-                                                        string.join(new List<String>(fieldMap.keyset()),',')+
-                                                        ' FROM Epic_Account_Data__c '+
-                                                        'WHERE Account__c =:accountId'
-                                                       );
-        if(lst.isEmpty()) return true;
-        return verifyInsuranceSubscriber(lst[0]) 
-            && verifyGurantor(lst[0])
-            //&& string.isNotBlank(lst[0].Referring_Doctor__c)
-            //&& string.isNotEmpty(lst[0].Referring_Doctor__c)
-            && string.isNotBlank(lst[0].Original_Referring_Doctor__c)
-            && string.isNotEmpty(lst[0].Original_Referring_Doctor__c);
-    }
     
-      
-    static boolean verifyInsuranceSubscriber(Epic_Account_Data__c data){
-        Boolean isValid = true;
-        //START Changes by Sanjay 06/20/2022
-        List<String> requiredFields = new List<String>{
-            'Patient_Relationship_to_Subscriber_1__c',
-                'Insurance_Subscriber_First_Name_1__c','Insurance_Subscriber_Last_Name_1__c',
-                'Insurance_Birth_Date_1__c','Insurance_Gender_1__c',
-                'Insurance_SSN_1__c','Insurance_City_1__c','Insurance_Street_1__c','Insurance_State_1__c',
-                'Insurance_PostalCode_1__c','Insurance_Country_1__c','Subscriber_ID_1__c','Insurance_Subscriber_Member_Id_1__c',
-                'Group_Number_1_c__c','Insurance_Purchaser_Plan_1__c','Insurance_Member_eff_from_1__c'
-                /** Commented by Sanjay 06/20/2022,
-                'Patient_Relationship_to_Subscriber_2__c',
-                'Insurance_Subscriber_First_Name_2__c','Insurance_Subscriber_Last_Name_2__c',
-                'Insurance_Birth_Date_2__c','Insurance_Gender_2__c',
-                'Insurance_SSN_2__c','Insurance_City_2__c','Insurance_Street_2__c','Insurance_State_2__c',
-                'Insurance_PostalCode_2__c','Insurance_Country_2__c','Subscriber_ID_2__c','Insurance_Subscriber_Member_Id_2__c',
-                'Group_Number_2_c__c','Insurance_Purchaser_Plan_2__c','Insurance_Member_eff_from_2__c',
-                'Patient_Relationship_to_Subscriber_3__c',
-                'Insurance_Subscriber_First_Name_3__c','Insurance_Subscriber_Last_Name_3__c',
-                'Insurance_Birth_Date_3__c','Insurance_Gender_3__c',
-                'Insurance_SSN_3__c','Insurance_City_3__c','Insurance_Street_3__c','Insurance_State_3__c',
-                'Insurance_PostalCode_3__c','Insurance_Country_3__c','Subscriber_ID_3__c','Insurance_Subscriber_Member_Id_3__c',
-                'Group_Number_3_c__c','Insurance_Purchaser_Plan_3__c','Insurance_Member_eff_from_3__c'**/
-                };
-                    
-        if(isValid && data.Insurance_Purchaser_Plan_1__c <> null && data.Insurance_Purchaser_Plan_1__r.Name.contains('GENERIC')){
-            requiredFields.addAll(new List<String>{
-                'Insurance_Payor_Name_1__c','Insurance_Plan_Name_1__c','Insurance_Payer_Street_1__c','Insurance_Payer_City_1__c',
-                    'Insurance_Payer_State_1__c','Insurance_Payer_PostalCode_1__c','Insurance_Payer_Country_1__c'
-            });
-        }/**Commented by Sanjay 06/20/2022
-        if(isValid && data.Insurance_Purchaser_Plan_2__c <> null && data.Insurance_Purchaser_Plan_2__r.Name.contains('GENERIC')){
-            requiredFields.addAll(new List<String>{
-                'Insurance_Payor_Name_2__c','Insurance_Plan_Name_2__c','Insurance_Payer_Street_2__c','Insurance_Payer_City_2__c',
-                    'Insurance_Payer_State_2__c','Insurance_Payer_PostalCode_2__c','Insurance_Payer_Country_2__c'
-            });
-        }
-        if(isValid && data.Insurance_Purchaser_Plan_3__c <> null && data.Insurance_Purchaser_Plan_3__r.Name.contains('GENERIC')){
-            requiredFields.addAll(new List<String>{
-                'Insurance_Payor_Name_3__c','Insurance_Plan_Name_3__c','Insurance_Payer_Street_3__c','Insurance_Payer_City_3__c',
-                    'Insurance_Payer_State_3__c','Insurance_Payer_PostalCode_3__c','Insurance_Payer_Country_3__c'
-            });
-        }**/
-        for(string requiredField : requiredFields){
-            isValid = isValid && data.get(requiredField) <> null;
-        }
-        return isValid;
-        //END Changes by Sanjay 06/20/2022
-    }
-    
-   static boolean verifyGurantor(Epic_Account_Data__c data){
-        Boolean isValid = true;
-       isValid = isValid && string.isNotBlank(data.Guarantor1_Patient_Relationship_to__c) && string.isNotEmpty(data.Guarantor1_Patient_Relationship_to__c);
-       //Removing Guarantor2 dependent code by Sanjay 06/17/2022
-       //isValid = isValid && string.isNotBlank(data.Guarantor2_Patient_Relationship_to__c) && string.isNotEmpty(data.Guarantor2_Patient_Relationship_to__c);
-       isValid = isValid && string.isNotBlank(data.Guarantor1_Street__c) && string.isNotEmpty(data.Guarantor1_Street__c);
-       isValid = isValid && string.isNotBlank(data.Guarantor1_City__c) && string.isNotEmpty(data.Guarantor1_City__c);
-       isValid = isValid && string.isNotBlank(data.Guarantor1_State__c) && string.isNotEmpty(data.Guarantor1_State__c);
-       isValid = isValid && string.isNotBlank(data.Guarantor1_PostalCode__c) && string.isNotEmpty(data.Guarantor1_PostalCode__c);
-       isValid = isValid && string.isNotBlank(data.Guarantor1_Country__c) && string.isNotEmpty(data.Guarantor1_Country__c);
-       isValid = isValid && string.isNotBlank(data.Guarantor1_Type__c) && string.isNotEmpty(data.Guarantor1_Type__c);
-       isValid = isValid && data.Guarantor1_Birth_Date__c <> null;
-       isValid = isValid && string.isNotBlank(data.Guarantor1_FirstName__c) && string.isNotEmpty(data.Guarantor1_FirstName__c);
-       isValid = isValid && string.isNotBlank(data.Guarantor1_Gender__c) && string.isNotEmpty(data.Guarantor1_Gender__c);
-       //Changes by Sanjay 06/20/2022
-       //isValid = isValid && string.isNotBlank(data.Guarantor1_Home_Phone__c) && string.isNotEmpty(data.Guarantor1_Home_Phone__c);
-       isValid = isValid && string.isNotBlank(data.Guarantor1_LastName__c) && string.isNotEmpty(data.Guarantor1_LastName__c);
-       
-       //Changes by Sanjay 06/20/2022
-       //isValid = isValid && string.isNotBlank(data.Guarantor1_MiddleName__c) && string.isNotEmpty(data.Guarantor1_MiddleName__c);
-       
-       //Changes by Sanjay 06/20/2022
-       //isValid = isValid && string.isNotBlank(data.Guarantor1_Mobile_Phone__c) && string.isNotEmpty(data.Guarantor1_Mobile_Phone__c);
-       isValid = isValid && string.isNotBlank(data.Guarantor1_SSN__c) && string.isNotEmpty(data.Guarantor1_SSN__c);
-       //Changes by Sanjay 06/20/2022
-       //isValid = isValid && string.isNotBlank(data.Guarantor1_Work_Phone__c) && string.isNotEmpty(data.Guarantor1_Work_Phone__c);
-       
-       //Changes by Sanjay 06/20/2022
-       isValid = isValid 
-           && (
-               (string.isNotBlank(data.Guarantor1_Home_Phone__c) && string.isNotEmpty(data.Guarantor1_Home_Phone__c))
-               || (string.isNotBlank(data.Guarantor1_Mobile_Phone__c) && string.isNotEmpty(data.Guarantor1_Mobile_Phone__c))
-               || (string.isNotBlank(data.Guarantor1_Work_Phone__c) && string.isNotEmpty(data.Guarantor1_Work_Phone__c))
-           );
-       /*Removing Guarantor2 dependent code by Sanjay 06/17/2022
-        isValid = isValid && string.isNotBlank(data.Guarantor2_Street__c) && string.isNotEmpty(data.Guarantor2_Street__c);
-        isValid = isValid && string.isNotBlank(data.Guarantor2_City__c) && string.isNotEmpty(data.Guarantor2_City__c);
-        isValid = isValid && string.isNotBlank(data.Guarantor2_State__c) && string.isNotEmpty(data.Guarantor2_State__c);
-        isValid = isValid && string.isNotBlank(data.Guarantor2_PostalCode__c) && string.isNotEmpty(data.Guarantor2_PostalCode__c);
-        isValid = isValid && string.isNotBlank(data.Guarantor2_Country__c) && string.isNotEmpty(data.Guarantor2_Country__c);
-        isValid = isValid && string.isNotBlank(data.Guarantor2_Type__c) && string.isNotEmpty(data.Guarantor2_Type__c);
-        isValid = isValid && data.Guarantor2_Birth_Date__c <> null;
-        isValid = isValid && string.isNotBlank(data.Guarantor2_FirstName__c) && string.isNotEmpty(data.Guarantor2_FirstName__c);
-        isValid = isValid && string.isNotBlank(data.Guarantor2_Gender__c) && string.isNotEmpty(data.Guarantor2_Gender__c);
-        isValid = isValid && string.isNotBlank(data.Guarantor2_Home_Phone__c) && string.isNotEmpty(data.Guarantor2_Home_Phone__c);
-        isValid = isValid && string.isNotBlank(data.Guarantor2_LastName__c) && string.isNotEmpty(data.Guarantor2_LastName__c);
-        isValid = isValid && string.isNotBlank(data.Guarantor2_MiddleName__c) && string.isNotEmpty(data.Guarantor2_MiddleName__c);
-        isValid = isValid && string.isNotBlank(data.Guarantor2_Mobile_Phone__c) && string.isNotEmpty(data.Guarantor2_Mobile_Phone__c);
-        isValid = isValid && string.isNotBlank(data.Guarantor2_SSN__c) && string.isNotEmpty(data.Guarantor2_SSN__c);
-        isValid = isValid && string.isNotBlank(data.Guarantor2_Work_Phone__c) && string.isNotEmpty(data.Guarantor2_Work_Phone__c);*/
-       return isValid;
-   }
-    /*END: Health cloud records check changes by Sanjay on 05/12/2022*/
-    
-     //End for Create Epic MRN for Guarantor, Insurance Subscriber , Referring Providers by Sanjay 06/16/2022
-    
+
     /*
      * Create a Chatter post.
      * 
-     * @param userID        User ID for the Chatter post.
-     * @param postText      Text of the post.
+     * @param userID		User ID for the Chatter post.
+     * @param postText		Text of the post.
      *
      */
     public static void simpleTextPost(Id userID, String postText) { 
@@ -849,15 +716,15 @@ public class COHEpicLightningController {
     /*
      * Retrieves the text value for an active Custom Metadata Item.
      * 
-     * @param key       Name of the Custom Metadata item.
-     * @return              Value of the  Custom Metadata item.
+     * @param key		Name of the Custom Metadata item.
+     * @return				Value of the  Custom Metadata item.
      * 
      */
     @TestVisible
     private static String getTextConfigurationValue(String key) {
         String returnVal = null;
         if (String.isNotEmpty(key)) {
-            String soqlQuery  = 'select Value__c from COH_Configuration__mdt where Application_Name__c = :EPIC_INTEGRATION and DeveloperName = :key and Is_Active__c = true';
+        	String soqlQuery  = 'select Value__c from COH_Configuration__mdt where Application_Name__c = :EPIC_INTEGRATION and DeveloperName = :key and Is_Active__c = true';
             List<COH_Configuration__mdt> retValList = Database.query(soqlQuery);
             if (COHUtil.isValidList(retValList)) {
                 COH_Configuration__mdt configObj = retValList.get(0);
@@ -870,9 +737,9 @@ public class COHEpicLightningController {
     /*
      * Build the header information for the Create record JSON header.
      * 
-     * @param jsonMap       JSON map where the header information will be stored.
-     * @param accountObj    Account object.
-     * @return                      Map containing the mappings for the JSON header.
+     * @param jsonMap		JSON map where the header information will be stored.
+     * @param accountObj	Account object.
+     * @return						Map containing the mappings for the JSON header.
      * 
      */
     private static Map<String, Object> buildCreateHeaderSection(Map<String, Object> jsonMap, Account accountObj) {
@@ -892,8 +759,8 @@ public class COHEpicLightningController {
     /*
      * Build the Name section for the Create record JSON message.
      * 
-     * @param accountObj    Account object.
-     * @return                      Map containing the mappings for the JSON name section.
+     * @param accountObj	Account object.
+     * @return						Map containing the mappings for the JSON name section.
      * 
      */
 
@@ -905,7 +772,7 @@ public class COHEpicLightningController {
         returnMap.put('PreferredNameType', null);
         returnMap.put('PreferredName', null); // resume here
         returnMap.put('Academic', null);
-        returnMap.put('Suffix', accountObj.Patient_Suffix__c);
+		returnMap.put('Suffix', accountObj.Patient_Suffix__c);
         returnMap.put('Title', accountObj.Title__c);
         returnMap.put('SpouseLastNamePrefix', null);
         returnMap.put('SpouseLastNamePrefix', null);
@@ -921,8 +788,8 @@ public class COHEpicLightningController {
     /*
      * Build the Address section for the Create record JSON message.
      * 
-     * @param accountObj    Account object.
-     * @return              Map containing the mappings for the JSON address section.
+     * @param accountObj	Account object.
+     * @return				Map containing the mappings for the JSON address section.
      * 
      */
     private static Map<String, Object> buildCreateAddressSection(Account accountObj) {
@@ -944,8 +811,8 @@ public class COHEpicLightningController {
     /*
      * Build the Phone section for the  Create record JSON message.
      * 
-     * @param accountObj    Account object.
-     * @return              List of maps where each one contains the sub-mappings for the JSON phone section.
+     * @param accountObj	Account object.
+     * @return				List of maps where each one contains the sub-mappings for the JSON phone section.
      * 
      */
     private static List<Map<String, String>> buildCreatePhoneSection(Account accountObj) {
@@ -994,7 +861,7 @@ public class COHEpicLightningController {
     /*
      * Build the Permanent Comments section for the Update record JSON message.
      * 
-     * @return              Map containing the mappings for the JSON Permanent Comments section.
+     * @return				Map containing the mappings for the JSON Permanent Comments section.
      * 
      */
     private static List<String> buildUpdatePermanentCommentsSection() {
@@ -1004,8 +871,8 @@ public class COHEpicLightningController {
     /*
      * Build the Name section for the Update record JSON message.
      * 
-     * @param accountObj    Account object.
-     * @return              Map containing the mappings for the JSON Name section.
+     * @param accountObj	Account object.
+     * @return				Map containing the mappings for the JSON Name section.
      * 
      */
     private static Map<String, String> buildUpdateNameSection(Account accountObj) {
@@ -1024,8 +891,8 @@ public class COHEpicLightningController {
     /*
      * Build the Language section for the Update record JSON message.
      * 
-     * @param accountObj    Account object.
-     * @return              Map containing the mappings for the JSON Language section.
+     * @param accountObj	Account object.
+     * @return				Map containing the mappings for the JSON Language section.
      * 
      */
     private static Map<String, Object>  buildUpdateLanguageSection() {
@@ -1040,8 +907,8 @@ public class COHEpicLightningController {
     /*
      * Build the Contact section for the Update record JSON message.
      * 
-     * @param accountObj    Account object.
-     * @return              Map containing the mappings for the JSON Contact section.
+     * @param accountObj	Account object.
+     * @return				Map containing the mappings for the JSON Contact section.
      * 
      */
     private static Map<String, Object> buildUpdateContactSection(Account accountObj) {
@@ -1052,9 +919,9 @@ public class COHEpicLightningController {
         String emailAddress = accountObj.PersonEmail;
         // Epic doesn't like an array of null values. It regards null values as invalid email addresses instead of ignoring them.
         if (String.isNotEmpty(emailAddress))  {
-            returnMap.put('EmailAddresses', new List<String> {accountObj.PersonEmail}); 
+			returnMap.put('EmailAddresses', new List<String> {accountObj.PersonEmail}); 
         } else {
-            returnMap.put('EmailAddresses', new List<String>()); 
+			returnMap.put('EmailAddresses', new List<String>()); 
         }
         return returnMap;
     }
@@ -1062,8 +929,8 @@ public class COHEpicLightningController {
     /*
      * Build the Address section for the Update record JSON message.
      * 
-     * @param accountObj    Account object.
-     * @return              Map containing the mappings for the JSON address section.
+     * @param accountObj	Account object.
+     * @return				Map containing the mappings for the JSON address section.
      * 
      */
     private static Map<String, Object> buildUpdateAddressSection(Account accountObj) {
@@ -1081,8 +948,8 @@ public class COHEpicLightningController {
     /*
      * Build the Phone section for the  Update record JSON message.
      * 
-     * @param accountObj    Account object.
-     * @return              List of maps where each one contains the sub-mappings for the JSON Phone section.
+     * @param accountObj	Account object.
+     * @return				List of maps where each one contains the sub-mappings for the JSON Phone section.
      * 
      */
     private static List<Map<String, String>> buildUpdatePhoneSection(Account accountObj) {
@@ -1138,7 +1005,7 @@ public class COHEpicLightningController {
     /*
      * Build the Temp Address section for the Update record JSON message.
      * 
-     * @return              Map containing the mappings for the JSON Temp Address section.
+     * @return				Map containing the mappings for the JSON Temp Address section.
      * 
      */
     private static Map<String, Object> buildUpdateTempAddressSection() {
@@ -1165,7 +1032,7 @@ public class COHEpicLightningController {
     /*
      * Build the Confidential Address section for the Update record JSON message.
      * 
-     * @return              Map containing the mappings for the JSON Confidential Address section.
+     * @return				Map containing the mappings for the JSON Confidential Address section.
      * 
      */
     private static Map<String, Object> buildUpdateConfidentialAddressSection() {
@@ -1218,7 +1085,7 @@ public class COHEpicLightningController {
     /*
      * Build the Emergency Contacts section for the Update record JSON message.
      * 
-     * @return              List of Maps containing the mappings for the JSON Emergency Contacts section.
+     * @return				List of Maps containing the mappings for the JSON Emergency Contacts section.
      * 
      */
     private static List<Map<String, Object>> buildUpdateEmergencyContactsSection() {
@@ -1274,8 +1141,8 @@ public class COHEpicLightningController {
     /*
      * Checks the required fields for creating a new record.
      * 
-     * @param accountObj        Account record to validate.
-     * @return                          Error string if errors were encountered, null otherwise.
+     * @param accountObj		Account record to validate.
+     * @return							Error string if errors were encountered, null otherwise.
      * 
      */
     private static String checkRequiredFieldsForCreate(Account accountObj) {
@@ -1286,16 +1153,16 @@ public class COHEpicLightningController {
                 errors.add('LastName cannot be empty');
             }
             if (String.isEmpty(accountObj.COH_Account_PatientAccess_SSN__c)) {
-                errors.add('SSN cannot be empty');
+	            errors.add('SSN cannot be empty');
             }
             if (String.isEmpty(accountObj.Gender__pc)) {
-                errors.add('Gender cannot be empty');
+	            errors.add('Gender cannot be empty');
             }
             if (String.isEmpty(accountObj.Primary_Phone_Number__c)) {
-                errors.add('Primary Phone Number cannot be empty');
+	            errors.add('Primary Phone Number cannot be empty');
             }
             if (accountObj.PersonBirthdate == null) {
-                errors.add('Birthdate cannot be empty');
+	            errors.add('Birthdate cannot be empty');
             }
         } else {
             errors.add('Null accountObj');
@@ -1313,11 +1180,11 @@ public class COHEpicLightningController {
     /*
      * Sets the Epic endpoint URLs for testing purposes.
      * 
-     * @param       createEndPointURL       URL for the creation of a record.
-     * @param       updateEndPointURL       URL for the creation of a record.
+     * @param		createEndPointURL		URL for the creation of a record.
+     * @param		updateEndPointURL		URL for the creation of a record.
      * 
      */
-    @TestVisible
+	@TestVisible
     private static void setTestEpicEndPointURLS(String createEndPointURL, String updateEndPointURL) {
         mEpicCreateURL = createEndPointURL;
         mEpicUpdateURL = updateEndPointURL;
@@ -1325,11 +1192,11 @@ public class COHEpicLightningController {
     /*
      * Sets the Epic username and password for testing purposes.
      * 
-     * @param epicUserName      Epic user name.
-     * @param epicPassword      Epic password.
+     * @param epicUserName		Epic user name.
+     * @param epicPassword		Epic password.
      * 
      */
-    @TestVisible
+	@TestVisible
     private static void setTestEpicLoginCredentials(String epicUserName, String epicPassword) {
         mEpicUserName = epicUserName;
         mEpicPassword = epicPassword;
@@ -1352,7 +1219,7 @@ public class COHEpicLightningController {
             }
             //FS 20210401 This will not be needed in new API verion
             //if (accountObj.PatientCreatedInEPIC__c == True) {
-            //  throw new AuraHandledException('Error: COHEpicLightningController.createNewEpicRecord(): Patient has already been created in EPIC');
+            //	throw new AuraHandledException('Error: COHEpicLightningController.createNewEpicRecord(): Patient has already been created in EPIC');
             //}
             //FS 20210401 This is code that was later on down the road but needs to be moved up
             if (String.isNotEmpty(accountObj.COH_MRN__c)) {
@@ -1429,7 +1296,6 @@ public class COHEpicLightningController {
                         }
                         if (patientMRN != null) {
                             accountObj.COH_MRN__c = patientMRN;
-                            accountObj.isRead__c = false;
                             try {
                                 update accountObj;
                             } catch (Exception e) {
@@ -1451,6 +1317,7 @@ public class COHEpicLightningController {
         if(lstCases.size() > 0){
             update lstCases;
         }
+        
         return patientMRN;
     }
     
@@ -1471,7 +1338,7 @@ public class COHEpicLightningController {
                 throw new AuraHandledException(errMesg);
             }
             
-            if (String.isEmpty(objAccount.COH_MRN__c)) {        // Ensure that legacy records aren't sent to Epic for creation because they already have MRNs but PatientCreatedInEPIC__c is false;
+            if (String.isEmpty(objAccount.COH_MRN__c)) {		// Ensure that legacy records aren't sent to Epic for creation because they already have MRNs but PatientCreatedInEPIC__c is false;
                 objAccount.IsRead__c = False;
                 objAccount.PatientCreatedInEPIC__c = True;
                 update objAccount;                     
@@ -1598,12 +1465,225 @@ public static boolean verifyAccountCreateEpicMRNButton(Id accountId){
     ){
         return true;
     } */
-    /*START: Health cloud records check changes by Sanjay on 05/12/2022*/
-    /**START: Changes by Sanjay 06/07/2022*/
-    //return false;
-    return !isHealthDataValid(accountId);
-    /**END: Changes by Sanjay 06/07/2022*/
-    /*END: Health cloud record check changes by Sanjay on 05/12/2022*/
+    return false;
 }
-/**END: Changes by Sanjay 02/15/2022*/    
+/*END: Changes by Sanjay 02/15/2022*/ 
+    
+    @AuraEnabled
+    public Static String validateFormsFromAccount(Id accountRecord,String saveAll){
+        List<Case> caseRecordList =  new List<Case>();
+        caseRecordList = [Select id from Case where accountId =:accountRecord order by createdDate desc];
+        if(!caseRecordList.isEmpty()){
+            return ValidateForms(caseRecordList[0].Id,saveAll);
+        }else{
+            return null;
+        }
+        
+    }
+    
+     @AuraEnabled
+    public static String ValidateForms(Id caseRecord,String saveAll){
+       Map<String,Object> validations = new Map<String,Object>();
+        Boolean isErrorInForm = false;
+        Map<String,List<String>> mapWithFormNameAndErrors = new Map<String,List<String>>();
+        Case Record = [Select id,RecordTypeId,RecordType.DeveloperName,ConfirmedThroughBiopsy__c,HasPatientUndergoneTreatment__c,CurrentlyUndergoingTreatment__c,
+                       Patient_Hospice_Status__c,Inquiry_Type__c,Intake_Status__c,Closed_Reason__c,Patient_Type__c,
+                       Consenting_Status__c,Consenting_Type__c,Visit_Type_Preference__c,
+                       Is_Patient_Requesting_a_Specific_MD__c,Pt_Appt_is_Scheduled_in_how_many_days__c,
+                       Service_Category__c,Plan_Type__c,Health_Plan__c,Medical_Group_IPA__c,
+                       Line_of_Business_Decision_Tree__c,Does_patient_have_auth_at_time_of_schedu__c,
+                       Auth__c,Appt_Status__c,Appt_Cancelation_Date__c,Appt_Rescheduled__c,
+                       Appt_Cancelation_Email_Sent__c,Appt_Call_Date__c,Coh_mrn__c,Last_Appointment_Scheduled__c,
+                       Diagnosis_Not_Listed__c,Department__c,Service_Line__c,Specialty__c,Clinical_Specialty_Assignment__c,
+                       Is_patient_diagnosed_with_cancer__c,Does_pt_have_a_biopsy_rltd_to_their_dns__c,Does_pt_have_recent_imgs_releted_to_dns__c from Case where id = :caseRecord LIMIT 1];
+        
+        if(Record!=null){
+            //clinical info - Start
+            mapWithFormNameAndErrors.put('clinicalInfo',new List<String>());
+            List<String> clinicalInfoErrors = mapWithFormNameAndErrors.get('clinicalInfo');
+            if(Record.RecordType.DeveloperName == 'Enterprise_Access_New_Patient'){
+                /*if(String.isBlank(Record.ConfirmedThroughBiopsy__c)){
+                    clinicalInfoErrors.add('Confirmed Through Biopsy cannot be blank');
+                    isErrorInForm  = true;
+                }*/
+                if(String.isBlank(Record.HasPatientUndergoneTreatment__c) && Record.ConfirmedThroughBiopsy__c == 'Yes'){
+                    clinicalInfoErrors.add('Has patient undergone treatment? cannot be blank');
+                    isErrorInForm  = true;
+                }
+                if(String.isBlank(Record.CurrentlyUndergoingTreatment__c) && Record.HasPatientUndergoneTreatment__c == 'Yes'){
+                    clinicalInfoErrors.add('Currently Undergoing Treatment cannot be blank');
+                    isErrorInForm  = true;
+                }
+                if(Record.Patient_Hospice_Status__c == 'Admitted'){
+                    if(String.isBlank(Record.Inquiry_Type__c)){
+                        clinicalInfoErrors.add('Inquiry Type cannot be blank');
+                        isErrorInForm  = true;
+                    }
+                }
+                if((Record.Intake_Status__c == 'Clinically Denied by MD' ||Record.Intake_Status__c == 'Clinically Denied by MD'
+                    ||Record.Intake_Status__c == 'Clinically Denied by MD') ) {
+                        if(String.isBlank(Record.Closed_Reason__c)){
+                            clinicalInfoErrors.add('closed Reason cannot be blank'); 
+                            isErrorInForm  = true;
+                        }
+                    }
+                if(String.isBlank(Record.Patient_Type__c)){
+                    clinicalInfoErrors.add('Patient Type field cannot be empty'); 
+                    isErrorInForm  = true;
+                }
+                
+                //1
+                if(String.isBlank(Record.Is_patient_diagnosed_with_cancer__c)){
+                    clinicalInfoErrors.add('Is patient diagnosed with cancer? field cannot be empty'); 
+                    isErrorInForm  = true;
+                }
+                if(String.isBlank(Record.Does_pt_have_a_biopsy_rltd_to_their_dns__c)){
+                    clinicalInfoErrors.add('Does patient have a biopsy related to their diagnosis? cannot be empty'); 
+                    isErrorInForm  = true;
+                }
+                if(String.isBlank(Record.Does_pt_have_recent_imgs_releted_to_dns__c)){
+                    clinicalInfoErrors.add('Does patient have recent images related to their diagnosis? field cannot be empty'); 
+                    isErrorInForm  = true;
+                }//3
+                
+                if(String.isBlank(Record.Patient_Hospice_Status__c)){
+                    clinicalInfoErrors.add('Is patient currently admitted/on hospice? field cannot be empty'); 
+                    isErrorInForm  = true;
+                }
+                
+            }
+            // clinical info - End
+            // Appointmnet Info - Start
+            /*mapWithFormNameAndErrors.put('appointmentInformation',new List<String>());
+            List<String> appointmentInfo = mapWithFormNameAndErrors.get('appointmentInformation');
+            if(String.isNotBlank(Record.Coh_mrn__c)){   
+                if(String.isNotBlank(Record.Last_Appointment_Scheduled__c)){
+                    if(String.isBlank(Record.Consenting_Status__c)){
+                        appointmentInfo.add('Consenting Status is a required field'); 
+                        isErrorInForm  = true;
+                    } 
+                    if(String.isBlank(Record.Consenting_Type__c)){
+                        appointmentInfo.add('Consenting Type is a required field');
+                        isErrorInForm  = true;
+                    }
+                    if(String.isBlank(Record.Visit_Type_Preference__c)){
+                        appointmentInfo.add('Visit Type Preference? is a required field'); 
+                        isErrorInForm  = true;
+                    }
+                    if(String.isBlank(Record.Is_Patient_Requesting_a_Specific_MD__c)){
+                        appointmentInfo.add('Is Pt. Requesting a Specific MD? is a required field'); 
+                        isErrorInForm  = true;
+                    }
+                    if(String.isNotBlank(Record.Pt_Appt_is_Scheduled_in_how_many_days__c) && Record.Pt_Appt_is_Scheduled_in_how_many_days__c == '8+ Days' && String.isBlank(Record.Does_Pt_want_a_sooner_appt__c)){
+                        appointmentInfo.add('Does Pt want a sooner appt? is a required field'); 
+                        isErrorInForm  = true;
+                    }
+                }
+                
+            }else{
+                appointmentInfo.add('COH MRN is Blank'); 
+                // isErrorInForm  = false;
+            } 
+            
+            if(String.isBlank(Record.Last_Appointment_Scheduled__c)){
+                appointmentInfo.add('Appointment is not scheduled'); 
+                //isErrorInForm  = true;
+            }// Appointmnet Info - End*/
+            // Insurance Matrix - Start
+            mapWithFormNameAndErrors.put('insuranceMatrix',new List<String>());
+            Boolean isError = false;
+            List<String> insuranceMatrix = mapWithFormNameAndErrors.get('insuranceMatrix');
+            if(String.isNotBlank(Record.Service_Category__c) && String.isNotBlank(Record.Plan_Type__c) &&
+               String.isNotBlank(Record.Health_Plan__c) &&String.isNotBlank(Record.Medical_Group_IPA__c) &&
+               String.isNotBlank(Record.Line_of_Business_Decision_Tree__c)){
+                   if(Record.Does_patient_have_auth_at_time_of_schedu__c == 'Yes'){
+                       if(String.isBlank(Record.Auth__c)){
+                           isError = true;
+                       }
+                   }
+               }else{
+                   isError = true;
+                   insuranceMatrix.add('Insurance Matrix cannot be empty'); 
+               }
+            
+            if(Record.Diagnosis_Not_Listed__c || (String.isNotBlank(Record.Department__c) || 
+                                                  String.isNotBlank(Record.Service_Line__c)||
+                                                  String.isNotBlank(Record.Specialty__c)) ){
+                                                      
+                                                  }else{
+                                                      isError = true;
+                                                      insuranceMatrix.add('Physician Matrix cannot be empty');
+                                                  }
+            if(isError){
+                
+                isErrorInForm  = true;
+            }
+            // Insurance Matrix - End
+            // Appointmnet Info - Start
+            /*mapWithFormNameAndErrors.put('cancelation',new List<String>());
+            List<String> Cancelation = mapWithFormNameAndErrors.get('cancelation');
+            if(Record.Appt_Status__c == 'Canceled'){
+                if(Record.Appt_Cancelation_Date__c == null){
+                    insuranceMatrix.add('Cancelation Date is required'); 
+                    isErrorInForm  = true;
+                }
+                if(String.isBlank(Record.Appt_Rescheduled__c)){
+                    insuranceMatrix.add('Did Patient Reschedule? is required'); 
+                    isErrorInForm  = true;
+                }
+                if(Record.Appt_Cancelation_Email_Sent__c == null){
+                    insuranceMatrix.add('Cancelation Email Sent Date is required'); 
+                    isErrorInForm  = true;
+                }
+                
+            }else if(Record.Appt_Status__c == 'No Show'){
+                
+                if(Record.Appt_Call_Date__c == null){
+                    insuranceMatrix.add('Cancelation Email Sent Date is required');
+                    isErrorInForm  = true;
+                }
+                if(String.isBlank(Record.Appt_Rescheduled__c)){
+                    insuranceMatrix.add('Did Patient Reschedule? is required'); 
+                    isErrorInForm  = true;
+                }
+            }
+            mapWithFormNameAndErrors.put('newPatientConsenting',new List<String>());
+            List<String> newPatientConsenting = mapWithFormNameAndErrors.get('newPatientConsenting');
+            if(String.isBlank(Record.Consenting_Type__c)){
+                newPatientConsenting.add('Consenting Type field cannot be empty'); 
+                isErrorInForm  = true;
+            }
+            if(Record.Consenting_Status__c!='Scheduled' &&
+               Record.Consenting_Status__c!='Completed' &&
+               Record.Consenting_Status__c!='Front Office to Complete' ){
+                   newPatientConsenting.add('Consenting Status field cannot be empty'); 
+                   isErrorInForm  = true;
+               }*/
+            
+            /*mapWithFormNameAndErrors.put('cohepicmrn',new List<String>());
+            List<String> cohepicmrn = mapWithFormNameAndErrors.get('cohepicmrn');
+            if(String.isBlank(Record.COH_MRN__c)){
+                cohepicmrn.add('COH MRN not created'); 
+                isErrorInForm  = true;
+            }
+            if(String.isBlank(Record.Clinical_Specialty_Assignment__c)){
+                cohepicmrn.add('Clinical Specialty Assignment cannot be empty'); 
+                isErrorInForm  = true;
+            }*/
+        }
+        validations.put('isError',isErrorInForm);
+        validations.put('errorMessages',mapWithFormNameAndErrors);
+        
+        if(saveAll == 'saveAll'){
+            Save_Record__e saveRecord = new Save_Record__e();
+            saveRecord.Record_Id__c = caseRecord;
+            saveRecord.Error_Message__c = json.serialize(validations);
+            //EventBus.publish(saveRecord);
+        }
+        
+        
+        
+        return json.serialize(validations);
+        //Clinical Form
+    }
 }

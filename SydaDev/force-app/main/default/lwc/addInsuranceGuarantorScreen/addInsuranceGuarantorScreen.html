@@ -340,12 +340,21 @@
 		</lightning-tab>
 
 		<!-- Insurances View lightning-tab -->
-		<lightning-tab label="Insurances" value="InsuranceList" onactive={handleActive}>
+		<lightning-tab label="Review Insurances and Guarantor" value="InsuranceList" onactive={handleActive}>
+			<p><b>Insurances</b></p>
 			<lightning-datatable
                 key-field="id"
                 data={insuranceData}
 				 hide-checkbox-column
                 columns={columns}>
+			</lightning-datatable>
+			<br/>
+			<p><b>Guarantor</b></p>
+			<lightning-datatable
+                key-field="id"
+                data={guarantorList}
+				 hide-checkbox-column
+                columns={guarantorColumns}>
 			</lightning-datatable>
 			<p style="color:red">{showErrorMessage}</p>
 			<lightning-layout>
