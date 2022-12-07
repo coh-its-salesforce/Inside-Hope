@@ -1,9 +1,10 @@
 <template>
 	
 	<lightning-tabset variant="scoped" active-tab-value={activeTab} >
-		<template if:true={recordId}>
+
+		<template if:true={caseAccountId}>
 			<lightning-tab label="Patient Information" value="PatientInfo" onactive={handleActive}>
-				<c-patient-information onselfpay={handleSelfPay} onprevious={handlePatientNext} record-id={recordId}></c-patient-information>
+				<c-patient-information onselfpay={handleSelfPay} onprevious={handlePatientNext} record-id={caseAccountId}></c-patient-information>
 			</lightning-tab>
 		</template>
 		<template if:false={showinsurance}>
@@ -171,7 +172,7 @@
 
 				<lightning-layout>
 					<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
-	<c-custom-lookup obj-name="Contact" filter="Epic External Providers" search-placeholder="Search Contacts" icon-name="standard:contact" class="lookup-class" onremovedvalue={handleRemove}  onlookupselected={handleAccountSelection}> </c-custom-lookup>
+	<c-custom-lookup obj-name="Contact" filter="Referring Physicians" search-placeholder="Search Contacts" icon-name="standard:contact" class="lookup-class" onremovedvalue={handleRemove}  onlookupselected={handleAccountSelection}> </c-custom-lookup>
 
 
 					</lightning-layout-item>

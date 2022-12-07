@@ -15,7 +15,7 @@
  * Modification: 	20210401 Frank Salinas 
  * 					Added new Epic search method for looking up Epic Patients before the EpicCreatePatient method is called
  */
-public class COHEpicLightningController {
+public class COHEpicLightningController { 
     
     // Http constants
     private static final String POST = 'POST';

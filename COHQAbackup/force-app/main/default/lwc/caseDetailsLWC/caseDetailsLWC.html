@@ -1,0 +1,148 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Case Details" icon-name="standard:account">
+      
+            <lightning-record-edit-form object-api-name="Case" record-id={recordId} onload={handleOnLoad} onsuccess={handleSuccess} onsubmit={handleSubmit} onerror={handleError}>
+            
+                    <template if:true={callServer}>
+                        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                    </template>
+                    
+                        
+                    <lightning-accordion allow-multiple-sections-open
+                                    onsectiontoggle={handleSectionToggle}
+                                    active-section-name={activeSections}>
+                                    
+                        <lightning-accordion-section name="Patient Details"  label="Patient Details" >
+                            <lightning-layout multiple-rows>
+                                <template if:true={showContact}>
+                                    <lightning-layout-item size="6" >
+                                        <lightning-input-field field-name="ContactId" variant="label-stacked" > </lightning-input-field> 
+                                    </lightning-layout-item>
+                                </template>
+                                <lightning-layout-item size="6" >
+                                    <lightning-output-field field-name="COH_MRN__c" variant="label-stacked" > </lightning-output-field> 
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6" >
+                                    <lightning-output-field field-name="Gender__c" variant="label-stacked" > </lightning-output-field> 
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6" >
+                                    <lightning-output-field field-name="Patient_DOB__c" variant="label-stacked" > </lightning-output-field> 
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6" >
+                                    <lightning-output-field field-name="Contact_Email__c" variant="label-stacked" > </lightning-output-field> 
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6" >
+                                    <lightning-input-field field-name="Patient_Referral_Services_Status__c" variant="label-stacked" > </lightning-input-field> 
+                                </lightning-layout-item>
+                                <template if:false={showContact}>
+                                <lightning-layout-item size="6" >
+                                    <lightning-input-field field-name="Lead__c" variant="label-stacked" > </lightning-input-field> 
+                                </lightning-layout-item>
+                                </template>
+                            </lightning-layout>
+                        </lightning-accordion-section>
+
+                        <lightning-accordion-section name="Caller Information" label="Caller Information">
+                            <lightning-layout multiple-rows>
+                            
+                                <lightning-layout-item size="6" >
+                                    <lightning-input-field field-name="Caller_First_Name__c" variant="label-stacked" > </lightning-input-field>
+                                </lightning-layout-item>
+                                
+                                <lightning-layout-item size="6" >
+                                    <lightning-input-field field-name="Caller_Same_as_Patient__c" variant="label-stacked" > </lightning-input-field>
+                                </lightning-layout-item> 
+                                <lightning-layout-item size="6" >
+                                    <lightning-input-field field-name="Caller_Last_Name__c" variant="label-stacked" > </lightning-input-field>
+                                </lightning-layout-item>
+                                
+                                <lightning-layout-item size="6" >
+                                    <lightning-input-field field-name="Caller_Relationship_to_Patient__c" variant="label-stacked" > </lightning-input-field>
+                                </lightning-layout-item> 
+                                <lightning-layout-item size="6" >
+                                    <lightning-input-field field-name="Primary_Callback_Number__c" variant="label-stacked" > </lightning-input-field>
+                                </lightning-layout-item>
+                                
+                                <lightning-layout-item size="6" >
+                                    <lightning-input-field field-name="Alternate_Callback_Number__c" variant="label-stacked" > </lightning-input-field>
+                                </lightning-layout-item> 
+                            
+                            </lightning-layout>
+                        </lightning-accordion-section>
+                        <lightning-accordion-section name="Case Information" label="Case Information">
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item size="6" >
+                                    <lightning-output-field field-name="CaseNumber" variant="label-stacked"> </lightning-output-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6" >
+                                    <lightning-output-field field-name="RecordTypeId" variant="label-stacked"> </lightning-output-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6" >
+                                    <lightning-output-field field-name="OwnerId" variant="label-stacked"> </lightning-output-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6" >
+                                    <lightning-input-field field-name="Light_Indicator_NPS__c" variant="label-stacked"> </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6" >
+                                    <lightning-input-field field-name="Origin" variant="label-stacked"> </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6" >
+                                    <lightning-output-field field-name="Status" variant="label-stacked"> </lightning-output-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6" >
+                                    <lightning-input-field field-name="Inquiry_Notes__c" variant="label-stacked"> </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6" >
+                                    <lightning-input-field field-name="Inquiry_Type__c" variant="label-stacked"> </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6" >
+                                    <lightning-input-field field-name="Priority" variant="label-stacked"> </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6" >
+                                    <lightning-input-field field-name="Closed_Reason__c" variant="label-stacked"> </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6" >
+                                    <lightning-input-field field-name="Subject" variant="label-stacked"> </lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6" >
+                                    <lightning-input-field field-name="Description" variant="label-stacked"> </lightning-input-field>
+                                </lightning-layout-item>
+                               <!-- <lightning-layout-item size="6" >
+                                    <lightning-input-field field-name="SuppliedEmail" variant="label-stacked"> </lightning-input-field>
+                                </lightning-layout-item>-->
+                            </lightning-layout>
+                        
+                        </lightning-accordion-section>
+                        <lightning-accordion-section name="System Information" label="System Information">
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item size="6" >
+                                    <lightning-output-field field-name="CreatedDate" name="CreatedDate"  variant="label-stacked" > </lightning-output-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6" >
+                                    <lightning-output-field field-name="ClosedDate" name="ClosedDate"  variant="label-stacked" > </lightning-output-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6" >
+                                    <lightning-output-field field-name="CreatedById" name="CreatedById"  variant="label-stacked" > </lightning-output-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6" >
+                                    <lightning-output-field field-name="LastModifiedById" name="LastModifiedById"  variant="label-stacked" > </lightning-output-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-accordion-section>
+                    
+                    </lightning-accordion>
+                    
+                    <footer class="slds-modal__footer">
+                     
+
+                        <lightning-button
+                            class="slds-m-top_small"
+                            type="submit"
+                            label="Save" variant="brand" style="padding:5px">
+                        </lightning-button>
+                    </footer>
+                
+            </lightning-record-edit-form>
+        
+    </lightning-card>
+</template>

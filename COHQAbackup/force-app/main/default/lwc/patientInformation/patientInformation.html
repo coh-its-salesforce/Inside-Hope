@@ -18,6 +18,7 @@
         onsuccess={handleSuccess}
         onsubmit={handleSubmit}
         onerror={handleError}
+        onload={handleOnload}
     >
        
     
@@ -52,10 +53,15 @@
         <lightning-input-field required field-name="Gender__pc"> </lightning-input-field>
         </lightning-layout-item>
         <lightning-layout-item size="12" >
-        <lightning-input-field required field-name="COH_Account_PatientAccess_SSN__c"> </lightning-input-field>
+            <!--<lightning-input-field required field-name="COH_Account_PatientAccess_SSN__c"> </lightning-input-field>-->
+            <lightning-input name="socialsecuritynumber1" label="SSN" 
+							class="validate"  value={ssnValue} onchange={handleChange} pattern="[0-9]{3}-[0-9]{2}-[0-9]{4}" required
+							message-when-pattern-mismatch="SSN Should be 9 and in the 123-45-4567 format."
+							></lightning-input>
+            
         </lightning-layout-item>
         <lightning-layout-item size="6" >
-        <lightning-input-field required field-name="Primary_Phone_Number__c"> </lightning-input-field>
+            <lightning-input-field required field-name="Primary_Phone_Number__c"> </lightning-input-field>
         </lightning-layout-item>
         <lightning-layout-item size="6" >
         <lightning-input-field field-name="PersonHomePhone"> </lightning-input-field>
@@ -80,8 +86,8 @@
         <lightning-input-field required field-name="COH_PA_Religion__c"> </lightning-input-field>
             </lightning-layout-item>
              <lightning-layout-item size="6" >
-        <p style="color:red;display:inline-block;">*</p><p style="display:inline-block;">Name</p>
-        <lightning-input-field required field-name="Emergency_Contact_Name__c" variant="label-hidden"> </lightning-input-field>
+        <!--<p style="color:red;display:inline-block;">*</p><p style="display:inline-block;">Name</p>-->
+        <lightning-input-field required field-name="Emergency_Contact_Name__c"> </lightning-input-field>
              </lightning-layout-item>
               <lightning-layout-item size="6" >
         <lightning-input-field required field-name="Relationship_to_Patient__c" > </lightning-input-field>

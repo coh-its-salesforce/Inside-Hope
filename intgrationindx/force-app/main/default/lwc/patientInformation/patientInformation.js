@@ -3,8 +3,10 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 export default class PatientInformation extends LightningElement {
 
     @api recordId;
+    showSpinner = false;
     handleSuccess(event){
         console.log('SAved Successfully');
+        this.showSpinner = false;
         const eventToast = new ShowToastEvent({
             title: 'Success',
             message:'Record updated Successfully',
@@ -21,6 +23,18 @@ export default class PatientInformation extends LightningElement {
         // Dispatches the event.
         this.dispatchEvent(selectedEvent);
 
+    }
+
+    handlePrev(event){
+        this.dispatchEvent(new CustomEvent('previous'));
+    }
+
+    handleSubmit(event){
+        this.showSpinner = true;
+    }
+
+    handleError(event){
+        this.showSpinner = false;
     }
     
 }

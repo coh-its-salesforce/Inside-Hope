@@ -12,10 +12,10 @@ import updateEpicRecord from '@salesforce/apex/epicAccountDataController.updateE
 import getEpicRecordDetails from '@salesforce/apex/epicAccountDataController.getEpicRecordDetails';
 import verifyCreateEpicMRNButton from '@salesforce/apex/COHEpicLightningController.verifyAccountCreateEpicMRNButton';
 import createNewEpicRecord from '@salesforce/apex/COHEpicLightningController.createNewEpicRecordViaAccount';
-import validateFormsFromAccount from '@salesforce/apex/COHEpicLightningController.validateFormsFromAccount';
+import validateForms from '@salesforce/apex/COHEpicLightningController.ValidateForms';
 
-
-import SELF_PAY from '@salesforce/schema/Account.Self_Pay__c';
+import SELF_PAY from '@salesforce/schema/Case.Account.Self_Pay__c';
+import ACCOUNT_ID from '@salesforce/schema/Case.AccountId';
 import PATIENT_RELATIONSHIP_TO_SUBSCRIBER_1 from '@salesforce/schema/Epic_Account_Data__c.Patient_Relationship_to_Subscriber_1__c';
 import INSURANCE_GENDER_1 from '@salesforce/schema/Epic_Account_Data__c.Insurance_Gender_1__c';
 import INSURANCE_STATE_1 from '@salesforce/schema/Epic_Account_Data__c.Insurance_State_1__c';
@@ -23,14 +23,15 @@ import INSURANCE_COUNTRY_1 from '@salesforce/schema/Epic_Account_Data__c.Insuran
 import GuARANTOR_TYPE from '@salesforce/schema/Epic_Account_Data__c.Guarantor1_Type__c';
 import PATIENT_RELATIONSHIP_TO_GuARANTOR_1 from '@salesforce/schema/Epic_Account_Data__c.Guarantor1_Patient_Relationship_to__c';
 
-const fields = [SELF_PAY];
+const fields = [ACCOUNT_ID,SELF_PAY];
 
 export default class AddInsuranceGuarantorScreen extends LightningElement {
     @api accountId;
 
     @wire(getRecord, { recordId: '$recordId', fields })
-    account;
+    case;
 
+   
     @api recordId;
     @track removeObj;
     patientRelationshipPicklist = '';
@@ -94,24 +95,28 @@ export default class AddInsuranceGuarantorScreen extends LightningElement {
     middleNameGuarantor='';
     mrnDisabled = false;
     showErrorMessage = '';
-    showinsurance = false;
+    showinsurance=true;
     columns = [
-        { label: 'Sequence', fieldName: 'Sequence' },
-        { label: 'Name', fieldName: 'Name' },
-        { label: 'Relationship', fieldName: 'RelationShip' } ,
-        { label: 'Subscriber', fieldName: 'Subscriber' } ,
-        { label: 'Group', fieldName: 'Group' } 
-        
+    { label: 'Sequence', fieldName: 'Sequence' },
+    { label: 'Name', fieldName: 'Name' },
+    { label: 'Relationship', fieldName: 'RelationShip' } ,
+    { label: 'Subscriber', fieldName: 'Subscriber' } ,
+    { label: 'Group', fieldName: 'Group' } 
+     
     ];
     guarantorColumns = [
         { label: 'Sequence', fieldName: 'Sequence' },
         { label: 'Type', fieldName: 'Type' },
         { label: 'Name', fieldName: 'Name' },
         
-    ];
+    ];hi
     insuranceData = [];
     guarantorList = [];
 
+    get caseAccountId() {
+        console.log('getFieldValue(this.case.data, ACCOUNT_ID)',JSON.stringify(this.case))
+        return getFieldValue(this.case.data, ACCOUNT_ID);
+    }
 
     // getting the object info
     @wire(getObjectInfo, { objectApiName: EPIC_ACCOUNT_DATA_OBJECT })
@@ -176,36 +181,25 @@ export default class AddInsuranceGuarantorScreen extends LightningElement {
     }
 //ConnectedCallback
 
-    handleSelfPay(event){
-        console.log('event.detail',event.detail)
-        this.showinsurance = event.detail;
-    }
-
-    handlePatientNext(){
-        if(!this.showinsurance){
-            this.activeTab = 'Insurance';
-        }else{
-            this.activeTab = 'Guarantor';
-        }
-    }
-
-    renderedCallback(){
-        console.log('RENDER')
-        console.log('getFieldValue(this.account.data, SELF_PAY)',getFieldValue(this.account.data, SELF_PAY))
-                        this.showinsurance = getFieldValue(this.account.data, SELF_PAY);
-    }
+handleSelfPay(event){
+    console.log('event.detail',event.detail)
+    this.showinsurance = event.detail;
+}
 
  connectedCallback(){
-
+console.log('this.caseAccountId ',this.recordId )
         getEpicRecordDetails({ ObjRecId: this.recordId })
         .then(result => {
-            console.log('result',result)
+            console.log('result getEpicRecordDetails case',result)
             //if(!this.isEmptyObject(result)){
                 this.epicAccountRecord = result;
                 if(this.epicAccountRecord){
+                    console.log('connected 1')
                     this.epicRecordId=this.epicAccountRecord.Id;
                     var insuranceList = [];
+                    console.log('connected 2')
                     this.getFirstInsurance();
+                    console.log('connected 3')
                     if(result.hasOwnProperty('Patient_Relationship_to_Subscriber_1__c')){
                         this.primaryInsuranceAdded=true;
                         let primary = new Object();
@@ -279,22 +273,37 @@ export default class AddInsuranceGuarantorScreen extends LightningElement {
                     this.genderGuarantor = result.Guarantor1_Gender__c;
                     this.middleNameGuarantor = result.Guarantor1_MiddleName__c;
 
-                        
+                    
                 }
+                
                // }
                 console.log('resultgetdata : ' , JSON.stringify(this.epicAccountRecord));
 
         })
         .catch((error) =>{
+            console.log('ERROR')
              //alert("error1: " + JSON.stringify(error))
         });
     }  
+
+    handlePatientNext(){
+        if(!this.showinsurance){
+            this.activeTab = 'Insurance';
+        }else{
+            this.activeTab = 'Guarantor';
+        }
+    }
+    renderedCallback(){
+        console.log('RENDER')
+        console.log('getFieldValue(this.case.data, SELF_PAY)',getFieldValue(this.case.data, SELF_PAY))
+                        this.showinsurance = getFieldValue(this.case.data, SELF_PAY);
+    }
     isEmptyObject(obj){
         return JSON.stringify(obj) === '{}';
     }
 
     fetchInsuranceTab(){
-        getEpicRecordDetails({ ObjRecId: this.recordId })
+        getEpicRecordDetails({ ObjRecId: this.caseAccountId })
         .then(result => {
             console.log('result',result)
             //if(!this.isEmptyObject(result)){
@@ -373,9 +382,12 @@ export default class AddInsuranceGuarantorScreen extends LightningElement {
     // Data setup
     handleChange(event) {
         const field = event.target.name;
+        console.log('field',field)
         if (field === 'patientRelationshiptoSub1') {
             this.patientRelationshiptoSub1 = event.target.value;
+            console.log('this.patientRelationshiptoSub1',this.patientRelationshiptoSub1)
             if(this.patientRelationshiptoSub1==='Self'){
+                console.log('Self')
                  this.handleCopyPatienteButton();
             }
         } else if (field === 'firstName1') {
@@ -544,7 +556,7 @@ export default class AddInsuranceGuarantorScreen extends LightningElement {
     createUpdateEpic(){
          if(this.epicRecordId===''){
             console.log('epicAccountRecord',this.epicAccountRecord);
-            createEpicRecord({ epicRecord: this.epicAccountRecord,accId: this.recordId })
+            createEpicRecord({ epicRecord: this.epicAccountRecord,accId: this.caseAccountId })
             //.then(() => alert("record created"))
             .then(result => {
                 this.data = result;
@@ -594,17 +606,13 @@ export default class AddInsuranceGuarantorScreen extends LightningElement {
     }
 
     handleEpicMrn(event){
-        validateFormsFromAccount({ caseRecord: this.recordId,
+        validateForms({ caseRecord: this.recordId,
         saveAll : 'saveAll' })
         .then((result) => {
             console.log('result',result)
             // this.mrnDisabled = result
-            if(result == null){
-                this.showErrorMessage = 'Not allowed to create MRN';
-                return;
-            }
             var mapData = JSON.parse(result);
-            console.log('mapData',mapData);
+            console.log('mapData',mapData)
             if(mapData.isError == true){
                 this.throwErrorToast('Forms have errors, please review Patient Checklist');
                 this.showErrorMessage = 'Review and confirm New Patient Checklist to create MRN';
@@ -630,7 +638,7 @@ export default class AddInsuranceGuarantorScreen extends LightningElement {
 
     createEpicRecord(){
         console.log('createNewEpicRecord')
-        createNewEpicRecord({ accountId: this.recordId })
+        createNewEpicRecord({ accountId: this.caseAccountId })
         .then((result) => {
             this.throwSuccessToast('Record saved to Epic');
             location.reload();
@@ -732,7 +740,7 @@ handleGuarantorUpdate(event){
 
         if(this.isInputValid()){    
         
-        let accountRecordId = this.recordId;
+        let accountRecordId = this.caseAccountId;
         console.log('Inside save',this.epicAccountRecord);
         if (this.insuranceNumber === 'Primary') {
 
@@ -857,15 +865,21 @@ handleGuarantorUpdate(event){
     getFirstInsurance() {
     
         if(this.epicRecordId !==''){
+            console.log('1a')
             this.insuranceNumber = 'Primary';
             
-            this.template.querySelector('c-custom-lookup').onSetData(this.epicAccountRecord.Insurance_Purchaser_Plan_1__c);
+            if(this.epicAccountRecord.Insurance_Purchaser_Plan_1__c){
+                console.log('2a1')
+                this.template.querySelector('c-custom-lookup').onSetData(this.epicAccountRecord.Insurance_Purchaser_Plan_1__c);
+                console.log('2a12')
+            }
             this.patientRelationshiptoSub1=this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c ;
             this.firstName1=this.epicAccountRecord.Insurance_Subscriber_First_Name_1__c;
             this.lastName1=this.epicAccountRecord.Insurance_Subscriber_Last_Name_1__c;
             if(this.epicAccountRecord.Insurance_Subscriber_Middle_Name_1__c !== '') {
                 this.middleName1=this.epicAccountRecord.Insurance_Subscriber_Middle_Name_1__c;
             }
+            console.log('2a')
             this.gender1=this.epicAccountRecord.Insurance_Gender_1__c ;
             this.birthdate1=this.epicAccountRecord.Insurance_Birth_Date_1__c ;
             this.socialsecuritynumber1=this.epicAccountRecord.Insurance_SSN_1__c;
@@ -874,6 +888,7 @@ handleGuarantorUpdate(event){
             this.subscriberstate1=this.epicAccountRecord.Insurance_State_1__c;
             this.subscriberzip1=this.epicAccountRecord.Insurance_PostalCode_1__c ;
             this.subscribercountry1=this.epicAccountRecord.Insurance_Country_1__c;
+            console.log('3a')
             //this.insurancePlan1=this.epicAccountRecord.Insurance_Purchaser_Plan_1__c ;
             this.subscriberId1=this.epicAccountRecord.Subscriber_ID_1__c ;
             this.memberId1=this.epicAccountRecord.Insurance_Subscriber_Member_Id_1__c ;
@@ -883,9 +898,12 @@ handleGuarantorUpdate(event){
             if (this.epicAccountRecord.Authorization_number_1__c  !== '') {
                 this.authorizationNumber1=this.epicAccountRecord.Authorization_number_1__c ;
             }
+            console.log('4a')
             this.effectiveFrom1=this.epicAccountRecord.Insurance_Member_eff_from_1__c ;
-            if(this.epicAccountRecord.Original_Referring_Doctor__c)
-            this.template.querySelector('.lookup-class').onSetOriginalDocData(this.epicAccountRecord.Original_Referring_Doctor__c);
+            console.log('this.epicAccountRecord.Original_Referring_Doctor__c',this.epicAccountRecord.Original_Referring_Doctor__c)
+            if(this.epicAccountRecord.Original_Referring_Doctor__c){
+                this.template.querySelector('.lookup-class').onSetOriginalDocData(this.epicAccountRecord.Original_Referring_Doctor__c);
+            }
             
         }
       }
@@ -893,6 +911,7 @@ handleGuarantorUpdate(event){
       getSecondInsurance() {
           this.insuranceNumber = 'Secondary';
          // this.displayingInsuranceNumber='Secondary';
+         if(this.epicAccountRecord.Insurance_Purchaser_Plan_2__c)
        this.template.querySelector('c-custom-lookup').onSetData(this.epicAccountRecord.Insurance_Purchaser_Plan_2__c);
             this.patientRelationshiptoSub1=this.epicAccountRecord.Patient_Relationship_to_Subscriber_2__c ;
             this.firstName1=this.epicAccountRecord.Insurance_Subscriber_First_Name_2__c;
@@ -921,6 +940,7 @@ handleGuarantorUpdate(event){
               this.originalReferringProvider1=this.epicAccountRecord.Original_Referring_Doctor__c;
         }
         getThirdInsurance() {
+            if(this.epicAccountRecord.Insurance_Purchaser_Plan_3__c)
     this.template.querySelector('c-custom-lookup').onSetData(this.epicAccountRecord.Insurance_Purchaser_Plan_3__c);
              this.insuranceNumber = 'Tertiary';
             //this.displayingInsuranceNumber='Tertiary';
@@ -1023,7 +1043,8 @@ previousGuarantor(){
     handleCopyPatienteButton() {
                  
                 
-        let accountRecordId = this.recordId;
+        let accountRecordId = this.caseAccountId;
+        console.log('Case',accountRecordId)
         getAccountDetails({ accountRecordId: accountRecordId })
             .then(result => {
                 this.accountRecord = result;
@@ -1042,13 +1063,14 @@ previousGuarantor(){
                  
             })
             .catch((error) => {
+                console.log('ERROR',JSON.stringify(error))
                 //alert("error: " + JSON.stringify(error))
                 });
         
     }
        handleCopyPatienteButtoGuarantor() {
 
-        let accountRecordId = this.recordId;
+        let accountRecordId = this.caseAccountId;
         getAccountDetails({ accountRecordId: accountRecordId })
             .then(result => {
                 this.accountRecord = result;

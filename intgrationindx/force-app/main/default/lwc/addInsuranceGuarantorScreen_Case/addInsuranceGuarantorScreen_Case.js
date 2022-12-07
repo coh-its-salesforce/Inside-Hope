@@ -282,6 +282,14 @@ console.log('this.caseAccountId ',this.recordId )
              //alert("error1: " + JSON.stringify(error))
         });
     }  
+
+    handlePatientNext(){
+        if(!this.showinsurance){
+            this.activeTab = 'Insurance';
+        }else{
+            this.activeTab = 'Guarantor';
+        }
+    }
     renderedCallback(){
         console.log('RENDER')
         console.log('getFieldValue(this.case.data, SELF_PAY)',getFieldValue(this.case.data, SELF_PAY))

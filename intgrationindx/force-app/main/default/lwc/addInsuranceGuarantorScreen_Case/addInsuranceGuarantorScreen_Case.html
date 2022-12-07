@@ -4,7 +4,7 @@
 
 		<template if:true={caseAccountId}>
 			<lightning-tab label="Patient Information" value="PatientInfo" onactive={handleActive}>
-				<c-patient-information onselfpay={handleSelfPay} record-id={caseAccountId}></c-patient-information>
+				<c-patient-information onselfpay={handleSelfPay} onprevious={handlePatientNext} record-id={caseAccountId}></c-patient-information>
 			</lightning-tab>
 		</template>
 		<template if:false={showinsurance}>
@@ -348,14 +348,16 @@
 
 		<!-- Insurances View lightning-tab -->
 		<lightning-tab label="Review Insurances and Guarantor" value="InsuranceList" onactive={handleActive}>
-			<p><b>Insurances</b></p>
-			<lightning-datatable
-                key-field="id"
-                data={insuranceData}
-				 hide-checkbox-column
-                columns={columns}>
-			</lightning-datatable>
-			<br/>
+			<template if:false={showinsurance}>
+				<p><b>Insurances</b></p>
+				<lightning-datatable
+					key-field="id"
+					data={insuranceData}
+					hide-checkbox-column
+					columns={columns}>
+				</lightning-datatable>
+				<br/>
+			</template>
 			<p><b>Guarantor</b></p>
 			<lightning-datatable
                 key-field="id"

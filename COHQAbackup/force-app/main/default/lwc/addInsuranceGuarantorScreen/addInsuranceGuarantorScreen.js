@@ -190,8 +190,8 @@ export default class AddInsuranceGuarantorScreen extends LightningElement {
     }
 
     renderedCallback(){
-        console.log('RENDER')
-        console.log('getFieldValue(this.account.data, SELF_PAY)',getFieldValue(this.account.data, SELF_PAY))
+        //console.log('RENDER')
+        //console.log('getFieldValue(this.account.data, SELF_PAY)',getFieldValue(this.account.data, SELF_PAY))
                         this.showinsurance = getFieldValue(this.account.data, SELF_PAY);
     }
 
@@ -199,13 +199,17 @@ export default class AddInsuranceGuarantorScreen extends LightningElement {
 
         getEpicRecordDetails({ ObjRecId: this.recordId })
         .then(result => {
-            console.log('result',result)
+            console.log('result,epicAccountRecord',result)
             //if(!this.isEmptyObject(result)){
                 this.epicAccountRecord = result;
                 if(this.epicAccountRecord){
+                    console.log('1')
                     this.epicRecordId=this.epicAccountRecord.Id;
+                    console.log('2')
                     var insuranceList = [];
+                    console.log('epicAccountRecord',this.epicAccountRecord)
                     this.getFirstInsurance();
+                    console.log('3')
                     if(result.hasOwnProperty('Patient_Relationship_to_Subscriber_1__c')){
                         this.primaryInsuranceAdded=true;
                         let primary = new Object();
@@ -856,13 +860,17 @@ handleGuarantorUpdate(event){
 
     getFirstInsurance() {
     
+    console.log('1a')
         if(this.epicRecordId !==''){
+            console.log('1ab')
             this.insuranceNumber = 'Primary';
-            
+            if(this.epicAccountRecord.Insurance_Purchaser_Plan_1__c)
             this.template.querySelector('c-custom-lookup').onSetData(this.epicAccountRecord.Insurance_Purchaser_Plan_1__c);
             this.patientRelationshiptoSub1=this.epicAccountRecord.Patient_Relationship_to_Subscriber_1__c ;
             this.firstName1=this.epicAccountRecord.Insurance_Subscriber_First_Name_1__c;
             this.lastName1=this.epicAccountRecord.Insurance_Subscriber_Last_Name_1__c;
+
+            console.log('2')
             if(this.epicAccountRecord.Insurance_Subscriber_Middle_Name_1__c !== '') {
                 this.middleName1=this.epicAccountRecord.Insurance_Subscriber_Middle_Name_1__c;
             }
@@ -873,6 +881,7 @@ handleGuarantorUpdate(event){
             this.subscribercity1=this.epicAccountRecord.Insurance_City_1__c ;
             this.subscriberstate1=this.epicAccountRecord.Insurance_State_1__c;
             this.subscriberzip1=this.epicAccountRecord.Insurance_PostalCode_1__c ;
+            console.log('1ac')
             this.subscribercountry1=this.epicAccountRecord.Insurance_Country_1__c;
             //this.insurancePlan1=this.epicAccountRecord.Insurance_Purchaser_Plan_1__c ;
             this.subscriberId1=this.epicAccountRecord.Subscriber_ID_1__c ;
@@ -886,7 +895,7 @@ handleGuarantorUpdate(event){
             this.effectiveFrom1=this.epicAccountRecord.Insurance_Member_eff_from_1__c ;
             if(this.epicAccountRecord.Original_Referring_Doctor__c)
             this.template.querySelector('.lookup-class').onSetOriginalDocData(this.epicAccountRecord.Original_Referring_Doctor__c);
-            
+            console.log('1ad')
         }
       }
 
@@ -921,7 +930,9 @@ handleGuarantorUpdate(event){
               this.originalReferringProvider1=this.epicAccountRecord.Original_Referring_Doctor__c;
         }
         getThirdInsurance() {
-    this.template.querySelector('c-custom-lookup').onSetData(this.epicAccountRecord.Insurance_Purchaser_Plan_3__c);
+
+            if(this.epicAccountRecord.Insurance_Purchaser_Plan_3__c)
+            this.template.querySelector('c-custom-lookup').onSetData(this.epicAccountRecord.Insurance_Purchaser_Plan_3__c);
              this.insuranceNumber = 'Tertiary';
             //this.displayingInsuranceNumber='Tertiary';
             this.patientRelationshiptoSub1=this.epicAccountRecord.Patient_Relationship_to_Subscriber_3__c ;
