@@ -1,9 +1,7 @@
 <aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId" controller="COHHopeAssistController">
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
-    <aura:handler event="force:refreshView" action="{!c.init}" />    
     <aura:attribute name="mCase" type="Case" default="{}"/>
     <aura:attribute name="mCaseLoaded" type="Boolean" default="false"/>
-    
     <aura:if isTrue="{!v.mCaseLoaded}">    
         <article class="slds-card">
             <div class="slds-card__header slds-grid slds-border_bottom">

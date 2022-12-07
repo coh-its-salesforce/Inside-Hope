@@ -1,6 +1,22 @@
-<aura:component >
+<aura:component controller="publishEvent">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:attribute name="mCase" type="Case" default=""/>
+    <aura:attribute name="formValidation" type="boolean" default="false"/>
+    <aura:attribute name="formErrorMessages" type="object" />
+    <aura:attribute name="errorData" type="String" />
+    <aura:attribute name="activeSections" type="List" default="['1','2','3','4','5','6','7','8']" /> 
+    <aura:attribute name="appointmentCheck" type="boolean" default="false"/>
+    <aura:attribute name="messageApplicationInfo" type="String[]"/>
+    <aura:attribute name="messageClinicalInfo" type="String[]"/>
+    <aura:attribute name="clinicalCheck" type="boolean" default="false"/>
+    <aura:attribute name="schCheck" type="boolean" default="false"/>
+    <aura:attribute name="schCheckInfo" type="String[]" />
+    <aura:attribute name="newPatientConsentingcheck" type="boolean" default="false"/>
+    <aura:attribute name="newPatientConsenting" type="String[]" />
+    <aura:attribute name="cohepicmrncheck" type="boolean" default="false"/>
+    <aura:attribute name="cohepicmrn" type="String[]" />
     
+    <lightning:empApi aura:id="empApi" />
     <article class="slds-card slds-card_boundary">    
         <aura:if isTrue="{!not(empty(v.mCase))}">
             <div class="slds-card__header slds-grid">
@@ -15,14 +31,157 @@
                 </header>
             </div>
             <div class="slds-card__body slds-card__body_inner">
-                <c:COHCaseStep mComplete="{!not(empty(v.mCase.COH_MRN__c))}" mCompleteText="Registration Completed" mIncompleteText="Registration Incomplete"/>
-                <c:COHCaseStep mComplete="{!and(not(empty(v.mCase.Appointment_Location__c)),not(empty(v.mCase.Appt_Date_Time__c)))}" mCompleteText="Appointment Scheduled" mIncompleteText="Appointment Not Scheduled"/>
-                <c:COHCaseStep mComplete="{!v.mCase.Clinical_Process_Complete__c}" mCompleteText="Clinical Intake Completed" mIncompleteText="Clinical Intake Incomplete"/>
-                <c:COHCaseStep mComplete="{!v.mCase.PHI_StatusNew__c == 'Completed'}" mCompleteText="PHI Completed" mIncompleteText="PHI Incomplete"/>
-                <c:COHCaseStep mComplete="{!or(v.mCase.Procurement_Process_Completed__c,v.mCase.Records_No_Longer_Needed__c)}" mCompleteText="Records Procurement Completed" mIncompleteText="Records Procurement Incomplete"/>
-                <c:COHCaseStep mComplete="{!or(and(v.mCase.Consenting_Status__c  == 'Completed',v.mCase.Consenting_Type__c   == 'Virtual'),and(v.mCase.Consenting_Status__c  == 'Scheduled',v.mCase.Consenting_Type__c   == 'In-Person'))}" mCompleteText="New Patient Consenting Completed" mIncompleteText="New Patient Consenting Incompleted"/>
-                <c:COHCaseStep mComplete="{!not(empty(v.mCase.Confirmation_Call_Completed__c))}" mCompleteText="Confirmation Call Completed" mIncompleteText="Confirmation Call Incompleted"/>
+                <aura:if isTrue="{!v.formValidation}">
+                    <lightning:accordion
+                                         allowMultipleSectionsOpen="true"
+                                         onsectiontoggle="{! c.handleSectionToggle }"
+                                         activeSectionName="{! v.activeSections }"
+                                         >
+                        <!--<lightning:accordionSection name="1" label="{!if(not(empty(v.mCase.COH_MRN__c)),'Registration Completed','Registration Incomplete')}">
+                            <aura:set attribute="actions">
+                                <c:COHCaseStep mComplete="{!not(empty(v.mCase.COH_MRN__c))}" mCompleteText="Registration Completed" mIncompleteText="Registration Incomplete"/>
+                                
+                                
+                            </aura:set>
+                            <aura:set attribute="body">
+                                
+                            </aura:set>
+                        </lightning:accordionSection>-->
+                        <lightning:accordionSection name="1" label="{!if(v.clinicalCheck,'Clinical Screening Completed','Clinical Screening Incomplete')}">
+                            <aura:set attribute="actions">
+                                
+                                <c:COHCaseStep mComplete="{!v.clinicalCheck}"  mCompleteText="Clinical Screening Completed" mIncompleteText="Clinical Screening Incomplete"/>
+                                
+                            </aura:set>
+                            <aura:set attribute="body">
+                                
+                                <ol class="slds-list_ordered">
+                                    <aura:iteration items="{!v.messageClinicalInfo}" var="clicnialData">
+                                        <li><b>{!clicnialData}</b></li>
+                                    </aura:iteration>
+                                </ol>
+                            </aura:set>
+                        </lightning:accordionSection>
+                        <lightning:accordionSection name="2" label="{!if(v.schCheck,'SCH Guidelines Completed','SCH Guidelines Incomplete')}">
+                            <aura:set attribute="actions">
+                                
+                                <c:COHCaseStep mComplete="{!v.schCheck}"  mCompleteText="SCH Guidelines Completed" mIncompleteText="SCH Guidelines Incomplete"/>
+                                
+                            </aura:set>
+                            <aura:set attribute="body">
+                                
+                                
+                                <ol class="slds-list_ordered">
+                                    <aura:iteration items="{!v.schCheckInfo}" var="schCheckInfoRec">
+                                        <b>{!schCheckInfoRec}</b>
+                                    </aura:iteration>
+                                </ol>
+                                
+                            </aura:set>
+                        </lightning:accordionSection>
+                        <lightning:accordionSection name="3" label="{!if(v.cohepicmrncheck,'Epic MRN Completed','Epic MRN Incomplete')}">
+                            <aura:set attribute="actions">
+                                
+                                <c:COHCaseStep mComplete="{!v.cohepicmrncheck}"  mCompleteText="Epic MRN Completed" mIncompleteText="Epic MRN Incomplete"/>
+                                
+                            </aura:set>
+                            <aura:set attribute="body">
+                                
+                                
+                                <ol class="slds-list_ordered">
+                                    <aura:iteration items="{!v.cohepicmrn}" var="cohepicmrnRec">
+                                        <li> <b>{!cohepicmrnRec}</b></li>
+                                        
+                                    </aura:iteration>
+                                </ol>
+                                
+                            </aura:set>
+                        </lightning:accordionSection>
+                        
+                        <lightning:accordionSection name="4" label="{!if(v.appointmentCheck,'Appointment Completed','Appointment Incompleted')}">
+                            <aura:set attribute="actions">
+                                
+                                <c:COHCaseStep mComplete="{!v.appointmentCheck}"  mCompleteText="Appointment Completed" mIncompleteText="Appointment Incompleted"/>
+                                
+                            </aura:set>
+                            <aura:set attribute="body">
+                                
+                                <ol class="slds-list_ordered">
+                                    <aura:iteration items="{!v.messageApplicationInfo}" var="appInfo">
+                                        <li><b>{!appInfo}</b></li>
+                                    </aura:iteration>
+                                </ol>
+                            </aura:set>
+                        </lightning:accordionSection>
+                        <lightning:accordionSection name="5" label="{!if(v.newPatientConsentingcheck,'New Patient Consenting Completed','New Patient Consenting Incompleted')}">
+                            <aura:set attribute="actions">
+                                
+                                <c:COHCaseStep mComplete="{!v.newPatientConsentingcheck}" mCompleteText="New Patient Consenting Completed" mIncompleteText="New Patient Consenting Incompleted"/>
+                            </aura:set>
+                            <aura:set attribute="body">
+                                
+                                <ol class="slds-list_ordered">
+                                    <aura:iteration items="{!v.newPatientConsenting}" var="newPatientConsentingInfo">
+                                        <li><b>{!newPatientConsentingInfo}</b></li>
+                                    </aura:iteration>
+                                </ol>
+                            </aura:set>
+                        </lightning:accordionSection>
+                        <lightning:accordionSection name="6" label="{!if(and(v.mCase.PHI_StatusNew__c == 'Completed',v.mCase.Subject__c == 'City of Hope PHI Release For Signature'),'PHI Form Sent Completed','PHI Form Sent Incomplete')}">
+                            <aura:set attribute="actions">
+                                
+                                <c:COHCaseStep mComplete="{!and(v.mCase.PHI_StatusNew__c == 'Completed',v.mCase.Subject__c == 'City of Hope PHI Release For Signature')}" mCompleteText="PHI Form Sent Completed" mIncompleteText="PHI Form Sent Incomplete"/>
+                                
+                            </aura:set>
+                            <aura:set attribute="body">
+                                <aura:if isTrue="{!!and(v.mCase.PHI_StatusNew__c == 'Completed',v.mCase.Subject__c == 'City of Hope PHI Release For Signature')}">
+                                    <ol class="slds-list_ordered">
+                                        
+                                        <li><b>DocuSign PHI Release for Signature has not been sent</b></li>
+                                        
+                                    </ol>
+                                </aura:if>
+                            </aura:set>
+                        </lightning:accordionSection>
+                        <lightning:accordionSection name="7" label="{!if(v.mCase.Clinical_Process_Complete__c ,'Clinical Intake Completed','Clinical Intake Incompleted')}">
+                            <aura:set attribute="actions">
+                                
+                                <c:COHCaseStep mComplete="{!v.mCase.Clinical_Process_Complete__c }" mCompleteText="Clinical Intake Completed" mIncompleteText="Clinical Intake Incompleted"/>
+                                
+                            </aura:set>
+                            <aura:set attribute="body">
+                                
+                                <aura:if isTrue="{!!v.mCase.Clinical_Process_Complete__c }">
+                                    <ol class="slds-list_ordered">
+                                        
+                                        <li><b>Clinical Process Complete is Blank</b></li>
+                                        
+                                    </ol>
+                                </aura:if>
+                            </aura:set>
+                        </lightning:accordionSection>
+                        
+                        <lightning:accordionSection name="8" label="{!if(not(empty(v.mCase.Confirmation_Email_Sent__c)),'Confirmation Email Completed','Confirmation Email Incompleted')}">
+                            <aura:set attribute="actions">
+                                
+                                <c:COHCaseStep mComplete="{!not(empty(v.mCase.Confirmation_Email_Sent__c))}" mCompleteText="Confirmation Email Completed" mIncompleteText="Confirmation Email Incompleted"/>
+                                
+                            </aura:set>
+                            <aura:set attribute="body">
+                                <aura:if isTrue="{!empty(v.mCase.Confirmation_Email_Sent__c)}">
+                                    <ol class="slds-list_ordered">
+                                        
+                                        <li><b>Confirmation email Sent field is Blank</b></li>
+                                        
+                                    </ol>
+                                </aura:if>
+                            </aura:set>
+                        </lightning:accordionSection>
+                    </lightning:accordion>
+                </aura:if>
                 
+               <p style="text-align:center">  <lightning:button variant="brand" label="Validate" title="Validate" onclick="{! c.handleClick }" /></p>
+
                 
             </div>
             <aura:set attribute="else">

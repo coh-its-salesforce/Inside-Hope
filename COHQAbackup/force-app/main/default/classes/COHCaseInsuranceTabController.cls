@@ -314,7 +314,8 @@ public with sharing class COHCaseInsuranceTabController {
                     'Symptoms__c','KPS__c','Treatment_Received__c', 'Routing_Comments__c', 'COH_MRN__c', 'IsRead__c', 'Is_patient_interested_in_a_CAR_T_Trial__c', 
                     'Clinical_Specialty_Assignment__c','Date_of_Specialty_Assignment__c', 'Clinical_Team_Member_Assignment__c', 'Date_Nurse_is_assigned__c',
                     'Reason_for_Clinical_Denial__c','Reason_Patient_Does_Not_Want_to_Proceed__c','Clinical_Process_Complete__c','location_pool_name__c','Clinical_Intake_Complete__c',
-                    'Location__c','Intake_Status__c','referred_To_COHMD__c','Closed_Reason__c','Epic_Location_Pool_Registry__c','Inquiry_Type__c'};
+                    'Location__c','Intake_Status__c','referred_To_COHMD__c','Closed_Reason__c','Epic_Location_Pool_Registry__c','Inquiry_Type__c','Is_patient_diagnosed_with_cancer__c',
+                    'Does_pt_have_a_biopsy_rltd_to_their_dns__c','Does_pt_have_recent_imgs_releted_to_dns__c'};
                         
         Map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.Case.fields.getMap();
         
@@ -335,7 +336,7 @@ public with sharing class COHCaseInsuranceTabController {
             'Is_patient_interested_in_a_CAR_T_Trial__c,Clinical_Specialty_Assignment__c,Date_of_Specialty_Assignment__c,Clinical_Team_Member_Assignment__c, '+
             'Date_Nurse_is_assigned__c,Reason_for_Clinical_Denial__c,Reason_Patient_Does_Not_Want_to_Proceed__c,Clinical_Intake_Complete__c,Clinical_Process_Complete__c,'+
             'location_pool_name__c,Intake_Status__c,referred_To_COHMD__c,Status,Closed_Reason__c,Epic_Location_Pool_Registry__c,Inquiry_Type__c'+
-            ',Clinical_Process_Date_Time__c'+//Changes by Sanjay on 05/29/2022- Clinical_Process_Date_Time__c Changes
+            ',Clinical_Process_Date_Time__c,Is_patient_diagnosed_with_cancer__c,Does_pt_have_a_biopsy_rltd_to_their_dns__c,Does_pt_have_recent_imgs_releted_to_dns__c'+//Changes by Sanjay on 05/29/2022- Clinical_Process_Date_Time__c Changes
             ' FROM Case WHERE id=:recordId';
         
         /**** Changes ****** End****/        
@@ -395,7 +396,8 @@ public with sharing class COHCaseInsuranceTabController {
                     'X2nd_Request_Pathology__c', 'How_Many_Locations_Pathology_2__c', 'Comments_Pathology_2__c',
                     'X3rd_Request_Pathology__c', 'How_Many_Locations_Pathology_3__c', 'Comments_Pathology_3__c',
                     'Confirmation_Email_Sent__c', 'Insurance_Card_ID__c', 'Confirmation_Call_Completed__c', 'New_Patient_Packet__c', 
-                    'Result_of_Confirmation_Call__c', 'Medications__c', 'Date_PRS_Specialist_Is_Assigned__c'};
+                    'Result_of_Confirmation_Call__c', 'Medications__c', 'Date_PRS_Specialist_Is_Assigned__c', 'PHI_uploaded_to_eHealth__c',
+                    'Handed_off_to_eHealth__c', 'Pathology_Slides_Needed__c', 'RAD_Imaging_Needed__c', 'PHI_Received_List__c' };
         Map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.Case.fields.getMap();
         
         for (String fieldToCheck : fieldsToAccess) {
@@ -404,7 +406,7 @@ public with sharing class COHCaseInsuranceTabController {
             }
         }
 
-        String queryStr = 'select id, PRSpecialist_Assignment__c, All_Records_Recieved__c, Appt_Date_Time__c, E_Health_Template_Submitted__c, Records_No_Longer_Needed__c, ' + 
+       String queryStr = 'select id, PRSpecialist_Assignment__c, All_Records_Recieved__c, Appt_Date_Time__c, E_Health_Template_Submitted__c,Pathology_Req_Entered__c,Ancillary_Req_Entered__c,eHealth_Record_Template__c,Procurement_Process_Completed__c, Records_No_Longer_Needed__c, ' + 
                     'Imaging_Status__c, How_Many_Locations_Imaging_Status_1__c, Comments_Imaging_Status_1__c, ' + 
                     'X2nd_Request_Imaging_Status__c, Clinical_Specialty_Assignment__c, Clinical_Team_Member_Assignment__c, How_Many_Locations_Imaging_Status_2__c, Comments_Imaging_Status_2__c, ' + 
                     'X3rd_Request_Imaging_Status__c, How_Many_Locations_Imaging_Status_3__c, Comments_Imaging_Status_3__c,  MD_Note_Status__c, ' + 
@@ -415,7 +417,8 @@ public with sharing class COHCaseInsuranceTabController {
                     'X2nd_Request_Pathology__c, How_Many_Locations_Pathology_2__c, Comments_Pathology_2__c, ' +
                     'X3rd_Request_Pathology__c, How_Many_Locations_Pathology_3__c, Comments_Pathology_3__c, ' +
                     'Confirmation_Email_Sent__c, Insurance_Card_ID__c, Confirmation_Call_Completed__c, New_Patient_Packet__c, ' +
-                    'Result_of_Confirmation_Call__c, Medications__c, Date_PRS_Specialist_Is_Assigned__c from Case where id = :recordId';
+                    'Result_of_Confirmation_Call__c, Medications__c, Date_PRS_Specialist_Is_Assigned__c, PHI_uploaded_to_eHealth__c, '+
+                    'Handed_off_to_eHealth__c, Pathology_Slides_Needed__c, RAD_Imaging_Needed__c, PHI_Received_List__c from Case where id = :recordId';
         
         Case caseRecord = Database.query(queryStr);
         
@@ -428,6 +431,8 @@ public with sharing class COHCaseInsuranceTabController {
             returnValue.put(PROCUREMENT_NEW_PATIENT_PACKET_FIELD_ID, caseRecord.New_Patient_Packet__c );
             returnValue.put(PROCUREMENT_MEDICATIONS_FIELD_ID, caseRecord.Medications__c );
             returnValue.put(PROCUREMENT_CLINICAL_SPECIALTY_ASSIGNMENT, caseRecord.Clinical_Specialty_Assignment__c);
+            returnValue.put('PRSpecialist_Assignment__c',picklist_values('Case','PRSpecialist_Assignment__c'));
+            returnValue.put('eHealth_Record_Template__c',picklist_values('Case','eHealth_Record_Template__c'));
         }
         return returnValue;
     }
@@ -482,9 +487,22 @@ public with sharing class COHCaseInsuranceTabController {
             returnValue.put('ClinicallyDeniedReasons', getCompletedClinicallyDeniedValuesServer(caseRecord.Patient_Status_Case__c));
             returnValue.put('ClinicalTeamMembers', getClinicalTeamMembers());
             returnValue.put('Locations', getLocationValues());// changes by Sanjay on 01/26/2022
+            
         }
         system.debug('caseRecord'+caseRecord);
         return returnValue;
+    }
+    
+    public static Map<String,String> picklist_values(String object_name, String field_name) {
+        Map<String,String> values = new Map<String,String>();
+            String[] types = new String[]{object_name};
+                Schema.DescribeSobjectResult[] results = Schema.describeSObjects(types);
+        for(Schema.DescribeSobjectResult res : results) {
+            for (Schema.PicklistEntry entry : res.fields.getMap().get(field_name).getDescribe().getPicklistValues()) {
+                if (entry.isActive()) {values.put(entry.getLabel(),entry.getValue());}
+            }
+        }
+        return values;
     }
 
     /*
@@ -2000,5 +2018,103 @@ Public Decimal hj
      system.debug('Physician Matrix Query : ' + query);
      return Database.query(query);
  }
+    
+    @AuraEnabled //get PRSpecialistAssignment Picklist Values
+    public static Map<String, String> getPRSpecialistAssignment(){
+        Map<String, String> options = new Map<String, String>();
+        
+        Schema.DescribeFieldResult fieldResult = Case.PRSpecialist_Assignment__c.getDescribe();
+        
+        List<Schema.PicklistEntry> pList = fieldResult.getPicklistValues();
+        for (Schema.PicklistEntry p: pList) {
+            
+            options.put(p.getValue(), p.getLabel());
+        }
+        return options;
+    }
+    
+     @AuraEnabled //get PHI_Received_List__c Picklist Values
+    public static Map<String, String> getPHI_Received_List(){
+        Map<String, String> options = new Map<String, String>();
+        
+        Schema.DescribeFieldResult fieldResult = Case.PHI_Received_List__c.getDescribe();
+        
+        List<Schema.PicklistEntry> pList = fieldResult.getPicklistValues();
+        for (Schema.PicklistEntry p: pList) {
+            
+            options.put(p.getValue(), p.getLabel());
+        }
+        return options;
+    }
+    
+    @AuraEnabled //get eHealth_Record_Template Picklist Values
+    public static Map<String, String> geteHealth_Record_Template(){
+        Map<String, String> options = new Map<String, String>();
+        
+        Schema.DescribeFieldResult fieldResult = Case.eHealth_Record_Template__c.getDescribe();
+        
+        List<Schema.PicklistEntry> pList = fieldResult.getPicklistValues();
+        for (Schema.PicklistEntry p: pList) {
+            
+            options.put(p.getValue(), p.getLabel());
+        }
+        return options;
+    }
+        @AuraEnabled //get Clinical_Specialty_Assignment Picklist Values
+    public static Map<String, String> getClinical_Specialty_Assignment(){
+        Map<String, String> options = new Map<String, String>();
+        
+        Schema.DescribeFieldResult fieldResult = Case.Clinical_Specialty_Assignment__c.getDescribe();
+        
+        List<Schema.PicklistEntry> pList = fieldResult.getPicklistValues();
+        for (Schema.PicklistEntry p: pList) {
+            
+            options.put(p.getValue(), p.getLabel());
+        }
+        return options;
+    }
+     @AuraEnabled //get Result_of_Confirmation_Call Picklist Values
+    public static Map<String, String> getResult_of_Confirmation_Call(){
+        Map<String, String> options = new Map<String, String>();
+        
+        Schema.DescribeFieldResult fieldResult = Case.Result_of_Confirmation_Call__c.getDescribe();
+        
+        List<Schema.PicklistEntry> pList = fieldResult.getPicklistValues();
+        for (Schema.PicklistEntry p: pList) {
+            
+            options.put(p.getValue(), p.getLabel());
+        }
+        return options;
+    }
+    @AuraEnabled
+    public static String saveProcurementData(String caseObj){
+        system.debug('caseobj '+caseobj);
+      //  try{
+            Case obj = (casE)JSON.deserialize(caseObj,case.class);
+            upsert obj;
+            return 'Success';
+       /* }
+        catch(Exception e){
+            return e.getMessage();
+        }*/
+    }
+    
+      @AuraEnabled
+    public static Case getProcurementData(Id recordID){
+        Case c = new Case();
+        system.debug('recordID '+recordID);
+       // if(recordID != '' && recordID != NULL){
+                c = [SELECT PRSpecialist_Assignment__c,Date_PRS_Specialist_Is_Assigned__c,PHI_Received_List__c,Date_Time_PHI_Received__c,
+                       Procurement_Process_Completed__c,E_Consents_Sent_To_Patient__c,E_Health_Template_Submitted__c,Records_No_Longer_Needed__c,
+                       Pathology_Req_Entered__c,Ancillary_Req_Entered__c,eHealth_Record_Template__c,Confirmation_Email_Sent__c,Confirmation_Call_Completed__c,
+                       Clinical_Specialty_Assignment__c,Result_of_Confirmation_Call__c FROM Case where ID =:recordID];
+      //  }
+        return c;
+        
+    }
+
+    
 //End Sanjay Singh 06/20/2022 for Physician / Insurance Decision Tree
+
+      
 }

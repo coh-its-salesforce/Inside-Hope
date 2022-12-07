@@ -23,11 +23,10 @@
      * @param helper						The helper
      * 
      */ 
-    saveCOHCaseClinicalTabClient : function (component, event, helper) { 
-       //component.set("v.mLoading", true); 
+    saveCOHCaseClinicalTabClient : function (component, event, helper,saveAll) {        //component.set("v.mLoading", true); 
         var action = component.get('c.saveCOHCaseClinicalInfoTabServer');
         var caseRecord = component.get('v.mCase');
-
+		var errorArray = [];
         // Create a Map of True/False drop down values to their Boolean equivalent
 
         var selectListMap = {};
@@ -69,32 +68,65 @@
             fieldComp = component.find('Subgroup_Num__c');
             caseRecord.Subgroup_Num__c = fieldComp.get('v.value');
 
-        } else if (caseRecord.RecordType.DeveloperName == 'Enterprise_Access_New_Patient') {	
-           caseRecord.HasPatientBeenDiagnosed__c = component.find('mPatientDiagnoseds').get('v.value');
-           var confirmedThrough = component.find('mConfirmedThroughBiopsys').get('v.value');
-            if ((confirmedThrough == '' || confirmedThrough == null || confirmedThrough == 'None') && caseRecord.HasPatientBeenDiagnosed__c == 'Yes') {
+        } 
+        else if (caseRecord.RecordType.DeveloperName == 'Enterprise_Access_New_Patient') {	
+          /*   //comment added by vara 12.09.2022  caseRecord.HasPatientBeenDiagnosed__c = component.find('mPatientDiagnoseds').get('v.value');
+           var diagWithCancer = component.find('mIsPatientIntrestedinacar1').get('v.value');
+            if ((diagWithCancer == '' || diagWithCancer == null || diagWithCancer == 'None') && caseRecord.HasPatientBeenDiagnosed__c == 'Yes') {
                 //component.set("v.mLoading", false);// added by Vara
                 helper.showToast("Error: Clinical Information Not Saved", "error", "The 'Confirmed Through Biopsys?' field cannot be empty. ");
                 return;
             } else {
                caseRecord.ConfirmedThroughBiopsy__c = confirmedThrough;
+            }*/
+            console.log('1')
+            var diagWithCancer = component.find('mIsPatientIntrestedinacar1').get('v.value');
+            if ((diagWithCancer == '' || diagWithCancer == null || diagWithCancer == 'None')){
+                errorArray.push("The 'Is patient diagnosed with cancer?' cannot be empty. ");
+            }else{
+                caseRecord.Is_patient_diagnosed_with_cancer__c=diagWithCancer;
             }
+            console.log('2')
+            var biopsyDiag = component.find('mPatientDiagnoseds1').get('v.value');
+            if ((biopsyDiag == '' || biopsyDiag == null || biopsyDiag == 'None')){
+                errorArray.push("The 'Does patient have a biopsy related to their diagnosis?' cannot be empty. ");
+            }else{
+                caseRecord.Does_pt_have_a_biopsy_rltd_to_their_dns__c=biopsyDiag;
+            }
+            
+            var mConfirmedThroughBiopsys1 = component.find('mConfirmedThroughBiopsys1').get('v.value');
+            if ((mConfirmedThroughBiopsys1 == '' || mConfirmedThroughBiopsys1 == null || mConfirmedThroughBiopsys1 == 'None') ) {
+                  errorArray.push("The 'Does patient have recent images related to their diagnosis?' field cannot be empty. ");
+                
+            } else {
+               caseRecord.Does_pt_have_recent_imgs_releted_to_dns__c = mConfirmedThroughBiopsys1;
+            }
+            
+            console.log('3')
             var patientUndergone = component.find('mPatientUndergoneTreatments').get('v.value');
             if ((patientUndergone == '' || patientUndergone == null || patientUndergone == 'None')  && caseRecord.ConfirmedThroughBiopsy__c == 'Yes') {
-                //component.set("v.mLoading", false);// added by Vara               
-                helper.showToast("Error: Clinical Information Not Saved", "error", "The 'Patient Under gone Treatments' field cannot be empty. ");
-                return;
+               
+                 errorArray.push("The 'Patient Under gone Treatments' field cannot be empty. ");
             } else {
                caseRecord.HasPatientUndergoneTreatment__c = patientUndergone;
             }
+            console.log('4')
             var currentlyUndergoing = component.find('mCurrentlyUndergoingTreatments').get('v.value');
             if ((currentlyUndergoing == '' || currentlyUndergoing == null || currentlyUndergoing == 'None') &&caseRecord.HasPatientUndergoneTreatment__c== 'Yes') {
-                //component.set("v.mLoading", false);// added by Vara                
-                helper.showToast("Error: Clinical Information Not Saved", "error", "The 'Currently Under going Treatments' field cannot be empty. ");
-                return;
+                  errorArray.push("The 'Currently Undergoing Treatment' field cannot be empty. ");
+                
             } else {
                caseRecord.CurrentlyUndergoingTreatment__c = currentlyUndergoing;
             }
+            console.log('5')
+            
+            
+            //console.log('DNS',component.find('mPatientDiagnosed1').get('v.value'))
+            //start added by vara 12.09.2022
+           
+          // caseRecord.Does_pt_have_a_biopsy_rltd_to_their_dns__c= component.find('mPatientDiagnoseds1').get('v.value');
+           //caseRecord.Does_pt_have_recent_imgs_releted_to_dns__c= component.find('mConfirmedThroughBiopsys1').get('v.value');
+            // end changes made by vara 12.09.2022
            caseRecord.Is_patient_interested_in_a_CAR_T_Trial__c = component.find('mIsPatientIntrestedinacar').get('v.value');
            caseRecord.Clinical_Specialty_Assignment__c = component.find('Clinical_Specialty_Assignment').get('v.value');
            caseRecord.Date_of_Specialty_Assignment__c = component.find('Date_of_Specialty_Assignment').get('v.value');
@@ -115,35 +147,43 @@
            caseRecord.Intake_Status__c = component.find('Intake_Status').get('v.value');
            caseRecord.referred_To_COHMD__c = component.find('referredToCOHMD').get('v.value');
            //caseRecord.Epic_Location_Pool_Registry__c = component.find('Epic_Location_Pool_Registry').get('v.value');
-           if(component.get('V.mHospiceStatusVal') == 'Admitted') {
-               caseRecord.Status = 'Inquiry';
-               caseRecord.Closed_Reason__c = '';
+            if(component.get('v.mHospiceStatusVal') == 'Admitted') {
+                //if(component.get('v.originalhospice')!=component.get('v.mHospiceStatusVal')){
+                    caseRecord.Status = 'Inquiry';
+                    caseRecord.Closed_Reason__c = '';
+              //  }
+               
                
                var inquiryType = component.find('Inquiry_Type')
                var inquiryTypeValue =  Array.isArray(inquiryType) ? inquiryType[0].get('v.value'):inquiryType.get("v.value");
                if (inquiryTypeValue == '' || inquiryTypeValue == null || inquiryTypeValue == 'None') {
+                     errorArray.push("The 'Inquiry Type' field cannot be empty. ");
                   // component.set("v.mLoading", false);// added by Vara                   
-                   helper.showToast("Error: Clinical Information Not Saved", "error", "The 'Inquiry Type' field cannot be empty. ");
-                   return;
+                   //helper.showToast("Error: Clinical Information Not Saved", "error", "The 'Inquiry Type' field cannot be empty. ");
+                  // return;
                } else {
                    caseRecord.Inquiry_Type__c = inquiryTypeValue;
                }
-           } else if((component.get('V.mHospiceStatusVal') == 'No' && caseRecord.COH_MRN__c == null)||component.get('V.mHospiceStatusVal') == 'Hospice') {
-               caseRecord.Status = 'New';
+            } else if((component.get('V.mHospiceStatusVal') == 'No' && caseRecord.COH_MRN__c == null)||component.get('V.mHospiceStatusVal') == 'Hospice') {
+              //  if(component.get('v.originalhospice')!=component.get('v.mHospiceStatusVal')){
+                    caseRecord.Status = 'New';
+              //  }
                caseRecord.Inquiry_Type__c = '';
            }
-            var hasClinicalSplAssig = component.find("Clinical_Specialty_Assignment").get('v.value');
+           /* Changes start by Vara on 7-27-2022 on Chevron bar*/
+            /*var hasClinicalSplAssig = component.find("Clinical_Specialty_Assignment").get('v.value');
             if(hasClinicalSplAssig){
                caseRecord.Status = 'Nursing Review';
-            }
+            }*/ /* Changes end by Vara on 7-27-2022 on Chevron bar*/
             var intakeStatusValue = component.get('V.mIntakeStatusListVal');
-           if((intakeStatusValue == 'Clinically Denied by MD' || intakeStatusValue == 'All Attempts Made - Case Closed'|| intakeStatusValue == "Patient doesn't want to proceed") && hasClinicalSplAssig) {
+           if((intakeStatusValue == 'Clinically Denied by MD' || intakeStatusValue == 'All Attempts Made - Case Closed'|| intakeStatusValue == "Patient doesn't want to proceed") ) {
                caseRecord.Status = 'Closed - Not Selected';
                var closedReasonValue = component.get('v.mReason_for_Clinical_Denial');
                if (closedReasonValue == '' || closedReasonValue == null || closedReasonValue == 'None') {
+                    errorArray.push("The 'closed Reason' field cannot be empty. ");
                  // component.set("v.mLoading", false);
-                   helper.showToast("Error: Clinical Information Not Saved", "error", "The 'closed Reason' field cannot be empty. ");
-                   return;
+                  // helper.showToast("Error: Clinical Information Not Saved", "error", "The 'closed Reason' field cannot be empty. ");
+                   //return;
                } else {
                    caseRecord.Closed_Reason__c = closedReasonValue;
                }   
@@ -151,9 +191,10 @@
                caseRecord.Status = 'Closed - Not Selected';
                var closedReasonValue = component.get('v.mReason_for_Clinical_Denial');
                if (closedReasonValue == '' || closedReasonValue == null || closedReasonValue == 'None') {
+                    errorArray.push("The 'closed Reason' field cannot be empty. ");
                    //component.set("v.mLoading", false);// added by Vara                   
-                   helper.showToast("Error: Clinical Information Not Saved", "error", "The 'closed Reason' field cannot be empty. ");
-                   return;
+                   //helper.showToast("Error: Clinical Information Not Saved", "error", "The 'closed Reason' field cannot be empty. ");
+                   //return;
                } else {
                    caseRecord.Closed_Reason__c = closedReasonValue;
                }  
@@ -172,16 +213,18 @@
         var patientType = caseRecord.Patient_Type__c;
         /*** changes sanjay- 07/24/20-----Start**/
         if ((patientType == '' || patientType == null)) { /*** Changes by Sanjay Singh -- 03/31/2022-----: set the field required**/
+             errorArray.push("The 'Patient Type' field cannot be empty. ");
 			//component.set("v.mLoading", false);// added by Vara            
-            helper.showToast("Error: Clinical Information Not Saved", "error", "The 'Patient Type' field cannot be empty. ");
-            return;
+            //helper.showToast("Error: Clinical Information Not Saved", "error", "The 'Patient Type' field cannot be empty. ");
+            //return;
         }
         /*** changes sanjay- 07/24/20-----end**/
         var hospiceStatus = this.mapPicklistResponse(component.get('v.mHospiceStatusVal'));
         if (hospiceStatus == '' || hospiceStatus == null) {
+             errorArray.push("The 'Is patient currently admitted/on hospice?' field cannot be empty. ");
 			//component.set("v.mLoading", false);//added by Vara             
-            helper.showToast("Error: Clinical Information Not Saved", "error", "The 'Is patient currently admitted/on hospice?' field cannot be empty. ");
-            return;
+           // helper.showToast("Error: Clinical Information Not Saved", "error", "The 'Is patient currently admitted/on hospice?' field cannot be empty. ");
+            //return;
         } else {
 	        caseRecord.Patient_Hospice_Status__c = hospiceStatus;
         }
@@ -189,6 +232,26 @@
         delete caseRecord.Clinical_Process_Date_Time__c;
         //END Changes by Sanjay on 05/29/2022: Clinical_Process_Date_Time__c Changes
         console.log('caseRecord',JSON.parse(JSON.stringify(caseRecord)));
+        
+        if(saveAll){	
+            var appEvent = $A.get("e.c:announceErrors"); 	
+            appEvent.setParams({"message" : errorArray,	
+                                "formName" : 'Clinical Info'}); 	
+            appEvent.fire(); 	
+            
+            
+        }	
+        
+        console.log('errorArray',errorArray)
+        if(errorArray.length>0){	
+            var errorMsg = '';	
+            for(var i = 0;i<errorArray.length;i++){	
+                errorMsg+=errorArray[i]+'\n';	
+            }	
+            console.log('errorMsg',errorMsg);	
+            helper.showToast("Error: Clinical Information Not Saved", "error", errorMsg);	
+            return;	
+        }
 
         // Check if the current case owner or physician name have changed
         action.setParams({'caseRecord' : caseRecord, 'physicianStr':physicianStr, 'newCaseOwnerAPIName':newCaseOwnerAPIName});
@@ -322,7 +385,7 @@
                         return data.value != 'Newly Diagnosed' && data.value != 'Second Opinion' && data.value != 'Third Opinion'
                         && data.value != 'Re-occurrence';
                     });     
-                    component.set("v.mPatientDiagnosedVals",caseRecord.HasPatientBeenDiagnosed__c);
+                    component.set("v.mPatientDiagnosedVals1",caseRecord.HasPatientBeenDiagnosed__c);
                     var patientDiagnosisComp = component.find('Patient_Diagnosis__c');
        				//patientDiagnosisComp.set("v.disabled", (caseRecord.HasPatientBeenDiagnosed__c == "Yes" ? false : true));
                     if (caseRecord.HasPatientBeenDiagnosed__c == "Yes") {
@@ -360,7 +423,9 @@
                     //component.set('v.mReason_Patient_Does_Not_Want_to_Proceed',caseRecord.Reason_Patient_Does_Not_Want_to_Proceed__c); 
                     component.find('Clinical_Intake_Complete').set('v.value',caseRecord.Clinical_Intake_Complete__c); 
                     component.find('Clinical_Process_Complete').set('v.value',caseRecord.Clinical_Process_Complete__c); 
-                    //component.find('Location').set('v.value',caseRecord.Location__c); 
+                    component.find('mIsPatientIntrestedinacar1').set('v.value',caseRecord.Is_patient_diagnosed_with_cancer__c); 
+                    component.find('mConfirmedThroughBiopsys1').set('v.value',caseRecord.Does_pt_have_recent_imgs_releted_to_dns__c); 
+                    component.find('mPatientDiagnoseds1').set('v.value',caseRecord.Does_pt_have_a_biopsy_rltd_to_their_dns__c); 
                     //component.find('location_pool_name').set('v.value',caseRecord.location_pool_name__c); 
                     //component.find('History_of_Present_Illness').set('v.value',caseRecord.History_of_Present_Illness__c); 
                     //component.find('Symptoms').set('v.value',caseRecord.Symptoms__c);
@@ -378,8 +443,9 @@
                         component.set("v.mAdmittedOnHospice",true);
                         component.find("Intake_Status").set("v.disabled", (true));
                         component.find("Clinical_Specialty_Assignment").set("v.disabled", (true));
-                        component.find("Clinical_Team_Member_Assignment").set("v.disabled", (true));
-                        component.find('Inquiry_Type').set('v.value',caseRecord.Inquiry_Type__c);
+                       component.find("Clinical_Team_Member_Assignment").set("v.disabled", (true));
+                       component.find('Inquiry_Type').set('v.value',caseRecord.Inquiry_Type__c);
+                       component.set('v.originalInqType',caseRecord.Inquiry_Type__c)
                    } else {
                        //component.find('Inquiry_Type').set('v.value','');
                        component.find("Clinical_Specialty_Assignment").set("v.disabled", (false));
@@ -433,6 +499,7 @@
 
                     component.set('v.mHospiceStatus', response.getReturnValue().mHospiceStatus);
                     component.set('v.mHospiceStatusVal', caseRecord.Patient_Hospice_Status__c == null ? '' : caseRecord.Patient_Hospice_Status__c);
+                    component.set('v.originalhospice',caseRecord.Patient_Hospice_Status__c == null ? '' : caseRecord.Patient_Hospice_Status__c)
                     //component.find('Inquiry_Type').set('v.value',caseRecord.Inquiry_Type__c);
                 }
                 component.set('v.mDoneLoading', true);

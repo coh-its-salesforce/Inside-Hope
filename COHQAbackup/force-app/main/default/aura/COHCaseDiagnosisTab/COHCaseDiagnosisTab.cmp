@@ -18,15 +18,21 @@
     <aura:attribute name="mPhysicianChanged" type="Boolean" default="false"/>
     <aura:attribute name="mCancerStatusList" type="List" default=""/>
     <aura:attribute name="mHospiceStatusVal" type="String" default=""/>
+    <aura:attribute name="inquiryTypeVal" type="String" default=""/>
+    <aura:attribute name="originalhospice" type="String" default=""/>
+    
     <aura:attribute name="mHospiceStatus" type="List" default=""/>
-    <aura:attribute name="mPatientDiagnosedVals" type="String" default="None"/>
-    <aura:attribute name="mConfirmedThroughBiopsyVals" type="String" default="None"/>
+    <!--<aura:attribute name="mPatientDiagnosedVals" type="String" default=""/>
+    <aura:attribute name="mConfirmedThroughBiopsyVals" type="String" default=""/>-->
+    <aura:attribute name="mPatientDiagnosedVals1" type="String" default=""/>
+    <aura:attribute name="mConfirmedThroughBiopsyVals1" type="String" default=""/>
     <aura:attribute name="mIntakeStatusListVal" type="String" default=""/>
     <aura:attribute name="mReasonforClinicalDenial" type="Boolean" default="false"/>
     <aura:attribute name="mReasonPatientDoesNotWanttoProceed" type="Boolean" default="false"/>
     <aura:attribute name="mReason_for_Clinical_Denial" type="String" default=""/>
     <aura:attribute name="mReason_Patient_Does_Not_Want_to_Proceed" type="String" default=""/>
-    <aura:attribute name="mIsPatientIntrestedinacarVal" type="String" default="None"/>
+    <aura:attribute name="mIsPatientIntrestedinacarVal" type="String" default=""/>
+    <aura:attribute name="mIsPatientIntrestedinacarVal1" type="String" default=""/>
     <aura:attribute name="mIsStatusValue" type="String"/>
     <aura:attribute name="mAdmittedOnHospice" type="Boolean" default="false"/>
     
@@ -34,6 +40,8 @@
     <aura:attribute name="patientTypeOptionMap" type="Object"/>
     <aura:attribute name="patientTypeOptionMapValue" type="String"/>
     <!--END Changes by Sanjay on 04/13/2022: Patient Type changes-->
+    <lightning:empApi aura:id="empApi" />	
+    <ltng:require styles="{!$Resource.multilineToastCSS}" />
     
     <lightning:recordEditForm aura:id="recordEditForm" recordId="{!v.recordId}" objectApiName="Case">
         <div class="slds-card slds-card_boundary" style="box-shadow: 0 2px 4px 4px rgba(0, 0, 0, 0.16);">
@@ -56,26 +64,19 @@
                                         </aura:iteration>
                                     </lightning:select>
                                 </div>
+                                 <!--Changes starts made by vara on 12-9-2022 -->
                                 <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
-                                    <!--Changes by Sanjay on 03/30/2022: set the field required-->
-                                    <!--Changes by Sanjay on 04/13/2022: Patient Type changes: added onchange method-->
-                                    <lightning:select  
-                                                      aura:id="Patient_Type__c" label="New Patient Type" name="Patient_Type__c" 
-                                                      required="true"
-                                                      onchange="{!c.onPatientTypeChange}"
-                                                      value="{!v.mCase.Patient_Type__c}">
-                                        <option text="--None--" value="" selected="{#v.mCase.Patient_Type__c == null}"/>
-                                        <aura:iteration items="{!v.mSelectListValues.Patient_Type__c}" var="i">
-                                            <option text="{#i.label}" value="{#i.value}" selected="{#v.mCase.Patient_Type__c == i.value}"/>
-                                        </aura:iteration>
-                                    </lightning:select>
-                                    <!--START Changes by Sanjay on 04/13/2022: Patient Type changes-->
-                                    <i>{!v.patientTypeOptionMapValue}</i>
-                                    <!--END Changes by Sanjay on 04/13/2022: Patient Type changes-->
-                                </div>
+                                    <lightning:select aura:id="mIsPatientIntrestedinacar1" name="mIsPatientIntrestedinacar1" value = "{!v.mIsPatientIntrestedinacarVal1}"  label="Is patient diagnosed with cancer?" required="true">
+                                        <option value="">--None--</option>
+                                        <option value="Yes" >Yes</option>
+                                        <option value="No" >No</option>
+                                    </lightning:select>  
+                                </div> 
+                                 <!--Changes end by vara on 12-9-2022 -->
                             </div>
                             <div class="slds-grid slds-wrap">
-                                <aura:if isTrue="{!v.mCase.RecordType.DeveloperName != 'Enterprise_Access_New_Patient'}">
+                                <!--Changes starts by vara on 9-9-22 -->
+                            <!--   <aura:if isTrue="{!v.mCase.RecordType.DeveloperName != 'Enterprise_Access_New_Patient'}">
                                     <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
                                         <lightning:select aura:id="mPatientDiagnosed" name="mPatientDiagnosed" value = "{!v.mPatientDiagnosedVal}" label="Has patient been diagnosed?" onchange="{!c.onPatientDiagnosedChange}" required="false">
                                             <option value="false" selected="{!not(v.mCase.Has_patient_been_diagnosed_CheckBox__c)}">No</option>
@@ -88,10 +89,10 @@
                                             <option value="true" selected="{!v.mCase.Confirmed_Through_Biopsy__c}">Yes</option>
                                         </lightning:select>
                                     </div>
-                                </aura:if>
+                                </aura:if> 
                                 <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
                                     <lightning:select aura:id="mPatientDiagnoseds" name="mPatientDiagnoseds" value = "{!v.mPatientDiagnosedVals}" label="Has patient been diagnosed?" onchange="{!c.onPatientDiagnosChange}" required="false">
-                                        <option value="None" >None</option>
+                                        <option value="" >None</option>
                                         <option value="Yes" >Yes</option>
                                         <option value="No" >No</option>
                                     </lightning:select>
@@ -99,7 +100,7 @@
                                 <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
                                     <lightning:select aura:id="mConfirmedThroughBiopsys" name="mConfirmedThroughBiopsys" value = "{!v.mConfirmedThroughBiopsyVals}"  label="Confirmed Through Biopsy" onchange="{!c.onConfirmedBiopsyChnage}" required="{!v.mPatientDiagnosedVals == 'Yes'}">
                                         <aura:if isTrue="{!v.mPatientDiagnosedVals != 'Yes'}">
-                                            <option value="None">None</option>
+                                            <option value="">None</option>
                                             <option value="Yes" >Yes</option>
                                             <option value="No" >No</option>                                   
                                         </aura:if>
@@ -109,7 +110,41 @@
                                             <option value="No" >No</option>
                                         </aura:if>                                                         
                                     </lightning:select>
+                                </div> -->
+                            <!--Changes end by Vara on 9-9-22--> 
+                                 <!--Changes starts by vara on 9-9-22 -->
+                                 <aura:if isTrue="{!v.mCase.RecordType.DeveloperName != 'Enterprise_Access_New_Patient'}">
+                                    <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                        <lightning:select aura:id="mPatientDiagnosed1" name="mPatientDiagnosed1" value = "{!v.mPatientDiagnosedVal1}" label="Does patient have a biopsy related to their diagnosis?" required="true">
+                                            <option value="false" selected="{!not(v.mCase.Does_pt_have_a_biopsy_rltd_to_their_dns__c)}">--None--</option>
+                                            <option value="true" selected="{!v.mCase.Does_pt_have_a_biopsy_rltd_to_their_dns__c}">Yes</option>
+                                            <option value="true" selected="{!v.mCase.Does_pt_have_a_biopsy_rltd_to_their_dns__c}">No</option>
+                                        </lightning:select>
+                                    </div>                       
+                                    <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                        <lightning:select aura:id="mConfirmedThroughBiopsy1" name="mConfirmedThroughBiopsy1" value = "{!v.mConfirmedThroughBiopsyVal1}"  label="Does patient have recent images related to their diagnosis?" required="true">
+                                            <option value="false" selected="{!not(v.mCase.Does_pt_have_recent_imgs_releted_to_dns__c)}">--None--</option>
+                                            <option value="true" selected="{!not(v.mCase.Does_pt_have_recent_imgs_releted_to_dns__c)}">Yes</option>
+                                            <option value="true" selected="{!v.mCase.Does_pt_have_recent_imgs_releted_to_dns__c}">No</option>
+                                        </lightning:select>
+                                    </div>
+                                </aura:if> 
+                                <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                    <lightning:select aura:id="mPatientDiagnoseds1" name="mPatientDiagnoseds1" value = "{!v.mPatientDiagnosedVals1}" label="Does patient have a biopsy related to their diagnosis?" required="true">
+                                        <option value="">--None--</option>
+                                        <option value="Yes" >Yes</option>
+                                        <option value="No" >No</option>
+                                    </lightning:select>
+                                </div>                       
+                                <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                    <lightning:select aura:id="mConfirmedThroughBiopsys1" name="mConfirmedThroughBiopsys1" value = "{!v.mConfirmedThroughBiopsyVals1}"  label="Does patient have recent images related to their diagnosis?" required="true">
+                                            <option value="">--None--</option>
+                                            <option value="Yes" >Yes</option>
+                                            <option value="No" >No</option>                                   
+                                                                                                         
+                                    </lightning:select>
                                 </div> 
+                            <!--Changes end by Vara on 9-9-22--> 
                                 <div class="slds-col slds-size_1-of-1 slds-p-horizontal_medium slds-p-vertical_xx-small">
                                     <lightning:textarea aura:id="Patient_Diagnosis__c" name="Patient_Diagnosis__c" label="Additional Information Regarding Diagnosis" maxlength="32768" />                                
                                 </div>
@@ -132,32 +167,32 @@
                                 <aura:if isTrue="{!v.mCase.RecordType.DeveloperName == 'Enterprise_Access_New_Patient'}">
                                     <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
                                         <lightning:select aura:id="mPatientUndergoneTreatments" name="mPatientUndergoneTreatments" value = "{!v.mPatientUndergoneTreatmentVal}"  label="Has patient undergone treatment?" onchange="{!c.onPatientUndergoneTreatmentChnage}" required="{!v.mConfirmedThroughBiopsyVals == 'Yes'}">
-                                            <aura:if isTrue="{!v.mConfirmedThroughBiopsyVals != 'Yes'}">
-                                                <option value="None">None</option>
+                                            <!--<aura:if isTrue="{!v.mConfirmedThroughBiopsyVals != 'Yes'}">
+                                                <option value="">None</option>
                                                 <option value="Yes" >Yes</option>
                                                 <option value="No" >No</option>
                                             </aura:if>                 
-                                            <aura:if isTrue="{!v.mConfirmedThroughBiopsyVals == 'Yes'}">
-                                                <option value=""></option>
+                                            <aura:if isTrue="{!v.mConfirmedThroughBiopsyVals == 'Yes'}">-->
+                                                <option value="">None</option>
                                                 <option value="Yes" >Yes</option>
                                                 <option value="No" >No</option>
-                                            </aura:if> 
+                                        <!--    </aura:if> -->
                                         </lightning:select>
                                     </div>                            
                                     <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
                                         <lightning:select aura:id="mCurrentlyUndergoingTreatments" name="mCurrentlyUndergoingTreatments" value = "{!v.mCurrentlyUndergoingTreatmentVal}"  label="Currently Undergoing Treatment" required="{!v.mPatientUndergoneTreatmentVal == 'Yes'}">
-                                            <aura:if isTrue="{!v.mPatientUndergoneTreatmentVal != 'Yes'}">
-                                                <option value="None">None</option>
+                                          <!--  <aura:if isTrue="{!v.mPatientUndergoneTreatmentVal != 'Yes'}">
+                                                <option value="">None</option>
                                                 <option value="Yes– Chemo" >Yes– Chemo</option>
                                                 <option value="Yes – Radiation" >Yes – Radiation</option>
                                                 <option value="No" >No</option>
                                             </aura:if>                 
-                                            <aura:if isTrue="{!v.mPatientUndergoneTreatmentVal == 'Yes'}">
-                                                <option value=""></option>
+                                            <aura:if isTrue="{!v.mPatientUndergoneTreatmentVal == 'Yes'}">-->
+                                                <option value="">--None--</option>
                                                 <option value="Yes– Chemo" >Yes– Chemo</option>
                                                 <option value="Yes – Radiation" >Yes – Radiation</option>
                                                 <option value="No" >No</option>
-                                            </aura:if>
+                                            <!--</aura:if>-->
                                         </lightning:select>  
                                     </div> 
                                 </aura:if>              
@@ -176,7 +211,7 @@
                                     <!-- <aura:set attribute="else">
                                  <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
                                     <lightning:select aura:id="Cancer_Status__c" label="Diagnosis Type" name="Cancer_Status__c" value="{!v.mCase.Cancer_Status__c}">
-                                        <option text="None" value="" selected="{#v.mCase.Cancer_Status__c == null}"/>
+                                        <option text="" value="" selected="{#v.mCase.Cancer_Status__c == null}"/>
                                         <aura:iteration items="{!v.mCancerStatusList}" var="i">
                                             <option text="{#i.label}" value="{#i.value}" selected="{#v.mCase.Cancer_Status__c == i.value}"/>
                                         </aura:iteration>
@@ -189,7 +224,7 @@
                                 <!--END: Changes by Sanjay 09/16/2021 -->
                                 <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
                                     <lightning:select aura:id="mIsPatientIntrestedinacar" name="mIsPatientIntrestedinacar" value = "{!v.mIsPatientIntrestedinacarVal}"  label="Is patient interested in a CAR-T Trial?">
-                                        <option value="None">None</option>
+                                        <option value="">--None--</option>
                                         <option value="Yes" >Yes</option>
                                         <option value="No" >No</option>
                                     </lightning:select>  
@@ -205,10 +240,21 @@
                                 <aura:if isTrue="{!v.mCase.RecordType.DeveloperName == 'Enterprise_Access_New_Patient'}">
                                     <aura:if isTrue="{!v.mAdmittedOnHospice}">
                                         <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
-                                            <lightning:inputField fieldName="Status" aura:id="Statusid" value="{!v.mIsStatusValue}" disabled="true"/>
+                                            <!--<lightning:inputField fieldName="Status" aura:id="Statusid" value="{!v.mIsStatusValue}" disabled="true"/>-->
                                         </div>
                                         <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
-                                            <lightning:inputField aura:id="Inquiry_Type" fieldName="Inquiry_Type__c" required="true"/>
+                                            <!--<lightning:inputField aura:id="Inquiry_Type" fieldName="Inquiry_Type__c" required="true"/>-->
+                                            <lightning:select aura:id="Inquiry_Type" name="Inquiry_Type" label="Inquiry Type"  value="{!v.inquiryTypeVal}"  required="true">
+                                                <option value="">--None--</option>
+                                                <option value="Info Only">Info Only</option>
+                                                <option value="Reg/Sched - 1st Attempt">Reg/Sched - 1st Attempt</option>
+                                                <option value="Reg/Sched - 2nd Attempt">Reg/Sched - 2nd Attempt</option>
+                                                <option value="Reg/Sched - 3rd Attempt">Reg/Sched - 3rd Attempt</option>
+                                                <option value="Ready to Schedule, Missing Reg Info">Ready to Schedule, Missing Reg Info</option>
+                                                <option value="Service Not Offered at COH">Service Not Offered at COH</option>
+                                            </lightning:select>
+                                            
+                                                
                                         </div>
                                     </aura:if>
                                 </aura:if>
@@ -219,6 +265,21 @@
                                 </div>                            
                             </div>
                             <div class="slds-grid slds-wrap">
+                                  <!--START: Changes made by vara 12.09.2022 -->
+                                   <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
+                                     <lightning:select  
+                                                      aura:id="Patient_Type__c" label="New Patient Type" name="Patient_Type__c" 
+                                                      required="true"
+                                                      onchange="{!c.onPatientTypeChange}"
+                                                      value="{!v.mCase.Patient_Type__c}">
+                                        <option text="--None--" value="" selected="{#v.mCase.Patient_Type__c == null}"/>
+                                        <aura:iteration items="{!v.mSelectListValues.Patient_Type__c}" var="i">
+                                            <option text="{#i.label}" value="{#i.value}" selected="{#v.mCase.Patient_Type__c == i.value}"/>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                    <i>{!v.patientTypeOptionMapValue}</i>
+                                    </div> 
+                                <!--END Changes made by vara on 12.09.2022: Patient Type changes-->
                                 <div class="slds-col slds-size_1-of-2 slds-p-horizontal_medium slds-p-vertical_xx-small">
                                     <aura:if isTrue="{!v.mCase.RecordType.DeveloperName != 'Enterprise_Access_New_Patient'}">
                                         <lightning:input aura:id="Referred_To_COH_MD__c" name="Referred_To_COH_MD__c" label="Referred To COH MD"/>

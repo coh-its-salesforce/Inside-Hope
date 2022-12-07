@@ -60,6 +60,7 @@
 		<name>Layout</name>
 	</types>
 	<types>
+		<members>cOH_DynamicNavigation</members>
 		<members>iHopeBreakthroughArticleList</members>
 		<members>iHopeBreakthroughArticleTile</members>
 		<name>LightningComponentBundle</name>
