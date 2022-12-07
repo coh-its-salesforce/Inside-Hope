@@ -1,0 +1,372 @@
+<template>
+	
+	<lightning-tabset variant="scoped" active-tab-value={activeTab} >
+		<lightning-tab label="Add Insurance" value="Insurance" onactive={handleActive}>
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<div class="slds-text-heading_medium">{insuranceNumber} Insurance 
+					</div>
+				</lightning-layout-item>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small"
+					class="slds-text-align_right">
+					<lightning-button variant="brand-outline" label="Add Insurance" title="Add Insurance"
+						onclick={handleAddInsuranceButton} disabled={isDisabledInsuranceButton} class="slds-m-left_x-small"></lightning-button>
+					
+ 
+
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" padding="horizontal-small">
+					<template if:true={patientRelationshipPicklist.data}>
+						<lightning-combobox name="patientRelationshiptoSub1" placeholder="-None-" label="Patient Relationship to Subscriber"
+							value={patientRelationshiptoSub1} class="spec-req" required
+							onchange={handleChange}
+							options={patientRelationshipPicklist.data.values} >
+						</lightning-combobox>
+					</template>
+
+				</lightning-layout-item>
+
+			</lightning-layout>
+
+
+
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input data-id='username' name="firstName1" label="First Name" value={firstName1} required class="spec-req" onchange={handleChange}></lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input  name="lastName1" label="Last Name" value={lastName1} required class="spec-req" onchange={handleChange}></lightning-input>
+				</lightning-layout-item>
+
+			</lightning-layout>
+
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="middleName1" label="Middle Name" value={middleName1} onchange={handleChange} class="spec-req"></lightning-input>
+				</lightning-layout-item>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<template if:true={genderPicklist.data}>
+						<lightning-combobox name="gender1" label="Gender" value={gender1} class="spec-req" required
+							options={genderPicklist.data.values} onchange={handleChange}>
+						</lightning-combobox>
+					</template>
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="birthdate1" label="Birthdate" type="date" class="spec-req" value={birthdate1} onchange={handleChange} required>
+					</lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="socialsecuritynumber1" label="Social Security Number" 
+						class="spec-req" value={socialsecuritynumber1} onchange={handleChange} pattern="[0-9]{3}-[0-9]{2}-[0-9]{4}" required
+						message-when-pattern-mismatch="SSN Should be 9 and in the 123-45-4567 format."
+						></lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="subscriberStreetAddress1" label="Subscriber's Street Address"
+						class="spec-req" value={subscriberStreetAddress1} onchange={handleChange} required></lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="subscribercity1" label="Subscriber's City" class="spec-req"
+					value={subscribercity1} onchange={handleChange}	required></lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+                    <template if:true={statePicklist.data}>
+						<lightning-combobox name="subscriberstate1" label="Subscriber's State" value={subscriberstate1} class="spec-req" required
+							options={statePicklist.data.values} onchange={handleChange}>
+						</lightning-combobox>
+					</template>
+					
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="subscriberzip1" label="Subscriber's Zip/Postal Code"
+						class="spec-req" value={subscriberzip1} onchange={handleChange} required></lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+
+  <template if:true={countryPicklist.data}>
+						<lightning-combobox name="subscribercountry1" label="Subscriber's Country" value={subscribercountry1} class="spec-req" required
+							options={countryPicklist.data.values} onchange={handleChange}>
+						</lightning-combobox>
+					</template>
+				
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+				</lightning-layout-item>
+
+			</lightning-layout>
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+  					<p> Insurance Plan </p> 
+					  <c-custom-lookup obj-name="PurchaserPlan" filter="" search-placeholder="Search PurchaserPlan" icon-name="standard:account"  onremovedvalue={handleRemove} onlookupselected={handlePayerSelection}> </c-custom-lookup>
+					
+
+
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="subscriberId1" label="Subscriber ID" class="spec-req" value={subscriberId1} onchange={handleChange} required>
+					</lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="memberId1" label="Member Id" class="spec-req" value={memberId1} onchange={handleChange} required>
+					</lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="groupNumber1" label="Group Number" value={groupNumber1} onchange={handleChange} >
+					</lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="authorizationNumber1" label="Authorization Number" value={authorizationNumber1} onchange={handleChange}
+						></lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+
+					<lightning-input name="effectiveFrom1" label="Effective From" type="date" class="spec-req" value={effectiveFrom1} onchange={handleChange}
+						required></lightning-input>
+
+				</lightning-layout-item>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<div class="slds-text-heading_medium slds-p-around_small">Referring Provider Information</div>
+
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+  <c-custom-lookup obj-name="Contact" filter="Epic External Providers" search-placeholder="Search Contacts" icon-name="standard:contact" class="lookup-class" onremovedvalue={handleRemove}  onlookupselected={handleAccountSelection}> </c-custom-lookup>
+
+
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+
+				</lightning-layout-item>
+			</lightning-layout>
+
+
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" padding="horizontal-small" class="slds-text-align_right">
+					<lightning-button variant="brand" label="Previous" title="Previous" onclick={handleAddInsurancePreviousButton} disabled={disablePrevButton}
+						class="slds-m-left_x-small"></lightning-button>
+					<lightning-button variant="brand" label="Next" title="Next" onclick={handleNextButton} disabled={disableNextButton}
+						class="slds-m-left_x-small"></lightning-button>
+					<lightning-button variant="brand" label="Save" title="Save" onclick={handleSavePatient1Button}
+						class="slds-m-left_x-small"></lightning-button>
+
+
+				</lightning-layout-item>
+			</lightning-layout>
+
+		</lightning-tab>
+
+
+		<!-- Guarantor lightning-tab -->
+		<lightning-tab label="Guarantor"  value="Guarantor" onactive={handleActive} >
+			<lightning-layout-item flexibility="auto" size="4" padding="horizontal-small">
+				<div class="slds-text-heading_medium">Guarantor Information
+				</div>
+			</lightning-layout-item>
+
+
+			<lightning-layout>
+
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+						<template if:true={guarantorRelationshipPicklist.data}>
+						<lightning-combobox name="patientRelationshipToGuarantor" placeholder="-None-" label="Patient Relationship to Guarantor"
+							value={patientRelationshipToGuarantor} class="spec-req-guarnator" required
+							onchange={handleChange}
+							options={guarantorRelationshipPicklist.data.values} >
+						</lightning-combobox>
+					</template>
+				
+				</lightning-layout-item>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="streetGuarantor" label="Street" value={streetGuarantor} onchange={handleChange} ></lightning-input>
+				</lightning-layout-item>
+
+			</lightning-layout>
+
+
+
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					
+					<template if:true={guarantorTypePicklist.data}>
+						<lightning-combobox name="guarantorType" placeholder="-None-" label="Guarantor Type"
+							value={guarantorType} class="spec-req-guarnator" required
+							onchange={handleChange}
+							options={guarantorTypePicklist.data.values} >
+						</lightning-combobox>
+					</template>
+				
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="cityGuarantor" label="City" value={cityGuarantor} onchange={handleChange} ></lightning-input>
+				</lightning-layout-item>
+
+			</lightning-layout>
+
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="firstNameGuarantor" label="First Name" value={firstNameGuarantor} onchange={handleChange} class="spec-req-guarnator" required></lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" padding="horizontal-small">
+					  <template if:true={statePicklist.data}>
+						<lightning-combobox name="stateGuarantor" label="State" value={stateGuarantor}  
+							options={statePicklist.data.values} onchange={handleChange}>
+						</lightning-combobox>
+					</template>
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="middleNameGuarantor" label="Middle Name"  value={middleNameGuarantor} onchange={handleChange}>
+					</lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="zipCodeGuarantor" label="Zip/Postal Code"  value={zipCodeGuarantor} onchange={handleChange} >
+					</lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="lastNameGuarantor" label="Last Name" class="spec-req-guarnator" value={lastNameGuarantor} onchange={handleChange} required>
+					</lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					
+  						<template if:true={countryPicklist.data}>
+						<lightning-combobox name="countryGuarantor" label="Country" value={countryGuarantor} 
+							options={countryPicklist.data.values} onchange={handleChange}>
+						</lightning-combobox>
+					</template>
+				
+				</lightning-layout-item>
+			</lightning-layout>
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="SSNGuarantor" label="SSN"   value={SSNGuarantor} onchange={handleChange} 
+					pattern="[0-9]{3}-[0-9]{2}-[0-9]{4}" 
+						message-when-pattern-mismatch="SSN Should be 9 and in the 123-45-4567 format."
+					>
+					</lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="homePhoneGuarantor" label="Home Phone" type="Phone" 
+						value={homePhoneGuarantor} onchange={handleChange} ></lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<template if:true={genderPicklist.data}>
+						<lightning-combobox name="genderGuarantor" label="Gender" value={genderGuarantor}  
+							options={genderPicklist.data.values} onchange={handleChange}>
+						</lightning-combobox>
+					</template>
+					
+					</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="mobilePhoneGuarantor" label="Mobile Phone" type="Phone" 
+						value={mobilePhoneGuarantor} onchange={handleChange} ></lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="birthDateGuarantor" label="Birthdate" type="date"  value={birthDateGuarantor} onchange={handleChange} >
+					</lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item flexibility="auto" size="6" padding="horizontal-small">
+					<lightning-input name="workPhoneGuarantor" label="Work Phone" type="Phone"  value={workPhoneGuarantor} onchange={handleChange}
+						></lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+
+
+			<lightning-layout>
+				<lightning-layout-item flexibility="auto" padding="horizontal-small"
+					class="slds-text-align_right slds-p-top_medium">
+					<lightning-button variant="brand" label="Previous" title="Previous" onclick={handleGuarantorPreviousButton} disabled={disableUpdateButton} 
+						class="slds-m-left_x-small"></lightning-button>
+					<lightning-button variant="brand" label="Next" title="Next" onclick={handleGuarantorNextButton}
+						class="slds-m-left_x-small"></lightning-button>
+					<lightning-button variant="brand" label="Update" title="Update" onclick={handleGuarantorUpdate}
+						disabled={disableUpdateButton} class="slds-m-left_x-small"></lightning-button>
+
+				</lightning-layout-item>
+			</lightning-layout>
+
+		</lightning-tab>
+
+		<!-- Insurances View lightning-tab -->
+		<lightning-tab label="Review Insurances and Guarantor" value="InsuranceList" onactive={handleActive}>
+			<p><b>Insurances</b></p>
+			<lightning-datatable
+                key-field="id"
+                data={insuranceData}
+				 hide-checkbox-column
+                columns={columns}>
+			</lightning-datatable>
+			<br/>
+			<p><b>Guarantor</b></p>
+			<lightning-datatable
+                key-field="id"
+                data={guarantorList}
+				 hide-checkbox-column
+                columns={guarantorColumns}>
+			</lightning-datatable>
+			<p style="color:red">{showErrorMessage}</p>
+			<lightning-layout>
+
+				<lightning-layout-item flexibility="auto" padding="horizontal-small" class="slds-text-align_right">
+					
+			<p style="padding-top:10px">
+				<lightning-button variant="brand" label="Previous" title="Previous" onclick={previousGuarantor}  class="slds-m-left_x-small"></lightning-button>
+			
+				<lightning-button variant="brand" label="Create Epic MRN" title="Create Epic MRN" onclick={handleEpicMrn} disabled={mrnDisabled} class="slds-m-left_x-small"></lightning-button>
+			</p>
+				</lightning-layout-item></lightning-layout>
+		</lightning-tab>
+	</lightning-tabset>
+</template>

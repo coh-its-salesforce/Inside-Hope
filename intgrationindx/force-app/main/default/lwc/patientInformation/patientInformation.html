@@ -1,0 +1,107 @@
+<template>
+   
+        <!--
+        <p class="slds-p-horizontal_small">
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" >
+                    Name
+                </lightning-layout-item>
+            </lightning-layout>
+        </p>
+       -->
+       <lightning-record-edit-form
+        record-id={recordId}
+        object-api-name="Account"
+        onsuccess={handleSuccess}
+    >
+        <lightning-messages> </lightning-messages>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="12" >
+        <lightning-input-field required field-name="FirstName"> </lightning-input-field>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" >
+        <lightning-input-field required field-name="LastName"> </lightning-input-field>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" >
+        <lightning-input-field required field-name="Patient_Street1__c"> </lightning-input-field>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" >
+        <lightning-input-field required field-name="Patient_City__c"> </lightning-input-field>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" >
+        <lightning-input-field required field-name="COH_PA_State__c"> </lightning-input-field>
+            </lightning-layout-item>
+        <lightning-layout-item size="12" >
+        <lightning-input-field required field-name="Patient_Postal_Code__c"> </lightning-input-field>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" >
+        <lightning-input-field required field-name="COH_PA_Country__c"> </lightning-input-field>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" >
+        <lightning-input-field required field-name="PersonBirthdate"> </lightning-input-field>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" >
+        <lightning-input-field required field-name="Gender__pc"> </lightning-input-field>
+        </lightning-layout-item>
+        <lightning-layout-item size="12" >
+        <lightning-input-field required field-name="COH_Account_PatientAccess_SSN__c"> </lightning-input-field>
+        </lightning-layout-item>
+        <lightning-layout-item size="6" >
+        <lightning-input-field required field-name="Primary_Phone_Number__c"> </lightning-input-field>
+        </lightning-layout-item>
+        <lightning-layout-item size="6" >
+        <lightning-input-field field-name="PersonHomePhone"> </lightning-input-field>
+        </lightning-layout-item>
+        <lightning-layout-item size="6" >
+        <lightning-input-field field-name="PersonMobilePhone"> </lightning-input-field>
+        </lightning-layout-item>
+        <lightning-layout-item size="6" >
+        <lightning-input-field field-name="PersonOtherPhone"> </lightning-input-field>
+        </lightning-layout-item>
+        
+         <lightning-layout-item size="6" >
+        <lightning-input-field required field-name="Preferred_Language__c"> </lightning-input-field>
+         </lightning-layout-item>
+          <lightning-layout-item size="6" >
+        <lightning-input-field required field-name="Ethnicity__c"> </lightning-input-field>
+          </lightning-layout-item>
+           <lightning-layout-item size="6" >
+        <lightning-input-field required field-name="Race__c"> </lightning-input-field>
+           </lightning-layout-item>
+            <lightning-layout-item size="6" >
+        <lightning-input-field required field-name="COH_PA_Religion__c"> </lightning-input-field>
+            </lightning-layout-item>
+             <lightning-layout-item size="6" >
+        <p style="color:red;display:inline-block;">*</p><p style="display:inline-block;">Name</p>
+        <lightning-input-field required field-name="Emergency_Contact_Name__c" variant="label-hidden"> </lightning-input-field>
+             </lightning-layout-item>
+              <lightning-layout-item size="6" >
+        <lightning-input-field required field-name="Relationship_to_Patient__c" > </lightning-input-field>
+              </lightning-layout-item>
+               <lightning-layout-item size="6" >
+        <lightning-input-field  field-name="COH_Account_EC_PatientAccess_MobilePhone__c" > </lightning-input-field>
+               </lightning-layout-item>
+                <lightning-layout-item size="6" >
+        <lightning-input-field  field-name="COH_Account_EC_PatientAccess_HomePhone__c" > </lightning-input-field>
+                </lightning-layout-item>
+                 <lightning-layout-item size="6" >
+        <lightning-input-field  field-name="COH_Account_EC_PatientAccess_WorkPhone__c" > </lightning-input-field>
+                 </lightning-layout-item>
+         <lightning-layout-item size="12" >
+        <lightning-input-field field-name="Self_Pay__c" > </lightning-input-field>
+         </lightning-layout-item>
+       
+        <lightning-layout-item flexibility="auto" padding="horizontal-small" class="slds-text-align_right">
+        <lightning-button
+            class="slds-m-top_small"
+            variant="brand"
+            type="submit"
+            name="update"
+            label="Update"
+        >
+        </lightning-button>
+        </lightning-layout-item>
+        </lightning-layout>
+    </lightning-record-edit-form>
+   
+</template>
